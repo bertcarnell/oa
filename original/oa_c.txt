@@ -1,0 +1,7422 @@
+#!/bin/sh
+# This is a shell archive (produced by shar 3.50)
+# To extract the files from this archive, save it to a file, remove
+# everything above the "!/bin/sh" line above, and type "sh file_name".
+#
+# made 07/27/1995 18:19 UTC by art@playfair
+# Source directory /h1/art/latin/lhint/galois/deliver
+#
+# existing files will NOT be overwritten unless -c is specified
+#
+# This shar contains:
+# length  mode       name
+# ------ ---------- ------------------------------------------
+#  30654 -rw-r--r-- README
+#   5680 -rw-r--r-- Makefile
+#   1456 -rw-r--r-- addelkemp.c
+#   1289 -rw-r--r-- addelkemp3.c
+#   1556 -rw-r--r-- addelkempn.c
+#   7000 -rw-r--r-- ak3.c
+#   4273 -rw-r--r-- akconst.c
+#   6832 -rw-r--r-- akn.c
+#   1132 -rw-r--r-- bose.c
+#   1499 -rw-r--r-- bosebush.c
+#   2238 -rw-r--r-- bosebushl.c
+#   1201 -rw-r--r-- bush.c
+#   1689 -rw-r--r-- busht.c
+#   9127 -rw-r--r-- construct.c
+#     31 -rw-r--r-- galdec.h
+#    162 -rw-r--r-- galdef.h
+#   5741 -rw-r--r-- galois.c
+#    232 -rw-r--r-- galois.h
+#   2554 -rw-r--r-- gfields.c
+#   2877 -rw-r--r-- memory.c
+#  16258 -rw-r--r-- oa.c
+#    394 -rw-r--r-- oa.h
+#   1345 -rw-r--r-- oaagree.c
+#    783 -rw-r--r-- oadimen.c
+#   1082 -rw-r--r-- oarand.c
+#    903 -rw-r--r-- oastr.c
+#   1240 -rw-r--r-- oastr1.c
+#   1495 -rw-r--r-- oastr2.c
+#   1249 -rw-r--r-- oastr3.c
+#   1565 -rw-r--r-- oastr4.c
+#   1172 -rw-r--r-- oatriple.c
+#   6227 -rw-r--r-- ogfields.c
+#   2033 -rw-r--r-- primes.c
+#   4312 -rw-r--r-- runif.c
+#   1706 -rw-r--r-- rutils.c
+#   2117 -rw-r--r-- xtndeclare.h
+#   4892 -rw-r--r-- xtndispatch.h
+#  23434 -rw-r--r-- xtnset.h
+#
+# ============= README ==============
+if test -f 'README' -a X"$1" != X"-c"; then
+	echo 'x - skipping README (File already exists)'
+else
+echo 'x - extracting README (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'README' &&
+XFrom: owen@stat.stanford.edu
+X
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+X  I thank Randall Tobias of SAS Inc. for many helpful
+electronic discussions that lead to improvements in
+these programs.
+X
+X
+******************************************************
+*    Contents                                        *
+******************************************************    
+X
+X  This documentation discusses in order:
+X
+X     Orthogonal arrays
+X     Installation of the software
+X     Available prime powers
+X     Array construction programs:
+X       bose              OA(  q^2,       q+1,  q,  2 )
+X       bush              OA(  q^3,       q+1,  q,  3 )
+X       busht             OA(  q^t,       q+1,  q,  t )
+X       bosebush          OA( 2q^2,      2q+1,  q,  2 )
+X       bosebushl         OA( lq^2,      lq+1,  q,  2 )
+X       addelkemp         OA( 2q^2,      2q+1,  q,  2 )
+X       addelkemp3        OA( 2q^3, 2q^2+2q+1,  q,  2 )
+X     OA input conventions
+X     Array manipulation programs:
+X       oarand            randomly permute symbols in each column
+X       oastr             find strength of the array
+X       oastr1...oastr4   check strength = 1 ... =4
+X       oatriple          report triple coincidences
+X       oaagree           count agreements among rows
+X       oadimen           count rows, columns and symbols
+X     Tips on use
+X     Implementation details
+X     References
+X
+******************************************************
+*    Orthogonal Arrays                               *
+******************************************************    
+X
+X  An orthogonal array A is a matrix of n rows, k 
+columns with every element being one of q symbols
+0,...,q-1.  The array has strength t if, in every n by t
+submatrix, the q^t possible distinct rows, all appear
+the same number of times.  This number is the index
+of the array, commonly denoted lambda.  Clearly, 
+lambda*q^t=n. Geometrically, if one were to "plot" the 
+submatrix with one plotting axis for each of the t columns
+and one point in t dimensional space for each row, the
+result would be a grid of q^t distinct points.  There would
+be lambda "overstrikes" at each point of the grid.
+X
+X  The notation for such an array is OA( n, k, q, t ).
+X
+X  If n <= q^(t+1), then the n rows "should" plot as
+n distinct points in every n by t+1 dimensional subarray.
+When this fails to hold, the array has the "coincidence
+defect".
+X
+X  Owen (1992,199?) describes some uses for randomized
+orthogonal arrays, in numerical integration, computer
+experiments and visualization of functions.  Those
+references contain further references to the literature,
+that provide further explanations.  A strength
+1 randomized orthogonal array is a Latin hypercube
+sample, essentially so or exactly so, depending on
+the definition used for Latin hypercube sampling.
+The arrays constructed here have strength 2 or more, it
+being much easier to construct arrays of strength 1.
+X
+X  The randomization is achieved by independent
+uniform permutation of the symbols in each column.
+X
+X  To investigate a function f of d variables, one
+has to have an array with k >= d.  One may also
+have a maximum value of n in mind and a minimum value
+for the number q of distinct levels to investigate.
+It is entirely possible that no array of strength t>1
+is compatible with these conditions.  The programs
+below provide some choices to pick from, hopefully
+without too much of a compromise.
+X 
+X  The constructions used are based on published
+algorithms that exploit properties of Galois fields.
+Because of this the number of levels q must be
+a prime power.  That is q = p^r where p is prime
+and r>=1 is an integer.
+X
+X  The Galois field arithmetic for the prime powers is
+based on tables published by Knuth and Alanen (1964)
+below.  The resulting fields have been tested by the
+methods described in Appendix 2 of that paper and
+they passed.  This is more a test of the accuracy of
+my transcription than of the original tables.
+X
+******************************************************
+*    Installation                                    *
+******************************************************    
+X
+X  make all
+X
+X  Typing the above to the prompt in the directory 
+containing the C source files and the file Makefile
+should suffice to create the programs.  Typing
+X
+X  make cleanup
+X
+should get rid of lots of object files.  It might
+make sense to move the executable files to a
+directory other than the one with the source code.
+X
+******************************************************
+*    Available prime powers                          *
+******************************************************    
+X
+X  The designs given here require a prime power for
+the number of levels.  They presently work for the 
+following prime powers:
+X
+X  All Primes
+X  All prime powers q = p^r where p < 50 and q < 10^9
+X
+Here are some of the smaller prime powers:
+X
+X  Powers of 2:  4 8 16 32 64 128 256 512
+X  Powers of 3:  9 27 81 243 729
+X  Powers of 5:  25 125 625
+X  Powers of 7:  49 343 
+X  Square of 11: 121
+X  Square of 13: 169
+X
+Here are some useful primes:
+X
+X  2,3,5,7,11,13,17,19,23,29,31,37, 
+X  101,251,401
+X
+The first row are small primes, the second row are
+primes that are 1 more than a "round number".  The small
+primes lead to small arrays.  An array with 101 levels
+is useful for exploring a function at levels 0.00 0.01
+through 1.00.  Keep in mind that a strength 2 array on
+101 levels requires 101^2 = 10201 experimental runs,
+so it is only useful where large experiments are possible.
+X
+X   Note that some of these will require more
+memory than your computer has.  For example,
+with a large prime like 10663, the program knows
+the Galois field, but can't allocate enough
+memory:
+X
+bose 10663
+Unable to allocate 1927'th row in an integer matrix.
+Unable to allocate space for Galois field on 10663 elements.
+Construction failed for GF(10663).
+Could not construct Galois field needed for Bose design.
+X
+X  The smallest prime power not covered is 53^2 = 2809.
+The smallest strength 2 array with 2809 symbols has
+2809^2 = 7890481 rows.  Therefore the missing prime powers
+are only needed in certain enormous arrays, not in the
+small ones of most practical use.  In any event there
+are some large primes and prime powers in the program
+if an enormous array is needed.
+X
+X  To add GF(p^r) for some new prime power p^r,
+consult Alanen and Knuth for instructions on how
+to search for an appropriate indexing polynomial,
+and for how to translate that polynomial into a
+replacement rule for "x^r".  
+X
+******************************************************
+*    bose                                            *
+******************************************************    
+X
+X  The bose program produces OA( q^2, k, q, 2 ),  k <= q+1
+for prime powers q.  This is based on:
+X    R.C. Bose (1938) Sankhya Vol 3 pp 323-338
+X
+X  The program needs to know q and k, in that order.
+They can be placed on the command line or in standard
+input.  If one number appears on the command line it
+is taken to be q, and k is taken to be q+1, the maximum
+possible k.
+X
+X  Examples:
+X
+X  bose 5 | oarand
+X  bose 8 | oarand
+X  bose 101 10 | oarand
+X  echo 101 10 | bose | oarand
+X
+X  These produce OA( 25, 6, 5, 2), OA( 64, 9, 8, 2) and
+OA( 10201, 10, 101, 2) (twice) respectively.  The trailing
+oarand randomizes the levels of the array (see oarand below).
+X  
+******************************************************
+*    bush                                            *
+******************************************************    
+X
+X  The bush program produces OA( q^3, k, q, 3 ),  k <= q+1
+for prime powers q.  This strength 3 construction is based on:
+X
+X    K.A. Bush (1952) Annals of Mathematical Statistics, Vol 23 pp 426-434
+X
+X  The program needs to know q and k, in that order.
+They can be placed on the command line or in standard
+input.  If one number appears on the command line it
+is taken to be q, and k is taken to be q+1, the maximum
+possible k.
+X
+X  Examples:
+X
+X  bush 4 | oarand
+X  bush 7 4 | oarand
+X  echo 7 4 | bush | oarand
+X
+X  These produce OA( 64, 5, 4, 3) and OA( 343, 4, 7, 3) (twice)
+respectively.  Compared to the Bose arrays, the strength increases
+from 2 to 3, the number of runs increases from q^2 to q^3.
+The use of oarand (see below) randomizes the levels of the array.
+X
+X  This construction is the most commonly used special case
+of busht given below.   
+X
+******************************************************
+*    busht                                           *
+******************************************************    
+X
+X  The bush program produces OA( q^t, k, q, t ),  k <= q+1, t>=3,
+for prime powers q.  This strength t construction is based on:
+X
+X    K.A. Bush (1952) Annals of Mathematical Statistics, Vol 23 pp 426-434
+X
+X  The program needs to know t, q and k, in that order.
+They can be placed on the command line or in standard
+input.  If two numbers appear on the command line they
+are taken to be t and q, and k is set to q+1.
+X  
+X  Examples:
+X
+X  busht 4 8 | oarand
+X  busht 4 8 5 | oarand
+X  echo 4 8 5 | busht | oarand
+X
+X  These produce OA( 4096, 9, 8, 4) and OA( 4096, 5, 8, 4) (twice)
+respectively.  The use of oarand (see below) randomizes the levels 
+of the array.
+X
+******************************************************
+*    bosebush                                        *
+******************************************************    
+X
+X  The bosebush program produces OA( 2q^2, k, q, 2 ),  k <= 2q+1,
+for powers of 2, q=2^r.  This construction is based on:
+X
+X    R.C. Bose and K.A. Bush (1952) Annals of Mathematical Statistics,
+X Vol 23 pp 508-524.
+X
+X  The program needs to know  q and k, in that order.
+They can be placed on the command line or in standard
+input.  If one number appears on the command line it
+is taken to be q, and k is set to 2q.  2q columns can be
+constructed without a coincidence defect.  Setting k=2q+1
+leads to an array with the coincidence defect.  Some
+triples of columns contain duplicate rows.  (The lack of
+a coincidence defect has been verified for q=2,4,8,16,32
+and k=2q.)
+X  
+X  Examples:
+X
+X  bosebush 8 | oarand
+X  bosebush 16 11 | oarand
+X  echo 16 11 | bosebush | oarand
+X
+X  These produce OA( 128, 16, 8, 2) and OA( 512, 11, 16, 2) (twice)
+respectively.  These should be randomized (see oarand below):
+The use of oarand (see below) randomizes the levels of the array.
+X
+******************************************************
+*    bosebushl                                       *
+******************************************************    
+X
+X  The bosebushl program produces OA( lambda*q^2, k, q, 2 ),  
+k <= lambda*q+1, for prime powers q and lambda > 1.  Both q and 
+lambda must be powers of the same prime.  This construction is based on:
+X
+X    R.C. Bose and K.A. Bush (1952) Annals of Mathematical Statistics,
+X Vol 23 pp 508-524.
+X
+X  The program needs to know lambda, q and k, in that order.
+They can be placed on the command line or in standard
+input.  If two numbers appear on the command line they
+are taken to be lambda and q respectively, and k is set to 
+lambda*q.
+X  
+X  Examples:
+X
+X  bosebushl 3 9 | oarand
+X  bosebushl 9 3 | oarand
+X  echo 9 3 11 | bosebushl | oarand
+X  bosebushl 11 11 | oarand
+X  bosebushl 4 8 | oarand
+X
+X  These produce OA( 243, 27, 9, 2), OA( 81, 27, 3, 2),
+OA( 81, 11, 3, 2), OA( 1331, 121, 11, 2) and OA( 256, 32, 8, 2 )
+respectively.  The use of oarand (see below) randomizes the levels
+of the array.
+X
+X  Coincidences are harder to understand with these designs.
+For example "bosebushl 3 9" does lead to a number of triple
+coincidences, that is pairs of rows in which 3 columns agree,
+but no quadruple coincidences.  "bosebush 3 9 28" produces
+an extra column that figures in some quadruple coincidences.
+X
+X  The arrays produced by this program are not always the
+largest possible.  The article by Bose and Bush cited
+above describes ways of adjoining some extra columns.
+X	
+X  When k <= lambda*q, the program produces an array that
+is "completely resolvable".  What this means is that 
+the rows of the array may be split into lambda*q consecutive
+nonoverlapping sets of rows each of which is OA( q,k,q,1 ).
+X
+******************************************************
+*    addelkemp                                       *
+******************************************************    
+X
+X  The addelkemp program produces OA( 2q^2, k, q, 2 ),  k <= 2q+1,
+for odd prime powers q.  Even prime powers may be produced using
+bosebush above.  
+X
+This construction is based on:
+X
+X    S. Addelman and O. Kempthorne (1961) Annals of Mathematical Statistics,
+X Vol 32 pp 1167-1176.
+X
+using "n=2" in their notation.
+X
+X  The program needs to know q and k, in that order.
+They can be placed on the command line or in standard
+input.  If one number appears on the command line it
+is taken to be q, and k is set to 2q.  2q columns can be
+constructed without a coincidence defect.  Setting k=2q+1
+leads to an array with the coincidence defect.  Some
+triples of columns contain duplicate rows.  (The lack of
+a coincidence defect has been verified for 
+q=2,3,4,5,7,9,11,13,17,19,23,25 and k=2q.)
+X  
+X  Examples:
+X
+X  addelkemp 9 | oarand
+X  addelkemp 25 10 | oarand
+X  echo 25 10 | addelkemp | oarand
+X
+X  These produce OA( 162, 18, 9, 2) and OA( 1250, 10, 25, 2) (twice)
+respectively.  The use of oarand (see below) randomizes the levels`
+of the array.
+X
+X  This construction should work for all prime powers
+q, but it failed to do so for even powers greater
+than 4.  This may have been a programming error, or
+it may have stemmed from misunderstanding of the description
+of the algorithm.  The program rejects requests with
+q=2^r for r>2.  The Bose Bush construction handles these
+cases.
+X
+X  The description of the construction for odd prime powers
+calls for some arithmetic involving the number 4.  In
+Galois fields with 3^r elements, there is no 4.  Replacing 4
+by 1 for these fields works when q=3,9,27 (brute force
+verification).
+X
+******************************************************
+*    addelkemp3                                      *
+******************************************************    
+X
+X  The addelkemp3 program produces OA( 2*q^3, k, q, 2 ),  k <= 2q^2+2q+1,
+for prime powers q.  q may be an odd prime power, or q may
+be 2 or 4.
+X
+This construction is based on:
+X
+X    S. Addelman and O. Kempthorne (1961) Annals of Mathematical Statistics,
+X Vol 32 pp 1167-1176.
+X
+using "n=3" in their notation.
+X
+X  The program needs to know q and k, in that order.
+They can be placed on the command line or in standard
+input.  If one number appears on the command line it
+is taken to be q and k is set to 2*q.
+X  
+X  Examples:
+X
+X  addelkemp3 3 | oarand
+X  addelkemp3 9 | oarand
+X  echo 11 250 | addelkemp3 | oarand
+X
+X  These produce OA( 54, 25, 3, 2), OA( 1458, 181, 9, 2),
+and OA( 2662, 250, 11, 2 ) respectively.  The use of 
+oarand (see below) randomizes the levels of the array.
+X
+X  Coincidences are much harder to understand with these designs.
+For example "addelkemp3 3 9" does lead to a number of triple
+coincidences, that is pairs of rows in which 3 columns agree,
+but no quadruple coincidences.  "addelkemp  3 9 28" produces
+an extra column that figures in some quadruple coincidences.
+X
+X  As for addelkemp above, 4 is replaced by 1 in fields that
+do not have an element 4.  Also powers of 2 larger than 4
+are not allowed, as described above for addelkemp.
+X
+******************************************************
+*    OA input conventions                            *
+******************************************************    
+X
+X  Programs that need to read an orthogonal array from
+standard input, require q, n and k, the numbers of
+symbols, rows and columns respectively in the array.
+The input requirements are illustrated below in terms
+of a generic program "oaprog".
+X
+X  If all three are given on the command line, the array
+is read as the next nk integers from standard input.
+The first k integers comprise the first row of the
+array, the next k are the second row, and so forth.  In 
+X
+X  oaprog 11 121 50
+X
+standard input should consist of 121*50=6050 integers
+between 0 and 11-1 = 10 inclusive.  An error message
+is generated if there are too few or too many integers
+or if any of them is outside the range 0 through 10.
+X
+X  If only two integers are given on the command line
+as in
+X
+X  oaprog 11 121
+X
+the program reads the number of columns from
+standard input and then starts reading the array
+as above.
+X
+X  If only one integer is on the command line as in
+X
+X  oaprog 11
+X
+the program reads the numbers of rows and columns from
+standard input and then starts reading the array
+as above.
+X
+X  If no integers are given on the command line then
+the program starts reading the array from standard
+input and tries to guess what n, k and q are.
+The number of columns, k, is taken to be the number of
+integers read before the first newline character.
+The number of rows, n, is taken to be the number of
+lines of input before the end of file.  Each of these
+lines must have k integers and must end in aa newline.
+The number of symbols, q, is taken to be one more
+than the largest integer found on standard input.
+X
+X
+******************************************************
+*    oarand                                          *
+******************************************************    
+X
+X  This program reads an orthogonal array from standard
+input, permutes the symbols in each column and prints
+the array to standard output.  The permutations are
+uniformly distributed (all q! permutations have the same
+probability) and all columns are permuted independently.
+X
+X  Input is described above under OA input conventions,
+with exceptions noted below to allow passing a random
+seed.  If oarand is called twice with the same input array,
+the same permuted output will result both times, unless
+different seeds are given.
+X
+X  If the command line consists of 4 or more integers the
+last four integers are taken to be a random seed.
+The random number generator is a version of the
+Marsaglia-Zaman random number generator, transliterated
+into C from  FORTRAN.  The seed must be four integers
+between 1 and 168 inclusive, with not all values equal
+to 1.  
+X
+X  If one prefers some other random number generator
+one can replace runif() in runif.c.  In that case it is
+also likely to be necessary to change how the seed is
+read in oarand.c.
+X
+X  Examples:
+X
+X  bose 9 | oarand 
+X  bose 9 | oarand 9 81 10	
+X  bose 9 | oarand 9 81 10 22	
+X  bose 9 | oarand 9 81 10  11 22 33 44
+X  bose 17 8 | oarand 17 289 8
+X  bose 17 8 | oarand 17 289 8  
+X
+X  These produce randomized versions of bose arrays
+OA( 81, 10, 9, 2)(four times) and OA( 289, 8, 17, 2 ) 
+(three times) respectively.  The first and second runs
+use the default seeds.  The third run uses 9 81 10 22
+as seeds, figuring out the dimension of the array
+by reading it.  If the integers 9 81 10 were meant
+to be dimensions they aren't being used that way.
+The fourth run one passes the seed information
+11 22 33 44 to the random number generator.
+X
+X  Note that 
+X
+X  bose 9 | oarand | oarand
+X
+doesn't get an array independent of the one produced
+by one pass through oarand.   What it produces is
+an array with a particular random permutation applied
+twice.   Any symbols that are unchanged by the permutation
+in oarand will be unchanged by applying it twice.
+X
+******************************************************
+*    oastr                                           *
+******************************************************    
+X
+X  This program reads an orthogonal array from standard
+input, and finds its strength by brute force computation.
+In addition to the strength t described above under
+the heading orthogonal arrays, strength 0 is taken to 
+mean that the array indeed has all its elements in the
+range 0..q-1.  
+X 
+X  An array of strength t>0 is also of strength s for
+all 0 <= s < t.  The program starts testing t=0 and
+increases t until it finds t for which the array is
+not strength t.
+X
+X  Finding the strength of an array by brute force is
+lightning fast for small arrays but very slow for larger
+arrays.  When the job is large enough, intermediate
+results are printed so the user can decide whether or
+not to kill the job, based on how much progress is
+being made.
+X
+X  The function that calculates strength has an argument
+verbose.  In oastr the array strength function is
+called with verbose=2.  This prints to standard output
+a description of progress as the strength check proceeds.
+If one wants to use this function in other settings,
+calling it with verbose=1 shuts off standard output
+but leaves the warnings to standard error, and verbose=0
+shuts off all output.
+X
+X  Input is described above under OA input conventions.
+X
+X  Examples:
+X
+X  bosebush 8 | oastr 8 128 16 
+X  bosebush 8 | oastr
+X 
+X  both result in:
+X
+The array has strength (at least) 0.
+The array has strength (at least) 1.
+The array has strength (at least) 2.
+The array cannot have strength 3, because the number
+of rows 128 is not a multiple of q^3 = 8^3 = 512.
+X
+The array has strength 2 and no higher strength.
+X
+X  addelkemp 2 5 | oastr 2 8 5
+X  addelkemp 2 5 | oastr
+X
+X  both result in:
+X
+The array has strength (at least) 0.
+The array has strength (at least) 1.
+The array has strength (at least) 2.
+Array is not of strength 3.  The first violation arises for
+the number of times (A[,0],A[,2],A[,4]) = (0,0,0).
+This happened in 2 rows, it should have happened in 1 rows.
+X
+The array has strength 2 and no higher strength.
+X
+X  You also get a warning (from addelkemp) about the
+coincidence defect in this design.  Notice that
+the program refers to the columns of the array
+starting with column 0.
+X
+******************************************************
+*    oastr1, oastr2, oastr3, oastr4                  *
+******************************************************    
+X
+X  These are just like oastr above, except that they
+only check one strength level.
+X
+X  Example:
+X
+X  addelkemp3 9 | oastr2 9 1458 181 &
+X  addelkemp3 9 | oastr2 &
+X
+X  where the & just puts the job in background, both 
+result in:
+X
+If the array has strength 2, 1.92382e+09 comparisons will
+be required to prove it.  This might take a long time.
+This warning is triggered when more than 100000000 comparisons
+are required.  To avoid this warning increase BIGWORK in
+oa.h.  Intermediate results will be printed.
+X
+X
+No violation of strength 2 involves column 0.
+No violation of strength 2 involves column 1.
+No violation of strength 2 involves column 2.
+No violation of strength 2 involves column 3.
+...
+etc.
+...
+No violation of strength 2 involves column 178.
+No violation of strength 2 involves column 179.
+No violation of strength 2 involves column 180.
+The array has strength (at least) 2.
+X
+X
+X  The advantage of using oastr2 here instead of oastr is that
+you can let it go in background without worrying that it
+will start checking strength 3 if the array turns out to
+have strength 2.
+X
+******************************************************
+*    oatriple                                        *
+******************************************************    
+X
+X  This program reports on triple coincidences.  For all
+triples of distinct columns, it counts the number of
+distinct pairs of rows in which the triple of columns
+agree.
+X
+X  Input is described above under OA input conventions.
+X  
+X  Examples:
+X
+X  bosebush 8 | oatriple 8 128 16
+X  bosebush 8 | oatriple 
+X
+both lead to:
+X
+There are 0 distinct triples of columns that agree
+in at least two distinct rows.
+X
+X  bosebush 8 17 | oatriple 8 128 17
+X  bosebush 8 17 | oatriple
+X
+both lead to:
+X
+Warning: The Bose-Bush construction with ncol = 2q+1
+has a defect.  While it is still an OA(2q^2,2q+1,q,2),
+there exist some pairs of rows that agree in three columns.
+X
+X
+Cols 0 1 16 match in 64 distinct pairs of rows.
+Cols 2 3 16 match in 64 distinct pairs of rows.
+Cols 4 5 16 match in 64 distinct pairs of rows.
+Cols 6 7 16 match in 64 distinct pairs of rows.
+Cols 8 9 16 match in 64 distinct pairs of rows.
+Cols 10 11 16 match in 64 distinct pairs of rows.
+Cols 12 13 16 match in 64 distinct pairs of rows.
+Cols 14 15 16 match in 64 distinct pairs of rows.
+There are 8 distinct triples of columns that agree
+in at least two distinct rows.
+X
+X
+X  The warning above is generated by bosebush.
+The rest shows that there are triple coincidences.
+Notice that they all involve the 17th column
+(which is column 16, since the first one is column 0).
+The other 16 columns can be organized into 8 pairs
+with each pair forming a triple with column 16 and
+no other triples agreeing in any row.
+X
+******************************************************
+*    oaagree                                         *
+******************************************************    
+X
+X  This program counts the number of columns in which
+each pair of distinct rows agree.  
+X
+X  Input is described above under OA input conventions.  
+X
+X  Examples:
+X
+X  addelkemp3 3 | oaagree 3
+New max 0 1 7
+New max 0 9 8
+New max 0 27 9
+Checked rows <= 50 vs all other rows.
+Maximum number of columns matching for two distinct rows is 9.
+This is attained by rows 0 and 27.
+X
+X  addelkemp3 3 24 | oaagree 3 54 24
+New max 0 1 6
+New max 0 9 8
+Checked rows <= 50 vs all other rows.
+Maximum number of columns matching for two distinct rows is 8.
+This is attained by rows 0 and 9.
+X
+X  The first example finds that in OA( 54, 25, 3, 2 )
+produced by addelkemp3 there exist pairs of rows
+agreeing in 9 columns.  The first rows to attain
+this are rows 0 and 9, the 1st and 10th rows.
+X
+X  The second example finds that in OA( 54, 24, 3, 2 )
+produced by addelkemp3 there exist pairs of rows
+agreeing in 8 columns.   No pairs of rows agree in
+9 columns.
+X
+******************************************************    
+*    oadimen                                         *
+******************************************************    
+X
+X  This program attempts to count the number of rows 
+columns and symbols in an orthogonal array.
+X
+X  Input is described above under OA input conventions.  
+X
+X  Example:
+X
+X  bosebush 4 | oadimen
+X
+The array has 32 rows, 8 columns and appears
+to have 4 symbols, since the largest symbol is 3.
+X
+X
+******************************************************
+*     Tips on use                                    *
+******************************************************    
+X
+X  It is faster to generate only the columns you need.
+For example
+X
+X  bose 101 4 | oarand 101 10201 4
+X
+only generates the first 4 columns of the array, whereas
+X
+X  bose 101 | oarand 101 10201 102
+X
+generates 102 columns.  If you only want 4 columns the
+former saves a lot of time.
+X
+X  Passing the q n k on the command line is more difficult
+than letting the computer figure them out, but it
+allows more error checking.
+X
+X  In practical use, I would try first to use a Bose
+design.  Then I would consider either an Addelman-
+Kempthorne or Bose-Bush design to see whether it
+could accommodate the desired number of columns with
+fewer runs.  Obviously this advice depends on the
+sort of problems I expect to handle.  When a very
+large number of runs is possible a Bush design may
+work well, since it can have high strength.
+X
+******************************************************
+*     References                                     *
+******************************************************    
+X
+X    Here are the references for the constructions used:
+X
+X    S. Addelman and O. Kempthorne (1961) Annals of Mathematical Statistics,
+X          Vol 32 pp 1167-1176.
+X    J.D. Alanen and D.E. Knuth (1964) Sankhya Ser. A Vol. 26, pp 305-328
+X    R.C. Bose (1938) Sankhya Vol 3 pp 323-338
+X    K.A. Bush (1952) Annals of Mathematical Statistics, Vol 23 pp 426-434
+X    R.C. Bose and K.A. Bush (1952) Annals of Mathematical Statistics,
+X          Vol 23 pp 508-524.
+X
+X    This book provides a large list of orthogonal array 
+X constructions:
+X
+X    Aloke Dey (1985) "Orthogonal Fractional Factorial Designs"
+X          Halstead Press
+X
+X    These papers discuss randomized orthogonal arrays, the second
+X  is being revised in parallel with development of the software
+X  described here:
+X 
+X    A.B. Owen (1992)  Statistica Sinica, v2 n2 pp 439-452
+X    A.B. Owen (199?)  Annals of Statistics, to appear
+X        "Lattice Sampling Revisited: Monte Carlo Variance of 
+X        Means Over Randomized Orthogonal Arrays"
+X    H.D. Patterson (1954) J.R.S.S. B 16, 140-149
+X
+X    These papers discuss Latin hypercube sampling:
+X 
+X    M.D. McKay, W.J. Conover and R.J. Beckman (1979)
+X	Technometrics 21, 239-245
+X    A.B. Owen (1992) J.R.S.S. B 541-551
+X    H.D. Patterson (1954) J.R.S.S. B 16, 140-149
+X    M. Stein (1987) Technometrics 29, 143-151
+X
+******************************************************
+*     Implementation Details                         *
+******************************************************    
+X
+X    Galois fields are implemented through arrays that
+store their addition and multiplication tables.  Some
+space could have been saved by using powers of primitive
+marks in place of the multiplication table.  But since
+the multiplication tables itself is only as large as
+the smallest possible column in a strength 2 array it
+was not considered to be a burden.   Subtraction and
+division are implemented through vectors of additive
+and multiplicative inverses, derived from the tables.
+The tables for GF(p^r) are constructed using a 
+representation of the field elements as polynomials in x
+with coefficients as integers modulo p and a special
+rule (derived from minimal polynomials) for handling
+products involving x^r.  These rules are taken from
+published references.  The rules have not all
+been checked for accuracy, because some of the fields are 
+very large (e.g. 16807 elements).
+X
+X    The functions that manipulate orthogonal arrays
+keep the arrays in integer matrices.  This might be
+a problem for applications that require enormous
+arrays.  The reason for keeping them in memory is
+that it makes it easier for others to lift out the
+functions and embed them in applications or to put
+on a GUI front end.  It was also thought that any
+array that is too large to store in a computer, is
+likely to be too large to use in integration/experimentation
+on that same computer.  The arrays are generated
+row by row, so it is not too hard to change the program
+to place the elements on an output stream as they
+are computed and do away with the storage.
+X
+X     The functions that test the strengh of the
+arrays may be very far from optimally fast.
+X
+******************************************************        
+*    End     					     *
+******************************************************
+SHAR_EOF
+chmod 0644 README ||
+echo 'restore of README failed'
+Wc_c="`wc -c < 'README'`"
+test 30654 -eq "$Wc_c" ||
+	echo 'README: original size 30654, current size' "$Wc_c"
+fi
+# ============= Makefile ==============
+if test -f 'Makefile' -a X"$1" != X"-c"; then
+	echo 'x - skipping Makefile (File already exists)'
+else
+echo 'x - extracting Makefile (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'Makefile' &&
+memory.o: memory.c
+X	cc -g -c memory.c -lm
+runif.o: runif.c
+X	cc -g -c runif.c -lm
+rutils.o: rutils.c
+X	cc -g -c rutils.c -lm
+X
+primes.o: primes.c
+X	cc -g -c primes.c -lm
+galois.o: galois.c galois.h
+X	cc -g -c galois.c -lm
+gfields.o: gfields.c galois.h xtnset.h xtndeclare.h xtndispatch.h
+X	cc -g -c gfields.c -lm
+oa.o: oa.c
+X	cc -g -c oa.c -lm
+X
+construct.o: construct.c galois.h
+X	cc -g -c construct.c -lm
+ak3.o: ak3.c galois.h
+X	cc -g -c ak3.c -lm
+akconst.o: akconst.c galois.h
+X	cc -g -c akconst.c -lm
+akn.o: akn.c galois.h
+X	cc -g -c akn.c -lm
+X
+X
+X
+bose.o: bose.c galois.h
+X	cc -g -c bose.c -lm
+bose: bose.o construct.o akconst.o  oa.o primes.o gfields.o galois.o  memory.o
+X	cc -g -o bose bose.o construct.o akconst.o  oa.o primes.o gfields.o galois.o memory.o -lm
+X
+bush.o: bush.c galois.h
+X	cc -g -c bush.c -lm
+bush: bush.o construct.o akconst.o  oa.o primes.o gfields.o galois.o  memory.o
+X	cc -g -o bush bush.o construct.o akconst.o  oa.o primes.o gfields.o galois.o memory.o -lm
+X
+busht.o: busht.c galois.h
+X	cc -g -c busht.c -lm
+busht: busht.o construct.o akconst.o  oa.o primes.o gfields.o galois.o  memory.o
+X	cc -g -o busht busht.o construct.o akconst.o  oa.o primes.o gfields.o galois.o memory.o -lm
+X
+X
+bosebush.o: bosebush.c galois.h
+X	cc -g -c bosebush.c -lm
+bosebush: bosebush.o construct.o akconst.o  oa.o primes.o gfields.o galois.o  memory.o
+X	cc -g -o bosebush bosebush.o construct.o akconst.o  oa.o primes.o gfields.o galois.o memory.o -lm
+X
+X
+bosebushl.o: bosebushl.c galois.h
+X	cc -g -c bosebushl.c -lm
+bosebushl: bosebushl.o construct.o akconst.o  oa.o primes.o gfields.o galois.o  memory.o
+X	cc -g -o bosebushl bosebushl.o construct.o akconst.o  oa.o primes.o gfields.o galois.o memory.o -lm
+X
+X
+addelkemp.o: addelkemp.c galois.h
+X	cc -g -c addelkemp.c -lm
+addelkemp: addelkemp.o construct.o oa.o primes.o gfields.o galois.o  memory.o akconst.o
+X	cc -g -o addelkemp addelkemp.o construct.o oa.o primes.o gfields.o galois.o memory.o akconst.o -lm
+X
+X
+addelkemp3.o: addelkemp3.c galois.h
+X	cc -g -c addelkemp3.c -lm
+addelkemp3: addelkemp3.o ak3.o akconst.o oa.o primes.o gfields.o galois.o  memory.o
+X	cc -g -o addelkemp3 addelkemp3.o ak3.o akconst.o oa.o primes.o gfields.o galois.o memory.o -lm
+X
+addelkempn.o: addelkempn.c galois.h
+X	cc -g -c addelkempn.c -lm
+addelkempn: addelkempn.o akn.o akconst.o oa.o primes.o gfields.o galois.o  memory.o
+X	cc -g -o addelkempn addelkempn.o akn.o akconst.o oa.o primes.o gfields.o galois.o memory.o -lm
+X
+oarand.o: oarand.c oa.h
+X	cc -g -c oarand.c -lm
+oarand: oarand.o memory.o oa.o primes.o runif.o rutils.o
+X	cc -g -o oarand oarand.o memory.o oa.o primes.o runif.o rutils.o -lm
+X
+oaagree.o: oaagree.c oa.h
+X	cc -g -c oaagree.c -lm
+oaagree: oaagree.o memory.o oa.o primes.o
+X	cc -g -o oaagree oaagree.o memory.o oa.o primes.o -lm
+X
+oatriple.o: oatriple.c oa.h
+X	cc -g -c oatriple.c -lm
+oatriple: oatriple.o memory.o oa.o primes.o
+X	cc -g -o oatriple oatriple.o memory.o oa.o primes.o -lm
+X
+oadimen.o: oadimen.c oa.h
+X	cc -g -c oadimen.c -lm
+oadimen: oadimen.o memory.o oa.o primes.o
+X	cc -g -o oadimen oadimen.o memory.o oa.o primes.o -lm
+X
+X
+oastr1.o: oastr1.c oa.h
+X	cc -g -c oastr1.c -lm
+oastr1: oastr1.o memory.o oa.o primes.o oa.h
+X	cc -g -o oastr1 oastr1.o memory.o oa.o primes.o -lm
+oastr2.o: oastr2.c oa.h
+X	cc -g -c oastr2.c -lm
+oastr2: oastr2.o memory.o oa.o primes.o oa.h
+X	cc -g -o oastr2 oastr2.o memory.o oa.o primes.o -lm
+oastr3.o: oastr3.c oa.h
+X	cc -g -c oastr3.c oa.o primes.o -lm
+oastr3: oastr3.o memory.o
+X	cc -g -o oastr3 oastr3.o memory.o oa.o primes.o -lm
+oastr4.o: oastr4.c oa.h
+X	cc -g -c oastr4.c oa.o primes.o -lm
+oastr4: oastr4.o memory.o
+X	cc -g -o oastr4 oastr4.o memory.o oa.o primes.o -lm
+oastr.o: oastr.c oa.h
+X	cc -g -c oastr.c -lm
+oastr: oastr.o memory.o oa.o primes.o oa.h
+X	cc -g -o oastr oastr.o memory.o oa.o primes.o -lm
+X
+X
+X
+allstr: oastr1 oastr2 oastr3 oastr4 oastr
+alldes:   bose bush busht bosebush bosebushl addelkemp addelkemp3
+X
+all: allstr alldes oarand oatriple oadimen oaagree
+X	echo "To remove .o files: make cleanup"
+X
+b9: bose oarand
+X	bose 9 | oarand 9 81 10 > b9
+X
+X
+cleanup:
+X	rm -f *.o
+X
+X
+lint_bose: galois.h oa.h bose.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X	lint bose.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X
+lint_bush: galois.h oa.h bush.c construct.c oa.c primes.c \
+X	gfields.c galois.c memory.o
+X	lint bush.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X
+lint_busht: galois.h oa.h busht.c construct.c oa.c primes.c\
+X	 gfields.c galois.c memory.o
+X	lint busht.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X
+lint_bosebush: galois.h oa.h bosebush.c construct.c oa.c primes.c\
+X	 gfields.c galois.c memory.o
+X	lint bosebush.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X
+lint_bosebushl: galois.h oa.h bosebushl.c construct.c oa.c primes.c\
+X	gfields.c galois.c memory.o
+X	lint bosebushl.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X
+lint_addelkemp: galois.h oa.h addelkemp.c construct.c oa.c primes.c\
+X	 gfields.c galois.c memory.o
+X	lint addelkemp.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X
+lint_addelkemp3: galois.h oa.h addelkemp3.c ak3.c oa.c primes.c\
+X	 gfields.c galois.c memory.o
+X	lint addelkemp3.c construct.c oa.c primes.c gfields.c galois.c memory.c 
+X 
+lint_all_des: lint_bose lint_bush lint_busht lint_bosebush \
+X	lint_bosebushl lint_addelkemp lint_addelkemp3
+X
+X
+X
+lint_str1: galois.h oa.h oastr1.c memory.c oa.c
+X	lint oastr1.c memory.c oa.c
+X
+lint_str2: galois.h oa.h oastr2.c memory.c oa.c
+X	lint oastr2.c memory.c oa.c
+X
+lint_str3: galois.h oa.h oastr3.c memory.c oa.c
+X	lint oastr3.c memory.c oa.c
+X
+lint_str4: galois.h oa.h oastr4.c memory.c oa.c
+X	lint oastr4.c memory.c oa.c
+X
+lint_all_str: lint_str1 lint_str2 lint_str3 lint_str4
+X
+X
+SHAR_EOF
+chmod 0644 Makefile ||
+echo 'restore of Makefile failed'
+Wc_c="`wc -c < 'Makefile'`"
+test 5680 -eq "$Wc_c" ||
+	echo 'Makefile: original size 5680, current size' "$Wc_c"
+fi
+# ============= addelkemp.c ==============
+if test -f 'addelkemp.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping addelkemp.c (File already exists)'
+else
+echo 'x - extracting addelkemp.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'addelkemp.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       q, ncol, **A;
+struct GF gf;
+X
+if(  argc==1  )
+X  scanf("%d %d",&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&q);
+X  ncol = 2*q;    /* Can get 2q without defect, 2q+1 with defect */
+}else{
+X  sscanf(argv[1],"%d",&q);
+X  sscanf(argv[2],"%d",&ncol);
+}
+X
+if(  ncol > 2*q+1  ){
+X  fprintf(stderr,"At most 2q+1 = %d columns are possible\n",2*q+1);
+X  fprintf(stderr,"for the Addelman Kempthorne design with q = %d.\n",q);
+X  exit(1);
+}  
+X
+if(  !GF_getfield(q, &gf)  ){
+X  fprintf(stderr,"Could not construct the Galois field needed\n");
+X  fprintf(stderr,"for the Addelman Kempthorne design.\n");
+X  exit(1);
+}
+X
+A = imatrix( 0,2*q*q-1, 0,ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Addelman Kempthorne design.\n");
+X  exit(1);
+}  
+X
+if(  addelkemp( &gf, A, ncol )  ){
+X  OA_put( A, 2*q*q, ncol, q );
+X  exit(0);
+}
+else{
+X  fprintf(stderr,"Unable to construct Addelman Kempthorne design q=%d, ncol=%d.\n",
+X	  q,ncol);
+X  exit(1);
+}
+}
+X
+SHAR_EOF
+chmod 0644 addelkemp.c ||
+echo 'restore of addelkemp.c failed'
+Wc_c="`wc -c < 'addelkemp.c'`"
+test 1456 -eq "$Wc_c" ||
+	echo 'addelkemp.c: original size 1456, current size' "$Wc_c"
+fi
+# ============= addelkemp3.c ==============
+if test -f 'addelkemp3.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping addelkemp3.c (File already exists)'
+else
+echo 'x - extracting addelkemp3.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'addelkemp3.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       q, ncol, **A;
+struct GF gf;
+X
+if(  argc==1  )
+X  scanf("%d %d",&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&q);
+X  ncol = 2*q*q + 2*q +1;  /*  2(q^3-1)/(q-1) - 1  */
+}else{
+X  sscanf(argv[1],"%d",&q);
+X  sscanf(argv[2],"%d",&ncol);
+}
+X
+if(  !GF_getfield(q, &gf)  ){
+X  fprintf(stderr,"Could not construct the Galois field needed\n");
+X  fprintf(stderr,"for the Addelman-Kempthorne (n=3) design.\n");
+X  exit(1);
+}
+X
+A = imatrix( 0, 2*q*q*q-1, 0, ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Addelman-Kempthorne (n=3) design.\n");
+X  exit(1);
+}  
+X
+if(  addelkemp3( &gf, A, ncol )  ){
+X  OA_put( A, 2*q*q*q, ncol, q );
+X  exit(0);
+}
+else{
+X  fprintf(stderr,"Unable to construct Addelman-Kempthorne (n=3) design q=%d, ncol=%d.\n",
+X	  q,ncol);
+X  exit(1);
+}
+}
+X
+SHAR_EOF
+chmod 0644 addelkemp3.c ||
+echo 'restore of addelkemp3.c failed'
+Wc_c="`wc -c < 'addelkemp3.c'`"
+test 1289 -eq "$Wc_c" ||
+	echo 'addelkemp3.c: original size 1289, current size' "$Wc_c"
+fi
+# ============= addelkempn.c ==============
+if test -f 'addelkempn.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping addelkempn.c (File already exists)'
+else
+echo 'x - extracting addelkempn.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'addelkempn.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       akn, q, ncol, **A;
+struct GF gf;
+X
+if(  argc==1  )
+X  scanf("%d %d %d",&akn,&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&akn);
+X  scanf("%d %d",&q,&ncol);
+}else if( argc==3  ){
+X  sscanf(argv[1],"%d",&akn);
+X  sscanf(argv[2],"%d",&q);
+X  ncol = 2*(ipow(q,akn)-1)/(q-1) - 1;  /*  2(q^3-1)/(q-1) - 1  */
+}else{
+X  sscanf(argv[1],"%d",&akn);
+X  sscanf(argv[2],"%d",&q);
+X  sscanf(argv[3],"%d",&ncol);
+}
+X
+if(  !GF_getfield(q, &gf)  ){
+X  fprintf(stderr,"Could not construct the Galois field needed\n");
+X  fprintf(stderr,"for the Addelman-Kempthorne (n=%d, q=%d) design.\n",
+X	  akn,q);
+X  exit(1);
+}
+X
+A = imatrix( 0, 2*ipow(q,akn)-1, 0, ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Addelman-Kempthorne\n");
+X  fprintf(stderr,"(n=%d, q=%d) design.\n",akn,q);
+X  exit(1);
+}  
+X
+if(  addelkempn( &gf, akn, A, ncol )  ){
+X  OA_put( A, 2*ipow(q,akn), ncol, q );
+X  exit(0);
+}
+else{
+X  fprintf(stderr,"Unable to construct Addelman-Kempthorne design \n");
+X  fprintf(stderr,"with n = %d, q = %d, ncol = %d.\n",akn,q,ncol);
+X  exit(1);
+}
+}
+X
+SHAR_EOF
+chmod 0644 addelkempn.c ||
+echo 'restore of addelkempn.c failed'
+Wc_c="`wc -c < 'addelkempn.c'`"
+test 1556 -eq "$Wc_c" ||
+	echo 'addelkempn.c: original size 1556, current size' "$Wc_c"
+fi
+# ============= ak3.c ==============
+if test -f 'ak3.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping ak3.c (File already exists)'
+else
+echo 'x - extracting ak3.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'ak3.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*     Addelman-Kempthorne Constructions with n = 3.
+X
+X       The article is quite vague on this.  Page 1173 states
+X   "When n>2 the same procedure will yield the desired plans
+X   if Lemma 5a is used in place of Lemma 5."  Page 1175
+X   provides the example n=3,q=3 which is OA( 54,25,3,2 ).
+X   Based on this example it is possible to make an educated
+X   guess as to how the construction generalizes to n=3.
+X   The resulting OA's are seen, by brute force to be of
+X   strength 2 for q=2,3,4,5,7,11.  These OAs are:
+X         OA(   16,  13,  2, 2 )   
+X	 OA(   54,  25,  3, 2 )
+X	 OA(  128,  41,  4, 2 )   
+X	 OA(  250,  61,  5, 2 )
+X	 OA(  686, 113,  7, 2 )
+X	 OA( 1458, 181,  9, 2 )
+X	 OA( 2662, 265, 11, 2 )
+X   The one with q=7 required 212709392 comparisons to determine
+X   that it really is of strength 2.  This took roughly 11.5 minutes
+X   on a DEC 5000/240 workstation (real and elapsed in this case).
+X   
+X   The array with q=11 took 1.12671e+10 comparisons to verify its strength.
+X   This took roughly 10 1/2 hours.
+X   Here is the tail end of the output from oacheck2:
+X   No violation of strength 2 involves column 262.
+X   No violation of strength 2 involves column 263.
+X   No violation of strength 2 involves column 264.
+X   The array is of strength (at least) 2.
+X   [2]    Done                 aktest | oacheck2 11 2662 265
+X   37890.0u 31.7s 10:33:11 99% 61+110k 0+0io 0pf+0w
+X
+X
+*/
+X
+#include <math.h>
+#include <stdio.h>
+X
+#include "galois.h"
+X
+addelkemp3check( q,p,ncol  )
+int q,p,ncol;
+{
+X
+if(  p==2 && q>4 ){
+X  fprintf(stderr,"This Addelman-Kempthorne OA(2q^3,ncol,q,2) is only\n");
+X  fprintf(stderr,"available for odd prime powers q and for even prime\n");
+X  fprintf(stderr,"powers q<=4.\n");
+X  return 0;
+}
+X
+if(  q==8  ){  /* Moot */
+X  fprintf(stderr,"This Addelman-Kempthorne OA(2*8^3,ncol,8,2) is\n");
+X  fprintf(stderr,"experimental and not yet working.\n");
+X  return 1;
+}
+X
+if(  ncol > 2*q*q + 2*q + 1  ){
+X  fprintf(stderr,"The Addelman-Kempthorne (n=3) construction needs\n");
+X   fprintf(stderr,"ncol <= 2q^2+2q+1. Can't have ncol = %d with q = %d,\n",ncol,q);
+X  return 0;
+}
+X
+return 1;
+}
+X
+X
+X
+addelkemp3( gf, A, ncol )
+/* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
+struct GF *gf;
+int **A, ncol;
+{
+int i1,i2,i3, m1,m2, p,q;
+int kay,*b,*c,*k;  /* A&K notation */
+int row, col, square, ksquare;
+X
+p=gf->p, q=gf->q;
+X
+if(  !addelkemp3check( q,p,ncol  )  )return 0;
+X
+b = ivector( 0,q-1 );
+c = ivector( 0,q-1 );
+k = ivector( 0,q-1 );
+X
+for(  i1=0; i1<q; i1++  ){           /* First q^3 rows */
+X  square = gf->times[i1][i1];
+X  for(  i2=0; i2<q; i2++  )
+X  for(  i3=0; i3<q; i3++  ){
+X    row = i3 + q*i2 + q*q*i1;
+X    col = 0;
+X    if(  col<ncol  )A[row][col++]=i2;                     /*      y       */
+X    for(  m1=1; m1<q && col<ncol; m1++  )                 /* x + my       */
+X      A[row][col++] = gf->plus[i1][gf->times[m1][i2]];
+X    if(  col<ncol  )A[row][col++]=i3;                     /*           z  */
+X    for(  m2=1; m2<q && col<ncol; m2++  )                 /* x      + mz  */
+X      A[row][col++] = gf->plus[i1][gf->times[m2][i3]];
+X    for(  m2=1; m2<q && col<ncol; m2++  )                 /*      y + mz  */
+X      A[row][col++] = gf->plus[i2][gf->times[m2][i3]];
+X    for(  m1=1; m1<q && col<ncol; m1++  )                 /* x + my + nz  */
+X    for(  m2=1; m2<q && col<ncol; m2++  )
+X      A[row][col++] = 
+X        gf->plus[i1][gf->plus[gf->times[m1][i2]][gf->times[m2][i3]]];
+X    for(  m1=0; m1<q && col<ncol; m1++  )                 /* x^2 + mx + y */
+X      A[row][col++] = gf->plus[square][
+X                       gf->plus[i2][
+X                       gf->times[m1][i1]]];
+X
+X    for(  m1=0; m1<q && col<ncol; m1++  )                 /* x^2 + mx + z */
+X      A[row][col++] = gf->plus[square][
+X		       gf->plus[i3][
+X                       gf->times[m1][i1]]];
+X
+X    for(  m1=0; m1<q && col<ncol; m1++  )              /* x^2 + mx + y + nz */
+X    for(  m2=1; m2<q && col<ncol; m2++  )              
+X      A[row][col++] 
+X	= gf->plus[square][
+X            gf->plus[i2][
+X              gf->plus[ gf->times[m2][i3] ][
+X                        gf->times[m1][i1] 
+X                ]
+X              ]
+X            ];
+X    if(  col<ncol  )A[row][col++]=i1;                     /* x            */
+X  }
+}
+X
+if(  p!=2  )
+X  akodd(  gf,&kay,b,c,k ); /* Get kay,b,c,k for odd p  */
+else                             
+X  akeven( gf,&kay,b,c,k ); /* Constants kay,b,c,k for even p */
+X
+for(  i1=0; i1<q; i1++  ){           /* Second q^3 rows */
+X  square = gf->times[i1][i1];
+X  ksquare = gf->times[kay][square];
+X  for(  i2=0; i2<q; i2++  )
+X  for(  i3=0; i3<q; i3++  ){
+X    row = i3 + q*i2 + q*q*i1 + q*q*q;
+X    col = 0;
+X    if(  col<ncol  )A[row][col++]=i2;                /*     y        */
+X
+X    for(  m1=1; m1<q && col<ncol; m1++  ){           /* x + my + b(m)      */
+X      A[row][col] = gf->plus[i1][gf->times[m1][i2]];
+X      A[row][col] = gf->plus[A[row][col]][b[m1]];
+X      col++;
+X    }
+X    if(  col<ncol  )A[row][col++]=i3;                /*           z  */
+X
+X    for(  m2=1; m2<q && col<ncol; m2++  ){      /* x      + mz + b(m) */
+X      A[row][col] =   gf->plus[i1][gf->times[m2][i3]];
+X      A[row][col] = gf->plus[A[row][col]][b[m2]];
+X      col++;
+X    }
+X    for(  m2=1; m2<q && col<ncol; m2++  )            /*      y + mz  */
+X      A[row][col++] = gf->plus[i2][gf->times[m2][i3]];
+X
+X    for(  m1=1; m1<q && col<ncol; m1++  )      /* x + my + nz + b(m) */
+X    for(  m2=1; m2<q && col<ncol; m2++  ){
+X      A[row][col] = 
+X        gf->plus[i1][gf->plus[gf->times[m1][i2]][gf->times[m2][i3]]];
+X      A[row][col] = gf->plus[A[row][col]][b[m1]];
+X      col++;
+X    }      
+X
+X    for(  m1=0; m1<q && col<ncol; m1++  ){      /* kx^2 + k(m)x + y + c(m)*/
+X      A[row][col] = gf->plus[ksquare][
+X                       gf->plus[i2][
+X                       gf->times[k[m1]][i1]]];
+X      A[row][col] = gf->plus[A[row][col]][c[m1]];
+X      col++;
+X    }
+X
+X    for(  m1=0; m1<q && col<ncol; m1++  ){      /* kx^2 + k(m)x + z + c(m)*/
+X      A[row][col] = gf->plus[ksquare][
+X                       gf->plus[i3][
+X                       gf->times[k[m1]][i1]]];
+X      A[row][col] = gf->plus[A[row][col]][c[m1]];
+X      col++;
+X    }
+X
+X    for(  m1=0; m1<q && col<ncol; m1++  )    /* kx^2 + k(m)x + y + nz +c(m) */
+X    for(  m2=1; m2<q && col<ncol; m2++  ){
+X      A[row][col] 
+X	= gf->plus[ksquare][
+X            gf->plus[i2][
+X              gf->plus[ gf->times[m2][i3] ][
+X                        gf->times[k[m1]][i1] 
+X                ]
+X              ]
+X            ];
+X      A[row][col] = gf->plus[ A[row][col] ][ c[m1] ];
+X      col++;
+X    }
+X    if(  col<ncol  )A[row][col++]=i1;                /* x            */
+X  }
+}
+return 1;
+}
+X
+X
+X
+X
+SHAR_EOF
+chmod 0644 ak3.c ||
+echo 'restore of ak3.c failed'
+Wc_c="`wc -c < 'ak3.c'`"
+test 7000 -eq "$Wc_c" ||
+	echo 'ak3.c: original size 7000, current size' "$Wc_c"
+fi
+# ============= akconst.c ==============
+if test -f 'akconst.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping akconst.c (File already exists)'
+else
+echo 'x - extracting akconst.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'akconst.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+/*  Find constants for Addelman Kempthorne designs
+X  when q is even. */
+X
+#include <math.h>
+#include <stdio.h>
+X
+#include "galois.h"
+X
+int  *ivector(), **imatrix();
+X
+X
+/*  EVEN    EVEN    EVEN    EVEN    EVEN    EVEN    EVEN    EVEN  */
+X
+/*  For even q, only q= 2 or 4 are available.  The prescription
+given in Addelman and Kempthorne (1961) does not appear to work.
+Commented out code below attempts to implement that prescription.
+It seemed to be impossible to find a constant b[1],c[1] pair.
+*/
+X
+X
+akeven( gf, kay, b, c, k )
+struct GF *gf;
+int        *kay, *b, *c, *k;
+{
+/*
+int   **posb, **posc;
+int   j, temp, square;
+int   v1, v2, x1, x2, z1, z2, ib, ic;
+int   *vals1, *vals2, done;
+*/
+int   i,q,xtn;
+X
+q = gf->q;
+*kay=1;
+X
+if(  q==2  )
+X  b[1] = c[1] = k[1] = 1;
+if(  q==4  ){
+X  b[1] = c[1] = 2;
+X  b[2] = c[2] = 1;
+X  b[3] = c[3] = 3;
+X  k[1] = 1; k[2] = 2; k[3] = 3;
+}
+X
+for(  i=1; i<q; i++  )
+X  k[i]=i;
+X
+if(  q>4  ){
+X  fprintf(stderr,"Addelman Kempthorne designs not yet available for\n");
+X  fprintf(stderr,"even q >4.");
+X  exit(1);
+X
+/*
+X  fprintf(stderr,"Using experimental values in akconst.\n");
+X  xtn = 1;
+X  for(  i=0; i<gf->n; i++  )
+X    xtn = gf->times[xtn][2];
+X  xtn = gf->times[xtn][xtn];
+X  for(  i=1; i<q; i++  ){
+X    b[i] = gf->times[xtn][gf->inv[i]];
+X    c[i] = gf->times[xtn][gf->times[i][i]];
+X  }
+*/
+}
+}
+X
+/*
+posb  = imatrix(0,q-1,0,q-1);
+posc  = imatrix(0,q-1,0,q-1);
+vals1 = ivector(0,q-1);
+vals2 = ivector(0,q-1);
+X
+for(  i=1; i<q; i++  )
+for(  j=1; j<q; j++  )
+X  posb[i][j]=posc[i][j] = 1;
+*/
+X
+X
+/* Rule out some b */
+/*
+for(  i =1; i <q;  i++  )       
+for(  x1=0; x1<q; x1++  ){
+X  temp  = gf->times[x1][gf->inv[i]];
+X  square= gf->times[x1][x1];
+X  temp  = gf->plus[square][gf->neg[temp]];
+X  posb[i][temp] = 0;*/        /* b[i] != temp */
+/*}*/
+X
+/* Rule out some c */
+/*
+for(  i =1; i <q;  i++  )       
+for(  x1=0; x1<q; x1++  ){
+X  temp = gf->times[x1][i];
+X  square=gf->times[x1][x1];
+X  temp = gf->plus[square][temp];
+X  posc[i][temp] = 0;*/          /* c[i] != temp */
+/*}*/
+X
+/*
+printf("Possible b\n\n");
+OA_put( posb,q,q,2 );
+printf("Possible c\n\n");
+OA_put( posc,q,q,2 );
+*/
+X
+/* Search for b[i],c[i]  */
+/*
+for(  i=1; i<q; i++  ){       
+X  done = 0;
+X  for(  ib=1; ib<q && !done; ib++  ){
+X    if(  !posb[i][ib]  )continue;
+X    for(  ic=1; ic<q && !done; ic++  ){
+X      if(  !posc[i][ic]  )continue;
+X      for(  j=0; j<q; j++  )
+X	vals1[j] = vals2[j] = 0;
+X      for(  x1=0; x1<q; x1++  ){
+X	square = gf->times[x1][x1];
+X	x2 = gf->plus[x1][ib];
+X	x2 = gf->times[x2][gf->inv[i]];
+X	x2 = gf->neg[x2];
+X	v1 = gf->times[k[i]][x1];
+X	v1 = gf->plus[v1][square];
+X	v1 = gf->plus[v1][x2];
+X	v1 = gf->plus[v1][ic];
+X	vals1[ v1 ] = 1;
+X
+X	x2 = gf->times[x1][gf->inv[i]];
+X	x2 = gf->neg[x2];
+X	v2 = gf->times[k[i]][x1];
+X	v2 = gf->plus[v2][square];
+X	v2 = gf->plus[v2][x2];
+X	vals2[ v2 ] =1;
+X      }
+X      for(  j=0; j<q; j++  )
+X	done += (vals2[j] + vals1[j] == 1);
+X      if(  done<q  )
+X	done=0;
+X      else{
+X	b[i] = ib;
+X	c[i] = ic;
+X      }
+X    }
+X  }
+X  if(  !done  )
+X    printf("No b[%d] c[%d] combination works.\n",i,i);
+X  else
+X    printf("b[%d] = %d and c[%d] = %d works\n",i,b[i],i,c[i]);
+}
+}
+*/
+X
+X
+X
+X
+X
+/*  ODD    ODD    ODD    ODD    ODD    ODD    ODD    ODD    ODD  */
+X
+akodd( gf, kay, b, c, k )
+struct GF *gf;
+int        *kay, *b, *c, *k;
+{
+int   i, q, p, num, den, four;
+X
+q = gf->q; p = gf->p;
+X
+if(  p!=3  )
+X  four = 4;
+else
+X  four = 1;
+X
+*kay=0;
+for(  i=2; i<q; i++  )
+X  if( gf->root[i] == -1 )*kay=i;
+if(  *kay==0  ){
+X  fprintf(stderr,"Problem: no rootless element in GF(%d).\n",gf->n);
+X  return 0;
+}
+X
+for(  i=1; i<q; i++  ){
+X  num = gf->plus[*kay][p-1];  /* -1 = +(p-1) */
+X  den = gf->times[*kay][four];
+X  den = gf->times[den][i];
+X  b[i]= gf->times[num][gf->inv[den]];
+X  k[i]= gf->times[*kay][i];
+X  c[i]= gf->times[i][i];
+X  c[i]= gf->times[c[i]][num];
+X  c[i]= gf->times[c[i]][gf->inv[four]];
+X  /*    printf("i,num,den,b,k,c %3d %3d %3d %3d %3d %3d\n",i,num,den,b[i],k[i],c[i]);*/
+}
+}
+SHAR_EOF
+chmod 0644 akconst.c ||
+echo 'restore of akconst.c failed'
+Wc_c="`wc -c < 'akconst.c'`"
+test 4273 -eq "$Wc_c" ||
+	echo 'akconst.c: original size 4273, current size' "$Wc_c"
+fi
+# ============= akn.c ==============
+if test -f 'akn.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping akn.c (File already exists)'
+else
+echo 'x - extracting akn.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'akn.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*     Addelman-Kempthorne Constructions with general n.
+X
+X       The article is quite vague on this.  Page 1173 states
+X   "When n>2 the same procedure will yield the desired plans
+X   if Lemma 5a is used in place of Lemma 5."  Page 1175
+X   provides the example n=3,q=3 which is OA( 54,25,3,2 ).
+X   Based on this example it is possible to make an educated
+X   guess as to how the construction generalizes.
+X
+*/
+X
+#include <math.h>
+#include <stdio.h>
+X
+#include "galois.h"
+X
+addelkempncheck( q,p,akn,ncol  )
+int q,p,akn,ncol;
+{
+X
+if(  akn<2  ){
+X  fprintf(stderr,"This Addelman-Kempthorne OA(2q^n,ncol,q,2) is only\n");
+X  fprintf(stderr,"available for n >= 2.  n = %d was requested.\n",akn);
+X  return 0;
+}
+X
+if(  p==2 && q>4 ){
+X  fprintf(stderr,"This Addelman-Kempthorne OA(2q^n,ncol,q,2) is only\n");
+X  fprintf(stderr,"available for odd prime powers q and for even prime\n");
+X  fprintf(stderr,"powers q<=4.\n");
+X  return 0;
+}
+X
+if(  ncol > 2*(ipow(q,akn)-1)/(q-1) -1){
+X  fprintf(stderr,"The Addelman-Kempthorne construction needs\n");
+X   fprintf(stderr,"ncol <= 2(q^n-1)(q-1) -1. Can't have ncol = %d\n",ncol);
+X   fprintf(stderr,"with n=%d and q = %d,\n",akn,q);
+X  return 0;
+}
+X
+return 1;
+}
+X
+X
+addelkempn( gf, akn, A, ncol )
+/* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
+struct GF *gf;
+int **A, ncol, akn;
+{
+int i,p,q;
+int kay,*b,*c,*k;  /* A&K notation */
+int row, col, square, ksquare;
+int monic, numin, *x, *coef, *indx, *s, poly, elt, sub;
+X
+p=gf->p, q=gf->q;
+X
+if(  !addelkempncheck( q,p,akn,ncol  )  )return 0;
+X
+b = ivector( 0,q-1 );
+c = ivector( 0,q-1 );
+k = ivector( 0,q-1 );
+X
+x = ivector( 0,akn-1 );
+s    = ivector( 0,akn-1 );
+coef = ivector( 0,akn-1 );
+indx = ivector( 0,akn-1 );
+X
+for(  i=0; i<akn; i++  )
+X  x[i] = 0;
+for(  row=0; row<ipow(q,akn); row++  ){  /* First q^akn rows */
+X  /*printf("x: ");for(i=0;i<akn;i++)printf("%d ",x[i]);printf("\n");*/
+X  col = 0;
+X  s[0] = 1;          
+X  for(  i=1; i<akn; i++  )               /* first subset */
+X    s[i] = 0;           /* nonempty subsets of x indices */
+X  for(  sub=1; sub<ipow(2,akn) && col<ncol; sub++  ){
+/*    if(!row)
+X      {printf("s: ");for(i=0;i<akn;i++)printf("%d ",s[i]);printf("\n");}*/
+X    monic = -1;
+X    numin = 0;
+X    for(  i=0; i<akn; i++  )
+X      if( s[i]  )
+X	if(  monic == -1  )
+X	  monic = i;
+X	else
+X	  indx[numin++] = i;
+X    for(  i=0; i<numin; i++  )
+X      coef[i] = 1;
+X    for(  poly=0; poly<ipow(q-1,numin) && col<ncol; poly++  ){
+/*      if(  row==0  ){
+X	printf("  p: ");for(i=0;i<numin;i++)printf("%d ",coef[i]);printf("\n");
+X      }*/
+X      elt = x[monic];
+X      for(  i=0; i<numin; i++  )
+X	elt = gf->plus[elt][gf->times[coef[i]][x[indx[i]]]];
+X      A[row][col++] = elt;
+X      for( i=numin-1; i>=0; i--  ){
+X	coef[i] = (coef[i]+1) % q;
+X	if(  coef[i]  )
+X	  break;
+X	else
+X	  coef[i] = 1;
+X      }
+X    }
+X    for(  i=0; i<akn; i++  ){
+X      s[i] = (s[i]+1) % 2;
+X      if(  s[i]  )break;
+X    }      
+X  }
+X
+X  square = gf->times[x[0]][x[0]];
+X
+X  s[1] = 1;          
+X  for(  i=2; i<akn; i++  )               /* first subset */
+X    s[i] = 0;           /* nonempty subsets of x indices */
+X  for(  sub=1; sub<ipow(2,akn-1) && col<ncol; sub++  ){
+/*    if(!row)
+X      {printf("s: ");for(i=0;i<akn;i++)printf("%d ",s[i]);printf("\n");}*/
+X    monic = -1;
+X    numin = 0;
+X    for(  i=1; i<akn; i++  )
+X      if( s[i]  )
+X	if(  monic == -1  )
+X	  monic = i;
+X	else
+X	  indx[numin++] = i;
+X    coef[0] = 0;
+X    for(  i=1; i<numin+1; i++  )
+X      coef[i] = 1;
+X    for(  poly=0; poly<q*ipow(q-1,numin) && col<ncol; poly++  ){
+/*      if(  !row  ){
+X	printf("  p: ");for(i=0;i<numin+1;i++)printf("%d ",coef[i]);printf("\n");
+X      }*/
+X      elt = gf->plus[square][gf->times[x[0]][coef[0]]];
+X      elt = gf->plus[elt][x[monic]];
+X      for(  i=1; i<numin+1; i++  )
+X	elt = gf->plus[elt][gf->times[coef[i]][x[indx[i-1]]]];
+X      A[row][col++] = elt;
+X      for( i=numin+1-1; i>=0; i--  ){
+X	coef[i] = (coef[i]+1) % q;
+X	if(  coef[i]  )
+X	  break;
+X	else
+X	  if( i>0 )coef[i] = 1;
+X      }
+X    }
+X    for(  i=1; i<akn; i++  ){
+X      s[i] = (s[i]+1) % 2;
+X      if(  s[i]  )break;
+X    }
+X  }
+X
+X  for(  i=akn-1; i>=0; i--  ){
+X    x[i] = (x[i]+1) % q;
+X    if(  x[i]  )break;
+X  }
+}
+X
+if(  p !=2  )                    /* Constants kay,b,c,k for odd p */
+X  akodd(  gf,&kay,b,c,k );
+else                             /* Constants kay,b,c,k for even p */
+X  akeven( gf,&kay,b,c,k );
+X
+for(  i=0; i<akn; i++  )
+X  x[i] = 0;
+for(  row=ipow(q,akn); row<2*ipow(q,akn); row++  ){  /* Second q^akn rows */
+X  col = 0;
+X  s[0] = 1;          
+X  for(  i=1; i<akn; i++  )               /* first subset */
+X    s[i] = 0;           /* nonempty subsets of x indices */
+X  for(  sub=1; sub<ipow(2,akn) && col<ncol; sub++  ){
+X    monic = -1;
+X    numin = 0;
+X    for(  i=0; i<akn; i++  )
+X      if( s[i]  )
+X	if(  monic == -1  )
+X	  monic = i;
+X	else
+X	  indx[numin++] = i;
+X    for(  i=0; i<numin; i++  )
+X      coef[i] = 1;
+X    for(  poly=0; poly<ipow(q-1,numin) && col<ncol; poly++  ){
+X      elt = x[monic];
+X      if(  numin && s[0] )
+X	elt = gf->plus[elt][b[coef[0]]];
+X      for(  i=0; i<numin; i++  )
+X	elt = gf->plus[elt][gf->times[coef[i]][x[indx[i]]]];
+X      A[row][col++] = elt;
+X      for( i=numin-1; i>=0; i--  ){
+X	coef[i] = (coef[i]+1) % q;
+X	if(  coef[i]  )
+X	  break;
+X	else
+X	  coef[i] = 1;
+X      }
+X    }
+X    for(  i=0; i<akn; i++  ){
+X      s[i] = (s[i]+1) % 2;
+X      if(  s[i]  )break;
+X    }      
+X  }
+X
+X  ksquare = gf->times[kay][gf->times[x[0]][x[0]]];
+X
+X  s[1] = 1;          
+X  for(  i=2; i<akn; i++  )               /* first subset */
+X    s[i] = 0;           /* nonempty subsets of x indices */
+X  for(  sub=1; sub<ipow(2,akn-1) && col<ncol; sub++  ){
+X    monic = -1;
+X    numin = 0;
+X    for(  i=1; i<akn; i++  )
+X      if( s[i]  )
+X	if(  monic == -1  )
+X	  monic = i;
+X	else
+X	  indx[numin++] = i;
+X    coef[0] = 0;
+X    for(  i=1; i<numin+1; i++  )
+X      coef[i] = 1;
+X    for(  poly=0; poly<q*ipow(q-1,numin) && col<ncol; poly++  ){
+X      elt = gf->plus[ksquare][gf->times[x[0]][k[coef[0]]]];
+X      elt = gf->plus[elt][x[monic]];
+X      elt = gf->plus[elt][c[coef[0]]];
+X      for(  i=1; i<numin+1; i++  )
+X	elt = gf->plus[elt][gf->times[coef[i]][x[indx[i-1]]]];
+X      A[row][col++] = elt;
+X      for( i=numin+1-1; i>=0; i--  ){
+X	coef[i] = (coef[i]+1) % q;
+X	if(  coef[i]  )
+X	  break;
+X	else
+X	  coef[i] = i>0 ? 1 : 0;
+X      }
+X    }
+X    for(  i=1; i<akn; i++  ){
+X      s[i] = (s[i]+1) % 2;
+X      if(  s[i]  )break;
+X    }
+X  }
+X
+X  for(  i=akn-1; i>=0; i--  ){
+X    x[i] = (x[i]+1) % q;
+X    if(  x[i]  )break;
+X  }
+}
+X
+return 1;
+}
+X
+X
+X
+X
+X
+SHAR_EOF
+chmod 0644 akn.c ||
+echo 'restore of akn.c failed'
+Wc_c="`wc -c < 'akn.c'`"
+test 6832 -eq "$Wc_c" ||
+	echo 'akn.c: original size 6832, current size' "$Wc_c"
+fi
+# ============= bose.c ==============
+if test -f 'bose.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping bose.c (File already exists)'
+else
+echo 'x - extracting bose.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'bose.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       q, ncol, **A;
+struct GF gf;
+X
+if(  argc==1  )
+X  scanf("%d %d",&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&q);
+X  ncol = q+1;
+}else{
+X  sscanf(argv[1],"%d",&q);
+X  sscanf(argv[2],"%d",&ncol);
+}
+X
+if(  !GF_getfield(q, &gf)  ){
+X  fprintf(stderr,"Could not construct Galois field needed for Bose design.\n");
+X  exit(1);
+}
+X
+A = imatrix( 0,q*q-1, 0,ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Bose design.\n");
+X  exit(1);
+}  
+X
+if(  bose( &gf, A, ncol )  )
+X  OA_put( A,q*q,ncol,q );
+else{
+X  fprintf(stderr,"Unable to construct Bose design q=%d, ncol=%d.\n",
+X	  q,ncol);
+X  exit(1);
+}
+exit(0);
+}
+X
+SHAR_EOF
+chmod 0644 bose.c ||
+echo 'restore of bose.c failed'
+Wc_c="`wc -c < 'bose.c'`"
+test 1132 -eq "$Wc_c" ||
+	echo 'bose.c: original size 1132, current size' "$Wc_c"
+fi
+# ============= bosebush.c ==============
+if test -f 'bosebush.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping bosebush.c (File already exists)'
+else
+echo 'x - extracting bosebush.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'bosebush.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       q, ncol, **A;
+struct GF gf;
+X
+if(  argc==1  )
+X  scanf("%d %d",&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&q);
+X  ncol = 2*q;    /* Can get 2q without defect, 2q+1 with defect */
+}else{
+X  sscanf(argv[1],"%d",&q);
+X  sscanf(argv[2],"%d",&ncol);
+}
+X
+if(  q%2  ){
+X  fprintf(stderr,"This implementation of Bose-Bush only works for a number\n");
+X  fprintf(stderr,"q of levels equal to a power of 2.  q=%d was requested.\n",q);
+X  fprintf(stderr,"The Addelman-Kempthorne designs might be available.\n");
+X  exit(1);
+}
+X
+if(  !GF_getfield(2*q, &gf)  ){
+X  fprintf(stderr,"Could not construct the Galois field needed\n");
+X  fprintf(stderr,"for the Bose Bush design.\n");
+X  exit(1);
+}
+X
+A = imatrix( 0,2*q*q-1, 0,ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Bose design.\n");
+X  exit(1);
+}  
+X
+if(  bosebush( &gf, A, ncol )  ){
+X  OA_put( A,2*q*q,ncol,q );
+X  exit(0);
+}
+else{
+X  fprintf(stderr,"Unable to construct Bose design q=%d, ncol=%d.\n",
+X	  q,ncol);
+X  exit(1);
+}
+}
+X
+SHAR_EOF
+chmod 0644 bosebush.c ||
+echo 'restore of bosebush.c failed'
+Wc_c="`wc -c < 'bosebush.c'`"
+test 1499 -eq "$Wc_c" ||
+	echo 'bosebush.c: original size 1499, current size' "$Wc_c"
+fi
+# ============= bosebushl.c ==============
+if test -f 'bosebushl.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping bosebushl.c (File already exists)'
+else
+echo 'x - extracting bosebushl.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'bosebushl.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       lam, q, ncol, **A;
+struct GF gf;
+int       pq, nq, isppq,  pl, nl, isppl;
+X
+if(  argc==1  )
+X  scanf("%d %d %d",&lam,&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&lam);
+X  scanf("%d %d",&q,&ncol);
+}else if( argc==3 ){
+X  sscanf(argv[1],"%d",&lam);
+X  sscanf(argv[2],"%d",&q);
+X  ncol = q*lam;
+}else{
+X  sscanf(argv[1],"%d",&lam);
+X  sscanf(argv[2],"%d",&q);
+X  sscanf(argv[3],"%d",&ncol);
+}
+X
+primepow( lam, &pl, &nl, &isppl  );
+primepow(  q , &pq, &nq, &isppq  );
+X
+if(  !isppq  ){
+X  fprintf(stderr,"The Bose-Bush construction requires that q be a prime\n");
+X  fprintf(stderr,"raised to a positive integral power. q=%d was requested\n",q);
+X  fprintf(stderr," and is not such a prime power.\n");
+X  exit(1);
+}
+X
+if(  !isppl  ){
+X  fprintf(stderr,"The Bose-Bush construction requires that lambda be a prime\n");
+X  fprintf(stderr,"raised to a positive integral power. lambda=%d was requested\n",lam);
+X  fprintf(stderr," and is not such a prime power.\n");
+X  exit(1);
+}
+X
+if(  pl != pq  ){
+X  fprintf(stderr,"The Bose-Bush construction requires lambda and q\n");
+X  fprintf(stderr,"to be powers of the same prime. So lambda = %d = %d^%d\n",
+X	  lam,pl,nl);
+X  fprintf(stderr,"and q = %d = %d^%d are not suitable.\n",q,pq,nq);
+X  exit(1);
+}
+X
+if(  !GF_getfield(lam*q, &gf)  ){
+X  fprintf(stderr,"Could not construct the Galois field needed\n");
+X  fprintf(stderr,"for the Bose-Bush design.\n");
+X  exit(1);
+}
+X
+A = imatrix( 0,lam*q*q-1, 0,ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Bose design.\n");
+X  exit(1);
+}  
+X
+if(  bosebushl( &gf, lam, A, ncol )  ){
+X  OA_put( A,lam*q*q,ncol,q );
+X  exit(0);
+}
+else{
+X  fprintf(stderr,"Unable to construct Bose design lambda=%d, q=%d, ncol=%d.\n",
+X	  lam,q,ncol);
+X  exit(1);
+}
+}
+X
+X
+X
+SHAR_EOF
+chmod 0644 bosebushl.c ||
+echo 'restore of bosebushl.c failed'
+Wc_c="`wc -c < 'bosebushl.c'`"
+test 2238 -eq "$Wc_c" ||
+	echo 'bosebushl.c: original size 2238, current size' "$Wc_c"
+fi
+# ============= bush.c ==============
+if test -f 'bush.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping bush.c (File already exists)'
+else
+echo 'x - extracting bush.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'bush.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       q, ncol, **A;
+struct GF gf;
+X
+if(  argc==1  )
+X  scanf("%d %d",&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&q);
+X  ncol = q+1;
+}else{
+X  sscanf(argv[1],"%d",&q);
+X  sscanf(argv[2],"%d",&ncol);
+}
+X
+if(  !GF_getfield(q, &gf)  ){
+X  fprintf(stderr,"Could not construct the Galois field needed\n");
+X  fprintf(stderr,"for the strength 3 Bush design.\n");
+X  exit(1);
+}
+X
+A = imatrix( 0,q*q*q-1, 0,ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Bush design.\n");
+X  exit(1);
+}  
+X
+if(  bush( &gf, A, 3, ncol )  ){
+X  OA_put( A,q*q*q,ncol,q );
+X  exit(0);
+}
+else{
+X  fprintf(stderr,"Unable to construct the strength 3 Bush design q=%d, ncol=%d.\n",
+X	  q,ncol);
+X  exit(1);
+}
+}
+X
+SHAR_EOF
+chmod 0644 bush.c ||
+echo 'restore of bush.c failed'
+Wc_c="`wc -c < 'bush.c'`"
+test 1201 -eq "$Wc_c" ||
+	echo 'bush.c: original size 1201, current size' "$Wc_c"
+fi
+# ============= busht.c ==============
+if test -f 'busht.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping busht.c (File already exists)'
+else
+echo 'x - extracting busht.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'busht.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <math.h>
+#include <stdio.h>
+#include "galois.h"
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int       str, q, ncol, **A;
+struct GF gf;
+X
+if(  argc==1  )
+X  scanf("%d %d %d",&str,&q,&ncol);
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",&str);
+X  scanf("%d %d",&q,&ncol);
+}else if( argc==3  ){
+X  sscanf(argv[1],"%d",&str);
+X  sscanf(argv[2],"%d",&q);
+X  ncol = q+1;  /* can sometimes get 1 more with even q */
+}else{
+X  sscanf(argv[1],"%d",&str);
+X  sscanf(argv[2],"%d",&q);
+X  sscanf(argv[3],"%d",&ncol);
+}
+X
+if( str < 2 ){
+X  fprintf(stderr,"Bush designs not provided for strength %d.\n",str);
+X  exit(1);
+}
+X
+if( ncol > q+1 ){
+X  fprintf(stderr,"Only q+1 = %d columns provided in Bush design.\n",q+1);
+X  fprintf(stderr,"Columns requested was %d.\n",ncol);
+X  exit(1);
+}
+X
+if(  !GF_getfield(q, &gf)  ){
+X  fprintf(stderr,"Could not construct the Galois field needed\n");
+X  fprintf(stderr,"for the strength %d Bush design on %d levels.\n",str,q);
+X  exit(1);
+}
+X
+A = imatrix( 0,ipow(q,str)-1, 0,ncol-1  );
+if(  !A  ){
+X  fprintf(stderr,"Could not allocate array for Bush design.\n");
+X  exit(1);
+}  
+X
+if(  bush( &gf, A, str, ncol )  ){
+X  OA_put( A,ipow(q,str),ncol,q );
+X  exit(0);
+}
+else{
+X  fprintf(stderr,"Unable to construct the strength %d Bush design q=%d, ncol=%d.\n",str, q,ncol);
+X  exit(1);
+}
+}
+X
+SHAR_EOF
+chmod 0644 busht.c ||
+echo 'restore of busht.c failed'
+Wc_c="`wc -c < 'busht.c'`"
+test 1689 -eq "$Wc_c" ||
+	echo 'busht.c: original size 1689, current size' "$Wc_c"
+fi
+# ============= construct.c ==============
+if test -f 'construct.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping construct.c (File already exists)'
+else
+echo 'x - extracting construct.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'construct.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*  Constructions for designs using Galois fields */
+X
+#include <math.h>
+#include <stdio.h>
+X
+#include "galois.h"
+X
+/*  Glossary:
+X
+X    bose:            OA( q^2, q+1, q, 2  )
+X                     R.C. Bose (1938) Sankhya Vol 3 pp 323-338
+X    bosecheck:       test input to bose
+X
+X    bosebush:        OA( 2q^2, 2q+1, q, 2 ), only implemented for q=2^n
+X    bosebushcheck:   test input to bosebush
+X
+X    polyeval:        evaluate a polynomial with coefficients, argument
+X                     and result in a Galois field
+X
+*/
+X
+X
+bosecheck( q,ncol )
+int q, ncol;
+{
+if(  ncol > q+1  ){
+X  fprintf(stderr,"Bose's design must have ncol <= q+1.\n");
+X  fprintf(stderr,"Had q=%d and ncol=%d.\n",q,ncol);
+X  return 0;
+}
+if(  ncol <= 0  ){
+X  fprintf(stderr,"Nonpositive number of columns requested for Bose's design\n");
+X  return 0;
+}
+return 1;
+}
+X
+X
+bose( gf, A, ncol )
+struct GF *gf;
+int    **A, ncol;
+{
+int i,j, icol,  q=gf->q, irow;
+X
+if(  !bosecheck(q,ncol)  )return 0;
+X
+irow = 0;
+for(  i=0; i<q; i++  )
+for(  j=0; j<q; j++  ){
+X  icol=0;
+X  A[ irow ][ icol++ ] = i;
+X  if(  ncol > 1 )A[ irow  ][ icol++ ] = j;
+X  for(  icol=2; icol<ncol; icol++ )
+X    A[ irow ][ icol ] = gf->plus[j][gf->times[i][icol-1]];
+X  irow++;
+}
+X
+X
+return 1;
+}
+X
+itopoly( n,q,d,coef )
+int  n,q,d,*coef;
+{
+int i;
+X
+for(  i=0; i<=d; i++  ){
+X  coef[i] = n % q;
+X  n = n/q;
+}
+}
+X
+X
+polyeval( gf, d, poly, arg, value )
+/*  find  value = poly(arg) where poly is a polynomial of degree d  
+X    and all the arithmetic takes place in the given Galois field.*/
+X
+struct GF *gf;
+int    d, *poly, arg, *value;
+{
+int   i,ans;
+X
+ans = 0;
+for(  i= d; i>=0; i--  )  /* Horner's rule */
+X  ans = gf->plus[  gf->times[ans][arg]  ][  poly[i] ];
+X
+*value = ans;
+}
+X
+bushcheck(q,str,ncol)
+int q,str,ncol;
+{
+if(  ncol > q+1  ){
+X  fprintf(stderr,"Bush designs require ncol <= q+1.\n");
+X  fprintf(stderr,"Cannot have q = %d and ncol = %d.\n",q,ncol);
+X  return 0;
+}
+if(  str > ncol  ){
+X  fprintf(stderr,"It doesn't make sense to have an array of strength\n");
+X  fprintf(stderr,"%d with only %d columns.\n",str,ncol);
+X  return 0;
+}
+if(  str >= q+1  ){
+X  fprintf(stderr,"Bush's (1952) theorem has a condition t<q where t\n");
+X  fprintf(stderr,"is the strength of the array and q is the number of symbols.\n");
+X  fprintf(stderr,"Here we have t = %d and q = %d.  The array may still\n",str,q);
+X  fprintf(stderr,"be useful, but a full factorial would have at least as\n");
+X  fprintf(stderr,"many columns.\n");
+X  return 1;
+}
+X
+return 1;
+}
+X
+X
+bush( gf, A, str, ncol  )
+struct GF *gf;
+int       **A, str, ncol;
+{
+int   *coef;
+int   q, i,j;
+X
+q = gf->q;
+if(  !bushcheck(q,str,ncol)  )return 0;
+X
+coef = ivector( 0,str-1  );  
+if( !coef  ){ /* Very unlikely */
+X  fprintf(stderr,"Could not allocate memory for Bush design.\n");
+X  return 0;
+}
+X
+for(  i=0; i<ipow(q,str); i++  ){
+X  itopoly( i,q,str-1,coef );
+X  A[i][0] = coef[str-1];  
+X  for(  j=0; j<ncol-1; j++  )
+X    polyeval( gf, str-1, coef, j, &A[i][1+j] );
+}
+free_ivector( coef,0,str-1  );  
+return 1;
+}
+X
+X
+addelkempcheck( q,p,ncol )
+int  q,p,ncol;
+{
+X
+if(  p==2 && q>4 ){
+X  fprintf(stderr,"This Addelman-Kempthorne OA(2q^2,ncol,q,2) is only\n");
+X  fprintf(stderr,"available for odd prime powers q and for even prime\n");
+X  fprintf(stderr,"powers q<=4.  q=%d is not available, but a Bose Bush\n",q);
+X  fprintf(stderr,"construction exists for that design.\n");
+X  return 0;
+}
+X
+if(  ncol > 2*q+1  ){
+X  fprintf(stderr,"The Addelman-Kempthorne construction needs ncol <= 2q+1.\n");
+X  fprintf(stderr,"Can't have ncol = %d with q = %d,\n",ncol,q);
+X  return 0;
+}
+X
+if(  ncol == 2*q+1  ){
+X  fprintf(stderr,"\nWarning: The Addelman-Kempthorne construction with ncol = 2q+1\n");
+X  fprintf(stderr,"has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
+X  fprintf(stderr,"there exist some pairs of rows that agree in three columns.\n");
+X  fprintf(stderr,"The final column in the array is involved in all of these\n");
+X  fprintf(stderr,"triple coincidences.\n\n\n");
+}
+return 1;
+}
+X
+X
+addelkemp( gf, A, ncol )
+/* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=2 */
+struct GF *gf;
+int    ncol, **A;
+{
+int i,j,m,p,q;
+int kay,*b,*c,*k;  /* A&K notation */
+int row, col, square, ksquare, temp;
+X
+p=gf->p, q=gf->q;
+X
+if(  !addelkempcheck( q,p,ncol )  )return 0;
+X
+b = ivector( 0,q-1 );
+c = ivector( 0,q-1 );
+k = ivector( 0,q-1 );
+X
+for(  i=0; i<q; i++  ){           /* First q*q rows */
+X  square = gf->times[i][i];
+X  for(  j=0; j<q; j++  ){
+X    row = i*q+j;
+X    col = 0;
+X    if( col<ncol  )A[row][col++]=j;
+X    for(  m=1; m<q && col<ncol; m++  )
+X      A[row][col++] = gf->plus[i][gf->times[m][j]];
+X    for(  m=0; m<q && col<ncol; m++  ){
+X      temp = gf->plus[j][gf->times[m][i]];
+X      A[row][col++] = gf->plus[temp][square]; /* Rgt cols */
+X    }
+X    if( col<ncol  )A[row][col++]=i;
+X  }
+}
+X
+if(  p !=2  )                    /* Constants kay,b,c,k for odd p */
+X  akodd(  gf,&kay,b,c,k );
+else                             /* Constants kay,b,c,k for even p */
+X  akeven( gf,&kay,b,c,k );
+X
+for(  i=0; i<q; i++  ){           /* Second q*q rows */
+X  square = gf->times[i][i];
+X  ksquare = gf->times[kay][square];
+X  for(  j=0; j<q; j++  ){
+X    row = q*q+i*q+j;
+X    col = 0;
+X    if( col<ncol  )A[row][col++]=j;
+X    for(  m=1; m<q && col<ncol; m++,col++  )
+X      A[row][col] = gf->plus[A[row-q*q][col]][b[m]];
+X    if( col<ncol  )A[row][col++] = gf->plus[ksquare][j]; /* q+1 */
+X    for(  m=1; m<q && col<ncol; m++  ){
+X      temp = gf->times[i][k[m]];
+X      temp = gf->plus[ksquare][temp];
+X      temp = gf->plus[j][temp];
+X      A[row][col++] = gf->plus[temp][c[m]];
+X    }
+X    if( col<ncol  )A[row][col++]=i;
+X  }
+}
+X
+/*for(  i=0; i<2*q*q; i++  )
+for(  j=0; j<ncol; j++  )
+X  printf("%3d%s",A[i][j],j==(ncol-1)?"\n":" ");
+*/
+X
+return 1;
+}
+X
+X
+bosebushcheck( q,p,ncol  )
+int  q,p,ncol;
+{
+X
+if(  p!=2  ){
+X  fprintf(stderr,"This version of Bose and Bush needs q=2^n for some n.\n");
+X  return 0;
+}
+X
+if(  ncol > 2*q+1  ){
+X  fprintf(stderr,"The Bose-Bush construction needs ncol <= 2q+1.\n");
+X  fprintf(stderr,"Can't have ncol = %d with q = %d,\n",ncol,q);
+X  return 0;
+}
+X
+if(  ncol == 2*q+1  ){
+X  fprintf(stderr,"\nWarning: The Bose-Bush construction with ncol = 2q+1\n");
+X  fprintf(stderr,"has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
+X  fprintf(stderr,"there exist some pairs of rows that agree in three columns.\n\n\n");
+}
+return 1;
+}
+X
+bosebush( gf, B, ncol )
+/* Implement Bose and Bush's 1952 A.M.S. method with p=2, u=1 */
+struct GF *gf;
+int **B;
+{
+int p,q,s,irow;
+int i,j,k,mul;
+int **A;
+X
+p=gf->p,   /* GF(q) used to generate design with q/2 levels */
+q=gf->q;
+s=q/2;     /* number of levels in design */
+X
+if(  !bosebushcheck( s,p,ncol )  )
+X  return 0;
+X
+A = imatrix(0,s-1,0,q-1);
+if(  !A  ){
+X  fprintf(stderr,"Unable to allocate scratch space for Bose-Bush array.\n");
+X  return 0;
+}
+X
+irow = 0;
+for(  i=0; i<q; i++  ){
+X  for(  j=0; j<q; j++  ){
+X    mul = gf->times[i][j];
+X    mul = mul % s;
+X    for( k=0; k<s; k++  )
+/*      A[k][j] = gf->plus[mul][k];*/
+X      A[k][j] = gf->plus[mul][k];
+X  }
+X  for(  k=0; k<s; k++  ){
+X    for( j=0; j<ncol && j<2*s+1; j++ )
+X      B[irow][j] = A[k][j];
+X    if(  ncol==2*s+1  )
+X      B[irow][ncol-1] = i%s;
+X    irow++;
+X  }
+}
+free_imatrix(A,0,s-1,0,q-1);
+return 1;
+}
+X  
+X  
+bosebushlcheck( s,p,lam,ncol  )
+int  s,p,lam,ncol;
+{
+X
+if(  !isprime(p)  ){
+X  fprintf(stderr,"Bose Bush routine given a nonprime.\n");
+X  return 0;
+}
+X
+if(  ncol > lam*s+1  ){
+X  fprintf(stderr,"The Bose-Bush construction needs ncol <= lambda*q+1.\n");
+X  fprintf(stderr,"Can't have ncol = %d with lam = %d and q = %d,\n",ncol,lam,s);
+X  return 0;
+}
+X
+if(  ncol == lam*s+1  ){
+X  fprintf(stderr,"\nWarning: The Bose-Bush construction with ncol = lambda*q+1\n");
+X  fprintf(stderr,"has a defect.  While it is still an OA(lambda*q^2,lambda*q+1,q,2),\n");
+X  fprintf(stderr,"it may have worse coincidence properties than\n");
+X  fprintf(stderr,"OA(lambda*q^2,lambda*q+1,q,2).\n");
+}
+return 1;
+}
+X
+bosebushl( gf, lam, B, ncol )
+/* Implement Bose and Bush's 1952 A.M.S. method with given lambda */
+struct GF *gf;
+int **B, lam;
+{
+int p,q,s,irow;
+int i,j,k,mul;
+int **A;
+X
+p=gf->p,   /* GF(q) used to generate design with q/lam levels */
+q=gf->q;
+s=q/lam;     /* number of levels in design */
+X
+if(  !bosebushlcheck( s,p,lam,ncol )  )
+X  return 0;
+X
+A = imatrix(0,s-1,0,q-1);
+if(  !A  ){
+X  fprintf(stderr,"Unable to allocate scratch space for Bose-Bush array.\n");
+X  return 0;
+}
+X
+irow = 0;
+for(  i=0; i<q; i++  ){
+X  for(  j=0; j<q; j++  ){
+X    mul = gf->times[i][j];
+X    mul = mul % s;
+X    for( k=0; k<s; k++  )
+/*      A[k][j] = gf->plus[mul][k];*/
+X      A[k][j] = gf->plus[mul][k];
+X  }
+X  for(  k=0; k<s; k++  ){
+X    for( j=0; j<ncol && j<lam*s+1; j++ )
+X      B[irow][j] = A[k][j];
+X    if(  ncol==lam*s+1  )
+X      B[irow][ncol-1] = i%s;
+X    irow++;
+X  }
+}
+X
+X
+X
+X
+X
+free_imatrix(A,0,s-1,0,q-1);
+return 1;
+}
+X  
+X  
+SHAR_EOF
+chmod 0644 construct.c ||
+echo 'restore of construct.c failed'
+Wc_c="`wc -c < 'construct.c'`"
+test 9127 -eq "$Wc_c" ||
+	echo 'construct.c: original size 9127, current size' "$Wc_c"
+fi
+# ============= galdec.h ==============
+if test -f 'galdec.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping galdec.h (File already exists)'
+else
+echo 'x - extracting galdec.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'galdec.h' &&
+int *ivector(), **imatrix();
+X
+X
+SHAR_EOF
+chmod 0644 galdec.h ||
+echo 'restore of galdec.h failed'
+Wc_c="`wc -c < 'galdec.h'`"
+test 31 -eq "$Wc_c" ||
+	echo 'galdec.h: original size 31, current size' "$Wc_c"
+fi
+# ============= galdef.h ==============
+if test -f 'galdef.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping galdef.h (File already exists)'
+else
+echo 'x - extracting galdef.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'galdef.h' &&
+/* Definitions for Galois Field code */
+X
+struct GF {
+X  int n,p,q;
+X  int *xton;
+X  int **plus;
+X  int **times;
+X  int *inv;
+X  int *neg;
+X  int *root;
+X  int **poly;
+};
+SHAR_EOF
+chmod 0644 galdef.h ||
+echo 'restore of galdef.h failed'
+Wc_c="`wc -c < 'galdef.h'`"
+test 162 -eq "$Wc_c" ||
+	echo 'galdef.h: original size 162, current size' "$Wc_c"
+fi
+# ============= galois.c ==============
+if test -f 'galois.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping galois.c (File already exists)'
+else
+echo 'x - extracting galois.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'galois.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*     Manipulation of generic Galois fields.  See gfields.c
+X   for construction of specific Galois fields.  */
+X
+#include <math.h>
+#include <stdio.h>
+X
+#include "galois.h"
+X
+/*  Glossary:
+X
+X       GF_poly_sum       Addition in polynomial representation
+X       GF_poly_prod      Multiplication in polynomial representation
+X       GF_poly2int       Convert polynomial to integer in 0..q-1
+X       GF_ready          Prepare (+,*,^-1) lookup tables
+X       GF_print          Print Galois field
+X       GF_free           Free storage
+X
+*/
+X
+X
+/*---------------------------------------------------------------*/
+X
+GF_poly_sum( p,n,p1,p2,sum )
+int  n,p,*p1,*p2,*sum;
+{
+int i;
+X
+for(  i=0; i<n; i++  )
+X  sum[i] = (p1[i]+p2[i]) % p;
+}
+X
+/*---------------------------------------------------------------*/
+X
+GF_poly_prod( p,n,xton,p1,p2,prod )
+/*
+X  Set prod = p1*p2 with coefficients modulo p, and x^n replaced
+by polynomial xton.
+*/
+int  n,p,*xton,*p1,*p2,*prod;
+{
+int i,j, *longprod;
+X
+longprod = ivector(0,2*n-2);
+X
+for(  i=0; i<2*n-1; i++  )
+X  longprod[i] = 0;
+for(  i=0; i<n; i++  )
+for(  j=0; j<n; j++  )
+X  longprod[i+j] += p1[i]*p2[j];
+for(  i=2*n-2; i>n-1; i--  )
+for(  j=0; j<n; j++  )
+X  longprod[i-n+j] += xton[j]*longprod[i];
+for(  i=0; i<n; i++  )
+X  prod[i] = longprod[i] % p;
+X
+free_ivector(longprod,0,2*n-2);
+}
+X
+/*---------------------------------------------------------------*/
+X
+int GF_poly2int( p,n,poly )
+X
+int n,p,*poly;
+{
+int ans, i;
+X
+ans = 0;
+for(  i=n-1; i>0; i--  )
+X  ans = (ans+poly[i])*p;
+ans += poly[0];
+X
+return ans;
+}
+X
+/*---------------------------------------------------------------*/
+X
+#define GFPUNT {fprintf(stderr,"Unable to allocate space for Galois field on %d elements.\n",q);return 0;}
+X
+GF_ready( gf,p,n,xton )
+/* 
+X   Make ready the Galois Field
+*/
+struct GF *gf;
+int  n,p,*xton;
+{
+int i,j,q,click,*poly;
+X
+poly = ivector(0,n-1);
+X
+gf->n = n;
+gf->p = p;
+q = 1;
+for(  i=0; i<n; i++  )
+X  q *= p;
+gf->q = q;
+gf->xton = ivector(0,n-1);        if(  !gf->xton  )GFPUNT;
+for(  i=0; i<n; i++  )
+X  gf->xton[i] = xton[i];
+gf->plus = imatrix(0,q-1,0,q-1);  if(  !gf->plus  )GFPUNT;
+gf->times= imatrix(0,q-1,0,q-1);  if(  !gf->times )GFPUNT;
+gf->inv  = ivector(0,q-1);        if(  !gf->inv   )GFPUNT;
+gf->neg  = ivector(0,q-1);        if(  !gf->neg   )GFPUNT;
+gf->root = ivector(0,q-1);        if(  !gf->root  )GFPUNT;
+gf->poly = imatrix(0,q-1,0,n-1);  if(  !gf->poly  )GFPUNT;
+X
+for(  i=0; i<n; i++  )
+X  gf->poly[0][i] = 0;
+X
+for( i=1; i<q; i++  ){
+X  for( click=0; gf->poly[i-1][click]==(p-1); click++  )
+X    gf->poly[i][click] = 0;
+X  gf->poly[i][click] = gf->poly[i-1][click]+1;
+X  for(  j=click+1; j<n; j++  )
+X    gf->poly[i][j] = gf->poly[i-1][j];
+}
+X
+for(  i=0; i<q; i++  )
+for(  j=0; j<q; j++  ){
+X  GF_poly_sum( p,n,gf->poly[i],gf->poly[j],poly );
+X  gf->plus[i][j] = GF_poly2int( p,n,poly );
+X  GF_poly_prod( p,n,xton,gf->poly[i],gf->poly[j],poly );
+X  gf->times[i][j] = GF_poly2int( p,n,poly );
+}
+X
+for(  i=0; i<q; i++  ){
+X  gf->inv[i] = -1;
+X  for(  j=0; j<q;  j++  )
+X    if(  gf->times[i][j]==1  )
+X      gf->inv[i] = j;
+X  if(  i>0 && gf->inv[i] <= 0  ){
+X    fprintf(stderr,"There is something wrong with the Galois field\n");
+X    fprintf(stderr,"used for q=%d.  Element %d has no reciprocal.\n",q,i);
+X    return 0;
+X  }
+}
+X
+for(  i=0; i<q; i++  ){
+X  gf->neg[i] = -1;
+X  for(  j=0; j<q;  j++  )
+X    if(  gf->plus[i][j]==0  )
+X      gf->neg[i] = j;
+X  if(  i>0 && gf->neg[i] <= 0  ){
+X    fprintf(stderr,"There is something wrong with the Galois field\n");
+X    fprintf(stderr,"used for q=%d.  Element %d has no negative.\n",q,i);
+X    return 0;
+X  }
+}
+X
+for(  i=0; i<q; i++  ){
+X  gf->root[i] = -1;
+X  for(  j=0; j<q;  j++  )
+X    if(  gf->times[j][j]==i  )
+X      gf->root[i] = j;
+}
+X
+/*printf("%d %d %d\n",q,p,n);*/
+return 1;
+}
+X
+/*---------------------------------------------------------------*/
+X
+GF_print( gf )
+X
+struct GF *gf;
+{
+int i,j,n,p,q;
+X
+n=gf->n, p=gf->p, q=gf->q;
+X
+if( q>999 )fprintf(stderr,"Warning q=%d will overflow print field.\n",q);
+X
+printf("\nFor GF(%d) p=%d n=%d\n",q,p,n);
+printf("x**n = (");
+for( i=0; i<n-1; i++  )
+X  printf("%d,",gf->xton[i]);
+printf("%d)\n",gf->xton[n-1]);
+printf("\n\nGF(%d) Polynomial coefficients:\n",q);
+for(  i=0; i<q; i++  ){
+X  printf("  %3d  ",i);
+X  for(  j=0; j<n; j++  )
+X    printf("%3d ",gf->poly[i][j]);
+X  printf("\n");
+}
+printf("\n\nGF(%d) Addition Table\n",q);
+for(  i=0; i<q; i++  ){
+X  printf("  ");
+X  for(  j=0; j<q; j++  )
+X    printf(" %3d",gf->plus[i][j]);
+X  printf("\n");
+}
+printf("\n\nGF(%d) Multiplication table\n",q);
+for(  i=0; i<q; i++  ){
+X  printf("  ");
+X  for(  j=0; j<q; j++  )
+X    printf(" %3d",gf->times[i][j]);
+X  printf("\n");
+}
+printf("\n\nGF(%d) Reciprocals\n",q);
+for(  i=1; i<q; i++  )
+X  printf(" %3d %3d\n",i,gf->inv[i]);
+X
+printf("\n\nGF(%d) Negatives\n",q);
+for(  i=0; i<q; i++  )
+X  printf(" %3d %3d\n",i,gf->neg[i]);
+X
+printf("\n\nGF(%d) Square roots\n",q);
+for(  i=0; i<q; i++  )
+X  printf(" %3d %3d\n",i,gf->root[i]);
+}
+X
+/*---------------------------------------------------------------*/
+X
+GF_free( gf )
+/* 
+X   Deallocate the Galois Field
+*/
+struct GF *gf;
+{
+/*int q,p,n;
+q = gf->q, p=gf->p, n=gf->n;*/
+X
+int q,n;
+q = gf->q, n=gf->n; /* Shuts lint up */
+X
+free_imatrix(gf->poly,0,q-1,0,n-1);
+free_ivector(gf->root,0,q-1);
+free_ivector(gf->neg,0,q-1);
+free_ivector(gf->inv,0,q-1);
+free_imatrix(gf->times,0,q-1,0,q-1);
+free_imatrix(gf->plus,0,q-1,0,q-1);
+free_ivector(gf->xton,0,n-1);
+}
+SHAR_EOF
+chmod 0644 galois.c ||
+echo 'restore of galois.c failed'
+Wc_c="`wc -c < 'galois.c'`"
+test 5741 -eq "$Wc_c" ||
+	echo 'galois.c: original size 5741, current size' "$Wc_c"
+fi
+# ============= galois.h ==============
+if test -f 'galois.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping galois.h (File already exists)'
+else
+echo 'x - extracting galois.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'galois.h' &&
+/* Declarations for dynamic allocation */
+X
+int *ivector(), **imatrix();
+X
+/* Definitions for Galois Fields */
+X
+struct GF {
+X  int n,p,q;
+X  int *xton;
+X  int **plus;
+X  int **times;
+X  int *inv;
+X  int *neg;
+X  int *root;
+X  int **poly;
+};
+X
+SHAR_EOF
+chmod 0644 galois.h ||
+echo 'restore of galois.h failed'
+Wc_c="`wc -c < 'galois.h'`"
+test 232 -eq "$Wc_c" ||
+	echo 'galois.h: original size 232, current size' "$Wc_c"
+fi
+# ============= gfields.c ==============
+if test -f 'gfields.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping gfields.c (File already exists)'
+else
+echo 'x - extracting gfields.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'gfields.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*     Construction of specific Galois fields.  See galois.c 
+X    for manipulation of generic Galois fields.
+X
+X       To add a new Galois field GF(q)=GF(p^n) it is necessary 
+X    to find the polynomial representation of x^n, and use it to
+X    include another *xtn--- vector like those used below.
+X
+*/
+X
+#include <math.h>
+#include <stdio.h>
+X
+#include "galois.h"
+X
+X
+/*  Glossary:
+X
+X       xtn2t2              Polynomial representation of x^2 in gf2t2
+X       xtn2t3              Polynomial representation of x^3 in gf2t3
+X       . . .               Polynomial representation of p^n in gfptn
+X       xtn13t2             Polynomial representation of x^2 in gf13t2
+X
+X       GF_set_fields       Initialize polynomial representations
+X       GF_fields_are_set   Indicates initialization done
+X       GF_getfield         Construct and return GF(q) if possible
+*/
+X
+#include "xtndeclare.h"
+int *xtnpt1;
+X
+int GF_fields_are_set = 0;
+X
+GF_set_fields()
+{
+/* Brute force set up of defining vectors, from Carmichael */
+X
+/* Declare x-to-the-power-n vectors, for GFs p-to-the-n */
+X
+if(   GF_fields_are_set   )
+X  fprintf(stderr,"Warning: Fields being re-initialized.  Possible memory waste.\n");
+X
+X
+#include "xtnset.h"
+X
+xtnpt1 = ivector(0,0);
+xtnpt1[0] = 0; 
+GF_fields_are_set = 1;
+}
+X
+X
+GF_getfield( q, gf )
+int q;
+struct GF *gf;
+{
+int *xtn;
+int p,n,ispp;
+X
+if(  !GF_fields_are_set  )
+X  GF_set_fields();
+X
+if(  q<1  ){      /* Impossible argument */
+X  fprintf(stderr,"Field must have positive number of elements.\n");
+X  return 0; }
+if(  q==1 ){      /* Pointless  argument */
+X  fprintf(stderr,"Field with 1 element was requested.\n");
+X  return 0; }
+X
+primepow( q,&p,&n,&ispp  );
+if(  !ispp  ){
+X  fprintf(stderr,"q=%d is not a prime power.\n",q);
+X  return 0; }
+X
+xtn = NULL;
+X
+#include "xtndispatch.h"
+X
+if(  isprime(q)  )xtn = xtnpt1;  /* Could have tested p=q, or n=1 */
+X
+if(  xtn   ){
+X  if(  GF_ready( gf,p,n,xtn )  )
+X    return 1;
+X  else{
+X    fprintf(stderr,"Construction failed for GF(%d).\n",q);
+X    return 0;
+X  }
+}
+else {
+X  fprintf(stderr,"GF(%d) = GF(%d^%d) is not included in this program.\n",q,p,n);
+X  fprintf(stderr,"To add it, consider modifying gfields.c.\n",q);
+X  return 0;
+}
+}
+SHAR_EOF
+chmod 0644 gfields.c ||
+echo 'restore of gfields.c failed'
+Wc_c="`wc -c < 'gfields.c'`"
+test 2554 -eq "$Wc_c" ||
+	echo 'gfields.c: original size 2554, current size' "$Wc_c"
+fi
+# ============= memory.c ==============
+if test -f 'memory.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping memory.c (File already exists)'
+else
+echo 'x - extracting memory.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'memory.c' &&
+/*  Use numerical recipes in C styled memory management methods */
+X
+#include <malloc.h>
+#include <stdio.h>
+X
+int **imatrix(nrl,nrh,ncl,nch)
+int nrl,nrh,ncl,nch;
+{
+X  int i;
+X  int **m;
+X
+X  m=(int **) malloc((unsigned) (nrh-nrl+1)*sizeof(int*));
+X  if (!m){
+X    fprintf(stderr,"Unable to allocate %d int* s.\n",nrh-nrl+1);
+X    return m;
+X  }
+X  m -= nrl;
+X
+X  for(i=nrl;i<=nrh;i++) {
+X    m[i]=(int *) malloc((unsigned) (nch-ncl+1)*sizeof(int));
+X    if (!m[i]) {
+X      fprintf(stderr,"Unable to allocate %d'th row in an integer matrix.\n",
+X	      i-nrl+1);
+X      return NULL;
+X    }
+X    m[i] -= ncl;
+X  }
+X  return m;
+}
+X
+int *ivector(nl,nh)
+int nl,nh;
+{
+X  int *v;
+X
+X  v=(int *)malloc((unsigned) (nh-nl+1)*sizeof(int) );
+X  if (!v){
+X    fprintf(stderr,"Unable to allocate %d int s.\n",nh-nl+1);
+X    return v;
+X  }
+X  return(v-nl);
+}
+X
+/* ARGSUSED */
+void free_imatrix(m,nrl,nrh,ncl,nch)
+X
+int nrl,nrh,ncl,nch;
+int **m;
+X
+{
+int i;
+X
+for(  i=nrh;i>=nrl;i--  )free( (char*) (m[i]+ncl) );
+free((char*) (m+nrl));
+}
+X
+/* ARGSUSED */
+void free_ivector(v,nl,nh)
+int *v;
+int nl,nh;
+{
+X  free((char*) (v+nl));
+}
+X
+X
+X
+double **dmatrix(nrl,nrh,ncl,nch)
+int nrl,nrh,ncl,nch;
+{
+X  int      i;
+X  double **m;
+X
+X  m=(double **) malloc((unsigned) (nrh-nrl+1)*sizeof(double*));
+X  if (!m){
+X    fprintf(stderr,"Unable to allocate %d double* s.\n",nrh-nrl+1);
+X    return m;
+X  }
+X  m -= nrl;
+X
+X  for(i=nrl;i<=nrh;i++) {
+X    m[i]=(double *) malloc((unsigned) (nch-ncl+1)*sizeof(double));
+X    if (!m[i]) {
+X      fprintf(stderr,"Unable to allocate %d'th row in an double matrix.\n",
+X	      i-nrl+1);
+X      return NULL;
+X    }
+X    m[i] -= ncl;
+X  }
+X  return m;
+}
+X
+double *dvector(nl,nh)
+int nl,nh;
+{
+X  double *v;
+X
+X  v=(double *)malloc((unsigned) (nh-nl+1)*sizeof(double) );
+X  if (!v){
+X    fprintf(stderr,"Unable to allocate %d double s.\n",nh-nl+1);
+X    return v;
+X  }
+X  return(v-nl);
+}
+X
+/* ARGSUSED */
+void free_dmatrix(m,nrl,nrh,ncl,nch)
+X
+int nrl,nrh,ncl,nch;
+double **m;
+X
+{
+int i;
+X
+for(  i=nrh;i>=nrl;i--  )free( (char*) (m[i]+ncl) );
+free((char*) (m+nrl));
+}
+X
+/* ARGSUSED */
+void free_dvector(v,nl,nh)
+double *v;
+int nl,nh;
+{
+X  free((char*) (v+nl));
+}
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+/*  Add rows to a matrix:
+X
+X      imat            pointer to that matrix
+X      oldrowsize      highest index+1 of old rows
+X      newrowsize      highest index+1 of new rows
+X      colsize         number of cols
+X
+*/
+X
+int grow_imatrix_byrows( imat, oldrowsize, newrowsize, colsize )
+int ***imat, oldrowsize, newrowsize, colsize;
+{
+X  int i;
+X
+X  imat[0] = (int **) realloc(imat[0],
+X		  (unsigned) (newrowsize)*sizeof(int*));
+X  if (!(imat[0])){
+X    fprintf(stderr,"Unable to reallocate %d int* s.\n",newrowsize);
+X    return 0;
+X  }
+X  for(i=oldrowsize; i<newrowsize; i++) {
+X    imat[0][i] = (int *) malloc((unsigned) (colsize)*sizeof(int));
+X    if (!imat[0][i]) {
+X      fprintf(stderr,"Unable to reallocate %d'th row in an integer matrix.\n",
+X	      i);
+X      return 0;
+X    }
+X  }
+}
+SHAR_EOF
+chmod 0644 memory.c ||
+echo 'restore of memory.c failed'
+Wc_c="`wc -c < 'memory.c'`"
+test 2877 -eq "$Wc_c" ||
+	echo 'memory.c: original size 2877, current size' "$Wc_c"
+fi
+# ============= oa.c ==============
+if test -f 'oa.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oa.c (File already exists)'
+else
+echo 'x - extracting oa.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oa.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+X  
+int  **imatrix(), *ivector();
+X
+/*  
+X
+X   Glossary:
+X
+X    OA_put            write OA to standard output
+X    OA_fput           write OA to stream
+X    OA_get            get OA from standard input
+X    OA_fget           get OA from stream
+X
+X    OA_parsein        read arguments q,nrow,ncol to OA "filter programs"
+X    OA_strworkcheck   warn about large work loads in strength checking programs
+X
+*/
+X
+X
+/*  OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT  */
+X
+OA_put( A,n,k,q )
+int **A, n, k, q;
+{
+OA_fput( stdout,A,n,k,q );
+}
+X
+OA_fput( stream,A,n,k,q )
+FILE *stream;
+int **A, n, k, q;
+{
+int   i,j;
+char* format;
+X
+format = "%d%s";
+if(  q < 1000  )format = "%3d%s";
+if(  q < 100   )format = "%2d%s";
+if(  q < 10    )format = "%1d%s";
+if(  q < 0     )format = "%d%s";
+X
+for(  i=0; i<n; i++  )
+for(  j=0; j<k; j++  )
+X  fprintf(stream,format,A[i][j],(j==k-1)?"\n":" ");
+}
+X
+X
+/*  INPUT    INPUT    INPUT    INPUT    INPUT    INPUT    INPUT    INPUT  */
+X
+OA_get( A,n,k,q, eof_assert )
+int **A, n, k, q, eof_assert;
+{
+return OA_fget( stdin,A,n,k,q,eof_assert );
+}
+X
+OA_fget( stream,A,n,k,q,eof_assert )
+FILE *stream;
+int **A, n, k, q, eof_assert;
+{
+int   i,j;
+for( i=0; i<n; i++ )
+for( j=0; j<k; j++ )
+X  if( fscanf(stream,"%d",&A[i][j]) == EOF  ){
+X    fprintf(stderr,"Unexpected end of input encountered.  Wanted to read\n");
+X    fprintf(stderr,"%d rows of %d cols.  Failed trying for row %d, col %d.\n",
+X	    n,k,i,j);
+X    return 0;
+X  }else if(  A[i][j] >= q ){
+X    fprintf(stderr,"Invalid array element %d.  All elements should be\n",
+X	    A[i][j]);
+X    fprintf(stderr,"strictly less than q = %d.\n",q);
+X    return 0;
+X  }else if(  A[i][j] <0   ){
+X    fprintf(stderr,"Invalid array element %d, should be >= 0.\n",A[i][j]);
+X    return 0;
+X  }
+X
+if(  eof_assert  &&  fscanf(stream,"%d",&eof_assert) != EOF  ){
+X    fprintf(stderr,"Input has more integers than expected.\n");
+X    fprintf(stderr,"Perhaps the number of rows and/or columns is incorrect.\n");
+X    return 0;
+X  }
+return 1;
+}
+X
+/*  READ    READ    READ    READ    READ    READ    READ    READ    READ  */
+X
+/*  Read array and determine dimensions.   Inspired by approach
+taken in Xgobi.  */
+X
+#define MAXK 5000
+#define ROWINC 1000
+int line0[ MAXK ];
+X
+OA_read( A,n,k,q )
+int ***A, *n, *k, *q;
+{
+return OA_fread( stdin,A,n,k,q );
+}
+X
+X
+OA_fread( stream,A,n,k,q )
+FILE *stream;
+int ***A, *n, *k, *q;
+{
+int   i, j;
+char  c;
+X
+*k = 0;
+X
+while( (c = getc(stream)) != '\n'  ){
+X  if(  c=='\t' || c==' '  )
+X    ;
+X  else{
+X    ungetc(c,stream);
+X    if(  *k >= MAXK  ){
+X      fprintf(stderr,"Error: Input appears to have more than %d columns.\n",*k);
+X      fprintf(stderr,"If such large input is desired, increase MAXK in oa.c\n");
+X      fprintf(stderr,"and re-install the software.\n");
+X      return 0;
+X    }
+X    if(  fscanf(stream,"%d",&line0[(*k)++]) <= 0  ){
+X      fprintf(stderr,"Error: no newline character found.  Could be empty\n");
+X      fprintf(stderr,"input or matrix all on one line.\n");
+X      return 0;
+X    }
+X  }
+}
+X
+*A = imatrix( 0,ROWINC-1, 0,*k-1 );
+if(  !(*A)  ){
+X  fprintf(stderr,"Unable to allocate memory to read the array.\n");
+X  return 0;
+}
+X
+*n = 0;
+for(  j=0; j<*k; j++  )
+X  A[0][*n][j] = line0[j];
+X
+while( 1 ){
+X  (*n)++;
+X  if(  (*n % ROWINC)==0  )
+X    if(  !grow_imatrix_byrows( A, (*n), (*n)+ROWINC, *k )  ){
+X      fprintf(stderr,"Unable to allocate extra memory for row %d of the array.\n"
+X	      ,*n);
+X      return 0;
+X    }
+X
+X  if(  fscanf(stream,"%d",&(A[0][*n][0])) == EOF  )
+X    break;
+X
+X  for(  j=1; j<*k; j++  )
+X    if( fscanf(stream,"%d",&(A[0][*n][j])) == EOF  ){
+X      fprintf(stderr,"Unexpected end of input encountered.  Row %d only has\n",*n);
+X      fprintf(stderr,"%d elements of %d expected.\n",j,*k);
+X      return 0;
+X    }
+}
+*q = 0;                   /* Assume that q = max(A)+1  */
+X
+for(  i=0; i<*n; i++  )
+for(  j=0; j<*k; j++  )
+X  if(  A[0][i][j] > *q  )
+X    *q = A[0][i][j];
+*q = *q +1;
+X
+return 1;
+}
+X
+/*  PARSE    PARSE    PARSE    PARSE    PARSE    PARSE    PARSE    PARSE  */
+X
+OA_parsein( argc,argv, q,nrow,ncol, A )
+int  argc;
+char *argv[];
+int *q, *nrow, *ncol, ***A;
+{
+if(  argc<=1  ){
+X  if(  !OA_read( A,nrow,ncol,q )  ){
+X    fprintf(stderr,"Fatal error while reading the array.\n");
+X    exit(1);
+X  }
+}
+else if( argc==2  ){
+X  sscanf(argv[1],"%d",q);
+X  scanf("%d %d",nrow,ncol);
+}else if( argc==3  ){
+X  sscanf(argv[1],"%d",q);
+X  sscanf(argv[2],"%d",nrow);
+X  scanf("%d",nrow,ncol);
+}else{
+X  sscanf(argv[1],"%d",q);
+X  sscanf(argv[2],"%d",nrow);
+X  sscanf(argv[3],"%d",ncol);
+}
+X
+if(  *q<1  ){
+X  fprintf(stderr,"Array has only %d symbol(s).  At least one\n",*q);
+X  fprintf(stderr,"symbol is necessary in an orthogonal array.\n");
+X  exit(1);
+}
+X
+if(  *ncol<1  ){
+X  fprintf(stderr,"Array has only %d column(s).  At least one\n",*ncol);
+X  fprintf(stderr,"column is necessary in an orthogonal array.\n");
+X  exit(1);
+}
+X
+if(  *nrow<1  ){
+X  fprintf(stderr,"Array has only %d rows.  At least one\n",*nrow);
+X  fprintf(stderr,"row is necessary in an orthogonal array.\n");
+X  exit(1);
+}
+X
+X
+if(  argc >1  ){
+X  *A = imatrix( 0,*nrow-1,0,*ncol-1 );
+X  if(  !(*A)  ){
+X    fprintf(stderr,"The array is too large (%d by %d) to fit in memory.\n",nrow,ncol);
+X    exit(1);
+X  }
+X  
+X  if(  !OA_get( *A,*nrow,*ncol,*q, 1 )  ){/* Read 'em all */
+X    fprintf(stderr,"Read error getting the orthogonal array.\n");
+X    exit(1);
+X  }
+}
+}
+X
+X
+/*  WORK    WORK    WORK    WORK    WORK    WORK    WORK    WORK    WORK  */
+X
+OA_strworkcheck( work,str )
+double work;
+int    str;
+{
+if(  work > BIGWORK  ){
+X  fprintf(stderr,"If the array has strength %d, %g comparisons will\n",
+X	  str, work);
+X  fprintf(stderr,"be required to prove it.  This might take a long time.\n");
+X  fprintf(stderr,"This warning is triggered when more than %d comparisons\n",
+X	  BIGWORK);
+X  fprintf(stderr,"are required.  To avoid this warning increase BIGWORK in\n");
+X  fprintf(stderr,"oa.h.  Intermediate results will be printed.\n\n");
+X  fflush(stderr);
+}else if(  work > MEDWORK  ){
+X  fprintf(stderr,"Since more than %d comparisons may be required to\n",MEDWORK);
+X  fprintf(stderr,"to check whether the array has strength %d, intermediate\n",
+X	  str);
+X  fprintf(stderr,"results will be printed.  To avoid this warning increase\n");
+X  fprintf(stderr,"MEDWORK in oa.h\n\n");
+X  fflush(stderr);
+}
+}
+X
+X
+/*  STRENGTH    STRENGTH    STRENGTH    STRENGTH    STRENGTH  */
+X
+X
+OA_strength( q,nrow,ncol,A,str,verbose )
+int  q,nrow,ncol,**A,*str, verbose;
+/*
+X     Calculate and return the strength of the array A.
+X
+verbose = 0   =>   No printed output
+verbose = 1   =>   Only stderr output
+verbose = 2   =>   Output to both stdout and stderr
+X
+*/
+{
+*str = -1;
+X
+if(  OA_str0( q,nrow,ncol,A,verbose)   )
+X  *str = 0;
+else
+X  return;
+if(  OA_str1( q,nrow,ncol,A,verbose)   )
+X  *str = 1;
+else
+X  return;
+while( OA_strt( q,nrow,ncol,A,*str+1,verbose )  )
+X  (*str)++;
+return;
+}
+X
+X
+/* Check strength 0 */
+OA_str0( q,nrow,ncol,A,verbose   )
+int      q,nrow,ncol,**A, verbose;
+{
+int  i, j1;
+X
+for(  j1=0; j1<ncol; j1++  )
+for(  i=0; i<nrow; i++  )
+X  if(  A[i][j1] < 0  || A[i][j1] >= q  ){
+X    if(  verbose >= 2  ){
+X      printf("Array is not even of strength 0, that is there are elements\n");
+X      printf("other than integers 0 through %d inclusive in it.\n");
+X      printf("The first exception is A[%d][%d] = %d.\n",i,j1,A[i][j1]);
+X    }
+X    return 0;
+X  }
+if(  verbose >=2  )
+X  printf("The array has strength (at least) 0.\n");
+return 1;
+}
+X
+X
+/* Check strength 1 */
+OA_str1( q,nrow,ncol,A,verbose   )
+int      q,nrow,ncol,**A, verbose;
+{
+int     i, j1, q1;
+int     lambda, count;
+double  work;
+X
+if(  nrow%q  ){
+X  if(  verbose >= 2  ){
+X    printf("The array cannot have strength 1, because the number\n");
+X    printf("of rows %d is not a multiple of q = %d.\n",nrow,q);
+X  }
+X  return 0;
+}
+X
+lambda = nrow/q;
+work = nrow * ncol * q * 1.0;
+OA_strworkcheck( work,1 );
+for(  j1=0; j1<ncol; j1++  ){
+X  for(  q1=0; q1<q; q1++  ){
+X    count = 0;
+X    for( i=0; i<nrow; i++  )
+X      count += (A[i][j1]==q1);
+X    if(  count != lambda   ){
+X      if(  verbose >= 2  ){
+X	printf("Array is not of strength 1.  The first violation arises for\n");
+X	printf("the number of times A[,%d] = %d.\n",
+X	       j1, q1);
+X	printf("This happened in %d rows, it should have happened in %d rows.\n",
+X	       count, lambda);
+X      }
+X      return 0;
+X    }
+X  }
+if(  work > MEDWORK && verbose > 0  )
+X  fprintf(stderr,"No violation of strength 1 involves column %d.\n",j1);
+}
+if(  verbose >=2  )
+X  printf("The array has strength (at least) 1.\n");
+return 1;
+}
+X
+/* Check strength 2  */
+OA_str2( q,nrow,ncol,A,verbose   )
+int      q,nrow,ncol,**A, verbose;
+{
+int  i, j1,j2, q1,q2;
+int  lambda, count;
+double  work;
+X
+if(  ncol<2  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"Array has only %d column(s).  At least two\n",ncol);
+X    fprintf(stderr,"columns are necessary for strength 2 to make sense.\n");
+X  }
+X  return 0;
+}
+if(  nrow % (q*q)  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"The array cannot have strength 2, because the number\n");
+X    fprintf(stderr,"of rows %d is not a multiple of q^2 = %d^2 = %d.\n",nrow,q,q*q);
+X  }
+X  return 0;
+}
+X
+lambda = nrow/(q*q);
+work = nrow*ncol*(ncol-1.0)*q*q/2.0;
+OA_strworkcheck( work,2 );
+X
+for(  j1=0;    j1<ncol; j1++  ){
+for(  j2=j1+1; j2<ncol; j2++  ){
+X  for(  q1=0; q1<q; q1++  )
+X  for(  q2=0; q2<q; q2++  ){
+X    count = 0;
+X    for( i=0; i<nrow; i++  )
+X      count += (A[i][j1]==q1)&&(A[i][j2]==q2);
+X    if(  count != lambda   ){
+X      if(  verbose >= 2 ){
+X	printf("Array is not of strength 2.  The first violation arises for\n");
+X	printf("the number of times (A[,%d],A[,%d]) = (%d,%d).\n",
+X	       j1,j2, q1,q2 );
+X	printf("This happened in %d rows, it should have happened in %d rows.\n",
+X	       count, lambda);
+X      }
+X      return 0;
+X    }
+X  }
+}
+if(  work > MEDWORK && verbose > 0 )
+X  fprintf(stderr,"No violation of strength 2 involves column %d.\n",j1);
+}
+X
+if(  verbose >=2  )
+X  printf("The array has strength (at least) 2.\n");
+return 1;
+}
+X
+X
+X
+/* Check strength 3  */
+OA_str3( q,nrow,ncol,A,verbose   )
+int      q,nrow,ncol,**A, verbose;
+{
+int  i, j1,j2,j3, q1,q2,q3;
+int  lambda, count;
+double  work;
+X
+if(  ncol<3  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"Array has only %d column(s).  At least three\n",ncol);
+X    fprintf(stderr,"columns are necessary for strength 3 to make sense.\n");
+X  }
+X  return 0;
+}
+if(  nrow % (q*q*q)  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"The array cannot have strength 3, because the number\n");
+X    fprintf(stderr,"of rows %d is not a multiple of q^3 = %d^3 = %d.\n",nrow,q,q*q*q);
+X  }
+X  return 0;
+}
+X
+lambda = nrow/(q*q*q);
+work = nrow*ncol*(ncol-1.0)*(ncol-2.0)*q*q*q/6.0;
+OA_strworkcheck( work,3 );
+X
+for(  j1=0;    j1<ncol; j1++  ){
+for(  j2=j1+1; j2<ncol; j2++  )
+for(  j3=j2+1; j3<ncol; j3++  ){
+X  for(  q1=0; q1<q; q1++  )
+X  for(  q2=0; q2<q; q2++  )
+X  for(  q3=0; q3<q; q3++  ){
+X    count = 0;
+X    for( i=0; i<nrow; i++  )
+X      count += (A[i][j1]==q1)&&(A[i][j2]==q2)&&(A[i][j3]==q3);
+X    if(  count != lambda   ){
+X      if(  verbose >= 2 ){
+X	printf("Array is not of strength 3.  The first violation arises for\n");
+X	printf("the number of times (A[,%d],A[,%d],A[,%d]) = (%d,%d,%d).\n",
+X	       j1,j2,j3,  q1,q2,q3 );
+X	printf("This happened in %d rows, it should have happened in %d rows.\n",
+X	       count, lambda);
+X      }
+X      return 0;
+X    }
+X  }
+}
+if(  work > MEDWORK && verbose > 0 )
+X  fprintf(stderr,"No violation of strength 3 involves column %d.\n",j1);
+}
+if(  verbose >=2  )
+X  printf("The array has strength (at least) 3.\n");
+return 1;
+}
+X
+X
+/* Check strength 4  */
+OA_str4( q,nrow,ncol,A,verbose   )
+int      q,nrow,ncol,**A, verbose;
+{
+int  i, j1,j2,j3,j4, q1,q2,q3,q4;
+int  lambda, count;
+double  work;
+X
+if(  ncol<4  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"Array has only %d column(s).  At least four\n",ncol);
+X    fprintf(stderr,"columns are necessary for strength 4 to make sense.\n");
+X  }
+X  return 0;
+}
+if(  nrow % (q*q*q*q)  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"The array cannot have strength 4, because the number\n");
+X    fprintf(stderr,"of rows %d is not a multiple of q^4 = %d^4 = %d.\n",nrow,q,q*q*q*q);
+X  }
+X  return 0;
+}
+X
+lambda = nrow/(q*q*q*q);
+work = nrow*ncol*(ncol-1.0)*(ncol-2.0)*(ncol-3.0)*q*q*q*q/24.0;
+OA_strworkcheck( work,4 );
+X
+for(  j1=0;    j1<ncol; j1++  ){
+for(  j2=j1+1; j2<ncol; j2++  )
+for(  j3=j2+1; j3<ncol; j3++  )
+for(  j4=j3+1; j4<ncol; j4++  ){
+X  for(  q1=0; q1<q; q1++  )
+X  for(  q2=0; q2<q; q2++  )
+X  for(  q3=0; q3<q; q3++  )
+X  for(  q4=0; q4<q; q4++  ){
+X    count = 0;
+X    for( i=0; i<nrow; i++  )
+X      count += (A[i][j1]==q1)&&(A[i][j2]==q2)&&(A[i][j3]==q3)&&(A[i][j4]==q4);
+X    if(  count != lambda  ){
+X      if(  verbose >= 2  ){
+X	printf("Array is not of strength 4.  The first violation arises for\n");
+X	printf("the number of times (A[,%d],A[,%d],A[,%d],A[,%d]) = (%d,%d,%d,%d).\n",
+X	       j1,j2,j3,j4, q1,q2,q3,q4 );
+X	printf("This happened in %d rows, it should have happened in %d rows.\n",
+X	       count, lambda);
+X      }
+X      return 0;
+X    }
+X    }
+X  }
+}
+if(  work > MEDWORK && verbose > 0 )
+X  fprintf(stderr,"No violation of strength 4 involves column %d.\n",j1);
+X
+if(  verbose >=2  )
+X  printf("The array has strength (at least) 4.\n");
+return 1;
+}
+X
+X
+/* Check strength t  */
+OA_strt( q,nrow,ncol,A,t,verbose   )
+int      q,nrow,ncol,**A,t,verbose;
+{
+int  row, i, ic, iq, *clist, *qlist, ctuples, qtuples;
+int  lambda, count, match;
+double  work;
+X
+if(  t<0  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"Don't know how to verify strength %d.  It doesn't\n",t);
+X    fprintf(stderr,"make sense.\n");
+X  }
+X  return 0;
+}
+if(  ncol<t  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"Array has only %d column(s).  At least %d\n",ncol,t);
+X    fprintf(stderr,"columns are necessary for strength %d to make sense.\n",t);
+X  }
+X  return 0;
+}
+if(  t==0  )
+X  return OA_str0( q,nrow,ncol,A,verbose );
+if(  nrow % ipow(q,t)  ){
+X  if(  verbose > 0 ){
+X    fprintf(stderr,"The array cannot have strength %d, because the number\n",t);
+X    fprintf(stderr,"of rows %d is not a multiple of q^%d = %d^%d = %d.\n",
+X	    nrow,t,q,t,ipow(q,t));
+X  }
+X  return 0;
+}
+X
+lambda = nrow/ipow(q,t);
+work   = nrow*ipow(q,t);
+ctuples = 1;
+X
+clist = ivector( 0,t-1 );
+qlist = ivector( 0,t-1 );
+X
+for(  i=0; i<t; i++  ){
+X  work *= (ncol-i)/(i+1.0);
+X  ctuples *= ncol-i;
+X  qlist[i] = 0;
+X  clist[i] = i;
+}
+for(  i=0; i<t; i++  )
+X  ctuples /= (i+1);
+qtuples = ipow(q,t);
+X
+OA_strworkcheck( work,t );
+X
+for(  ic=0; ic<ctuples; ic++  ){   /* Loop over ordered tuples of columns */
+/*  for( i=0; i<t; i++  )
+X    printf("%s %d%s",(i==0)?"Col":"",clist[i],(i==t-1)?"\n":" ");*/
+X
+X  for(  iq=0; iq<qtuples;   iq++  ){ /* Loop over unordered tuples of symbols */
+/*    for( i=0; i<t; i++  )
+X      printf("  %s %d%s",(i==0)?"Sym":"",qlist[i],(i==t-1)?"\n":" ");*/
+X    count = 0;
+X    for( row=0; row<nrow; row++  ){
+X      match = 1;
+X      for(  i=0; i<t && match; i++  )
+X	match *= A[row][clist[i]] == qlist[i];
+X      count += match;
+X    }
+X    if(  count != lambda  ){
+X      if(  verbose >= 2  ){
+X	printf("Array is not of strength %d.  The first violation arises for\n",t);
+X	printf("the number of times (");
+X	for(  i=0; i<t; i++  )
+X	  printf("A[,%d]%s",clist[i],(i==t-1)?")":",");
+X	printf(" = (");
+X	for(  i=0; i<t; i++  )
+X	  printf("%d%s",qlist[i],(i==t-1)?").\n":",");
+X	printf("This happened in %d rows, it should have happened in %d rows.\n",
+X	       count, lambda);
+X      }
+X      return 0;
+X    }
+X    for( i=t-1; i>=0; i--  ){
+X      qlist[i] = (qlist[i]+1) % q;
+X      if(  qlist[i]  )break;
+X    }
+X  }
+X
+X  for( i= t-1; i>=0; i--  ){
+X    clist[i] = (clist[i]+1) % (ncol+i-t+1);
+X    if(  clist[i]  )break;
+X  }
+X
+X  if(  work > MEDWORK && verbose > 0 && (t==1||t>1 && clist[1]==0)  )
+X    fprintf(stderr,"No violation of strength %d involves column %d.\n",
+X	    t,(clist[0]+ncol-1)%ncol);
+X
+X  for( i=1; i< t; i++  )
+X    if(  clist[i] <= clist[i-1]  )
+X      clist[i] = clist[i-1]+1;
+}
+X
+if(  verbose >=2  )
+X  printf("The array has strength (at least) %d.\n",t);
+return 1;
+}
+SHAR_EOF
+chmod 0644 oa.c ||
+echo 'restore of oa.c failed'
+Wc_c="`wc -c < 'oa.c'`"
+test 16258 -eq "$Wc_c" ||
+	echo 'oa.c: original size 16258, current size' "$Wc_c"
+fi
+# ============= oa.h ==============
+if test -f 'oa.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping oa.h (File already exists)'
+else
+echo 'x - extracting oa.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oa.h' &&
+/*  
+X
+X  If more than BIGWORK comparisons are required in
+an oacheck routine, then a warning is printed that
+a large job is underway.  If more than MEDWORK comparisons
+are required then intermediate results are printed.
+X
+X  No strength checking beyond strength MAXSTR is done.
+Only change it if you implement the higher strength
+checks!
+X
+*/
+X
+#define BIGWORK 100000000
+#define MEDWORK BIGWORK/10
+X
+SHAR_EOF
+chmod 0644 oa.h ||
+echo 'restore of oa.h failed'
+Wc_c="`wc -c < 'oa.h'`"
+test 394 -eq "$Wc_c" ||
+	echo 'oa.h: original size 394, current size' "$Wc_c"
+fi
+# ============= oaagree.c ==============
+if test -f 'oaagree.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oaagree.c (File already exists)'
+else
+echo 'x - extracting oaagree.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oaagree.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+int *ivector(), **imatrix();
+X
+/* Count Agreements among rows of an array */
+X
+#define ROWCHECK 50
+X
+int **A;
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+int i, j, k;
+int agree, maxagr;
+int mrow1, mrow2;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+X
+maxagr = mrow1 = mrow2 = 0;
+X
+for( i=0; i<nrow; i++  ){
+X  for( j=i+1; j<nrow; j++  ){
+X    agree = 0;
+X    for( k=0; k<ncol; k++  )
+X      agree += (A[i][k]==A[j][k]);
+X    if(  agree>maxagr  ){
+X      maxagr = agree;
+X      mrow1 = i;
+X      mrow2 = j;
+X      printf("New max %d %d %d\n",i,j,agree);
+X    }
+X  }
+X  if(  i && i % ROWCHECK == 0  )
+X    printf("Checked rows <= %d vs all other rows.\n",i);
+}
+if(  maxagr == 0  )
+X  printf("No two distinct rows agree in any columns.\n");
+else{
+X  printf("Maximum number of columns matching for two distinct rows is %d.\n",
+X	 maxagr);
+X  printf("This is attained by rows %d and %d.\n",mrow1,mrow2);
+}
+X
+}
+SHAR_EOF
+chmod 0644 oaagree.c ||
+echo 'restore of oaagree.c failed'
+Wc_c="`wc -c < 'oaagree.c'`"
+test 1345 -eq "$Wc_c" ||
+	echo 'oaagree.c: original size 1345, current size' "$Wc_c"
+fi
+# ============= oadimen.c ==============
+if test -f 'oadimen.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oadimen.c (File already exists)'
+else
+echo 'x - extracting oadimen.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oadimen.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+X
+/*  
+X 
+X   Use brute force to check the actual strength
+of the input array.
+X
+*/
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+int str;
+X
+double work;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+printf("\nThe array has %d rows, %d columns and appears\n",nrow,ncol);
+printf("to have %d symbols, since the largest symbol is %d.\n",q,q-1);
+}
+SHAR_EOF
+chmod 0644 oadimen.c ||
+echo 'restore of oadimen.c failed'
+Wc_c="`wc -c < 'oadimen.c'`"
+test 783 -eq "$Wc_c" ||
+	echo 'oadimen.c: original size 783, current size' "$Wc_c"
+fi
+# ============= oarand.c ==============
+if test -f 'oarand.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oarand.c (File already exists)'
+else
+echo 'x - extracting oarand.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oarand.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+int *ivector(), **imatrix();
+/*  
+X
+X  In each column of an orthogonal array, independently randomize the symbols.
+X
+*/
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+int i, j, *pi;
+int is,js,ks,ls;
+X
+if(  argc >= 5  ){  /* Take random seed */
+X  sscanf(argv[argc-1],"%d",&is);
+X  sscanf(argv[argc-2],"%d",&js);
+X  sscanf(argv[argc-3],"%d",&ks);
+X  sscanf(argv[argc-4],"%d",&ls);
+X  seed( is,js,ks,ls );
+}  
+argc -= 4;
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+X
+pi = ivector( 0,q-1 );
+X
+for(  j=0; j<ncol; j++  ){
+X  unifperm( pi,q );
+X  for(  i=0; i<nrow; i++  )
+X    A[i][j] = pi[ A[i][j] ];
+}
+X
+OA_put( A,nrow,ncol,q );
+exit(0);
+}
+SHAR_EOF
+chmod 0644 oarand.c ||
+echo 'restore of oarand.c failed'
+Wc_c="`wc -c < 'oarand.c'`"
+test 1082 -eq "$Wc_c" ||
+	echo 'oarand.c: original size 1082, current size' "$Wc_c"
+fi
+# ============= oastr.c ==============
+if test -f 'oastr.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oastr.c (File already exists)'
+else
+echo 'x - extracting oastr.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oastr.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+X
+/*  
+X 
+X   Use brute force to check the actual strength
+of the input array.
+X
+*/
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+int str;
+X
+double work;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+OA_strength( q,nrow,ncol,A,&str,2 );
+X
+if(  str <0  ){
+X  printf("\nThe array does not even have strength 0, meaning that\n");
+X  printf("it is not composed of symbols 0 through %d.\n");
+}
+else
+X  printf("\nThe array has strength %d and no higher strength.\n",str);
+}
+SHAR_EOF
+chmod 0644 oastr.c ||
+echo 'restore of oastr.c failed'
+Wc_c="`wc -c < 'oastr.c'`"
+test 903 -eq "$Wc_c" ||
+	echo 'oastr.c: original size 903, current size' "$Wc_c"
+fi
+# ============= oastr1.c ==============
+if test -f 'oastr1.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oastr1.c (File already exists)'
+else
+echo 'x - extracting oastr1.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oastr1.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+X
+/*  
+X
+X       Check whether the array in standard input is really
+X   of strength 1.  Use brute force.  For OA( nrow, ncol, q, ? )
+X   it takes work roughly proportional to 
+X             ncol * nrow * q
+X   to decide if ? >= 1.  The user is warned if this is likely
+X   to be too much work.
+X
+X       The program calls exit(0) if the input array has strength
+X   1.  It calls exit(1) if the array is not of strength 1, or if
+X   the input is invalid, or if it is impossible to allocate enough
+X   memory to find out.
+X
+X       Note that an array of strength larger than 1 is a fortiori
+X   of strength 1 and will pass this test.  
+X
+*/
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+if(  OA_str1( q,nrow,ncol,A,2   )  )
+X  exit(1);
+else
+X  exit(0);
+}
+SHAR_EOF
+chmod 0644 oastr1.c ||
+echo 'restore of oastr1.c failed'
+Wc_c="`wc -c < 'oastr1.c'`"
+test 1240 -eq "$Wc_c" ||
+	echo 'oastr1.c: original size 1240, current size' "$Wc_c"
+fi
+# ============= oastr2.c ==============
+if test -f 'oastr2.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oastr2.c (File already exists)'
+else
+echo 'x - extracting oastr2.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oastr2.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+X
+/*  
+X
+X       Check whether the array in standard input is really
+X   of strength 2.  Use brute force.  For OA( nrow, ncol, q, ? )
+X   it takes work roughly proportional to 
+X             ncol^2 * nrow * q^2/2
+X   to decide if ? >= 2.  The user is warned if this is likely
+X   to be too much work.
+X
+X       The program calls exit(0) if the input array has strength
+X   2.  It calls exit(1) if the array is not of strength 2, or if
+X   the input is invalid, or if it is impossible to allocate enough
+X   memory to find out.
+X
+X       The program exits at the first sign that the array is
+X   not of strength 2.  This can save lots of work if the problem
+X   shows up early, but it doesn't give a complete list of the
+X   array's shortcomings.  Such a list could be very large.
+X
+X       Note that an array of strength larger than 2 is a fortiori
+X   of strength 2 and will pass this test.  
+X
+*/
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+if(  OA_str2( q,nrow,ncol,A,2   )  )
+X  exit(1);
+else
+X  exit(0);
+}
+SHAR_EOF
+chmod 0644 oastr2.c ||
+echo 'restore of oastr2.c failed'
+Wc_c="`wc -c < 'oastr2.c'`"
+test 1495 -eq "$Wc_c" ||
+	echo 'oastr2.c: original size 1495, current size' "$Wc_c"
+fi
+# ============= oastr3.c ==============
+if test -f 'oastr3.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oastr3.c (File already exists)'
+else
+echo 'x - extracting oastr3.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oastr3.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+X
+/*  
+X
+X       Check whether the array in standard input is really
+X   of strength 3.  Use brute force.  For OA( nrow, ncol, q, ? )
+X   it takes work roughly proportional to 
+X             ncol^3 * nrow * q^3/6  
+X   to decide if ? >= 3.  The user is warned if this is likely
+X   to be too much work.
+X
+X       The program calls exit(0) if the input array has strength
+X   3.  It calls exit(1) if the array is not of strength 3, or if
+X   the input is invalid, or if it is impossible to allocate enough
+X   memory to find out.
+X
+X       Note that an array of strength larger than 3 is a fortiori
+X   of strength 3 and will pass this test.  
+X
+*/
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+if(  OA_str3( q,nrow,ncol,A,2   )  )
+X  exit(1);
+else
+X  exit(0);
+}
+SHAR_EOF
+chmod 0644 oastr3.c ||
+echo 'restore of oastr3.c failed'
+Wc_c="`wc -c < 'oastr3.c'`"
+test 1249 -eq "$Wc_c" ||
+	echo 'oastr3.c: original size 1249, current size' "$Wc_c"
+fi
+# ============= oastr4.c ==============
+if test -f 'oastr4.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oastr4.c (File already exists)'
+else
+echo 'x - extracting oastr4.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oastr4.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+X
+/*  
+X
+X       Check whether the array in standard input is really
+X   of strength 4.  Use brute force.  For OA( nrow, ncol, q, ? )
+X   it takes work roughly proportional to 
+X             ncol^4 * nrow * q^4/24  
+X   to decide if ? >= 4.  The user is warned if this is likely
+X   to be too much work.
+X
+X       The program calls exit(0) if the input array has strength
+X   4.  It calls exit(1) if the array is not of strength 4, or if
+X   the input is invalid, or if it is impossible to allocate enough
+X   memory to find out.
+X
+X       The program exits at the first sign that the array is
+X   not of strength 4.  This can save lots of work if the problem
+X   shows up early, but it doesn't give a complete list of the
+X   array's shortcomings.  Such a list could be very large.
+X
+X       Note that an array of strength larger than 4 is a fortiori
+X   of strength 4 and will pass this test.  
+X
+*/
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int q, nrow, ncol, **A;
+int i, j1,j2,j3,j4,  q1,q2,q3,q4;
+int lambda, count;
+X
+double work;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+if(  OA_str4( q,nrow,ncol,A,2   )  )
+X  exit(1);
+else
+X  exit(0);
+}
+SHAR_EOF
+chmod 0644 oastr4.c ||
+echo 'restore of oastr4.c failed'
+Wc_c="`wc -c < 'oastr4.c'`"
+test 1565 -eq "$Wc_c" ||
+	echo 'oastr4.c: original size 1565, current size' "$Wc_c"
+fi
+# ============= oatriple.c ==============
+if test -f 'oatriple.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping oatriple.c (File already exists)'
+else
+echo 'x - extracting oatriple.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'oatriple.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include "oa.h"
+int *ivector(), **imatrix();
+X
+/* Count triple agreements among rows of an array */
+X
+main(argc,argv)
+int  argc;
+char *argv[];
+{
+int a3, q, nrow, ncol, **A;
+int i1, i2, j1, j2, j3;
+int num3;
+X
+OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+X
+num3 = 0;
+for(  j1=0;    j1<ncol; j1++  )
+for(  j2=j1+1; j2<ncol; j2++  )
+for(  j3=j2+1; j3<ncol; j3++  ){
+X  a3 = 0;
+X  for( i1=0;    i1<nrow; i1++  )
+X  for( i2=i1+1; i2<nrow; i2++  )
+X    a3 += ( A[i1][j1]==A[i2][j1] )&&( A[i1][j2]==A[i2][j2] )&&( A[i1][j3]==A[i2][j3] );
+X  if( a3 ){
+X    printf("Cols %d %d %d match in %d distinct pairs of rows.\n",j1,j2,j3,a3 );
+X    num3++;
+X  }
+} 
+printf("There are %d distinct triples of columns that agree\n",num3);
+printf("in at least two distinct rows.\n");
+}
+SHAR_EOF
+chmod 0644 oatriple.c ||
+echo 'restore of oatriple.c failed'
+Wc_c="`wc -c < 'oatriple.c'`"
+test 1172 -eq "$Wc_c" ||
+	echo 'oatriple.c: original size 1172, current size' "$Wc_c"
+fi
+# ============= ogfields.c ==============
+if test -f 'ogfields.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping ogfields.c (File already exists)'
+else
+echo 'x - extracting ogfields.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'ogfields.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*     Construction of specific Galois fields.  See galois.c 
+X    for manipulation of generic Galois fields.
+X
+X       To add a new Galois field GF(q)=GF(p^n) it is necessary 
+X    to find the polynomial representation of x^n, and use it to
+X    include another *xtn--- vector like those used below.
+X
+*/
+X
+#include <math.h>
+#include <stdio.h>
+X
+#include "galois.h"
+X
+X
+/*  Glossary:
+X
+X       xtn2t2              Polynomial representation of x^2 in gf2t2
+X       xtn2t3              Polynomial representation of x^3 in gf2t3
+X       . . .               Polynomial representation of p^n in gfptn
+X       xtn13t2             Polynomial representation of x^2 in gf13t2
+X
+X       GF_set_fields       Initialize polynomial representations
+X       GF_fields_are_set   Indicates initialization done
+X       GF_getfield         Construct and return GF(q) if possible
+*/
+X
+int *xtn2t2, *xtn2t3, *xtn2t4, *xtn2t5, *xtn2t6, *xtn2t7, *xtn2t8, *xtn2t9;
+int *xtn3t2, *xtn3t3, *xtn3t4, *xtn3t5, *xtn3t6;
+int *xtn5t2, *xtn5t3, *xtn5t4, *xtn5t5, *xtn5t6;
+int *xtn7t2, *xtn7t3, *xtn7t4, *xtn7t5;
+int *xtn11t2;
+int *xtn13t2;
+X
+int *xtnpt1;
+X
+int GF_fields_are_set = 0;
+X
+GF_set_fields()
+{
+/* Brute force set up of defining vectors, from Carmichael */
+X
+/* Declare x-to-the-power-n vectors, for GFs p-to-the-n */
+X
+if(   GF_fields_are_set   )
+X  fprintf(stderr,"Warning: Fields being re-initialized.  Possible memory waste.\n");
+X
+xtnpt1 = ivector(0,0);
+X
+xtn2t2 = ivector(0,1);
+xtn3t2 = ivector(0,1);
+xtn5t2 = ivector(0,1);
+xtn7t2 = ivector(0,1);
+xtn11t2 = ivector(0,1);
+xtn13t2 = ivector(0,1);
+X
+xtn2t3 = ivector(0,2);
+xtn3t3 = ivector(0,2);
+xtn5t3 = ivector(0,2);
+xtn7t3 = ivector(0,2);
+X
+xtn2t4 = ivector(0,3);
+xtn3t4 = ivector(0,3);
+xtn5t4 = ivector(0,3);
+xtn7t4 = ivector(0,3);
+X
+xtn2t5 = ivector(0,4);
+xtn3t5 = ivector(0,4);
+xtn5t5 = ivector(0,4);
+xtn7t5 = ivector(0,4);
+X
+xtn2t6 = ivector(0,5);
+xtn3t6 = ivector(0,5);
+xtn5t6 = ivector(0,5);
+X
+xtn2t7 = ivector(0,6);
+xtn2t8 = ivector(0,7);
+xtn2t9 = ivector(0,8);
+X
+/* Assign values for vectors with p=2 */
+X
+xtn2t2[0] = 1;
+xtn2t2[1] = 1;
+X
+xtn2t3[0] = 1;
+xtn2t3[1] = 1;
+xtn2t3[2] = 0;
+X
+xtn2t4[0] = 1;
+xtn2t4[1] = 1;
+xtn2t4[2] = 0;
+xtn2t4[3] = 0;
+X
+xtn2t5[0] = 1;
+xtn2t5[1] = 0;
+xtn2t5[2] = 1;
+xtn2t5[3] = 0;
+xtn2t5[4] = 0;
+X
+xtn2t6[0] = 1;
+xtn2t6[1] = 1;
+xtn2t6[2] = 0;
+xtn2t6[3] = 0;
+xtn2t6[4] = 0;
+xtn2t6[5] = 0;
+X
+xtn2t7[0] = 1;
+xtn2t7[1] = 1;
+xtn2t7[2] = 0;
+xtn2t7[3] = 0;
+xtn2t7[4] = 0;
+xtn2t7[5] = 0;
+xtn2t7[6] = 0;
+X
+xtn2t8[0] = 1;
+xtn2t8[1] = 0;
+xtn2t8[2] = 1;
+xtn2t8[3] = 1;
+xtn2t8[4] = 1;
+xtn2t8[5] = 0;
+xtn2t8[6] = 0;
+xtn2t8[7] = 0;
+X
+xtn2t9[0] = 1;
+xtn2t9[1] = 1;
+xtn2t9[2] = 1;
+xtn2t9[3] = 1;
+xtn2t9[4] = 1;
+xtn2t9[5] = 0;
+xtn2t9[6] = 0;
+xtn2t9[7] = 0;
+xtn2t9[8] = 1;
+X
+/* Assign values for vectors with p=3 */
+X
+xtn3t2[0] = 1;
+xtn3t2[1] = 2;
+X
+xtn3t3[0] = 2;
+xtn3t3[1] = 1;
+xtn3t3[2] = 0;
+X
+xtn3t4[0] = 1;
+xtn3t4[1] = 1;
+xtn3t4[2] = 2;
+xtn3t4[3] = 2;
+X
+xtn3t5[0] = 2;
+xtn3t5[1] = 1;
+xtn3t5[2] = 0;
+xtn3t5[3] = 0;
+xtn3t5[4] = 0;
+X
+xtn3t6[0] = 1;
+xtn3t6[1] = 1;
+xtn3t6[2] = 0;
+xtn3t6[3] = 0;
+xtn3t6[4] = 0;
+xtn3t6[5] = 0;
+X
+/* Assign values for vectors with p=5 */
+X
+xtn5t2[0] = 2;
+xtn5t2[1] = 2;
+X
+xtn5t3[0] = 3;
+xtn5t3[1] = 2;
+xtn5t3[2] = 0;
+X
+xtn5t4[0] = 2;
+xtn5t4[1] = 1;
+xtn5t4[2] = 0;
+xtn5t4[3] = 1;
+X
+xtn5t5[0] = 2;
+xtn5t5[1] = 1;
+xtn5t5[2] = 0;
+xtn5t5[3] = 0;
+xtn5t5[4] = 0;
+X
+xtn5t6[0] = 3; /* uses some negs in Carmichael */
+xtn5t6[1] = 3;
+xtn5t6[2] = 0;
+xtn5t6[3] = 1;
+xtn5t6[4] = 4;
+xtn5t6[5] = 1;
+X
+/* Assign values for vectors with p=7 */
+X
+xtn7t2[0] = 4; /* uses some negs in Carmichael */
+xtn7t2[1] = 1;
+X
+xtn7t3[0] = 5; /* uses some negs in Carmichael */
+xtn7t3[1] = 1;
+xtn7t3[2] = 0;
+X
+xtn7t4[0] = 2;
+xtn7t4[1] = 2;
+xtn7t4[2] = 0;
+xtn7t4[3] = 2;
+X
+xtn7t5[0] = 3;
+xtn7t5[1] = 6;
+xtn7t5[2] = 0;
+xtn7t5[3] = 0;
+xtn7t5[4] = 0;
+X
+/* Assign values for vectors with p=11,13 */
+X
+xtn11t2[0] = 9; /* uses some negs in Carmichael */
+xtn11t2[1] = 4;
+X
+xtn13t2[0] = 11;
+xtn13t2[1] = 12;
+X
+xtnpt1[0] = 0; /* Not used */
+X
+GF_fields_are_set = 1;
+}
+X
+X
+GF_getfield( q, gf )
+int q;
+struct GF *gf;
+{
+int *xtn;
+int p,n,ispp;
+X
+if(  !GF_fields_are_set  )
+X  GF_set_fields();
+X
+if(  q<1  ){      /* Impossible argument */
+X  fprintf(stderr,"Field must have positive number of elements.\n");
+X  return 0; }
+if(  q==1 ){      /* Pointless  argument */
+X  fprintf(stderr,"Field with 1 element was requested.\n");
+X  return 0; }
+X
+primepow( q,&p,&n,&ispp  );
+if(  !ispp  ){
+X  fprintf(stderr,"q=%d is not a prime power.\n",q);
+X  return 0; }
+X
+xtn = NULL;
+X
+/*   4 8 16 32 64 128 256 512 */
+if(  q== ipow(2,2)  )xtn = xtn2t2;
+if(  q== ipow(2,3)  )xtn = xtn2t3;
+if(  q== ipow(2,4)  )xtn = xtn2t4;
+if(  q== ipow(2,5)  )xtn = xtn2t5;
+if(  q== ipow(2,6)  )xtn = xtn2t6;
+if(  q== ipow(2,7)  )xtn = xtn2t7;
+if(  q== ipow(2,8)  )xtn = xtn2t8;
+if(  q== ipow(2,9)  )xtn = xtn2t9;
+X
+/*   9 27 81 243 729          */
+if(  q== ipow(3,2)  )xtn = xtn3t2;
+if(  q== ipow(3,3)  )xtn = xtn3t3;
+if(  q== ipow(3,4)  )xtn = xtn3t4;
+if(  q== ipow(3,5)  )xtn = xtn3t5;
+if(  q== ipow(3,6)  )xtn = xtn3t6;
+X
+/*   25 125 625 3125 15625    */
+if(  q== ipow(5,2)  )xtn = xtn5t2;
+if(  q== ipow(5,3)  )xtn = xtn5t3;
+if(  q== ipow(5,4)  )xtn = xtn5t4;
+if(  q== ipow(5,5)  )xtn = xtn5t5;
+if(  q== ipow(5,6)  )xtn = xtn5t6;
+X
+/*   49 343 2401 16807        */
+if(  q== ipow(7,2)  )xtn = xtn7t2;
+if(  q== ipow(7,3)  )xtn = xtn7t3;
+if(  q== ipow(7,4)  )xtn = xtn7t4;
+if(  q== ipow(7,5)  )xtn = xtn7t5;
+X
+/*   121 169                  */
+if(  q== ipow(11,2) )xtn = xtn11t2;
+if(  q== ipow(13,2) )xtn = xtn13t2;
+X
+if(  isprime(q)  )xtn = xtnpt1;  /* Could have tested p=q, or n=1 */
+X
+if(  xtn   ){
+X  if(  GF_ready( gf,p,n,xtn )  )
+X    return 1;
+X  else{
+X    fprintf(stderr,"Construction failed for GF(%d).\n",q);
+X    return 0;
+X  }
+}
+else {
+X  fprintf(stderr,"GF(%d) = GF(%d^%d) is not included in this program.\n",q,p,n);
+X  fprintf(stderr,"To add it, consider modifying gfields.c.\n",q);
+X  return 0;
+}
+}
+SHAR_EOF
+chmod 0644 ogfields.c ||
+echo 'restore of ogfields.c failed'
+Wc_c="`wc -c < 'ogfields.c'`"
+test 6227 -eq "$Wc_c" ||
+	echo 'ogfields.c: original size 6227, current size' "$Wc_c"
+fi
+# ============= primes.c ==============
+if test -f 'primes.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping primes.c (File already exists)'
+else
+echo 'x - extracting primes.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'primes.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*     Utilities related to prime numbers.  */
+X
+#include <math.h>
+#include <stdio.h>
+X
+X
+/*  Glossary:
+X
+X       isprime           returns 1 for prime argument
+X       ispcheck          was used to test isprime
+X
+X       primepow          find q=p^n if q is a prime power with n>0
+X       isprimepow        returns 1 for prime power argument
+X       ipow              pow() with integer arguments and value
+X       fqpncheck         was used to test primepow
+X
+*/
+X
+isprime( p )
+int p;
+{
+int k;
+X
+if(  p<2  )return 0;
+X
+/*  This is not the fastest, but it is likely to
+take negligible time compared to that used in constructing
+the Galois field or the experimental design
+*/
+X
+for(  k=2; k< sqrt( (double) (p+1) ); k++  )
+X  if(  (p/k)*k == p  )return 0;
+return 1;
+}
+X
+ispcheck()
+{
+int q;
+for(  q=1; q<2000; q++  )
+X  if(  isprime(q)  )printf("%d\n",q);
+}
+X
+X
+X
+X
+primepow( q,p,n,isit )
+int q,*p,*n,*isit;
+{
+int k, firstfactor;
+X
+*p = *n = *isit = 0;
+if(  q<=1  )return;
+X
+if(  isprime(q)  ){
+X  *p=q; *n=1; *isit=1;
+X  return;
+}
+X
+for(  k=2; k<sqrt( (double) (q+1) ); k++  )
+X  if(  (q%k)==0  ){
+X    firstfactor = k;
+X    break;
+X  }
+if(  !isprime(firstfactor)  )return;
+X
+while( 1 ){
+X  if(  q == 1  ){
+X    *isit = 1;
+X    *p = firstfactor;
+X    return;
+X  }
+X  if(  q %  firstfactor == 0  ){
+X    *n += 1;
+X    q/= firstfactor;
+X  }
+X  else{
+X    return;
+X  }
+}
+}
+X
+isprimepow( q )
+int q;
+{
+int p,n,ispp;
+primepow( q,&p,&n,&ispp );
+return ispp;
+}
+X
+X
+int ipow( a,b )
+int a,b;
+{return (int) pow( (double) a, (double) b );}
+X
+X
+fqpncheck()
+{
+int q, p, n, ispp;
+X
+for(  q=0; q<=20000; q++  ){
+X  primepow( q, &p, &n, &ispp );
+X  if(  ispp  )
+X    printf("%5d %5d %5d\n",q,p,n);
+}
+}
+X
+SHAR_EOF
+chmod 0644 primes.c ||
+echo 'restore of primes.c failed'
+Wc_c="`wc -c < 'primes.c'`"
+test 2033 -eq "$Wc_c" ||
+	echo 'primes.c: original size 2033, current size' "$Wc_c"
+fi
+# ============= runif.c ==============
+if test -f 'runif.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping runif.c (File already exists)'
+else
+echo 'x - extracting runif.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'runif.c' &&
+#include <stdio.h>
+#include <math.h>
+X
+X
+X
+X
+/*
+c
+c Marsaglia - Zaman universal random number generator.
+c
+c reinitialization: call seed(is,js,ks,ls), with integer arguments
+c from 1 to 168, not all 1.
+c
+c generate n uniform random numbers and store in x(n): call ranums(x,n).
+c
+X
+X
+X  Transliterated from FORTRAN to C by Art Owen, 4 March 1993.
+X
+X  Functions:
+X
+X    mod( a,b )             a mod b
+X    seedok( is,js,ks,ls )  1 if seeds ok, 0 otherwise
+X    seed( is,js,ks,ls )    sets seed integers, rejects invalid input
+X    ranums( z,n )          sets z[0] through z[n-1] 
+X                           to the next n random uniforms between 0 and 1
+X    runif( z,n )           same as ranums
+X
+X  The C and f77 programs shown below find the first 2000 random
+X  numbers starting at 0 and print them to 10 places.  The maximum
+X  difference between any two corresponding random numbers was
+X  5e-11.  Equality held in 1822 of the cases.  The original FORTRAN 
+X  subroutines are appended in a comment at the end of this file.
+X
+X
+C test program:
+X
+#include <math.h>
+#include <stdio.h>
+X
+#define N 2000
+static  double z[N];
+X
+main()
+{
+int i;
+ranums( z,N );
+for(  i=0; i<N; i++  )
+X  printf("%14.10g\n",z[i]);
+}
+X
+F77 test program:
+X
+X      integer n
+X      real z(2000)
+X
+X      n = 2000
+X      call ranums( z,n )
+X      write(6,10)(z(i),i=1,n)
+X 10   format(F14.10)
+X
+X      stop
+X      end
+X
+*/
+X
+X
+int mod( a,b )
+int  a,b;
+{
+int ans;
+ans = a % b;
+if(  ans>=0  )return ans;
+else return ans+b;
+}
+X
+X
+static int      jent=0,i=12,j=34,k=56,l=78,      ip,jp;
+static double u[97+1],                          c,cd,cm;
+X
+seedok( is,js,ks,ls )   /*  1 iff seed is ok   */
+int is,js,ks,ls;
+{
+if(  is==1  && js==1  && ks==1  && ls==1   )return 0;
+if(  is<1   || js<1   || ks<1   || ls<1    )return 0;
+if(  is>168 || js>168 || ks>168 || ls>168  )return 0;
+return 1;
+}
+X
+X
+seed( is,js,ks,ls )
+int is,js,ks,ls;
+{
+jent=0;
+X
+if(  seedok(is,js,ks,ls)  ){
+X  i=is;  j=js;  k=ks;  l=ls;
+}else{
+X  fprintf(stderr,"Error: Invalid seed %d %d %d %d\n",is,js,ks,ls);
+X  fprintf(stderr,"Must be four integers between 1 and 168, and\n");
+X  fprintf(stderr,"must not all be 1.  Seed not changed.\n");
+}
+}
+X
+runif(x,n)
+int     n;
+double *x;
+{
+ranums(x,n);
+}
+X
+ranums(x,n)
+int     n;
+double *x;
+{
+int    ii, jj, m;
+double s,t,uni;
+X
+if(jent != 0) goto L30;
+jent=1;
+for(  ii=1; ii<=97; ii++  ){     /* do 20 ii=1,97 */
+X  s=0.0;
+X  t=0.5;
+X  for(  jj=1; jj<=24; jj++  ){   /* do 10 jj=1,24 */
+X    m=mod(mod(i*j,179)*k,179);
+X    i=j;
+X    j=k;
+X    k=m;
+X    l=mod(53*l+1,169);
+X    if (mod(l*m,64) >= 32) s=s+t;
+X    t=0.5*t;
+X  }                              /* 10   continue */
+X  u[ii]=s;
+}                                /* 20   continue */
+X
+c  =   362436.0/16777216.0;
+cd =  7654321.0/16777216.0;
+cm = 16777213.0/16777216.0;
+ip = 97;
+jp = 33;
+X
+X L30:  for(  ii=1; ii<=n; ii++  ){ /*  ii do 40 ii=1,n */
+X   uni=u[ip]-u[jp];
+X   if (uni < 0.0) uni=uni+1.0;
+X   u[ip]=uni;
+X   ip=ip-1;
+X   if (ip == 0) ip=97;
+X   jp=jp-1;
+X   if (jp == 0) jp=97;
+X   c=c-cd;
+X   if (c < 0.0) c=c+cm;
+X   uni=uni-c;
+X   if (uni < 0.0) uni=uni+1.0;
+X   x[ii-1]=uni;
+X }                                 /* 40   continue */
+}
+X
+/*  Original FORTRAN file:
+c
+X      subroutine seed (is,js,ks,ls)
+c
+c Marsaglia - Zaman universal random number generator.
+c
+c reinitialization: call seed(is,js,ks,ls), with integer arguments
+c from 1 to 168, not all 1.
+c
+c generate n uniform random numbers and store in x(n): call ranums(x,n).
+c
+X      real u(97),x(1)
+X      save u,jent,i,j,k,l,c,cd,cm,ip,jp
+X      data jent,i,j,k,l /0,12,34,56,78/
+X      jent=0
+X      i=is
+X      j=js
+X      k=ks
+X      l=ls
+X      return
+X      entry ranums(x,n)
+X      if (jent.ne.0) go to 30
+X      jent=1
+X      do 20 ii=1,97
+X      s=0.0
+X      t=0.5
+X      do 10 jj=1,24
+X      m=mod(mod(i*j,179)*k,179)
+X      i=j
+X      j=k
+X      k=m
+X      l=mod(53*l+1,169)
+X      if (mod(l*m,64).ge.32) s=s+t
+X      t=0.5*t
+X 10   continue
+X      u(ii)=s
+X 20   continue
+X      c=362436.0/16777216.0
+X      cd=7654321.0/16777216.0
+X      cm=16777213.0/16777216.0
+X      ip=97
+X      jp=33
+X 30   do 40 ii=1,n
+X      uni=u(ip)-u(jp)
+X      if (uni.lt.0.0) uni=uni+1.0
+X      u(ip)=uni
+X      ip=ip-1
+X      if (ip.eq.0) ip=97
+X      jp=jp-1
+X      if (jp.eq.0) jp=97
+X      c=c-cd
+X      if (c.lt.0.0) c=c+cm
+X      uni=uni-c
+X      if (uni.lt.0.0) uni=uni+1.0
+X      x(ii)=uni
+X 40   continue
+X      return
+X      end
+*/
+SHAR_EOF
+chmod 0644 runif.c ||
+echo 'restore of runif.c failed'
+Wc_c="`wc -c < 'runif.c'`"
+test 4312 -eq "$Wc_c" ||
+	echo 'runif.c: original size 4312, current size' "$Wc_c"
+fi
+# ============= rutils.c ==============
+if test -f 'rutils.c' -a X"$1" != X"-c"; then
+	echo 'x - skipping rutils.c (File already exists)'
+else
+echo 'x - extracting rutils.c (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'rutils.c' &&
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+X
+double **dmatrix(), *dvector();
+X
+X
+/*
+X
+X Utilities based on runif
+X
+*/
+X
+unifperm( pi,q )  
+/* 
+X   In S one just does rank(runif(q)).  Here we want
+something like rank(runif(q))-1 since the symbols to
+be permuted are 0..q-1.  
+*/
+X
+int q, *pi;
+{
+int i;
+double *z;
+X
+z = dvector( 0,q-1 );
+if(  !z  ){
+X  fprintf(stderr,"Could not allocate memory for random permutation.\n");
+X  exit(1);
+}
+runif( z,q );
+X
+findranks( q,z,pi );
+X
+for(  i=0; i<q; i++  )
+X  pi[i] -= 1;
+X
+free_dvector( z,0,q-1);
+}
+X
+X
+/* These routines perform sorting and ranking chores. */
+X
+int rankcomp( a,b )
+X
+double **a, **b;
+{
+/*printf("Randcomp a = (%g,%g) b=(%g,%g)\n",a[0][0],a[0][1],b[0][0],b[0][1]);*/
+if(  a[0][0] < b[0][0]  )return(-1);
+if(  a[0][0] > b[0][0]  )return( 1);
+return(0);
+}
+X
+findranks( n,v,r )
+int n, *r;
+double *v;
+X
+{
+double **temp;
+int    i;
+X
+temp = dmatrix(0,n-1,0,1);
+X
+if(  !temp  ){
+X  printf("findranks: could not allocate memory to find ranks.\n");
+X  exit(1);
+}
+X
+for( i=0; i<n; i++  ){
+X  temp[i][0] = v[i];
+X  temp[i][1] = (double) i;
+}
+qsort((void *)temp,(size_t) n,sizeof(temp[0]),rankcomp);
+X
+for(  i=0; i<n; i++  )
+X  r[ (int)temp[i][1] ] = i+1; /*Ranks go 1..n */
+}
+X
+X
+int doubcomp( a,b )
+double a,b;
+{
+if(  a < b  )return(-1);
+if(  a > b  )return( 1);
+return(0);
+}
+SHAR_EOF
+chmod 0644 rutils.c ||
+echo 'restore of rutils.c failed'
+Wc_c="`wc -c < 'rutils.c'`"
+test 1706 -eq "$Wc_c" ||
+	echo 'rutils.c: original size 1706, current size' "$Wc_c"
+fi
+# ============= xtndeclare.h ==============
+if test -f 'xtndeclare.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping xtndeclare.h (File already exists)'
+else
+echo 'x - extracting xtndeclare.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'xtndeclare.h' &&
+/*  This code was computer generated */
+X
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+int *xtn2t2;
+int *xtn2t3;
+int *xtn2t4;
+int *xtn2t5;
+int *xtn2t6;
+int *xtn2t7;
+int *xtn2t8;
+int *xtn2t9;
+int *xtn2t10;
+int *xtn2t11;
+int *xtn2t12;
+int *xtn2t13;
+int *xtn2t14;
+int *xtn2t15;
+int *xtn2t16;
+int *xtn2t17;
+int *xtn2t18;
+int *xtn2t19;
+int *xtn2t20;
+int *xtn2t21;
+int *xtn2t22;
+int *xtn2t23;
+int *xtn2t24;
+int *xtn2t25;
+int *xtn2t26;
+int *xtn2t27;
+int *xtn2t28;
+int *xtn2t29;
+int *xtn3t2;
+int *xtn3t3;
+int *xtn3t4;
+int *xtn3t5;
+int *xtn3t6;
+int *xtn3t7;
+int *xtn3t8;
+int *xtn3t9;
+int *xtn3t10;
+int *xtn3t11;
+int *xtn3t12;
+int *xtn3t13;
+int *xtn3t14;
+int *xtn3t15;
+int *xtn3t16;
+int *xtn3t17;
+int *xtn3t18;
+int *xtn5t2;
+int *xtn5t3;
+int *xtn5t4;
+int *xtn5t5;
+int *xtn5t6;
+int *xtn5t7;
+int *xtn5t8;
+int *xtn5t9;
+int *xtn5t10;
+int *xtn5t11;
+int *xtn5t12;
+int *xtn7t2;
+int *xtn7t3;
+int *xtn7t4;
+int *xtn7t5;
+int *xtn7t6;
+int *xtn7t7;
+int *xtn7t8;
+int *xtn7t9;
+int *xtn7t10;
+int *xtn11t2;
+int *xtn11t3;
+int *xtn11t4;
+int *xtn11t5;
+int *xtn11t6;
+int *xtn11t7;
+int *xtn11t8;
+int *xtn13t2;
+int *xtn13t3;
+int *xtn13t4;
+int *xtn13t5;
+int *xtn13t6;
+int *xtn13t7;
+int *xtn13t8;
+int *xtn17t2;
+int *xtn17t3;
+int *xtn17t4;
+int *xtn17t5;
+int *xtn17t6;
+int *xtn17t7;
+int *xtn19t2;
+int *xtn19t3;
+int *xtn19t4;
+int *xtn19t5;
+int *xtn19t6;
+int *xtn19t7;
+int *xtn23t2;
+int *xtn23t3;
+int *xtn23t4;
+int *xtn23t5;
+int *xtn23t6;
+int *xtn29t2;
+int *xtn29t3;
+int *xtn29t4;
+int *xtn29t5;
+int *xtn29t6;
+int *xtn31t2;
+int *xtn31t3;
+int *xtn31t4;
+int *xtn31t5;
+int *xtn31t6;
+int *xtn37t2;
+int *xtn37t3;
+int *xtn37t4;
+int *xtn37t5;
+int *xtn41t2;
+int *xtn41t3;
+int *xtn41t4;
+int *xtn41t5;
+int *xtn43t2;
+int *xtn43t3;
+int *xtn43t4;
+int *xtn43t5;
+int *xtn47t2;
+int *xtn47t3;
+int *xtn47t4;
+int *xtn47t5;
+SHAR_EOF
+chmod 0644 xtndeclare.h ||
+echo 'restore of xtndeclare.h failed'
+Wc_c="`wc -c < 'xtndeclare.h'`"
+test 2117 -eq "$Wc_c" ||
+	echo 'xtndeclare.h: original size 2117, current size' "$Wc_c"
+fi
+# ============= xtndispatch.h ==============
+if test -f 'xtndispatch.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping xtndispatch.h (File already exists)'
+else
+echo 'x - extracting xtndispatch.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'xtndispatch.h' &&
+/*  This code was computer generated */
+X
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+if(  q== ipow(2,2)  )xtn = xtn2t2;
+if(  q== ipow(2,3)  )xtn = xtn2t3;
+if(  q== ipow(2,4)  )xtn = xtn2t4;
+if(  q== ipow(2,5)  )xtn = xtn2t5;
+if(  q== ipow(2,6)  )xtn = xtn2t6;
+if(  q== ipow(2,7)  )xtn = xtn2t7;
+if(  q== ipow(2,8)  )xtn = xtn2t8;
+if(  q== ipow(2,9)  )xtn = xtn2t9;
+if(  q== ipow(2,10)  )xtn = xtn2t10;
+if(  q== ipow(2,11)  )xtn = xtn2t11;
+if(  q== ipow(2,12)  )xtn = xtn2t12;
+if(  q== ipow(2,13)  )xtn = xtn2t13;
+if(  q== ipow(2,14)  )xtn = xtn2t14;
+if(  q== ipow(2,15)  )xtn = xtn2t15;
+if(  q== ipow(2,16)  )xtn = xtn2t16;
+if(  q== ipow(2,17)  )xtn = xtn2t17;
+if(  q== ipow(2,18)  )xtn = xtn2t18;
+if(  q== ipow(2,19)  )xtn = xtn2t19;
+if(  q== ipow(2,20)  )xtn = xtn2t20;
+if(  q== ipow(2,21)  )xtn = xtn2t21;
+if(  q== ipow(2,22)  )xtn = xtn2t22;
+if(  q== ipow(2,23)  )xtn = xtn2t23;
+if(  q== ipow(2,24)  )xtn = xtn2t24;
+if(  q== ipow(2,25)  )xtn = xtn2t25;
+if(  q== ipow(2,26)  )xtn = xtn2t26;
+if(  q== ipow(2,27)  )xtn = xtn2t27;
+if(  q== ipow(2,28)  )xtn = xtn2t28;
+if(  q== ipow(2,29)  )xtn = xtn2t29;
+if(  q== ipow(3,2)  )xtn = xtn3t2;
+if(  q== ipow(3,3)  )xtn = xtn3t3;
+if(  q== ipow(3,4)  )xtn = xtn3t4;
+if(  q== ipow(3,5)  )xtn = xtn3t5;
+if(  q== ipow(3,6)  )xtn = xtn3t6;
+if(  q== ipow(3,7)  )xtn = xtn3t7;
+if(  q== ipow(3,8)  )xtn = xtn3t8;
+if(  q== ipow(3,9)  )xtn = xtn3t9;
+if(  q== ipow(3,10)  )xtn = xtn3t10;
+if(  q== ipow(3,11)  )xtn = xtn3t11;
+if(  q== ipow(3,12)  )xtn = xtn3t12;
+if(  q== ipow(3,13)  )xtn = xtn3t13;
+if(  q== ipow(3,14)  )xtn = xtn3t14;
+if(  q== ipow(3,15)  )xtn = xtn3t15;
+if(  q== ipow(3,16)  )xtn = xtn3t16;
+if(  q== ipow(3,17)  )xtn = xtn3t17;
+if(  q== ipow(3,18)  )xtn = xtn3t18;
+if(  q== ipow(5,2)  )xtn = xtn5t2;
+if(  q== ipow(5,3)  )xtn = xtn5t3;
+if(  q== ipow(5,4)  )xtn = xtn5t4;
+if(  q== ipow(5,5)  )xtn = xtn5t5;
+if(  q== ipow(5,6)  )xtn = xtn5t6;
+if(  q== ipow(5,7)  )xtn = xtn5t7;
+if(  q== ipow(5,8)  )xtn = xtn5t8;
+if(  q== ipow(5,9)  )xtn = xtn5t9;
+if(  q== ipow(5,10)  )xtn = xtn5t10;
+if(  q== ipow(5,11)  )xtn = xtn5t11;
+if(  q== ipow(5,12)  )xtn = xtn5t12;
+if(  q== ipow(7,2)  )xtn = xtn7t2;
+if(  q== ipow(7,3)  )xtn = xtn7t3;
+if(  q== ipow(7,4)  )xtn = xtn7t4;
+if(  q== ipow(7,5)  )xtn = xtn7t5;
+if(  q== ipow(7,6)  )xtn = xtn7t6;
+if(  q== ipow(7,7)  )xtn = xtn7t7;
+if(  q== ipow(7,8)  )xtn = xtn7t8;
+if(  q== ipow(7,9)  )xtn = xtn7t9;
+if(  q== ipow(7,10)  )xtn = xtn7t10;
+if(  q== ipow(11,2)  )xtn = xtn11t2;
+if(  q== ipow(11,3)  )xtn = xtn11t3;
+if(  q== ipow(11,4)  )xtn = xtn11t4;
+if(  q== ipow(11,5)  )xtn = xtn11t5;
+if(  q== ipow(11,6)  )xtn = xtn11t6;
+if(  q== ipow(11,7)  )xtn = xtn11t7;
+if(  q== ipow(11,8)  )xtn = xtn11t8;
+if(  q== ipow(13,2)  )xtn = xtn13t2;
+if(  q== ipow(13,3)  )xtn = xtn13t3;
+if(  q== ipow(13,4)  )xtn = xtn13t4;
+if(  q== ipow(13,5)  )xtn = xtn13t5;
+if(  q== ipow(13,6)  )xtn = xtn13t6;
+if(  q== ipow(13,7)  )xtn = xtn13t7;
+if(  q== ipow(13,8)  )xtn = xtn13t8;
+if(  q== ipow(17,2)  )xtn = xtn17t2;
+if(  q== ipow(17,3)  )xtn = xtn17t3;
+if(  q== ipow(17,4)  )xtn = xtn17t4;
+if(  q== ipow(17,5)  )xtn = xtn17t5;
+if(  q== ipow(17,6)  )xtn = xtn17t6;
+if(  q== ipow(17,7)  )xtn = xtn17t7;
+if(  q== ipow(19,2)  )xtn = xtn19t2;
+if(  q== ipow(19,3)  )xtn = xtn19t3;
+if(  q== ipow(19,4)  )xtn = xtn19t4;
+if(  q== ipow(19,5)  )xtn = xtn19t5;
+if(  q== ipow(19,6)  )xtn = xtn19t6;
+if(  q== ipow(19,7)  )xtn = xtn19t7;
+if(  q== ipow(23,2)  )xtn = xtn23t2;
+if(  q== ipow(23,3)  )xtn = xtn23t3;
+if(  q== ipow(23,4)  )xtn = xtn23t4;
+if(  q== ipow(23,5)  )xtn = xtn23t5;
+if(  q== ipow(23,6)  )xtn = xtn23t6;
+if(  q== ipow(29,2)  )xtn = xtn29t2;
+if(  q== ipow(29,3)  )xtn = xtn29t3;
+if(  q== ipow(29,4)  )xtn = xtn29t4;
+if(  q== ipow(29,5)  )xtn = xtn29t5;
+if(  q== ipow(29,6)  )xtn = xtn29t6;
+if(  q== ipow(31,2)  )xtn = xtn31t2;
+if(  q== ipow(31,3)  )xtn = xtn31t3;
+if(  q== ipow(31,4)  )xtn = xtn31t4;
+if(  q== ipow(31,5)  )xtn = xtn31t5;
+if(  q== ipow(31,6)  )xtn = xtn31t6;
+if(  q== ipow(37,2)  )xtn = xtn37t2;
+if(  q== ipow(37,3)  )xtn = xtn37t3;
+if(  q== ipow(37,4)  )xtn = xtn37t4;
+if(  q== ipow(37,5)  )xtn = xtn37t5;
+if(  q== ipow(41,2)  )xtn = xtn41t2;
+if(  q== ipow(41,3)  )xtn = xtn41t3;
+if(  q== ipow(41,4)  )xtn = xtn41t4;
+if(  q== ipow(41,5)  )xtn = xtn41t5;
+if(  q== ipow(43,2)  )xtn = xtn43t2;
+if(  q== ipow(43,3)  )xtn = xtn43t3;
+if(  q== ipow(43,4)  )xtn = xtn43t4;
+if(  q== ipow(43,5)  )xtn = xtn43t5;
+if(  q== ipow(47,2)  )xtn = xtn47t2;
+if(  q== ipow(47,3)  )xtn = xtn47t3;
+if(  q== ipow(47,4)  )xtn = xtn47t4;
+if(  q== ipow(47,5)  )xtn = xtn47t5;
+SHAR_EOF
+chmod 0644 xtndispatch.h ||
+echo 'restore of xtndispatch.h failed'
+Wc_c="`wc -c < 'xtndispatch.h'`"
+test 4892 -eq "$Wc_c" ||
+	echo 'xtndispatch.h: original size 4892, current size' "$Wc_c"
+fi
+# ============= xtnset.h ==============
+if test -f 'xtnset.h' -a X"$1" != X"-c"; then
+	echo 'x - skipping xtnset.h (File already exists)'
+else
+echo 'x - extracting xtnset.h (Text)'
+sed 's/^X//' << 'SHAR_EOF' > 'xtnset.h' &&
+/*  This code was computer generated */
+X
+/*
+X
+X  These programs construct and manipulate orthogonal 
+arrays.  They were prepared by
+X
+X    Art Owen
+X    Department of Statistics
+X    Sequoia Hall
+X    Stanford CA 94305
+X
+X  They may be freely used and shared.  This code comes
+with no warranty of any kind.  Use it at your own
+risk.
+X
+X  I thank the Semiconductor Research Corporation and
+the National Science Foundation for supporting this
+work.
+X
+*/
+X
+X
+/*  GF( 2 ^ 2 ) = GF( 4 ) */
+xtn2t2 = ivector(0,1);
+xtn2t2[0] = 1;
+xtn2t2[1] = 1;
+X
+/*  GF( 2 ^ 3 ) = GF( 8 ) */
+xtn2t3 = ivector(0,2);
+xtn2t3[0] = 1;
+xtn2t3[1] = 0;
+xtn2t3[2] = 1;
+X
+/*  GF( 2 ^ 4 ) = GF( 16 ) */
+xtn2t4 = ivector(0,3);
+xtn2t4[0] = 1;
+xtn2t4[1] = 0;
+xtn2t4[2] = 0;
+xtn2t4[3] = 1;
+X
+/*  GF( 2 ^ 5 ) = GF( 32 ) */
+xtn2t5 = ivector(0,4);
+xtn2t5[0] = 1;
+xtn2t5[1] = 0;
+xtn2t5[2] = 0;
+xtn2t5[3] = 1;
+xtn2t5[4] = 0;
+X
+/*  GF( 2 ^ 6 ) = GF( 64 ) */
+xtn2t6 = ivector(0,5);
+xtn2t6[0] = 1;
+xtn2t6[1] = 0;
+xtn2t6[2] = 0;
+xtn2t6[3] = 0;
+xtn2t6[4] = 0;
+xtn2t6[5] = 1;
+X
+/*  GF( 2 ^ 7 ) = GF( 128 ) */
+xtn2t7 = ivector(0,6);
+xtn2t7[0] = 1;
+xtn2t7[1] = 0;
+xtn2t7[2] = 0;
+xtn2t7[3] = 0;
+xtn2t7[4] = 0;
+xtn2t7[5] = 0;
+xtn2t7[6] = 1;
+X
+/*  GF( 2 ^ 8 ) = GF( 256 ) */
+xtn2t8 = ivector(0,7);
+xtn2t8[0] = 1;
+xtn2t8[1] = 0;
+xtn2t8[2] = 0;
+xtn2t8[3] = 0;
+xtn2t8[4] = 1;
+xtn2t8[5] = 1;
+xtn2t8[6] = 1;
+xtn2t8[7] = 0;
+X
+/*  GF( 2 ^ 9 ) = GF( 512 ) */
+xtn2t9 = ivector(0,8);
+xtn2t9[0] = 1;
+xtn2t9[1] = 0;
+xtn2t9[2] = 0;
+xtn2t9[3] = 0;
+xtn2t9[4] = 0;
+xtn2t9[5] = 1;
+xtn2t9[6] = 0;
+xtn2t9[7] = 0;
+xtn2t9[8] = 0;
+X
+/*  GF( 2 ^ 10 ) = GF( 1024 ) */
+xtn2t10 = ivector(0,9);
+xtn2t10[0] = 1;
+xtn2t10[1] = 0;
+xtn2t10[2] = 0;
+xtn2t10[3] = 0;
+xtn2t10[4] = 0;
+xtn2t10[5] = 0;
+xtn2t10[6] = 0;
+xtn2t10[7] = 1;
+xtn2t10[8] = 0;
+xtn2t10[9] = 0;
+X
+/*  GF( 2 ^ 11 ) = GF( 2048 ) */
+xtn2t11 = ivector(0,10);
+xtn2t11[0] = 1;
+xtn2t11[1] = 0;
+xtn2t11[2] = 0;
+xtn2t11[3] = 0;
+xtn2t11[4] = 0;
+xtn2t11[5] = 0;
+xtn2t11[6] = 0;
+xtn2t11[7] = 0;
+xtn2t11[8] = 0;
+xtn2t11[9] = 1;
+xtn2t11[10] = 0;
+X
+/*  GF( 2 ^ 12 ) = GF( 4096 ) */
+xtn2t12 = ivector(0,11);
+xtn2t12[0] = 1;
+xtn2t12[1] = 0;
+xtn2t12[2] = 0;
+xtn2t12[3] = 0;
+xtn2t12[4] = 1;
+xtn2t12[5] = 0;
+xtn2t12[6] = 0;
+xtn2t12[7] = 0;
+xtn2t12[8] = 0;
+xtn2t12[9] = 0;
+xtn2t12[10] = 1;
+xtn2t12[11] = 1;
+X
+/*  GF( 2 ^ 13 ) = GF( 8192 ) */
+xtn2t13 = ivector(0,12);
+xtn2t13[0] = 1;
+xtn2t13[1] = 0;
+xtn2t13[2] = 0;
+xtn2t13[3] = 0;
+xtn2t13[4] = 0;
+xtn2t13[5] = 0;
+xtn2t13[6] = 0;
+xtn2t13[7] = 0;
+xtn2t13[8] = 1;
+xtn2t13[9] = 0;
+xtn2t13[10] = 0;
+xtn2t13[11] = 1;
+xtn2t13[12] = 1;
+X
+/*  GF( 2 ^ 14 ) = GF( 16384 ) */
+xtn2t14 = ivector(0,13);
+xtn2t14[0] = 1;
+xtn2t14[1] = 0;
+xtn2t14[2] = 1;
+xtn2t14[3] = 0;
+xtn2t14[4] = 0;
+xtn2t14[5] = 0;
+xtn2t14[6] = 0;
+xtn2t14[7] = 0;
+xtn2t14[8] = 0;
+xtn2t14[9] = 0;
+xtn2t14[10] = 0;
+xtn2t14[11] = 0;
+xtn2t14[12] = 1;
+xtn2t14[13] = 1;
+X
+/*  GF( 2 ^ 15 ) = GF( 32768 ) */
+xtn2t15 = ivector(0,14);
+xtn2t15[0] = 1;
+xtn2t15[1] = 0;
+xtn2t15[2] = 0;
+xtn2t15[3] = 0;
+xtn2t15[4] = 0;
+xtn2t15[5] = 0;
+xtn2t15[6] = 0;
+xtn2t15[7] = 0;
+xtn2t15[8] = 0;
+xtn2t15[9] = 0;
+xtn2t15[10] = 0;
+xtn2t15[11] = 0;
+xtn2t15[12] = 0;
+xtn2t15[13] = 0;
+xtn2t15[14] = 1;
+X
+/*  GF( 2 ^ 16 ) = GF( 65536 ) */
+xtn2t16 = ivector(0,15);
+xtn2t16[0] = 1;
+xtn2t16[1] = 0;
+xtn2t16[2] = 0;
+xtn2t16[3] = 0;
+xtn2t16[4] = 1;
+xtn2t16[5] = 0;
+xtn2t16[6] = 0;
+xtn2t16[7] = 0;
+xtn2t16[8] = 0;
+xtn2t16[9] = 0;
+xtn2t16[10] = 0;
+xtn2t16[11] = 0;
+xtn2t16[12] = 0;
+xtn2t16[13] = 1;
+xtn2t16[14] = 0;
+xtn2t16[15] = 1;
+X
+/*  GF( 2 ^ 17 ) = GF( 131072 ) */
+xtn2t17 = ivector(0,16);
+xtn2t17[0] = 1;
+xtn2t17[1] = 0;
+xtn2t17[2] = 0;
+xtn2t17[3] = 0;
+xtn2t17[4] = 0;
+xtn2t17[5] = 0;
+xtn2t17[6] = 0;
+xtn2t17[7] = 0;
+xtn2t17[8] = 0;
+xtn2t17[9] = 0;
+xtn2t17[10] = 0;
+xtn2t17[11] = 0;
+xtn2t17[12] = 0;
+xtn2t17[13] = 0;
+xtn2t17[14] = 1;
+xtn2t17[15] = 0;
+xtn2t17[16] = 0;
+X
+/*  GF( 2 ^ 18 ) = GF( 262144 ) */
+xtn2t18 = ivector(0,17);
+xtn2t18[0] = 1;
+xtn2t18[1] = 0;
+xtn2t18[2] = 0;
+xtn2t18[3] = 0;
+xtn2t18[4] = 0;
+xtn2t18[5] = 0;
+xtn2t18[6] = 0;
+xtn2t18[7] = 0;
+xtn2t18[8] = 0;
+xtn2t18[9] = 0;
+xtn2t18[10] = 0;
+xtn2t18[11] = 1;
+xtn2t18[12] = 0;
+xtn2t18[13] = 0;
+xtn2t18[14] = 0;
+xtn2t18[15] = 0;
+xtn2t18[16] = 0;
+xtn2t18[17] = 0;
+X
+/*  GF( 2 ^ 19 ) = GF( 524288 ) */
+xtn2t19 = ivector(0,18);
+xtn2t19[0] = 1;
+xtn2t19[1] = 0;
+xtn2t19[2] = 0;
+xtn2t19[3] = 0;
+xtn2t19[4] = 0;
+xtn2t19[5] = 0;
+xtn2t19[6] = 0;
+xtn2t19[7] = 0;
+xtn2t19[8] = 0;
+xtn2t19[9] = 0;
+xtn2t19[10] = 0;
+xtn2t19[11] = 0;
+xtn2t19[12] = 0;
+xtn2t19[13] = 0;
+xtn2t19[14] = 1;
+xtn2t19[15] = 0;
+xtn2t19[16] = 0;
+xtn2t19[17] = 1;
+xtn2t19[18] = 1;
+X
+/*  GF( 2 ^ 20 ) = GF( 1048576 ) */
+xtn2t20 = ivector(0,19);
+xtn2t20[0] = 1;
+xtn2t20[1] = 0;
+xtn2t20[2] = 0;
+xtn2t20[3] = 0;
+xtn2t20[4] = 0;
+xtn2t20[5] = 0;
+xtn2t20[6] = 0;
+xtn2t20[7] = 0;
+xtn2t20[8] = 0;
+xtn2t20[9] = 0;
+xtn2t20[10] = 0;
+xtn2t20[11] = 0;
+xtn2t20[12] = 0;
+xtn2t20[13] = 0;
+xtn2t20[14] = 0;
+xtn2t20[15] = 0;
+xtn2t20[16] = 0;
+xtn2t20[17] = 1;
+xtn2t20[18] = 0;
+xtn2t20[19] = 0;
+X
+/*  GF( 2 ^ 21 ) = GF( 2097152 ) */
+xtn2t21 = ivector(0,20);
+xtn2t21[0] = 1;
+xtn2t21[1] = 0;
+xtn2t21[2] = 0;
+xtn2t21[3] = 0;
+xtn2t21[4] = 0;
+xtn2t21[5] = 0;
+xtn2t21[6] = 0;
+xtn2t21[7] = 0;
+xtn2t21[8] = 0;
+xtn2t21[9] = 0;
+xtn2t21[10] = 0;
+xtn2t21[11] = 0;
+xtn2t21[12] = 0;
+xtn2t21[13] = 0;
+xtn2t21[14] = 0;
+xtn2t21[15] = 0;
+xtn2t21[16] = 0;
+xtn2t21[17] = 0;
+xtn2t21[18] = 0;
+xtn2t21[19] = 1;
+xtn2t21[20] = 0;
+X
+/*  GF( 2 ^ 22 ) = GF( 4194304 ) */
+xtn2t22 = ivector(0,21);
+xtn2t22[0] = 1;
+xtn2t22[1] = 0;
+xtn2t22[2] = 0;
+xtn2t22[3] = 0;
+xtn2t22[4] = 0;
+xtn2t22[5] = 0;
+xtn2t22[6] = 0;
+xtn2t22[7] = 0;
+xtn2t22[8] = 0;
+xtn2t22[9] = 0;
+xtn2t22[10] = 0;
+xtn2t22[11] = 0;
+xtn2t22[12] = 0;
+xtn2t22[13] = 0;
+xtn2t22[14] = 0;
+xtn2t22[15] = 0;
+xtn2t22[16] = 0;
+xtn2t22[17] = 0;
+xtn2t22[18] = 0;
+xtn2t22[19] = 0;
+xtn2t22[20] = 0;
+xtn2t22[21] = 1;
+X
+/*  GF( 2 ^ 23 ) = GF( 8388608 ) */
+xtn2t23 = ivector(0,22);
+xtn2t23[0] = 1;
+xtn2t23[1] = 0;
+xtn2t23[2] = 0;
+xtn2t23[3] = 0;
+xtn2t23[4] = 0;
+xtn2t23[5] = 0;
+xtn2t23[6] = 0;
+xtn2t23[7] = 0;
+xtn2t23[8] = 0;
+xtn2t23[9] = 0;
+xtn2t23[10] = 0;
+xtn2t23[11] = 0;
+xtn2t23[12] = 0;
+xtn2t23[13] = 0;
+xtn2t23[14] = 0;
+xtn2t23[15] = 0;
+xtn2t23[16] = 0;
+xtn2t23[17] = 0;
+xtn2t23[18] = 1;
+xtn2t23[19] = 0;
+xtn2t23[20] = 0;
+xtn2t23[21] = 0;
+xtn2t23[22] = 0;
+X
+/*  GF( 2 ^ 24 ) = GF( 16777216 ) */
+xtn2t24 = ivector(0,23);
+xtn2t24[0] = 1;
+xtn2t24[1] = 0;
+xtn2t24[2] = 0;
+xtn2t24[3] = 0;
+xtn2t24[4] = 0;
+xtn2t24[5] = 0;
+xtn2t24[6] = 0;
+xtn2t24[7] = 0;
+xtn2t24[8] = 0;
+xtn2t24[9] = 0;
+xtn2t24[10] = 0;
+xtn2t24[11] = 0;
+xtn2t24[12] = 0;
+xtn2t24[13] = 0;
+xtn2t24[14] = 0;
+xtn2t24[15] = 0;
+xtn2t24[16] = 0;
+xtn2t24[17] = 1;
+xtn2t24[18] = 0;
+xtn2t24[19] = 0;
+xtn2t24[20] = 0;
+xtn2t24[21] = 0;
+xtn2t24[22] = 1;
+xtn2t24[23] = 1;
+X
+/*  GF( 2 ^ 25 ) = GF( 33554432 ) */
+xtn2t25 = ivector(0,24);
+xtn2t25[0] = 1;
+xtn2t25[1] = 0;
+xtn2t25[2] = 0;
+xtn2t25[3] = 0;
+xtn2t25[4] = 0;
+xtn2t25[5] = 0;
+xtn2t25[6] = 0;
+xtn2t25[7] = 0;
+xtn2t25[8] = 0;
+xtn2t25[9] = 0;
+xtn2t25[10] = 0;
+xtn2t25[11] = 0;
+xtn2t25[12] = 0;
+xtn2t25[13] = 0;
+xtn2t25[14] = 0;
+xtn2t25[15] = 0;
+xtn2t25[16] = 0;
+xtn2t25[17] = 0;
+xtn2t25[18] = 0;
+xtn2t25[19] = 0;
+xtn2t25[20] = 0;
+xtn2t25[21] = 0;
+xtn2t25[22] = 1;
+xtn2t25[23] = 0;
+xtn2t25[24] = 0;
+X
+/*  GF( 2 ^ 26 ) = GF( 67108864 ) */
+xtn2t26 = ivector(0,25);
+xtn2t26[0] = 1;
+xtn2t26[1] = 0;
+xtn2t26[2] = 0;
+xtn2t26[3] = 0;
+xtn2t26[4] = 0;
+xtn2t26[5] = 0;
+xtn2t26[6] = 0;
+xtn2t26[7] = 0;
+xtn2t26[8] = 0;
+xtn2t26[9] = 0;
+xtn2t26[10] = 0;
+xtn2t26[11] = 0;
+xtn2t26[12] = 0;
+xtn2t26[13] = 0;
+xtn2t26[14] = 0;
+xtn2t26[15] = 0;
+xtn2t26[16] = 0;
+xtn2t26[17] = 0;
+xtn2t26[18] = 0;
+xtn2t26[19] = 0;
+xtn2t26[20] = 1;
+xtn2t26[21] = 0;
+xtn2t26[22] = 0;
+xtn2t26[23] = 0;
+xtn2t26[24] = 1;
+xtn2t26[25] = 1;
+X
+/*  GF( 2 ^ 27 ) = GF( 134217728 ) */
+xtn2t27 = ivector(0,26);
+xtn2t27[0] = 1;
+xtn2t27[1] = 0;
+xtn2t27[2] = 0;
+xtn2t27[3] = 0;
+xtn2t27[4] = 0;
+xtn2t27[5] = 0;
+xtn2t27[6] = 0;
+xtn2t27[7] = 0;
+xtn2t27[8] = 0;
+xtn2t27[9] = 0;
+xtn2t27[10] = 0;
+xtn2t27[11] = 0;
+xtn2t27[12] = 0;
+xtn2t27[13] = 0;
+xtn2t27[14] = 0;
+xtn2t27[15] = 0;
+xtn2t27[16] = 0;
+xtn2t27[17] = 0;
+xtn2t27[18] = 0;
+xtn2t27[19] = 0;
+xtn2t27[20] = 0;
+xtn2t27[21] = 0;
+xtn2t27[22] = 1;
+xtn2t27[23] = 0;
+xtn2t27[24] = 0;
+xtn2t27[25] = 1;
+xtn2t27[26] = 1;
+X
+/*  GF( 2 ^ 28 ) = GF( 268435456 ) */
+xtn2t28 = ivector(0,27);
+xtn2t28[0] = 1;
+xtn2t28[1] = 0;
+xtn2t28[2] = 0;
+xtn2t28[3] = 0;
+xtn2t28[4] = 0;
+xtn2t28[5] = 0;
+xtn2t28[6] = 0;
+xtn2t28[7] = 0;
+xtn2t28[8] = 0;
+xtn2t28[9] = 0;
+xtn2t28[10] = 0;
+xtn2t28[11] = 0;
+xtn2t28[12] = 0;
+xtn2t28[13] = 0;
+xtn2t28[14] = 0;
+xtn2t28[15] = 0;
+xtn2t28[16] = 0;
+xtn2t28[17] = 0;
+xtn2t28[18] = 0;
+xtn2t28[19] = 0;
+xtn2t28[20] = 0;
+xtn2t28[21] = 0;
+xtn2t28[22] = 0;
+xtn2t28[23] = 0;
+xtn2t28[24] = 0;
+xtn2t28[25] = 1;
+xtn2t28[26] = 0;
+xtn2t28[27] = 0;
+X
+/*  GF( 2 ^ 29 ) = GF( 536870912 ) */
+xtn2t29 = ivector(0,28);
+xtn2t29[0] = 1;
+xtn2t29[1] = 0;
+xtn2t29[2] = 0;
+xtn2t29[3] = 0;
+xtn2t29[4] = 0;
+xtn2t29[5] = 0;
+xtn2t29[6] = 0;
+xtn2t29[7] = 0;
+xtn2t29[8] = 0;
+xtn2t29[9] = 0;
+xtn2t29[10] = 0;
+xtn2t29[11] = 0;
+xtn2t29[12] = 0;
+xtn2t29[13] = 0;
+xtn2t29[14] = 0;
+xtn2t29[15] = 0;
+xtn2t29[16] = 0;
+xtn2t29[17] = 0;
+xtn2t29[18] = 0;
+xtn2t29[19] = 0;
+xtn2t29[20] = 0;
+xtn2t29[21] = 0;
+xtn2t29[22] = 0;
+xtn2t29[23] = 0;
+xtn2t29[24] = 0;
+xtn2t29[25] = 0;
+xtn2t29[26] = 0;
+xtn2t29[27] = 1;
+xtn2t29[28] = 0;
+X
+/*  GF( 3 ^ 2 ) = GF( 9 ) */
+xtn3t2 = ivector(0,1);
+xtn3t2[0] = 1;
+xtn3t2[1] = 2;
+X
+/*  GF( 3 ^ 3 ) = GF( 27 ) */
+xtn3t3 = ivector(0,2);
+xtn3t3[0] = 2;
+xtn3t3[1] = 0;
+xtn3t3[2] = 1;
+X
+/*  GF( 3 ^ 4 ) = GF( 81 ) */
+xtn3t4 = ivector(0,3);
+xtn3t4[0] = 1;
+xtn3t4[1] = 0;
+xtn3t4[2] = 0;
+xtn3t4[3] = 2;
+X
+/*  GF( 3 ^ 5 ) = GF( 243 ) */
+xtn3t5 = ivector(0,4);
+xtn3t5[0] = 2;
+xtn3t5[1] = 0;
+xtn3t5[2] = 2;
+xtn3t5[3] = 0;
+xtn3t5[4] = 2;
+X
+/*  GF( 3 ^ 6 ) = GF( 729 ) */
+xtn3t6 = ivector(0,5);
+xtn3t6[0] = 1;
+xtn3t6[1] = 0;
+xtn3t6[2] = 0;
+xtn3t6[3] = 0;
+xtn3t6[4] = 0;
+xtn3t6[5] = 2;
+X
+/*  GF( 3 ^ 7 ) = GF( 2187 ) */
+xtn3t7 = ivector(0,6);
+xtn3t7[0] = 2;
+xtn3t7[1] = 0;
+xtn3t7[2] = 0;
+xtn3t7[3] = 0;
+xtn3t7[4] = 2;
+xtn3t7[5] = 0;
+xtn3t7[6] = 2;
+X
+/*  GF( 3 ^ 8 ) = GF( 6561 ) */
+xtn3t8 = ivector(0,7);
+xtn3t8[0] = 1;
+xtn3t8[1] = 0;
+xtn3t8[2] = 0;
+xtn3t8[3] = 0;
+xtn3t8[4] = 0;
+xtn3t8[5] = 2;
+xtn3t8[6] = 0;
+xtn3t8[7] = 0;
+X
+/*  GF( 3 ^ 9 ) = GF( 19683 ) */
+xtn3t9 = ivector(0,8);
+xtn3t9[0] = 2;
+xtn3t9[1] = 0;
+xtn3t9[2] = 0;
+xtn3t9[3] = 0;
+xtn3t9[4] = 0;
+xtn3t9[5] = 2;
+xtn3t9[6] = 0;
+xtn3t9[7] = 2;
+xtn3t9[8] = 0;
+X
+/*  GF( 3 ^ 10 ) = GF( 59049 ) */
+xtn3t10 = ivector(0,9);
+xtn3t10[0] = 1;
+xtn3t10[1] = 0;
+xtn3t10[2] = 0;
+xtn3t10[3] = 0;
+xtn3t10[4] = 0;
+xtn3t10[5] = 0;
+xtn3t10[6] = 0;
+xtn3t10[7] = 2;
+xtn3t10[8] = 0;
+xtn3t10[9] = 2;
+X
+/*  GF( 3 ^ 11 ) = GF( 177147 ) */
+xtn3t11 = ivector(0,10);
+xtn3t11[0] = 2;
+xtn3t11[1] = 0;
+xtn3t11[2] = 0;
+xtn3t11[3] = 0;
+xtn3t11[4] = 2;
+xtn3t11[5] = 0;
+xtn3t11[6] = 0;
+xtn3t11[7] = 0;
+xtn3t11[8] = 0;
+xtn3t11[9] = 0;
+xtn3t11[10] = 2;
+X
+/*  GF( 3 ^ 12 ) = GF( 531441 ) */
+xtn3t12 = ivector(0,11);
+xtn3t12[0] = 1;
+xtn3t12[1] = 0;
+xtn3t12[2] = 0;
+xtn3t12[3] = 0;
+xtn3t12[4] = 0;
+xtn3t12[5] = 0;
+xtn3t12[6] = 0;
+xtn3t12[7] = 2;
+xtn3t12[8] = 0;
+xtn3t12[9] = 0;
+xtn3t12[10] = 0;
+xtn3t12[11] = 2;
+X
+/*  GF( 3 ^ 13 ) = GF( 1594323 ) */
+xtn3t13 = ivector(0,12);
+xtn3t13[0] = 2;
+xtn3t13[1] = 0;
+xtn3t13[2] = 0;
+xtn3t13[3] = 0;
+xtn3t13[4] = 0;
+xtn3t13[5] = 0;
+xtn3t13[6] = 2;
+xtn3t13[7] = 0;
+xtn3t13[8] = 0;
+xtn3t13[9] = 0;
+xtn3t13[10] = 0;
+xtn3t13[11] = 0;
+xtn3t13[12] = 2;
+X
+/*  GF( 3 ^ 14 ) = GF( 4782969 ) */
+xtn3t14 = ivector(0,13);
+xtn3t14[0] = 1;
+xtn3t14[1] = 0;
+xtn3t14[2] = 0;
+xtn3t14[3] = 0;
+xtn3t14[4] = 0;
+xtn3t14[5] = 0;
+xtn3t14[6] = 0;
+xtn3t14[7] = 0;
+xtn3t14[8] = 0;
+xtn3t14[9] = 0;
+xtn3t14[10] = 0;
+xtn3t14[11] = 0;
+xtn3t14[12] = 0;
+xtn3t14[13] = 2;
+X
+/*  GF( 3 ^ 15 ) = GF( 14348907 ) */
+xtn3t15 = ivector(0,14);
+xtn3t15[0] = 2;
+xtn3t15[1] = 0;
+xtn3t15[2] = 0;
+xtn3t15[3] = 0;
+xtn3t15[4] = 2;
+xtn3t15[5] = 0;
+xtn3t15[6] = 0;
+xtn3t15[7] = 0;
+xtn3t15[8] = 0;
+xtn3t15[9] = 0;
+xtn3t15[10] = 0;
+xtn3t15[11] = 0;
+xtn3t15[12] = 0;
+xtn3t15[13] = 0;
+xtn3t15[14] = 2;
+X
+/*  GF( 3 ^ 16 ) = GF( 43046721 ) */
+xtn3t16 = ivector(0,15);
+xtn3t16[0] = 1;
+xtn3t16[1] = 0;
+xtn3t16[2] = 0;
+xtn3t16[3] = 0;
+xtn3t16[4] = 0;
+xtn3t16[5] = 0;
+xtn3t16[6] = 0;
+xtn3t16[7] = 0;
+xtn3t16[8] = 0;
+xtn3t16[9] = 2;
+xtn3t16[10] = 0;
+xtn3t16[11] = 0;
+xtn3t16[12] = 0;
+xtn3t16[13] = 0;
+xtn3t16[14] = 0;
+xtn3t16[15] = 0;
+X
+/*  GF( 3 ^ 17 ) = GF( 129140163 ) */
+xtn3t17 = ivector(0,16);
+xtn3t17[0] = 2;
+xtn3t17[1] = 0;
+xtn3t17[2] = 0;
+xtn3t17[3] = 0;
+xtn3t17[4] = 0;
+xtn3t17[5] = 0;
+xtn3t17[6] = 0;
+xtn3t17[7] = 0;
+xtn3t17[8] = 2;
+xtn3t17[9] = 0;
+xtn3t17[10] = 0;
+xtn3t17[11] = 0;
+xtn3t17[12] = 0;
+xtn3t17[13] = 0;
+xtn3t17[14] = 0;
+xtn3t17[15] = 0;
+xtn3t17[16] = 2;
+X
+/*  GF( 3 ^ 18 ) = GF( 387420489 ) */
+xtn3t18 = ivector(0,17);
+xtn3t18[0] = 1;
+xtn3t18[1] = 0;
+xtn3t18[2] = 0;
+xtn3t18[3] = 0;
+xtn3t18[4] = 0;
+xtn3t18[5] = 2;
+xtn3t18[6] = 0;
+xtn3t18[7] = 0;
+xtn3t18[8] = 0;
+xtn3t18[9] = 0;
+xtn3t18[10] = 0;
+xtn3t18[11] = 0;
+xtn3t18[12] = 0;
+xtn3t18[13] = 0;
+xtn3t18[14] = 0;
+xtn3t18[15] = 0;
+xtn3t18[16] = 0;
+xtn3t18[17] = 2;
+X
+/*  GF( 5 ^ 2 ) = GF( 25 ) */
+xtn5t2 = ivector(0,1);
+xtn5t2[0] = 3;
+xtn5t2[1] = 4;
+X
+/*  GF( 5 ^ 3 ) = GF( 125 ) */
+xtn5t3 = ivector(0,2);
+xtn5t3[0] = 3;
+xtn5t3[1] = 0;
+xtn5t3[2] = 4;
+X
+/*  GF( 5 ^ 4 ) = GF( 625 ) */
+xtn5t4 = ivector(0,3);
+xtn5t4[0] = 2;
+xtn5t4[1] = 4;
+xtn5t4[2] = 0;
+xtn5t4[3] = 4;
+X
+/*  GF( 5 ^ 5 ) = GF( 3125 ) */
+xtn5t5 = ivector(0,4);
+xtn5t5[0] = 3;
+xtn5t5[1] = 0;
+xtn5t5[2] = 4;
+xtn5t5[3] = 0;
+xtn5t5[4] = 0;
+X
+/*  GF( 5 ^ 6 ) = GF( 15625 ) */
+xtn5t6 = ivector(0,5);
+xtn5t6[0] = 3;
+xtn5t6[1] = 0;
+xtn5t6[2] = 0;
+xtn5t6[3] = 0;
+xtn5t6[4] = 0;
+xtn5t6[5] = 4;
+X
+/*  GF( 5 ^ 7 ) = GF( 78125 ) */
+xtn5t7 = ivector(0,6);
+xtn5t7[0] = 3;
+xtn5t7[1] = 0;
+xtn5t7[2] = 0;
+xtn5t7[3] = 0;
+xtn5t7[4] = 0;
+xtn5t7[5] = 0;
+xtn5t7[6] = 4;
+X
+/*  GF( 5 ^ 8 ) = GF( 390625 ) */
+xtn5t8 = ivector(0,7);
+xtn5t8[0] = 2;
+xtn5t8[1] = 0;
+xtn5t8[2] = 0;
+xtn5t8[3] = 4;
+xtn5t8[4] = 0;
+xtn5t8[5] = 4;
+xtn5t8[6] = 0;
+xtn5t8[7] = 0;
+X
+/*  GF( 5 ^ 9 ) = GF( 1953125 ) */
+xtn5t9 = ivector(0,8);
+xtn5t9[0] = 2;
+xtn5t9[1] = 0;
+xtn5t9[2] = 0;
+xtn5t9[3] = 0;
+xtn5t9[4] = 0;
+xtn5t9[5] = 0;
+xtn5t9[6] = 4;
+xtn5t9[7] = 4;
+xtn5t9[8] = 0;
+X
+/*  GF( 5 ^ 10 ) = GF( 9765625 ) */
+xtn5t10 = ivector(0,9);
+xtn5t10[0] = 2;
+xtn5t10[1] = 0;
+xtn5t10[2] = 0;
+xtn5t10[3] = 0;
+xtn5t10[4] = 0;
+xtn5t10[5] = 0;
+xtn5t10[6] = 0;
+xtn5t10[7] = 4;
+xtn5t10[8] = 0;
+xtn5t10[9] = 4;
+X
+/*  GF( 5 ^ 11 ) = GF( 48828125 ) */
+xtn5t11 = ivector(0,10);
+xtn5t11[0] = 3;
+xtn5t11[1] = 0;
+xtn5t11[2] = 0;
+xtn5t11[3] = 0;
+xtn5t11[4] = 0;
+xtn5t11[5] = 0;
+xtn5t11[6] = 0;
+xtn5t11[7] = 0;
+xtn5t11[8] = 0;
+xtn5t11[9] = 0;
+xtn5t11[10] = 4;
+X
+/*  GF( 5 ^ 12 ) = GF( 244140625 ) */
+xtn5t12 = ivector(0,11);
+xtn5t12[0] = 2;
+xtn5t12[1] = 0;
+xtn5t12[2] = 0;
+xtn5t12[3] = 0;
+xtn5t12[4] = 4;
+xtn5t12[5] = 0;
+xtn5t12[6] = 0;
+xtn5t12[7] = 4;
+xtn5t12[8] = 0;
+xtn5t12[9] = 0;
+xtn5t12[10] = 0;
+xtn5t12[11] = 0;
+X
+/*  GF( 7 ^ 2 ) = GF( 49 ) */
+xtn7t2 = ivector(0,1);
+xtn7t2[0] = 4;
+xtn7t2[1] = 6;
+X
+/*  GF( 7 ^ 3 ) = GF( 343 ) */
+xtn7t3 = ivector(0,2);
+xtn7t3[0] = 5;
+xtn7t3[1] = 6;
+xtn7t3[2] = 6;
+X
+/*  GF( 7 ^ 4 ) = GF( 2401 ) */
+xtn7t4 = ivector(0,3);
+xtn7t4[0] = 4;
+xtn7t4[1] = 0;
+xtn7t4[2] = 6;
+xtn7t4[3] = 6;
+X
+/*  GF( 7 ^ 5 ) = GF( 16807 ) */
+xtn7t5 = ivector(0,4);
+xtn7t5[0] = 3;
+xtn7t5[1] = 0;
+xtn7t5[2] = 0;
+xtn7t5[3] = 0;
+xtn7t5[4] = 6;
+X
+/*  GF( 7 ^ 6 ) = GF( 117649 ) */
+xtn7t6 = ivector(0,5);
+xtn7t6[0] = 4;
+xtn7t6[1] = 0;
+xtn7t6[2] = 0;
+xtn7t6[3] = 0;
+xtn7t6[4] = 6;
+xtn7t6[5] = 6;
+X
+/*  GF( 7 ^ 7 ) = GF( 823543 ) */
+xtn7t7 = ivector(0,6);
+xtn7t7[0] = 3;
+xtn7t7[1] = 0;
+xtn7t7[2] = 0;
+xtn7t7[3] = 0;
+xtn7t7[4] = 0;
+xtn7t7[5] = 6;
+xtn7t7[6] = 0;
+X
+/*  GF( 7 ^ 8 ) = GF( 5764801 ) */
+xtn7t8 = ivector(0,7);
+xtn7t8[0] = 4;
+xtn7t8[1] = 0;
+xtn7t8[2] = 0;
+xtn7t8[3] = 0;
+xtn7t8[4] = 0;
+xtn7t8[5] = 0;
+xtn7t8[6] = 0;
+xtn7t8[7] = 6;
+X
+/*  GF( 7 ^ 9 ) = GF( 40353607 ) */
+xtn7t9 = ivector(0,8);
+xtn7t9[0] = 5;
+xtn7t9[1] = 0;
+xtn7t9[2] = 0;
+xtn7t9[3] = 6;
+xtn7t9[4] = 0;
+xtn7t9[5] = 0;
+xtn7t9[6] = 0;
+xtn7t9[7] = 0;
+xtn7t9[8] = 6;
+X
+/*  GF( 7 ^ 10 ) = GF( 282475249 ) */
+xtn7t10 = ivector(0,9);
+xtn7t10[0] = 4;
+xtn7t10[1] = 0;
+xtn7t10[2] = 0;
+xtn7t10[3] = 0;
+xtn7t10[4] = 0;
+xtn7t10[5] = 0;
+xtn7t10[6] = 0;
+xtn7t10[7] = 0;
+xtn7t10[8] = 6;
+xtn7t10[9] = 6;
+X
+/*  GF( 11 ^ 2 ) = GF( 121 ) */
+xtn11t2 = ivector(0,1);
+xtn11t2[0] = 4;
+xtn11t2[1] = 10;
+X
+/*  GF( 11 ^ 3 ) = GF( 1331 ) */
+xtn11t3 = ivector(0,2);
+xtn11t3[0] = 6;
+xtn11t3[1] = 0;
+xtn11t3[2] = 10;
+X
+/*  GF( 11 ^ 4 ) = GF( 14641 ) */
+xtn11t4 = ivector(0,3);
+xtn11t4[0] = 9;
+xtn11t4[1] = 10;
+xtn11t4[2] = 0;
+xtn11t4[3] = 0;
+X
+/*  GF( 11 ^ 5 ) = GF( 161051 ) */
+xtn11t5 = ivector(0,4);
+xtn11t5[0] = 2;
+xtn11t5[1] = 0;
+xtn11t5[2] = 10;
+xtn11t5[3] = 10;
+xtn11t5[4] = 0;
+X
+/*  GF( 11 ^ 6 ) = GF( 1771561 ) */
+xtn11t6 = ivector(0,5);
+xtn11t6[0] = 4;
+xtn11t6[1] = 10;
+xtn11t6[2] = 0;
+xtn11t6[3] = 0;
+xtn11t6[4] = 0;
+xtn11t6[5] = 10;
+X
+/*  GF( 11 ^ 7 ) = GF( 19487171 ) */
+xtn11t7 = ivector(0,6);
+xtn11t7[0] = 6;
+xtn11t7[1] = 0;
+xtn11t7[2] = 0;
+xtn11t7[3] = 0;
+xtn11t7[4] = 0;
+xtn11t7[5] = 0;
+xtn11t7[6] = 10;
+X
+/*  GF( 11 ^ 8 ) = GF( 214358881 ) */
+xtn11t8 = ivector(0,7);
+xtn11t8[0] = 9;
+xtn11t8[1] = 10;
+xtn11t8[2] = 0;
+xtn11t8[3] = 0;
+xtn11t8[4] = 10;
+xtn11t8[5] = 0;
+xtn11t8[6] = 0;
+xtn11t8[7] = 0;
+X
+/*  GF( 13 ^ 2 ) = GF( 169 ) */
+xtn13t2 = ivector(0,1);
+xtn13t2[0] = 11;
+xtn13t2[1] = 12;
+X
+/*  GF( 13 ^ 3 ) = GF( 2197 ) */
+xtn13t3 = ivector(0,2);
+xtn13t3[0] = 6;
+xtn13t3[1] = 0;
+xtn13t3[2] = 12;
+X
+/*  GF( 13 ^ 4 ) = GF( 28561 ) */
+xtn13t4 = ivector(0,3);
+xtn13t4[0] = 11;
+xtn13t4[1] = 12;
+xtn13t4[2] = 0;
+xtn13t4[3] = 12;
+X
+/*  GF( 13 ^ 5 ) = GF( 371293 ) */
+xtn13t5 = ivector(0,4);
+xtn13t5[0] = 2;
+xtn13t5[1] = 12;
+xtn13t5[2] = 0;
+xtn13t5[3] = 12;
+xtn13t5[4] = 0;
+X
+/*  GF( 13 ^ 6 ) = GF( 4826809 ) */
+xtn13t6 = ivector(0,5);
+xtn13t6[0] = 7;
+xtn13t6[1] = 0;
+xtn13t6[2] = 0;
+xtn13t6[3] = 12;
+xtn13t6[4] = 0;
+xtn13t6[5] = 12;
+X
+/*  GF( 13 ^ 7 ) = GF( 62748517 ) */
+xtn13t7 = ivector(0,6);
+xtn13t7[0] = 7;
+xtn13t7[1] = 0;
+xtn13t7[2] = 0;
+xtn13t7[3] = 0;
+xtn13t7[4] = 12;
+xtn13t7[5] = 0;
+xtn13t7[6] = 0;
+X
+/*  GF( 13 ^ 8 ) = GF( 815730721 ) */
+xtn13t8 = ivector(0,7);
+xtn13t8[0] = 11;
+xtn13t8[1] = 0;
+xtn13t8[2] = 0;
+xtn13t8[3] = 0;
+xtn13t8[4] = 0;
+xtn13t8[5] = 12;
+xtn13t8[6] = 12;
+xtn13t8[7] = 0;
+X
+/*  GF( 17 ^ 2 ) = GF( 289 ) */
+xtn17t2 = ivector(0,1);
+xtn17t2[0] = 14;
+xtn17t2[1] = 16;
+X
+/*  GF( 17 ^ 3 ) = GF( 4913 ) */
+xtn17t3 = ivector(0,2);
+xtn17t3[0] = 3;
+xtn17t3[1] = 16;
+xtn17t3[2] = 0;
+X
+/*  GF( 17 ^ 4 ) = GF( 83521 ) */
+xtn17t4 = ivector(0,3);
+xtn17t4[0] = 12;
+xtn17t4[1] = 0;
+xtn17t4[2] = 0;
+xtn17t4[3] = 16;
+X
+/*  GF( 17 ^ 5 ) = GF( 1419857 ) */
+xtn17t5 = ivector(0,4);
+xtn17t5[0] = 3;
+xtn17t5[1] = 0;
+xtn17t5[2] = 0;
+xtn17t5[3] = 0;
+xtn17t5[4] = 16;
+X
+/*  GF( 17 ^ 6 ) = GF( 24137569 ) */
+xtn17t6 = ivector(0,5);
+xtn17t6[0] = 14;
+xtn17t6[1] = 0;
+xtn17t6[2] = 0;
+xtn17t6[3] = 0;
+xtn17t6[4] = 0;
+xtn17t6[5] = 16;
+X
+/*  GF( 17 ^ 7 ) = GF( 410338673 ) */
+xtn17t7 = ivector(0,6);
+xtn17t7[0] = 3;
+xtn17t7[1] = 0;
+xtn17t7[2] = 0;
+xtn17t7[3] = 16;
+xtn17t7[4] = 0;
+xtn17t7[5] = 0;
+xtn17t7[6] = 0;
+X
+/*  GF( 19 ^ 2 ) = GF( 361 ) */
+xtn19t2 = ivector(0,1);
+xtn19t2[0] = 17;
+xtn19t2[1] = 18;
+X
+/*  GF( 19 ^ 3 ) = GF( 6859 ) */
+xtn19t3 = ivector(0,2);
+xtn19t3[0] = 3;
+xtn19t3[1] = 0;
+xtn19t3[2] = 18;
+X
+/*  GF( 19 ^ 4 ) = GF( 130321 ) */
+xtn19t4 = ivector(0,3);
+xtn19t4[0] = 17;
+xtn19t4[1] = 0;
+xtn19t4[2] = 0;
+xtn19t4[3] = 18;
+X
+/*  GF( 19 ^ 5 ) = GF( 2476099 ) */
+xtn19t5 = ivector(0,4);
+xtn19t5[0] = 3;
+xtn19t5[1] = 18;
+xtn19t5[2] = 0;
+xtn19t5[3] = 0;
+xtn19t5[4] = 0;
+X
+/*  GF( 19 ^ 6 ) = GF( 47045881 ) */
+xtn19t6 = ivector(0,5);
+xtn19t6[0] = 16;
+xtn19t6[1] = 18;
+xtn19t6[2] = 0;
+xtn19t6[3] = 0;
+xtn19t6[4] = 0;
+xtn19t6[5] = 0;
+X
+/*  GF( 19 ^ 7 ) = GF( 893871739 ) */
+xtn19t7 = ivector(0,6);
+xtn19t7[0] = 10;
+xtn19t7[1] = 0;
+xtn19t7[2] = 0;
+xtn19t7[3] = 0;
+xtn19t7[4] = 0;
+xtn19t7[5] = 18;
+xtn19t7[6] = 0;
+X
+/*  GF( 23 ^ 2 ) = GF( 529 ) */
+xtn23t2 = ivector(0,1);
+xtn23t2[0] = 16;
+xtn23t2[1] = 22;
+X
+/*  GF( 23 ^ 3 ) = GF( 12167 ) */
+xtn23t3 = ivector(0,2);
+xtn23t3[0] = 7;
+xtn23t3[1] = 0;
+xtn23t3[2] = 22;
+X
+/*  GF( 23 ^ 4 ) = GF( 279841 ) */
+xtn23t4 = ivector(0,3);
+xtn23t4[0] = 12;
+xtn23t4[1] = 22;
+xtn23t4[2] = 0;
+xtn23t4[3] = 0;
+X
+/*  GF( 23 ^ 5 ) = GF( 6436343 ) */
+xtn23t5 = ivector(0,4);
+xtn23t5[0] = 5;
+xtn23t5[1] = 0;
+xtn23t5[2] = 0;
+xtn23t5[3] = 0;
+xtn23t5[4] = 22;
+X
+/*  GF( 23 ^ 6 ) = GF( 148035889 ) */
+xtn23t6 = ivector(0,5);
+xtn23t6[0] = 16;
+xtn23t6[1] = 0;
+xtn23t6[2] = 0;
+xtn23t6[3] = 0;
+xtn23t6[4] = 0;
+xtn23t6[5] = 22;
+X
+/*  GF( 29 ^ 2 ) = GF( 841 ) */
+xtn29t2 = ivector(0,1);
+xtn29t2[0] = 26;
+xtn29t2[1] = 28;
+X
+/*  GF( 29 ^ 3 ) = GF( 24389 ) */
+xtn29t3 = ivector(0,2);
+xtn29t3[0] = 11;
+xtn29t3[1] = 28;
+xtn29t3[2] = 0;
+X
+/*  GF( 29 ^ 4 ) = GF( 707281 ) */
+xtn29t4 = ivector(0,3);
+xtn29t4[0] = 27;
+xtn29t4[1] = 0;
+xtn29t4[2] = 0;
+xtn29t4[3] = 28;
+X
+/*  GF( 29 ^ 5 ) = GF( 20511149 ) */
+xtn29t5 = ivector(0,4);
+xtn29t5[0] = 3;
+xtn29t5[1] = 0;
+xtn29t5[2] = 0;
+xtn29t5[3] = 28;
+xtn29t5[4] = 0;
+X
+/*  GF( 29 ^ 6 ) = GF( 594823321 ) */
+xtn29t6 = ivector(0,5);
+xtn29t6[0] = 26;
+xtn29t6[1] = 28;
+xtn29t6[2] = 0;
+xtn29t6[3] = 0;
+xtn29t6[4] = 0;
+xtn29t6[5] = 0;
+X
+/*  GF( 31 ^ 2 ) = GF( 961 ) */
+xtn31t2 = ivector(0,1);
+xtn31t2[0] = 19;
+xtn31t2[1] = 30;
+X
+/*  GF( 31 ^ 3 ) = GF( 29791 ) */
+xtn31t3 = ivector(0,2);
+xtn31t3[0] = 3;
+xtn31t3[1] = 30;
+xtn31t3[2] = 0;
+X
+/*  GF( 31 ^ 4 ) = GF( 923521 ) */
+xtn31t4 = ivector(0,3);
+xtn31t4[0] = 18;
+xtn31t4[1] = 0;
+xtn31t4[2] = 0;
+xtn31t4[3] = 30;
+X
+/*  GF( 31 ^ 5 ) = GF( 28629151 ) */
+xtn31t5 = ivector(0,4);
+xtn31t5[0] = 11;
+xtn31t5[1] = 0;
+xtn31t5[2] = 0;
+xtn31t5[3] = 30;
+xtn31t5[4] = 0;
+X
+/*  GF( 31 ^ 6 ) = GF( 887503681 ) */
+xtn31t6 = ivector(0,5);
+xtn31t6[0] = 19;
+xtn31t6[1] = 0;
+xtn31t6[2] = 0;
+xtn31t6[3] = 0;
+xtn31t6[4] = 0;
+xtn31t6[5] = 30;
+X
+/*  GF( 37 ^ 2 ) = GF( 1369 ) */
+xtn37t2 = ivector(0,1);
+xtn37t2[0] = 32;
+xtn37t2[1] = 36;
+X
+/*  GF( 37 ^ 3 ) = GF( 50653 ) */
+xtn37t3 = ivector(0,2);
+xtn37t3[0] = 13;
+xtn37t3[1] = 0;
+xtn37t3[2] = 36;
+X
+/*  GF( 37 ^ 4 ) = GF( 1874161 ) */
+xtn37t4 = ivector(0,3);
+xtn37t4[0] = 35;
+xtn37t4[1] = 36;
+xtn37t4[2] = 0;
+xtn37t4[3] = 0;
+X
+/*  GF( 37 ^ 5 ) = GF( 69343957 ) */
+xtn37t5 = ivector(0,4);
+xtn37t5[0] = 5;
+xtn37t5[1] = 36;
+xtn37t5[2] = 0;
+xtn37t5[3] = 0;
+xtn37t5[4] = 0;
+X
+/*  GF( 41 ^ 2 ) = GF( 1681 ) */
+xtn41t2 = ivector(0,1);
+xtn41t2[0] = 29;
+xtn41t2[1] = 40;
+X
+/*  GF( 41 ^ 3 ) = GF( 68921 ) */
+xtn41t3 = ivector(0,2);
+xtn41t3[0] = 6;
+xtn41t3[1] = 40;
+xtn41t3[2] = 0;
+X
+/*  GF( 41 ^ 4 ) = GF( 2825761 ) */
+xtn41t4 = ivector(0,3);
+xtn41t4[0] = 24;
+xtn41t4[1] = 40;
+xtn41t4[2] = 0;
+xtn41t4[3] = 0;
+X
+/*  GF( 41 ^ 5 ) = GF( 115856201 ) */
+xtn41t5 = ivector(0,4);
+xtn41t5[0] = 6;
+xtn41t5[1] = 0;
+xtn41t5[2] = 0;
+xtn41t5[3] = 0;
+xtn41t5[4] = 40;
+X
+/*  GF( 43 ^ 2 ) = GF( 1849 ) */
+xtn43t2 = ivector(0,1);
+xtn43t2[0] = 40;
+xtn43t2[1] = 42;
+X
+/*  GF( 43 ^ 3 ) = GF( 79507 ) */
+xtn43t3 = ivector(0,2);
+xtn43t3[0] = 3;
+xtn43t3[1] = 42;
+xtn43t3[2] = 0;
+X
+/*  GF( 43 ^ 4 ) = GF( 3418801 ) */
+xtn43t4 = ivector(0,3);
+xtn43t4[0] = 23;
+xtn43t4[1] = 42;
+xtn43t4[2] = 0;
+xtn43t4[3] = 0;
+X
+/*  GF( 43 ^ 5 ) = GF( 147008443 ) */
+xtn43t5 = ivector(0,4);
+xtn43t5[0] = 3;
+xtn43t5[1] = 0;
+xtn43t5[2] = 0;
+xtn43t5[3] = 0;
+xtn43t5[4] = 42;
+X
+/*  GF( 47 ^ 2 ) = GF( 2209 ) */
+xtn47t2 = ivector(0,1);
+xtn47t2[0] = 34;
+xtn47t2[1] = 46;
+X
+/*  GF( 47 ^ 3 ) = GF( 103823 ) */
+xtn47t3 = ivector(0,2);
+xtn47t3[0] = 5;
+xtn47t3[1] = 0;
+xtn47t3[2] = 46;
+X
+/*  GF( 47 ^ 4 ) = GF( 4879681 ) */
+xtn47t4 = ivector(0,3);
+xtn47t4[0] = 42;
+xtn47t4[1] = 0;
+xtn47t4[2] = 0;
+xtn47t4[3] = 46;
+X
+/*  GF( 47 ^ 5 ) = GF( 229345007 ) */
+xtn47t5 = ivector(0,4);
+xtn47t5[0] = 5;
+xtn47t5[1] = 46;
+xtn47t5[2] = 0;
+xtn47t5[3] = 0;
+xtn47t5[4] = 0;
+X
+SHAR_EOF
+chmod 0644 xtnset.h ||
+echo 'restore of xtnset.h failed'
+Wc_c="`wc -c < 'xtnset.h'`"
+test 23434 -eq "$Wc_c" ||
+	echo 'xtnset.h: original size 23434, current size' "$Wc_c"
+fi
+exit 0
