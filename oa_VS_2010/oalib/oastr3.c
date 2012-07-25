@@ -18,7 +18,7 @@ work.
 
 */
 
-
+#include <stdlib.h>
 #include <stdio.h>
 #include "oa.h"
 
@@ -41,9 +41,9 @@ work.
 
 */
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char* argv[])
+/*int  argc;
+char *argv[];*/
 {
 int q, nrow, ncol, **A;
 

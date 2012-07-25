@@ -34,9 +34,11 @@ work.
 #include <stdio.h>
 
 #include "galois.h"
+#include "ak.h"
+#include "oa.h"
 
-addelkempncheck( q,p,akn,ncol  )
-int q,p,akn,ncol;
+int addelkempncheck(int q, int p, int akn, int ncol  )
+/*int q,p,akn,ncol;*/
 {
 
 if(  akn<2  ){
@@ -63,10 +65,10 @@ return 1;
 }
 
 
-addelkempn( gf, akn, A, ncol )
+int addelkempn(struct GF* gf, int akn, int** A, int ncol )
 /* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
-struct GF *gf;
-int **A, ncol, akn;
+/*struct GF *gf;
+int **A, ncol, akn;*/
 {
 int i,p,q;
 int kay,*b,*c,*k;  /* A&K notation */

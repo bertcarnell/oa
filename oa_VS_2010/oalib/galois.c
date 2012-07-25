@@ -41,8 +41,8 @@ work.
 
 /*---------------------------------------------------------------*/
 
-GF_poly_sum( p,n,p1,p2,sum )
-int  n,p,*p1,*p2,*sum;
+void GF_poly_sum(int p, int n, int* p1, int* p2, int* sum )
+/*int  n,p,*p1,*p2,*sum;*/
 {
 int i;
 
@@ -52,12 +52,12 @@ for(  i=0; i<n; i++  )
 
 /*---------------------------------------------------------------*/
 
-GF_poly_prod( p,n,xton,p1,p2,prod )
+void GF_poly_prod(int p, int n, int* xton, int* p1, int* p2, int* prod )
 /*
   Set prod = p1*p2 with coefficients modulo p, and x^n replaced
 by polynomial xton.
 */
-int  n,p,*xton,*p1,*p2,*prod;
+/*int  n,p,*xton,*p1,*p2,*prod;*/
 {
 int i,j, *longprod;
 
@@ -79,9 +79,9 @@ free_ivector(longprod,0,2*n-2);
 
 /*---------------------------------------------------------------*/
 
-int GF_poly2int( p,n,poly )
+int GF_poly2int( int p, int n, int* poly )
 
-int n,p,*poly;
+/*int n,p,*poly;*/
 {
 int ans, i;
 
@@ -97,12 +97,12 @@ return ans;
 
 #define GFPUNT {fprintf(stderr,"Unable to allocate space for Galois field on %d elements.\n",q);return 0;}
 
-GF_ready( gf,p,n,xton )
+int GF_ready(struct GF* gf, int p, int n, int* xton )
 /* 
    Make ready the Galois Field
 */
-struct GF *gf;
-int  n,p,*xton;
+/*struct GF *gf;
+int  n,p,*xton;*/
 {
 int i,j,q,click,*poly;
 
@@ -180,9 +180,9 @@ return 1;
 
 /*---------------------------------------------------------------*/
 
-GF_print( gf )
+void GF_print(struct GF* gf )
 
-struct GF *gf;
+/*struct GF *gf;*/
 {
 int i,j,n,p,q;
 
@@ -231,11 +231,11 @@ for(  i=0; i<q; i++  )
 
 /*---------------------------------------------------------------*/
 
-GF_free( gf )
+void GF_free(struct GF* gf )
 /* 
    Deallocate the Galois Field
 */
-struct GF *gf;
+/*struct GF *gf;*/
 {
 /*int q,p,n;
 q = gf->q, p=gf->p, n=gf->n;*/

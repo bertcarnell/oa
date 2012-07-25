@@ -3,8 +3,8 @@
 #include <malloc.h>
 #include <stdio.h>
 
-int **imatrix(nrl,nrh,ncl,nch)
-int nrl,nrh,ncl,nch;
+int **imatrix(int nrl, int nrh, int ncl, int nch)
+/*int nrl,nrh,ncl,nch;*/
 {
   int i;
   int **m;
@@ -28,8 +28,8 @@ int nrl,nrh,ncl,nch;
   return m;
 }
 
-int *ivector(nl,nh)
-int nl,nh;
+int *ivector(int nl, int nh)
+/*int nl,nh;*/
 {
   int *v;
 
@@ -42,10 +42,10 @@ int nl,nh;
 }
 
 /* ARGSUSED */
-void free_imatrix(m,nrl,nrh,ncl,nch)
+void free_imatrix(int** m, int nrl, int nrh, int ncl, int nch)
 
-int nrl,nrh,ncl,nch;
-int **m;
+/*int nrl,nrh,ncl,nch;
+int **m;*/
 
 {
 int i;
@@ -55,17 +55,17 @@ free((char*) (m+nrl));
 }
 
 /* ARGSUSED */
-void free_ivector(v,nl,nh)
-int *v;
-int nl,nh;
+void free_ivector(int* v, int nl, int nh)
+/*int *v;
+int nl,nh;*/
 {
   free((char*) (v+nl));
 }
 
 
 
-double **dmatrix(nrl,nrh,ncl,nch)
-int nrl,nrh,ncl,nch;
+double **dmatrix(int nrl, int nrh, int ncl, int nch)
+/*int nrl,nrh,ncl,nch;*/
 {
   int      i;
   double **m;
@@ -89,8 +89,8 @@ int nrl,nrh,ncl,nch;
   return m;
 }
 
-double *dvector(nl,nh)
-int nl,nh;
+double *dvector(int nl, int nh)
+/*int nl,nh;*/
 {
   double *v;
 
@@ -103,10 +103,10 @@ int nl,nh;
 }
 
 /* ARGSUSED */
-void free_dmatrix(m,nrl,nrh,ncl,nch)
+void free_dmatrix(double** m, int nrl, int nrh, int ncl, int nch)
 
-int nrl,nrh,ncl,nch;
-double **m;
+/*int nrl,nrh,ncl,nch;
+double **m;*/
 
 {
 int i;
@@ -116,9 +116,9 @@ free((char*) (m+nrl));
 }
 
 /* ARGSUSED */
-void free_dvector(v,nl,nh)
-double *v;
-int nl,nh;
+void free_dvector(double* v, int nl, int nh)
+/*double *v;
+int nl,nh;*/
 {
   free((char*) (v+nl));
 }

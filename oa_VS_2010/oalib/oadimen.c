@@ -20,6 +20,7 @@ work.
 
 
 #include <stdio.h>
+#include "oa.h"
 
 /*  
  
@@ -28,16 +29,16 @@ of the input array.
 
 */
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char* argv[])
+/*int  argc;
+char *argv[];*/
 {
 int q, nrow, ncol, **A;
 int str;
 
 double work;
 
-OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+OA_parsein( argc, argv, &q, &nrow, &ncol, &A );
 printf("\nThe array has %d rows, %d columns and appears\n",nrow,ncol);
 printf("to have %d symbols, since the largest symbol is %d.\n",q,q-1);
 }

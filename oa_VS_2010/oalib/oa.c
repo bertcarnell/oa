@@ -18,11 +18,12 @@ work.
 
 */
 
-
+#include <stdlib.h>
 #include <stdio.h>
 #include "oa.h"
   
-int  **imatrix(), *ivector();
+#include "galdec.h"
+/*int  **imatrix(), *ivector();*/
 
 /*  
 
@@ -41,15 +42,15 @@ int  **imatrix(), *ivector();
 
 /*  OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT  */
 
-OA_put( A,n,k,q )
-int **A, n, k, q;
+void OA_put(int** A, int n, int k, int q)
+/*int **A, n, k, q;*/
 {
 OA_fput( stdout,A,n,k,q );
 }
 
-OA_fput( stream,A,n,k,q )
-FILE *stream;
-int **A, n, k, q;
+void OA_fput(FILE* stream, int **A, int n, int k, int q )
+/*FILE *stream;
+int **A, n, k, q;*/
 {
 int   i,j;
 char* format;
@@ -68,15 +69,15 @@ for(  j=0; j<k; j++  )
 
 /*  INPUT    INPUT    INPUT    INPUT    INPUT    INPUT    INPUT    INPUT  */
 
-OA_get( A,n,k,q, eof_assert )
-int **A, n, k, q, eof_assert;
+int  OA_get(int** A, int n, int k, int q, int eof_assert)
+/*int **A, n, k, q, eof_assert;*/
 {
 return OA_fget( stdin,A,n,k,q,eof_assert );
 }
 
-OA_fget( stream,A,n,k,q,eof_assert )
-FILE *stream;
-int **A, n, k, q, eof_assert;
+int OA_fget(FILE* stream, int** A, int n, int k, int q, int eof_assert)
+/*FILE *stream;
+int **A, n, k, q, eof_assert;*/
 {
 int   i,j;
 for( i=0; i<n; i++ )
@@ -113,16 +114,16 @@ taken in Xgobi.  */
 #define ROWINC 1000
 int line0[ MAXK ];
 
-OA_read( A,n,k,q )
-int ***A, *n, *k, *q;
+int OA_read( int ***A, int *n, int *k, int* q )
+/*int ***A, *n, *k, *q;*/
 {
 return OA_fread( stdin,A,n,k,q );
 }
 
 
-OA_fread( stream,A,n,k,q )
-FILE *stream;
-int ***A, *n, *k, *q;
+int OA_fread(FILE* stream, int*** A, int *n, int *k, int *q)
+/*FILE *stream;
+int ***A, *n, *k, *q;*/
 {
 int   i, j;
 char  c;
@@ -190,10 +191,10 @@ return 1;
 
 /*  PARSE    PARSE    PARSE    PARSE    PARSE    PARSE    PARSE    PARSE  */
 
-OA_parsein( argc,argv, q,nrow,ncol, A )
-int  argc;
+int OA_parsein( int argc, char *argv[], int *q, int *nrow, int *ncol, int ***A)
+/*int  argc;
 char *argv[];
-int *q, *nrow, *ncol, ***A;
+int *q, *nrow, *ncol, ***A;*/
 {
 if(  argc<=1  ){
   if(  !OA_read( A,nrow,ncol,q )  ){
@@ -250,9 +251,9 @@ if(  argc >1  ){
 
 /*  WORK    WORK    WORK    WORK    WORK    WORK    WORK    WORK    WORK  */
 
-OA_strworkcheck( work,str )
-double work;
-int    str;
+void OA_strworkcheck(double work, int str)
+/*double work;
+int    str;*/
 {
 if(  work > BIGWORK  ){
   fprintf(stderr,"If the array has strength %d, %g comparisons will\n",
@@ -277,8 +278,8 @@ if(  work > BIGWORK  ){
 /*  STRENGTH    STRENGTH    STRENGTH    STRENGTH    STRENGTH  */
 
 
-OA_strength( q,nrow,ncol,A,str,verbose )
-int  q,nrow,ncol,**A,*str, verbose;
+void OA_strength(int q, int nrow, int ncol, int **A, int* str, int verbose )
+/*int  q,nrow,ncol,**A,*str, verbose;*/
 /*
      Calculate and return the strength of the array A.
 
@@ -305,8 +306,8 @@ return;
 
 
 /* Check strength 0 */
-OA_str0( q,nrow,ncol,A,verbose   )
-int      q,nrow,ncol,**A, verbose;
+int OA_str0(int q, int nrow, int ncol, int** A, int verbose   )
+/*int      q,nrow,ncol,**A, verbose;*/
 {
 int  i, j1;
 
@@ -327,8 +328,8 @@ return 1;
 
 
 /* Check strength 1 */
-OA_str1( q,nrow,ncol,A,verbose   )
-int      q,nrow,ncol,**A, verbose;
+int OA_str1( int q, int nrow, int ncol, int** A, int verbose   )
+/*int      q,nrow,ncol,**A, verbose;*/
 {
 int     i, j1, q1;
 int     lambda, count;
@@ -370,8 +371,8 @@ return 1;
 }
 
 /* Check strength 2  */
-OA_str2( q,nrow,ncol,A,verbose   )
-int      q,nrow,ncol,**A, verbose;
+int OA_str2(int q, int nrow, int ncol, int** A, int verbose   )
+/*int      q,nrow,ncol,**A, verbose;*/
 {
 int  i, j1,j2, q1,q2;
 int  lambda, count;
@@ -427,8 +428,8 @@ return 1;
 
 
 /* Check strength 3  */
-OA_str3( q,nrow,ncol,A,verbose   )
-int      q,nrow,ncol,**A, verbose;
+int OA_str3(int q, int nrow, int ncol, int** A, int verbose )
+/*int      q,nrow,ncol,**A, verbose;*/
 {
 int  i, j1,j2,j3, q1,q2,q3;
 int  lambda, count;
@@ -484,8 +485,8 @@ return 1;
 
 
 /* Check strength 4  */
-OA_str4( q,nrow,ncol,A,verbose   )
-int      q,nrow,ncol,**A, verbose;
+int OA_str4(int q, int nrow, int ncol, int** A, int verbose   )
+/*int      q,nrow,ncol,**A, verbose;*/
 {
 int  i, j1,j2,j3,j4, q1,q2,q3,q4;
 int  lambda, count;
@@ -544,8 +545,8 @@ return 1;
 
 
 /* Check strength t  */
-OA_strt( q,nrow,ncol,A,t,verbose   )
-int      q,nrow,ncol,**A,t,verbose;
+int OA_strt(int q, int nrow, int ncol, int **A, int t, int verbose   )
+/*int      q,nrow,ncol,**A,t,verbose;*/
 {
 int  row, i, ic, iq, *clist, *qlist, ctuples, qtuples;
 int  lambda, count, match;

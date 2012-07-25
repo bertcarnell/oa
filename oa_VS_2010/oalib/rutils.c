@@ -22,8 +22,9 @@ work.
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include "galdec.h"
 
-double **dmatrix(), *dvector();
+/*double **dmatrix(), *dvector();*/
 
 
 /*
@@ -32,14 +33,14 @@ double **dmatrix(), *dvector();
 
 */
 
-unifperm( pi,q )  
+void unifperm( int* pi, int q )  
 /* 
    In S one just does rank(runif(q)).  Here we want
 something like rank(runif(q))-1 since the symbols to
 be permuted are 0..q-1.  
 */
 
-int q, *pi;
+/*int q, *pi;*/
 {
 int i;
 double *z;
@@ -62,9 +63,9 @@ free_dvector( z,0,q-1);
 
 /* These routines perform sorting and ranking chores. */
 
-int rankcomp( a,b )
+int rankcomp( double** a, double** b )
 
-double **a, **b;
+/*double **a, **b;*/
 {
 /*printf("Randcomp a = (%g,%g) b=(%g,%g)\n",a[0][0],a[0][1],b[0][0],b[0][1]);*/
 if(  a[0][0] < b[0][0]  )return(-1);
@@ -72,9 +73,9 @@ if(  a[0][0] > b[0][0]  )return( 1);
 return(0);
 }
 
-findranks( n,v,r )
-int n, *r;
-double *v;
+int findranks(int n, double* v, int* r )
+/*int n, *r;
+double *v;*/
 
 {
 double **temp;
@@ -98,8 +99,8 @@ for(  i=0; i<n; i++  )
 }
 
 
-int doubcomp( a,b )
-double a,b;
+int doubcomp( double a, double b )
+/*double a,b;*/
 {
 if(  a < b  )return(-1);
 if(  a > b  )return( 1);

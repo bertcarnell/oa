@@ -65,8 +65,8 @@ F77 test program:
 */
 
 
-int mod( a,b )
-int  a,b;
+int mod( int a, int b )
+/*int  a,b;*/
 {
 int ans;
 ans = a % b;
@@ -78,8 +78,8 @@ else return ans+b;
 static int      jent=0,i=12,j=34,k=56,l=78,      ip,jp;
 static double u[97+1],                          c,cd,cm;
 
-seedok( is,js,ks,ls )   /*  1 iff seed is ok   */
-int is,js,ks,ls;
+int seedok(int is, int js, int ks, int ls )   /*  1 iff seed is ok   */
+/*int is,js,ks,ls;*/
 {
 if(  is==1  && js==1  && ks==1  && ls==1   )return 0;
 if(  is<1   || js<1   || ks<1   || ls<1    )return 0;
@@ -88,8 +88,8 @@ return 1;
 }
 
 
-seed( is,js,ks,ls )
-int is,js,ks,ls;
+void seed(int is, int js, int ks, int ls )
+/*int is,js,ks,ls;*/
 {
 jent=0;
 
@@ -102,16 +102,16 @@ if(  seedok(is,js,ks,ls)  ){
 }
 }
 
-runif(x,n)
-int     n;
-double *x;
+void runif(double *x, int n)
+/*int     n;
+double *x;*/
 {
 ranums(x,n);
 }
 
-ranums(x,n)
-int     n;
-double *x;
+void ranums(double *x, int n)
+/*int     n;
+double *x;*/
 {
 int    ii, jj, m;
 double s,t,uni;

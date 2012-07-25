@@ -18,14 +18,17 @@ work.
 
 */
 
-
+#include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
 #include "galois.h"
+#include "construct.h"
+#include "oa.h"
+#include "ak.h"
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char *argv[])
+//int  argc;
+//char *argv[];
 {
 int       q, ncol, **A;
 struct GF gf;

@@ -21,13 +21,13 @@ work.
 
 #include <stdio.h>
 #include "oa.h"
-int *ivector(), **imatrix();
+/*int *ivector(), **imatrix();*/
 
 /* Count triple agreements among rows of an array */
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char* argv[])
+/*int  argc;
+char *argv[];*/
 {
 int a3, q, nrow, ncol, **A;
 int i1, i2, j1, j2, j3;

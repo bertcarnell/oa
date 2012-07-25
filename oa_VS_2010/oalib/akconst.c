@@ -21,12 +21,13 @@ work.
 /*  Find constants for Addelman Kempthorne designs
   when q is even. */
 
+#include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
 
 #include "galois.h"
 
-int  *ivector(), **imatrix();
+/*int  *ivector(), **imatrix();*/
 
 
 /*  EVEN    EVEN    EVEN    EVEN    EVEN    EVEN    EVEN    EVEN  */
@@ -38,9 +39,9 @@ It seemed to be impossible to find a constant b[1],c[1] pair.
 */
 
 
-akeven( gf, kay, b, c, k )
-struct GF *gf;
-int        *kay, *b, *c, *k;
+int akeven(struct GF* gf, int* kay, int* b, int *c, int *k )
+/*struct GF *gf;
+int        *kay, *b, *c, *k;*/
 {
 /*
 int   **posb, **posc;
@@ -175,9 +176,9 @@ for(  i=1; i<q; i++  ){
 
 /*  ODD    ODD    ODD    ODD    ODD    ODD    ODD    ODD    ODD  */
 
-akodd( gf, kay, b, c, k )
-struct GF *gf;
-int        *kay, *b, *c, *k;
+int akodd(struct GF* gf, int* kay, int* b, int* c, int* k )
+/*struct GF *gf;
+int        *kay, *b, *c, *k;*/
 {
 int   i, q, p, num, den, four;
 

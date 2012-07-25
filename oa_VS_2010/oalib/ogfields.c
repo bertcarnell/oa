@@ -57,7 +57,7 @@ int *xtnpt1;
 
 int GF_fields_are_set = 0;
 
-GF_set_fields()
+void GF_set_fields()
 {
 /* Brute force set up of defining vectors, from Carmichael */
 
@@ -240,9 +240,9 @@ GF_fields_are_set = 1;
 }
 
 
-GF_getfield( q, gf )
-int q;
-struct GF *gf;
+int GF_getfield(int q, struct GF* gf )
+/*int q;
+struct GF *gf;*/
 {
 int *xtn;
 int p,n,ispp;

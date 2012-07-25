@@ -57,9 +57,10 @@ work.
 #include <stdio.h>
 
 #include "galois.h"
+#include "ak.h"
 
-addelkemp3check( q,p,ncol  )
-int q,p,ncol;
+int addelkemp3check(int q, int p, int ncol)
+//int q,p,ncol;
 {
 
 if(  p==2 && q>4 ){
@@ -86,10 +87,10 @@ return 1;
 
 
 
-addelkemp3( gf, A, ncol )
+int addelkemp3(struct GF* gf, int** A, int ncol )
 /* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
-struct GF *gf;
-int **A, ncol;
+/*struct GF *gf;
+int **A, ncol;*/
 {
 int i1,i2,i3, m1,m2, p,q;
 int kay,*b,*c,*k;  /* A&K notation */

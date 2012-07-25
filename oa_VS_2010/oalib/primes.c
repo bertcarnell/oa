@@ -37,8 +37,8 @@ work.
 
 */
 
-isprime( p )
-int p;
+int isprime(int p )
+/*int p;*/
 {
 int k;
 
@@ -54,7 +54,7 @@ for(  k=2; k< sqrt( (double) (p+1) ); k++  )
 return 1;
 }
 
-ispcheck()
+void ispcheck()
 {
 int q;
 for(  q=1; q<2000; q++  )
@@ -64,8 +64,8 @@ for(  q=1; q<2000; q++  )
 
 
 
-primepow( q,p,n,isit )
-int q,*p,*n,*isit;
+void primepow(int q, int* p, int* n, int* isit )
+/*int q,*p,*n,*isit;*/
 {
 int k, firstfactor;
 
@@ -100,8 +100,8 @@ while( 1 ){
 }
 }
 
-isprimepow( q )
-int q;
+int isprimepow(int q )
+/*int q;*/
 {
 int p,n,ispp;
 primepow( q,&p,&n,&ispp );
@@ -109,12 +109,12 @@ return ispp;
 }
 
 
-int ipow( a,b )
-int a,b;
+int ipow( int a, int b )
+/*int a,b;*/
 {return (int) pow( (double) a, (double) b );}
 
 
-fqpncheck()
+void fqpncheck()
 {
 int q, p, n, ispp;
 

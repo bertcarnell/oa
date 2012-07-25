@@ -1,3 +1,6 @@
+#ifndef GALDEF_H
+#define GALDEF_H
+
 /* Definitions for Galois Field code */
 
 struct GF {
@@ -10,3 +13,5 @@ struct GF {
   int *root;
   int **poly;
 };
+
+#endif

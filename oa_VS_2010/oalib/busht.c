@@ -18,14 +18,14 @@ work.
 
 */
 
-
+#include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
 #include "galois.h"
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char* argv[])
+/*int  argc;
+char *argv[];*/
 {
 int       str, q, ncol, **A;
 struct GF gf;

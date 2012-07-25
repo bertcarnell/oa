@@ -20,6 +20,7 @@ work.
 
 
 #include <stdio.h>
+#include "oa.h"
 
 /*  
  
@@ -28,9 +29,9 @@ of the input array.
 
 */
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char* argv[])
+/*int  argc;
+char *argv[];*/
 {
 int q, nrow, ncol, **A;
 int str;

@@ -21,7 +21,7 @@ work.
 
 #include <stdio.h>
 #include "oa.h"
-int *ivector(), **imatrix();
+/*int *ivector(), **imatrix();*/
 
 /* Count Agreements among rows of an array */
 
@@ -29,9 +29,9 @@ int *ivector(), **imatrix();
 
 int **A;
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char* argv[])
+/*int  argc;
+char *argv[];*/
 {
 int q, nrow, ncol, **A;
 int i, j, k;

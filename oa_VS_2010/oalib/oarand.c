@@ -18,19 +18,20 @@ work.
 
 */
 
-
+#include <stdlib.h>
 #include <stdio.h>
 #include "oa.h"
-int *ivector(), **imatrix();
+#include "galdec.h"
+/*int *ivector(), **imatrix();*/
 /*  
 
   In each column of an orthogonal array, independently randomize the symbols.
 
 */
 
-main(argc,argv)
-int  argc;
-char *argv[];
+int main(int argc, char* argv[])
+/*int  argc;
+char *argv[];*/
 {
 int q, nrow, ncol, **A;
 int i, j, *pi;
