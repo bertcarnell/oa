@@ -19,10 +19,7 @@ work.
 */
 
 
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include "galdec.h"
+#include "rutils.h"
 
 /*double **dmatrix(), *dvector();*/
 
@@ -32,6 +29,8 @@ work.
  Utilities based on runif
 
 */
+
+namespace oa {
 
 void unifperm( int* pi, int q )  
 /* 
@@ -73,6 +72,19 @@ if(  a[0][0] > b[0][0]  )return( 1);
 return(0);
 }
 
+template <class T>
+int rankcomp(const void* a, const void* b)
+{
+	T a_ = *(static_cast<const T*>(a));
+	T b_ = *(static_cast<const T*>(b));
+	if (a_ < b_)
+		return -1;
+	if (a_ > b_)
+		return 1;
+	return 0;
+}
+
+
 int findranks(int n, double* v, int* r )
 /*int n, *r;
 double *v;*/
@@ -92,10 +104,13 @@ for( i=0; i<n; i++  ){
   temp[i][0] = v[i];
   temp[i][1] = (double) i;
 }
-qsort((void *)temp,(size_t) n,sizeof(temp[0]),rankcomp);
+//qsort((void *)temp,(size_t) n,sizeof(temp[0]),rankcomp);
+std::qsort(static_cast<void *>(temp), static_cast<size_t>(n), sizeof(double), rankcomp<double>);
 
 for(  i=0; i<n; i++  )
   r[ (int)temp[i][1] ] = i+1; /*Ranks go 1..n */
+
+return 0;
 }
 
 
@@ -105,4 +120,5 @@ int doubcomp( double a, double b )
 if(  a < b  )return(-1);
 if(  a > b  )return( 1);
 return(0);
+}
 }

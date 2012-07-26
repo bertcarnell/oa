@@ -53,11 +53,9 @@ work.
 
 */
 
-#include <math.h>
-#include <stdio.h>
+#include "ak3.h"
 
-#include "galois.h"
-#include "ak.h"
+namespace oa {
 
 int addelkemp3check(int q, int p, int ncol)
 //int q,p,ncol;
@@ -87,7 +85,7 @@ return 1;
 
 
 
-int addelkemp3(struct GF* gf, int** A, int ncol )
+int addelkemp3(GF* gf, int** A, int ncol )
 /* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
 /*struct GF *gf;
 int **A, ncol;*/
@@ -220,4 +218,4 @@ return 1;
 
 
 
-
+} /* end oa */

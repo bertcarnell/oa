@@ -18,10 +18,6 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "oa.h"
-
 /*  
 
        Check whether the array in standard input is really
@@ -46,9 +42,13 @@ work.
 
 */
 
+/*
+ * Note that this is unnecessary and will just use OA_str4
+ */
+/*
 int main(int argc, char* argv[])
-/*int  argc;
-char *argv[];*/
+int  argc;
+char *argv[];
 {
 int q, nrow, ncol, **A;
 int i, j1,j2,j3,j4,  q1,q2,q3,q4;
@@ -62,3 +62,4 @@ if(  OA_str4( q,nrow,ncol,A,2   )  )
 else
   exit(0);
 }
+*/

@@ -18,20 +18,26 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
+#include "construct.h"
 #include "galois.h"
+#include "primes.h"
+#include "gfields.h"
 
-int main(int argc, char* argv[])
-/*int  argc;
+using namespace oa;
+
+extern "C" {
+	int bosebushl_main(int *_lam, int *_q, int*_ncol, int**A)
+/*int main(int argc, char* argv[])
+int  argc;
 char *argv[];*/
 {
-int       lam, q, ncol, **A;
-struct GF gf;
+int lam=*_lam;
+int q=*_q;
+int ncol=*_ncol;
+GF gf;
 int       pq, nq, isppq,  pl, nl, isppl;
 
-if(  argc==1  )
+/*if(  argc==1  )
   scanf("%d %d %d",&lam,&q,&ncol);
 else if( argc==2  ){
   sscanf(argv[1],"%d",&lam);
@@ -44,8 +50,9 @@ else if( argc==2  ){
   sscanf(argv[1],"%d",&lam);
   sscanf(argv[2],"%d",&q);
   sscanf(argv[3],"%d",&ncol);
-}
-
+}*/
+if (ncol <= 0)
+	ncol = q*lam;
 primepow( lam, &pl, &nl, &isppl  );
 primepow(  q , &pq, &nq, &isppq  );
 
@@ -84,7 +91,7 @@ if(  !A  ){
 }  
 
 if(  bosebushl( &gf, lam, A, ncol )  ){
-  OA_put( A,lam*q*q,ncol,q );
+  //OA_put( A,lam*q*q,ncol,q );
   exit(0);
 }
 else{
@@ -93,6 +100,6 @@ else{
   exit(1);
 }
 }
-
+}
 
 

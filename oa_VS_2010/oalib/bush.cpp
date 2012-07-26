@@ -17,20 +17,23 @@ the National Science Foundation for supporting this
 work.
 
 */
-
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
+#include "construct.h"
 #include "galois.h"
+#include "gfields.h"
 
-int main(int argc, char* argv[])
-/*int  argc;
+using namespace oa;
+
+extern "C" {
+	int bush_main(int *_q, int *_ncol, int** A)
+/*int main(int argc, char* argv[])
+int  argc;
 char *argv[];*/
 {
-int       q, ncol, **A;
-struct GF gf;
+int q=*_q;
+int ncol=*_ncol;
+GF gf;
 
-if(  argc==1  )
+/*if(  argc==1  )
   scanf("%d %d",&q,&ncol);
 else if( argc==2  ){
   sscanf(argv[1],"%d",&q);
@@ -38,7 +41,9 @@ else if( argc==2  ){
 }else{
   sscanf(argv[1],"%d",&q);
   sscanf(argv[2],"%d",&ncol);
-}
+}*/
+if (ncol <= 0)
+	ncol = q+1;
 
 if(  !GF_getfield(q, &gf)  ){
   fprintf(stderr,"Could not construct the Galois field needed\n");
@@ -53,7 +58,7 @@ if(  !A  ){
 }  
 
 if(  bush( &gf, A, 3, ncol )  ){
-  OA_put( A,q*q*q,ncol,q );
+  //OA_put( A,q*q*q,ncol,q );
   exit(0);
 }
 else{
@@ -62,4 +67,4 @@ else{
   exit(1);
 }
 }
-
+}

@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <math.h>
-
-
-
+#include "runif.h"
 
 /*
 c
@@ -64,6 +60,7 @@ F77 test program:
 
 */
 
+namespace oa {
 
 int mod( int a, int b )
 /*int  a,b;*/
@@ -214,3 +211,4 @@ c
       return
       end
 */
+}

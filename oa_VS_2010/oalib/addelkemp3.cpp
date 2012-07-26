@@ -18,30 +18,30 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
+#include "ak3.h"
 #include "galois.h"
-#include "construct.h"
-#include "oa.h"
-#include "ak.h"
+#include "gfields.h"
 
-int main(int argc, char *argv[])
-//int  argc;
-//char *argv[];
+using namespace oa;
+
+extern "C" {
+	int addelkemp3_main(int q, int ncol, int ** A)
+/*int main(int argc, char *argv[])
+int  argc;
+char *argv[];*/
 {
-int       q, ncol, **A;
-struct GF gf;
+/*int       q, ncol, **A;*/
+GF gf;
 
-if(  argc==1  )
+/*if(  argc==1  )
   scanf("%d %d",&q,&ncol);
 else if( argc==2  ){
   sscanf(argv[1],"%d",&q);
-  ncol = 2*q*q + 2*q +1;  /*  2(q^3-1)/(q-1) - 1  */
-}else{
+  ncol = 2*q*q + 2*q +1;*/  /*  2(q^3-1)/(q-1) - 1  */
+/*}else{
   sscanf(argv[1],"%d",&q);
   sscanf(argv[2],"%d",&ncol);
-}
+}*/
 
 if(  !GF_getfield(q, &gf)  ){
   fprintf(stderr,"Could not construct the Galois field needed\n");
@@ -56,7 +56,7 @@ if(  !A  ){
 }  
 
 if(  addelkemp3( &gf, A, ncol )  ){
-  OA_put( A, 2*q*q*q, ncol, q );
+  //OA_put( A, 2*q*q*q, ncol, q );
   exit(0);
 }
 else{
@@ -65,4 +65,4 @@ else{
   exit(1);
 }
 }
-
+}

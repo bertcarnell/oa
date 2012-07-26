@@ -18,19 +18,26 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
+#include "construct.h"
 #include "galois.h"
+#include "primes.h"
+#include "gfields.h"
 
-int main(int argc, char* argv[])
-/*int  argc;
+using namespace oa;
+
+extern "C" {
+	int busht_main(int *_str, int *_q, int *_ncol, int **A)
+/*int main(int argc, char* argv[])
+int  argc;
 char *argv[];*/
 {
-int       str, q, ncol, **A;
-struct GF gf;
+//int       str, q, ncol, **A;
+int str=*_str;
+int q=*_q;
+int ncol=*_ncol;
+GF gf;
 
-if(  argc==1  )
+/*if(  argc==1  )
   scanf("%d %d %d",&str,&q,&ncol);
 else if( argc==2  ){
   sscanf(argv[1],"%d",&str);
@@ -38,12 +45,14 @@ else if( argc==2  ){
 }else if( argc==3  ){
   sscanf(argv[1],"%d",&str);
   sscanf(argv[2],"%d",&q);
-  ncol = q+1;  /* can sometimes get 1 more with even q */
-}else{
+  ncol = q+1;*/  /* can sometimes get 1 more with even q */
+/*}else{
   sscanf(argv[1],"%d",&str);
   sscanf(argv[2],"%d",&q);
   sscanf(argv[3],"%d",&ncol);
-}
+}*/
+if (ncol <= 0)
+	ncol = q+1;
 
 if( str < 2 ){
   fprintf(stderr,"Bush designs not provided for strength %d.\n",str);
@@ -69,7 +78,7 @@ if(  !A  ){
 }  
 
 if(  bush( &gf, A, str, ncol )  ){
-  OA_put( A,ipow(q,str),ncol,q );
+  //OA_put( A,ipow(q,str),ncol,q );
   exit(0);
 }
 else{
@@ -77,4 +86,4 @@ else{
   exit(1);
 }
 }
-
+}

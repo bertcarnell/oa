@@ -22,8 +22,8 @@ work.
 /*     Manipulation of generic Galois fields.  See gfields.c
    for construction of specific Galois fields.  */
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 
 #include "galois.h"
 
@@ -38,6 +38,7 @@ work.
 
 */
 
+namespace oa {
 
 /*---------------------------------------------------------------*/
 
@@ -97,7 +98,7 @@ return ans;
 
 #define GFPUNT {fprintf(stderr,"Unable to allocate space for Galois field on %d elements.\n",q);return 0;}
 
-int GF_ready(struct GF* gf, int p, int n, int* xton )
+int GF_ready(GF* gf, int p, int n, int* xton )
 /* 
    Make ready the Galois Field
 */
@@ -180,7 +181,7 @@ return 1;
 
 /*---------------------------------------------------------------*/
 
-void GF_print(struct GF* gf )
+void GF_print(GF* gf )
 
 /*struct GF *gf;*/
 {
@@ -231,7 +232,7 @@ for(  i=0; i<q; i++  )
 
 /*---------------------------------------------------------------*/
 
-void GF_free(struct GF* gf )
+void GF_free(GF* gf )
 /* 
    Deallocate the Galois Field
 */
@@ -250,4 +251,5 @@ free_ivector(gf->inv,0,q-1);
 free_imatrix(gf->times,0,q-1,0,q-1);
 free_imatrix(gf->plus,0,q-1,0,q-1);
 free_ivector(gf->xton,0,n-1);
+}
 }

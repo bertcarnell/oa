@@ -19,7 +19,7 @@ work.
 */
 
 
-#include <stdio.h>
+#include <cstdio>
 #include "oa.h"
 /*int *ivector(), **imatrix();*/
 
@@ -27,18 +27,23 @@ work.
 
 #define ROWCHECK 50
 
-int **A;
+//int **A;
 
-int main(int argc, char* argv[])
-/*int  argc;
+using namespace oa;
+	
+	int oaagree(int *_nrow, int *_ncol, int** A)
+/*int main(int argc, char* argv[])
+int  argc;
 char *argv[];*/
 {
-int q, nrow, ncol, **A;
+//int q=*_q;
+int nrow=*_nrow;
+int ncol=*_ncol;
 int i, j, k;
 int agree, maxagr;
 int mrow1, mrow2;
 
-OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+//OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
 
 maxagr = mrow1 = mrow2 = 0;
 
@@ -64,5 +69,5 @@ else{
 	 maxagr);
   printf("This is attained by rows %d and %d.\n",mrow1,mrow2);
 }
-
+return 0;
 }

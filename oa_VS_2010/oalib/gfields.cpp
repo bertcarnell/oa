@@ -28,11 +28,13 @@ work.
 
 */
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 
+#include "memory.h"
+#include "galdef.h"
+#include "primes.h"
 #include "galois.h"
-
 
 /*  Glossary:
 
@@ -45,6 +47,8 @@ work.
        GF_fields_are_set   Indicates initialization done
        GF_getfield         Construct and return GF(q) if possible
 */
+
+namespace oa {
 
 #include "xtndeclare.h"
 int *xtnpt1;
@@ -69,7 +73,7 @@ GF_fields_are_set = 1;
 }
 
 
-int GF_getfield(int q, struct GF* gf )
+int GF_getfield(int q, GF* gf )
 /*int q;
 struct GF *gf;*/
 {
@@ -109,5 +113,6 @@ else {
   fprintf(stderr,"GF(%d) = GF(%d^%d) is not included in this program.\n",q,p,n);
   fprintf(stderr,"To add it, consider modifying gfields.c.\n",q);
   return 0;
+}
 }
 }

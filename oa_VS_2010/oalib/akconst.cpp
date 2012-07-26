@@ -21,11 +21,7 @@ work.
 /*  Find constants for Addelman Kempthorne designs
   when q is even. */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
-
-#include "galois.h"
+#include "akconst.h"
 
 /*int  *ivector(), **imatrix();*/
 
@@ -38,8 +34,10 @@ Commented out code below attempts to implement that prescription.
 It seemed to be impossible to find a constant b[1],c[1] pair.
 */
 
+namespace oa {
 
-int akeven(struct GF* gf, int* kay, int* b, int *c, int *k )
+
+int akeven(GF* gf, int* kay, int* b, int *c, int *k )
 /*struct GF *gf;
 int        *kay, *b, *c, *k;*/
 {
@@ -49,7 +47,7 @@ int   j, temp, square;
 int   v1, v2, x1, x2, z1, z2, ib, ic;
 int   *vals1, *vals2, done;
 */
-int   i,q,xtn;
+int   i,q;//, xtn;
 
 q = gf->q;
 *kay=1;
@@ -80,9 +78,9 @@ if(  q>4  ){
   for(  i=1; i<q; i++  ){
     b[i] = gf->times[xtn][gf->inv[i]];
     c[i] = gf->times[xtn][gf->times[i][i]];
-  }
-*/
+  }*/
 }
+return 0;
 }
 
 /*
@@ -176,7 +174,7 @@ for(  i=1; i<q; i++  ){
 
 /*  ODD    ODD    ODD    ODD    ODD    ODD    ODD    ODD    ODD  */
 
-int akodd(struct GF* gf, int* kay, int* b, int* c, int* k )
+int akodd(GF* gf, int* kay, int* b, int* c, int* k )
 /*struct GF *gf;
 int        *kay, *b, *c, *k;*/
 {
@@ -208,4 +206,7 @@ for(  i=1; i<q; i++  ){
   c[i]= gf->times[c[i]][gf->inv[four]];
   /*    printf("i,num,den,b,k,c %3d %3d %3d %3d %3d %3d\n",i,num,den,b[i],k[i],c[i]);*/
 }
+return 0;
+}
+
 }

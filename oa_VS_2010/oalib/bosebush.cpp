@@ -18,27 +18,33 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
 #include "galois.h"
+#include "construct.h"
+#include "gfields.h"
 
-int main(int argc, char* argv[])
-/*int  argc;
+using namespace oa;
+
+extern "C" {
+	int bosebush_main(int *_q, int* _ncol, int **A)
+/*int main(int argc, char* argv[])
+int  argc;
 char *argv[];*/
 {
-int       q, ncol, **A;
-struct GF gf;
+int q=*_q;
+int ncol=*_ncol;
+GF gf;
 
-if(  argc==1  )
+/*if(  argc==1  )
   scanf("%d %d",&q,&ncol);
 else if( argc==2  ){
   sscanf(argv[1],"%d",&q);
-  ncol = 2*q;    /* Can get 2q without defect, 2q+1 with defect */
-}else{
+  ncol = 2*q;*/    /* Can get 2q without defect, 2q+1 with defect */
+/*}else{
   sscanf(argv[1],"%d",&q);
   sscanf(argv[2],"%d",&ncol);
-}
+}*/
+if (ncol <= 0)
+	ncol = 2*q;
 
 if(  q%2  ){
   fprintf(stderr,"This implementation of Bose-Bush only works for a number\n");
@@ -60,7 +66,7 @@ if(  !A  ){
 }  
 
 if(  bosebush( &gf, A, ncol )  ){
-  OA_put( A,2*q*q,ncol,q );
+  //OA_put( A,2*q*q,ncol,q );
   exit(0);
 }
 else{
@@ -69,4 +75,4 @@ else{
   exit(1);
 }
 }
-
+}

@@ -13,8 +13,150 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\addelkemp">
+      <UniqueIdentifier>{2f144fa8-8554-46e4-8235-d0cf04cdb2fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\addelkemp">
+      <UniqueIdentifier>{79ad3321-1d43-44ce-8b06-f6294362a156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\bosebush">
+      <UniqueIdentifier>{7ee98272-4e55-4120-a3a8-1b7ae4589030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\galois">
+      <UniqueIdentifier>{1b4b2b18-94a1-43b6-a14a-0c80d3e0d610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\xtn">
+      <UniqueIdentifier>{87d6e6bb-617f-40d5-bcd4-39947a4fa7db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\galois">
+      <UniqueIdentifier>{60015c69-9412-40f3-8c67-ad3b03d45573}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
+    <ClInclude Include="construct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oalib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ak3.h">
+      <Filter>Header Files\addelkemp</Filter>
+    </ClInclude>
+    <ClInclude Include="akconst.h">
+      <Filter>Header Files\addelkemp</Filter>
+    </ClInclude>
+    <ClInclude Include="akn.h">
+      <Filter>Header Files\addelkemp</Filter>
+    </ClInclude>
+    <ClInclude Include="primes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="runif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rutils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="galdec.h">
+      <Filter>Header Files\galois</Filter>
+    </ClInclude>
+    <ClInclude Include="galdef.h">
+      <Filter>Header Files\galois</Filter>
+    </ClInclude>
+    <ClInclude Include="galois.h">
+      <Filter>Header Files\galois</Filter>
+    </ClInclude>
+    <ClInclude Include="gfields.h">
+      <Filter>Header Files\galois</Filter>
+    </ClInclude>
+    <ClInclude Include="xtndeclare.h">
+      <Filter>Header Files\xtn</Filter>
+    </ClInclude>
+    <ClInclude Include="xtndispatch.h">
+      <Filter>Header Files\xtn</Filter>
+    </ClInclude>
+    <ClInclude Include="xtnset.h">
+      <Filter>Header Files\xtn</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="construct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oaagree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oarand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oastr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oatriple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="primes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="runif.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rutils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="addelkemp.cpp">
+      <Filter>Source Files\addelkemp</Filter>
+    </ClCompile>
+    <ClCompile Include="addelkemp3.cpp">
+      <Filter>Source Files\addelkemp</Filter>
+    </ClCompile>
+    <ClCompile Include="addelkempn.cpp">
+      <Filter>Source Files\addelkemp</Filter>
+    </ClCompile>
+    <ClCompile Include="ak3.cpp">
+      <Filter>Source Files\addelkemp</Filter>
+    </ClCompile>
+    <ClCompile Include="akconst.cpp">
+      <Filter>Source Files\addelkemp</Filter>
+    </ClCompile>
+    <ClCompile Include="akn.cpp">
+      <Filter>Source Files\addelkemp</Filter>
+    </ClCompile>
+    <ClCompile Include="bose.cpp">
+      <Filter>Source Files\bosebush</Filter>
+    </ClCompile>
+    <ClCompile Include="bosebush.cpp">
+      <Filter>Source Files\bosebush</Filter>
+    </ClCompile>
+    <ClCompile Include="bosebushl.cpp">
+      <Filter>Source Files\bosebush</Filter>
+    </ClCompile>
+    <ClCompile Include="bush.cpp">
+      <Filter>Source Files\bosebush</Filter>
+    </ClCompile>
+    <ClCompile Include="busht.cpp">
+      <Filter>Source Files\bosebush</Filter>
+    </ClCompile>
+    <ClCompile Include="galois.cpp">
+      <Filter>Source Files\galois</Filter>
+    </ClCompile>
+    <ClCompile Include="gfields.cpp">
+      <Filter>Source Files\galois</Filter>
+    </ClCompile>
+    <ClCompile Include="ogfields.cpp">
+      <Filter>Source Files\galois</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

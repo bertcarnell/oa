@@ -10,6 +10,51 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ak3.h" />
+    <ClInclude Include="akconst.h" />
+    <ClInclude Include="akn.h" />
+    <ClInclude Include="construct.h" />
+    <ClInclude Include="galdec.h" />
+    <ClInclude Include="galdef.h" />
+    <ClInclude Include="galois.h" />
+    <ClInclude Include="gfields.h" />
+    <ClInclude Include="memory.h" />
+    <ClInclude Include="oa.h" />
+    <ClInclude Include="oalib.h" />
+    <ClInclude Include="primes.h" />
+    <ClInclude Include="runif.h" />
+    <ClInclude Include="rutils.h" />
+    <ClInclude Include="xtndeclare.h" />
+    <ClInclude Include="xtndispatch.h" />
+    <ClInclude Include="xtnset.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="addelkemp.cpp" />
+    <ClCompile Include="addelkemp3.cpp" />
+    <ClCompile Include="addelkempn.cpp" />
+    <ClCompile Include="ak3.cpp" />
+    <ClCompile Include="akconst.cpp" />
+    <ClCompile Include="akn.cpp" />
+    <ClCompile Include="bose.cpp" />
+    <ClCompile Include="bosebush.cpp" />
+    <ClCompile Include="bosebushl.cpp" />
+    <ClCompile Include="bush.cpp" />
+    <ClCompile Include="busht.cpp" />
+    <ClCompile Include="construct.cpp" />
+    <ClCompile Include="galois.cpp" />
+    <ClCompile Include="gfields.cpp" />
+    <ClCompile Include="memory.cpp" />
+    <ClCompile Include="oa.cpp" />
+    <ClCompile Include="oaagree.cpp" />
+    <ClCompile Include="oarand.cpp" />
+    <ClCompile Include="oastr.cpp" />
+    <ClCompile Include="oatriple.cpp" />
+    <ClCompile Include="ogfields.cpp" />
+    <ClCompile Include="primes.cpp" />
+    <ClCompile Include="runif.cpp" />
+    <ClCompile Include="rutils.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9DAC5B5E-DF65-44B1-B9A0-8A5F48BA515F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -42,9 +87,10 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4986; 4820; 4514; 4710</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -68,9 +114,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

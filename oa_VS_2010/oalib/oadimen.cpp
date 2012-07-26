@@ -18,10 +18,6 @@ work.
 
 */
 
-
-#include <stdio.h>
-#include "oa.h"
-
 /*  
  
    Use brute force to check the actual strength
@@ -29,9 +25,13 @@ of the input array.
 
 */
 
+/*
+ * Note this is unnecessary since we will not read the OA from the stdin
+ */
+/*int oadimen(int * q, int *nrow, int *ncol, int** A)
 int main(int argc, char* argv[])
-/*int  argc;
-char *argv[];*/
+int  argc;
+char *argv[];
 {
 int q, nrow, ncol, **A;
 int str;
@@ -42,3 +42,4 @@ OA_parsein( argc, argv, &q, &nrow, &ncol, &A );
 printf("\nThe array has %d rows, %d columns and appears\n",nrow,ncol);
 printf("to have %d symbols, since the largest symbol is %d.\n",q,q-1);
 }
+*/

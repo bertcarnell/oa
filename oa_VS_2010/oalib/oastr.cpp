@@ -19,7 +19,7 @@ work.
 */
 
 
-#include <stdio.h>
+#include <cstdio>
 #include "oa.h"
 
 /*  
@@ -29,16 +29,21 @@ of the input array.
 
 */
 
-int main(int argc, char* argv[])
-/*int  argc;
+using namespace oa;
+
+int oastr(int *_q, int*_nrow, int*_ncol, int**A)
+/*int main(int argc, char* argv[])
+int  argc;
 char *argv[];*/
 {
-int q, nrow, ncol, **A;
+int q = *_q;
+int nrow = *_nrow;
+int ncol = *_ncol;
 int str;
 
-double work;
+//double work;
 
-OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+//OA_parsein( &q, &nrow, &ncol, &A );
 OA_strength( q,nrow,ncol,A,&str,2 );
 
 if(  str <0  ){
@@ -47,4 +52,5 @@ if(  str <0  ){
 }
 else
   printf("\nThe array has strength %d and no higher strength.\n",str);
+return 0;
 }

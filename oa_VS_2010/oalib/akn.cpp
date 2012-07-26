@@ -30,12 +30,9 @@ work.
 
 */
 
-#include <math.h>
-#include <stdio.h>
+#include "akn.h"
 
-#include "galois.h"
-#include "ak.h"
-#include "oa.h"
+namespace oa {
 
 int addelkempncheck(int q, int p, int akn, int ncol  )
 /*int q,p,akn,ncol;*/
@@ -65,7 +62,7 @@ return 1;
 }
 
 
-int addelkempn(struct GF* gf, int akn, int** A, int ncol )
+int addelkempn(GF* gf, int akn, int** A, int ncol )
 /* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
 /*struct GF *gf;
 int **A, ncol, akn;*/
@@ -271,6 +268,4 @@ return 1;
 }
 
 
-
-
-
+}

@@ -21,8 +21,7 @@ work.
 
 /*     Utilities related to prime numbers.  */
 
-#include <math.h>
-#include <stdio.h>
+#include "primes.h"
 
 
 /*  Glossary:
@@ -36,6 +35,8 @@ work.
        fqpncheck         was used to test primepow
 
 */
+
+namespace oa {
 
 int isprime(int p )
 /*int p;*/
@@ -61,14 +62,12 @@ for(  q=1; q<2000; q++  )
   if(  isprime(q)  )printf("%d\n",q);
 }
 
-
-
-
 void primepow(int q, int* p, int* n, int* isit )
 /*int q,*p,*n,*isit;*/
 {
-int k, firstfactor;
-
+int k;
+int firstfactor = 0;
+ 
 *p = *n = *isit = 0;
 if(  q<=1  )return;
 
@@ -84,7 +83,8 @@ for(  k=2; k<sqrt( (double) (q+1) ); k++  )
   }
 if(  !isprime(firstfactor)  )return;
 
-while( 1 ){
+//while( 1 ){
+for ( ; ; ){ // eliminates warning that while (1) gives
   if(  q == 1  ){
     *isit = 1;
     *p = firstfactor;
@@ -125,3 +125,4 @@ for(  q=0; q<=20000; q++  ){
 }
 }
 
+}

@@ -18,20 +18,21 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
-#include "galois.h"
 #include "construct.h"
-#include "oa.h"
+#include "galois.h"
+#include "gfields.h"
 
-extern void addelkemp_c(int q, int ncol, int* n, int** A)
+using namespace oa;
+
+extern "C" {
+	int addelkemp_main(int* _q, int* _ncol, int* n, int** A)
 /*int main(int argc, char* argv[])
 int  argc;
 char *argv[];*/
 {
-int       q, ncol;
-struct GF gf;
+int q = *_q;
+int ncol = *_ncol;
+GF gf;
 
 /*if(  argc==1  )
   scanf("%d %d",&q,&ncol);
@@ -43,38 +44,35 @@ else if( argc==2  ){
   sscanf(argv[2],"%d",&ncol);
 }*/
 
+if (ncol <= 0)
+	ncol = 2*q;
 if(  ncol > 2*q+1  ){
   fprintf(stderr,"At most 2q+1 = %d columns are possible\n",2*q+1);
   fprintf(stderr,"for the Addelman Kempthorne design with q = %d.\n",q);
-  /*exit(1);*/
-  return;
+  exit(1);
 }  
 
 if(  !GF_getfield(q, &gf)  ){
   fprintf(stderr,"Could not construct the Galois field needed\n");
   fprintf(stderr,"for the Addelman Kempthorne design.\n");
-  /*exit(1);*/
-  return;
+  exit(1);
 }
 
 A = imatrix( 0, 2*q*q-1, 0, ncol-1  );
 if(  !A  ){
   fprintf(stderr,"Could not allocate array for Addelman Kempthorne design.\n");
-  /*exit(1);*/
-  return;
+  exit(1);
 }  
 
 if(  addelkemp( &gf, A, ncol )  ){
 	*n = 2*q*q;
   /*OA_put( A, 2*q*q, ncol, q );*/
-  /*exit(0)*/;
-  return;
+  exit(0);
 }
 else{
   fprintf(stderr,"Unable to construct Addelman Kempthorne design q=%d, ncol=%d.\n",
 	  q,ncol);
-  /*exit(1);*/
-  return;
+  exit(1);
 }
 }
-
+}

@@ -21,11 +21,9 @@ work.
 
 /*  Constructions for designs using Galois fields */
 
-#include <math.h>
-#include <stdio.h>
-
-#include "galois.h"
-#include "ak.h"
+#include "construct.h"
+#include "primes.h"
+#include "akconst.h"
 
 /*  Glossary:
 
@@ -41,6 +39,7 @@ work.
 
 */
 
+namespace oa {
 
 int bosecheck(int q, int ncol )
 /*int q, ncol;*/
@@ -58,7 +57,7 @@ return 1;
 }
 
 
-int bose(struct GF* gf, int** A, int ncol )
+int bose(GF* gf, int** A, int ncol )
 /*struct GF *gf;
 int    **A, ncol;*/
 {
@@ -81,7 +80,7 @@ for(  j=0; j<q; j++  ){
 return 1;
 }
 
-int itopoly(int n, int q, int d, int* coef )
+void itopoly(int n, int q, int d, int* coef )
 /*int  n,q,d,*coef;*/
 {
 int i;
@@ -93,7 +92,7 @@ for(  i=0; i<=d; i++  ){
 }
 
 
-int polyeval(struct GF* gf, int d, int* poly, int arg, int* value )
+void polyeval(GF* gf, int d, int* poly, int arg, int* value )
 /*  find  value = poly(arg) where poly is a polynomial of degree d  
     and all the arithmetic takes place in the given Galois field.*/
 
@@ -135,7 +134,7 @@ return 1;
 }
 
 
-int bush(struct GF* gf, int** A, int str, int ncol  )
+int bush(GF* gf, int** A, int str, int ncol  )
 /*struct GF *gf;
 int       **A, str, ncol;*/
 {
@@ -191,7 +190,7 @@ return 1;
 }
 
 
-int addelkemp(struct GF* gf, int** A, int ncol )
+int addelkemp(GF* gf, int** A, int ncol )
 /* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=2 */
 /*struct GF *gf;
 int    ncol, **A;*/
@@ -281,7 +280,7 @@ if(  ncol == 2*q+1  ){
 return 1;
 }
 
-int bosebush(struct GF* gf, int** B, int ncol )
+int bosebush(GF* gf, int** B, int ncol )
 /* Implement Bose and Bush's 1952 A.M.S. method with p=2, u=1 */
 /*struct GF *gf;
 int **B;*/
@@ -349,7 +348,7 @@ if(  ncol == lam*s+1  ){
 return 1;
 }
 
-int bosebushl(struct GF* gf, int lam, int** B, int ncol )
+int bosebushl(GF* gf, int lam, int** B, int ncol )
 /* Implement Bose and Bush's 1952 A.M.S. method with given lambda */
 /*struct GF *gf;
 int **B, lam;*/
@@ -396,5 +395,5 @@ for(  i=0; i<q; i++  ){
 free_imatrix(A,0,s-1,0,q-1);
 return 1;
 }
-  
-  
+
+}

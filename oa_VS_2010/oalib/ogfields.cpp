@@ -28,10 +28,11 @@ work.
 
 */
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 
 #include "galois.h"
+#include "primes.h"
 
 
 /*  Glossary:
@@ -45,6 +46,10 @@ work.
        GF_fields_are_set   Indicates initialization done
        GF_getfield         Construct and return GF(q) if possible
 */
+
+namespace oa_notused {
+
+	using namespace oa;
 
 int *xtn2t2, *xtn2t3, *xtn2t4, *xtn2t5, *xtn2t6, *xtn2t7, *xtn2t8, *xtn2t9;
 int *xtn3t2, *xtn3t3, *xtn3t4, *xtn3t5, *xtn3t6;
@@ -240,7 +245,7 @@ GF_fields_are_set = 1;
 }
 
 
-int GF_getfield(int q, struct GF* gf )
+int GF_getfield(int q, GF* gf )
 /*int q;
 struct GF *gf;*/
 {
@@ -312,5 +317,6 @@ else {
   fprintf(stderr,"GF(%d) = GF(%d^%d) is not included in this program.\n",q,p,n);
   fprintf(stderr,"To add it, consider modifying gfields.c.\n",q);
   return 0;
+}
 }
 }

@@ -18,22 +18,26 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
+#include "akn.h"
 #include "galois.h"
-#include "construct.h"
-#include "oa.h"
-#include "ak.h"
+#include "primes.h"
+#include "gfields.h"
 
-int main(int argc, char* argv[])
-//int  argc;
-//char *argv[];
+using namespace oa;
+
+extern "C" {
+	int addelkempn_main(int* _akn, int* _q, int* _ncol, int ** A)
+/*int main(int argc, char* argv[])
+int  argc;
+char *argv[];*/
 {
-int       akn, q, ncol, **A;
-struct GF gf;
+/*int       akn, q, ncol, **A;*/
+int akn = *_akn;
+int q = *_q;
+int ncol = *_ncol;
+GF gf;
 
-if(  argc==1  )
+/*if(  argc==1  )
   scanf("%d %d %d",&akn,&q,&ncol);
 else if( argc==2  ){
   sscanf(argv[1],"%d",&akn);
@@ -41,12 +45,15 @@ else if( argc==2  ){
 }else if( argc==3  ){
   sscanf(argv[1],"%d",&akn);
   sscanf(argv[2],"%d",&q);
-  ncol = 2*(ipow(q,akn)-1)/(q-1) - 1;  /*  2(q^3-1)/(q-1) - 1  */
-}else{
+  ncol = 2*(ipow(q,akn)-1)/(q-1) - 1;*/  /*  2(q^3-1)/(q-1) - 1  */
+/*}else{
   sscanf(argv[1],"%d",&akn);
   sscanf(argv[2],"%d",&q);
   sscanf(argv[3],"%d",&ncol);
-}
+}*/
+
+if (ncol <= 0)
+	ncol = 2*(ipow(q,akn)-1)/(q-1) - 1;
 
 if(  !GF_getfield(q, &gf)  ){
   fprintf(stderr,"Could not construct the Galois field needed\n");
@@ -63,7 +70,7 @@ if(  !A  ){
 }  
 
 if(  addelkempn( &gf, akn, A, ncol )  ){
-  OA_put( A, 2*ipow(q,akn), ncol, q );
+  //OA_put( A, 2*ipow(q,akn), ncol, q );
   exit(0);
 }
 else{
@@ -72,4 +79,4 @@ else{
   exit(1);
 }
 }
-
+}

@@ -18,11 +18,8 @@ work.
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "oa.h"
   
-#include "galdec.h"
 /*int  **imatrix(), *ivector();*/
 
 /*  
@@ -39,18 +36,19 @@ work.
 
 */
 
+namespace oa {
 
 /*  OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT    OUTPUT  */
 
-void OA_put(int** A, int n, int k, int q)
-/*int **A, n, k, q;*/
+/*void OA_put(int** A, int n, int k, int q)
+int **A, n, k, q;
 {
 OA_fput( stdout,A,n,k,q );
-}
+}*/
 
-void OA_fput(FILE* stream, int **A, int n, int k, int q )
-/*FILE *stream;
-int **A, n, k, q;*/
+/*void OA_fput(FILE* stream, int **A, int n, int k, int q )
+FILE *stream;
+int **A, n, k, q;
 {
 int   i,j;
 char* format;
@@ -65,19 +63,21 @@ for(  i=0; i<n; i++  )
 for(  j=0; j<k; j++  )
   fprintf(stream,format,A[i][j],(j==k-1)?"\n":" ");
 }
-
+*/
 
 /*  INPUT    INPUT    INPUT    INPUT    INPUT    INPUT    INPUT    INPUT  */
 
+/*
 int  OA_get(int** A, int n, int k, int q, int eof_assert)
-/*int **A, n, k, q, eof_assert;*/
+int **A, n, k, q, eof_assert;
 {
 return OA_fget( stdin,A,n,k,q,eof_assert );
-}
+}*/
 
+/*
 int OA_fget(FILE* stream, int** A, int n, int k, int q, int eof_assert)
-/*FILE *stream;
-int **A, n, k, q, eof_assert;*/
+FILE *stream;
+int **A, n, k, q, eof_assert;
 {
 int   i,j;
 for( i=0; i<n; i++ )
@@ -104,26 +104,28 @@ if(  eof_assert  &&  fscanf(stream,"%d",&eof_assert) != EOF  ){
   }
 return 1;
 }
+*/
 
 /*  READ    READ    READ    READ    READ    READ    READ    READ    READ  */
 
 /*  Read array and determine dimensions.   Inspired by approach
 taken in Xgobi.  */
 
-#define MAXK 5000
+/*#define MAXK 5000
 #define ROWINC 1000
-int line0[ MAXK ];
+int line0[ MAXK ];*/
 
+/*
 int OA_read( int ***A, int *n, int *k, int* q )
-/*int ***A, *n, *k, *q;*/
+int ***A, *n, *k, *q;
 {
 return OA_fread( stdin,A,n,k,q );
-}
+}*/
 
 
-int OA_fread(FILE* stream, int*** A, int *n, int *k, int *q)
-/*FILE *stream;
-int ***A, *n, *k, *q;*/
+/*int OA_fread(FILE* stream, int*** A, int *n, int *k, int *q)
+FILE *stream;
+int ***A, *n, *k, *q;
 {
 int   i, j;
 char  c;
@@ -178,8 +180,8 @@ while( 1 ){
       return 0;
     }
 }
-*q = 0;                   /* Assume that q = max(A)+1  */
-
+*q = 0;                  */ /* Assume that q = max(A)+1  */
+/*
 for(  i=0; i<*n; i++  )
 for(  j=0; j<*k; j++  )
   if(  A[0][i][j] > *q  )
@@ -187,14 +189,14 @@ for(  j=0; j<*k; j++  )
 *q = *q +1;
 
 return 1;
-}
+}*/
 
 /*  PARSE    PARSE    PARSE    PARSE    PARSE    PARSE    PARSE    PARSE  */
 
-int OA_parsein( int argc, char *argv[], int *q, int *nrow, int *ncol, int ***A)
-/*int  argc;
+/*int OA_parsein( int argc, char *argv[], int *q, int *nrow, int *ncol, int ***A)
+int  argc;
 char *argv[];
-int *q, *nrow, *ncol, ***A;*/
+int *q, *nrow, *ncol, ***A;
 {
 if(  argc<=1  ){
   if(  !OA_read( A,nrow,ncol,q )  ){
@@ -241,12 +243,12 @@ if(  argc >1  ){
     exit(1);
   }
   
-  if(  !OA_get( *A,*nrow,*ncol,*q, 1 )  ){/* Read 'em all */
-    fprintf(stderr,"Read error getting the orthogonal array.\n");
+  if(  !OA_get( *A,*nrow,*ncol,*q, 1 )  ){*/ /* Read 'em all */
+    /*fprintf(stderr,"Read error getting the orthogonal array.\n");
     exit(1);
   }
 }
-}
+}*/
 
 
 /*  WORK    WORK    WORK    WORK    WORK    WORK    WORK    WORK    WORK  */
@@ -647,4 +649,5 @@ for(  ic=0; ic<ctuples; ic++  ){   /* Loop over ordered tuples of columns */
 if(  verbose >=2  )
   printf("The array has strength (at least) %d.\n",t);
 return 1;
+}
 }

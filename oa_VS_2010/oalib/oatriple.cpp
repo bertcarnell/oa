@@ -19,21 +19,27 @@ work.
 */
 
 
-#include <stdio.h>
+#include <cstdio>
 #include "oa.h"
 /*int *ivector(), **imatrix();*/
 
 /* Count triple agreements among rows of an array */
 
-int main(int argc, char* argv[])
-/*int  argc;
+using namespace oa;
+
+int oatriple(int * _nrow, int * _ncol, int **A)
+/*int main(int argc, char* argv[])
+int  argc;
 char *argv[];*/
 {
-int a3, q, nrow, ncol, **A;
+//int q=*_q;
+int nrow=*_nrow;
+int ncol=*_ncol;
+int a3;
 int i1, i2, j1, j2, j3;
 int num3;
 
-OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
+//OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
 
 num3 = 0;
 for(  j1=0;    j1<ncol; j1++  )
@@ -50,4 +56,5 @@ for(  j3=j2+1; j3<ncol; j3++  ){
 } 
 printf("There are %d distinct triples of columns that agree\n",num3);
 printf("in at least two distinct rows.\n");
+return 0;
 }
