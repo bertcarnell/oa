@@ -21,6 +21,7 @@ work.
 #include "oa.h"
 #include "runif.h"
 #include "rutils.h"
+#include "defines.h"
 
 /*int *ivector(), **imatrix();*/
 /*  

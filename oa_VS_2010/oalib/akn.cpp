@@ -31,6 +31,7 @@ work.
 */
 
 #include "akn.h"
+#include "defines.h"
 
 namespace oa {
 
@@ -39,22 +40,22 @@ int addelkempncheck(int q, int p, int akn, int ncol  )
 {
 
 if(  akn<2  ){
-  fprintf(stderr,"This Addelman-Kempthorne OA(2q^n,ncol,q,2) is only\n");
-  fprintf(stderr,"available for n >= 2.  n = %d was requested.\n",akn);
+  ERROR_MACRO("This Addelman-Kempthorne OA(2q^n,ncol,q,2) is only\n");
+  ERROR_MACRO("available for n >= 2.  n = %d was requested.\n",akn);
   return 0;
 }
 
 if(  p==2 && q>4 ){
-  fprintf(stderr,"This Addelman-Kempthorne OA(2q^n,ncol,q,2) is only\n");
-  fprintf(stderr,"available for odd prime powers q and for even prime\n");
-  fprintf(stderr,"powers q<=4.\n");
+  ERROR_MACRO("This Addelman-Kempthorne OA(2q^n,ncol,q,2) is only\n");
+  ERROR_MACRO("available for odd prime powers q and for even prime\n");
+  ERROR_MACRO("powers q<=4.\n");
   return 0;
 }
 
 if(  ncol > 2*(ipow(q,akn)-1)/(q-1) -1){
-  fprintf(stderr,"The Addelman-Kempthorne construction needs\n");
-   fprintf(stderr,"ncol <= 2(q^n-1)(q-1) -1. Can't have ncol = %d\n",ncol);
-   fprintf(stderr,"with n=%d and q = %d,\n",akn,q);
+  ERROR_MACRO("The Addelman-Kempthorne construction needs\n");
+   ERROR_MACRO("ncol <= 2(q^n-1)(q-1) -1. Can't have ncol = %d\n",ncol);
+   ERROR_MACRO("with n=%d and q = %d,\n",akn,q);
   return 0;
 }
 

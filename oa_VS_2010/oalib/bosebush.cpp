@@ -21,6 +21,7 @@ work.
 #include "galois.h"
 #include "construct.h"
 #include "gfields.h"
+#include "defines.h"
 
 using namespace oa;
 
@@ -47,21 +48,21 @@ if (ncol <= 0)
 	ncol = 2*q;
 
 if(  q%2  ){
-  fprintf(stderr,"This implementation of Bose-Bush only works for a number\n");
-  fprintf(stderr,"q of levels equal to a power of 2.  q=%d was requested.\n",q);
-  fprintf(stderr,"The Addelman-Kempthorne designs might be available.\n");
+  ERROR_MACRO("This implementation of Bose-Bush only works for a number\n");
+  ERROR_MACRO("q of levels equal to a power of 2.  q=%d was requested.\n",q);
+  ERROR_MACRO("The Addelman-Kempthorne designs might be available.\n");
   exit(1);
 }
 
 if(  !GF_getfield(2*q, &gf)  ){
-  fprintf(stderr,"Could not construct the Galois field needed\n");
-  fprintf(stderr,"for the Bose Bush design.\n");
+  ERROR_MACRO("Could not construct the Galois field needed\n");
+  ERROR_MACRO("for the Bose Bush design.\n");
   exit(1);
 }
 
 A = imatrix( 0,2*q*q-1, 0,ncol-1  );
 if(  !A  ){
-  fprintf(stderr,"Could not allocate array for Bose design.\n");
+  ERROR_MACRO("Could not allocate array for Bose design.\n");
   exit(1);
 }  
 
@@ -70,7 +71,7 @@ if(  bosebush( &gf, A, ncol )  ){
   exit(0);
 }
 else{
-  fprintf(stderr,"Unable to construct Bose design q=%d, ncol=%d.\n",
+  ERROR_MACRO("Unable to construct Bose design q=%d, ncol=%d.\n",
 	  q,ncol);
   exit(1);
 }

@@ -20,6 +20,7 @@ work.
 #include "construct.h"
 #include "galois.h"
 #include "gfields.h"
+#include "defines.h"
 
 using namespace oa;
 
@@ -46,14 +47,14 @@ if (ncol <= 0)
 	ncol = q+1;
 
 if(  !GF_getfield(q, &gf)  ){
-  fprintf(stderr,"Could not construct the Galois field needed\n");
-  fprintf(stderr,"for the strength 3 Bush design.\n");
+  ERROR_MACRO("Could not construct the Galois field needed\n");
+  ERROR_MACRO("for the strength 3 Bush design.\n");
   exit(1);
 }
 
 A = imatrix( 0,q*q*q-1, 0,ncol-1  );
 if(  !A  ){
-  fprintf(stderr,"Could not allocate array for Bush design.\n");
+  ERROR_MACRO("Could not allocate array for Bush design.\n");
   exit(1);
 }  
 
@@ -62,7 +63,7 @@ if(  bush( &gf, A, 3, ncol )  ){
   exit(0);
 }
 else{
-  fprintf(stderr,"Unable to construct the strength 3 Bush design q=%d, ncol=%d.\n",
+  ERROR_MACRO("Unable to construct the strength 3 Bush design q=%d, ncol=%d.\n",
 	  q,ncol);
   exit(1);
 }

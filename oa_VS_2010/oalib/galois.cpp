@@ -26,6 +26,7 @@ work.
 #include <cstdio>
 
 #include "galois.h"
+#include "defines.h"
 
 /*  Glossary:
 
@@ -96,7 +97,7 @@ return ans;
 
 /*---------------------------------------------------------------*/
 
-#define GFPUNT {fprintf(stderr,"Unable to allocate space for Galois field on %d elements.\n",q);return 0;}
+#define GFPUNT {ERROR_MACRO("Unable to allocate space for Galois field on %d elements.\n",q);return 0;}
 
 int GF_ready(GF* gf, int p, int n, int* xton )
 /* 
@@ -150,8 +151,8 @@ for(  i=0; i<q; i++  ){
     if(  gf->times[i][j]==1  )
       gf->inv[i] = j;
   if(  i>0 && gf->inv[i] <= 0  ){
-    fprintf(stderr,"There is something wrong with the Galois field\n");
-    fprintf(stderr,"used for q=%d.  Element %d has no reciprocal.\n",q,i);
+    ERROR_MACRO("There is something wrong with the Galois field\n");
+    ERROR_MACRO("used for q=%d.  Element %d has no reciprocal.\n",q,i);
     return 0;
   }
 }
@@ -162,8 +163,8 @@ for(  i=0; i<q; i++  ){
     if(  gf->plus[i][j]==0  )
       gf->neg[i] = j;
   if(  i>0 && gf->neg[i] <= 0  ){
-    fprintf(stderr,"There is something wrong with the Galois field\n");
-    fprintf(stderr,"used for q=%d.  Element %d has no negative.\n",q,i);
+    ERROR_MACRO("There is something wrong with the Galois field\n");
+    ERROR_MACRO("used for q=%d.  Element %d has no negative.\n",q,i);
     return 0;
   }
 }
@@ -189,45 +190,45 @@ int i,j,n,p,q;
 
 n=gf->n, p=gf->p, q=gf->q;
 
-if( q>999 )fprintf(stderr,"Warning q=%d will overflow print field.\n",q);
+if( q>999 )ERROR_MACRO("Warning q=%d will overflow print field.\n",q);
 
-printf("\nFor GF(%d) p=%d n=%d\n",q,p,n);
-printf("x**n = (");
+PRINT_MACRO("\nFor GF(%d) p=%d n=%d\n",q,p,n);
+PRINT_MACRO("x**n = (");
 for( i=0; i<n-1; i++  )
-  printf("%d,",gf->xton[i]);
-printf("%d)\n",gf->xton[n-1]);
-printf("\n\nGF(%d) Polynomial coefficients:\n",q);
+  PRINT_MACRO("%d,",gf->xton[i]);
+PRINT_MACRO("%d)\n",gf->xton[n-1]);
+PRINT_MACRO("\n\nGF(%d) Polynomial coefficients:\n",q);
 for(  i=0; i<q; i++  ){
-  printf("  %3d  ",i);
+  PRINT_MACRO("  %3d  ",i);
   for(  j=0; j<n; j++  )
-    printf("%3d ",gf->poly[i][j]);
-  printf("\n");
+    PRINT_MACRO("%3d ",gf->poly[i][j]);
+  PRINT_MACRO("\n");
 }
-printf("\n\nGF(%d) Addition Table\n",q);
+PRINT_MACRO("\n\nGF(%d) Addition Table\n",q);
 for(  i=0; i<q; i++  ){
-  printf("  ");
+  PRINT_MACRO("  ");
   for(  j=0; j<q; j++  )
-    printf(" %3d",gf->plus[i][j]);
-  printf("\n");
+    PRINT_MACRO(" %3d",gf->plus[i][j]);
+  PRINT_MACRO("\n");
 }
-printf("\n\nGF(%d) Multiplication table\n",q);
+PRINT_MACRO("\n\nGF(%d) Multiplication table\n",q);
 for(  i=0; i<q; i++  ){
-  printf("  ");
+  PRINT_MACRO("  ");
   for(  j=0; j<q; j++  )
-    printf(" %3d",gf->times[i][j]);
-  printf("\n");
+    PRINT_MACRO(" %3d",gf->times[i][j]);
+  PRINT_MACRO("\n");
 }
-printf("\n\nGF(%d) Reciprocals\n",q);
+PRINT_MACRO("\n\nGF(%d) Reciprocals\n",q);
 for(  i=1; i<q; i++  )
-  printf(" %3d %3d\n",i,gf->inv[i]);
+  PRINT_MACRO(" %3d %3d\n",i,gf->inv[i]);
 
-printf("\n\nGF(%d) Negatives\n",q);
+PRINT_MACRO("\n\nGF(%d) Negatives\n",q);
 for(  i=0; i<q; i++  )
-  printf(" %3d %3d\n",i,gf->neg[i]);
+  PRINT_MACRO(" %3d %3d\n",i,gf->neg[i]);
 
-printf("\n\nGF(%d) Square roots\n",q);
+PRINT_MACRO("\n\nGF(%d) Square roots\n",q);
 for(  i=0; i<q; i++  )
-  printf(" %3d %3d\n",i,gf->root[i]);
+  PRINT_MACRO(" %3d %3d\n",i,gf->root[i]);
 }
 
 /*---------------------------------------------------------------*/

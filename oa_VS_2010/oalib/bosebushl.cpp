@@ -22,6 +22,7 @@ work.
 #include "galois.h"
 #include "primes.h"
 #include "gfields.h"
+#include "defines.h"
 
 using namespace oa;
 
@@ -57,36 +58,36 @@ primepow( lam, &pl, &nl, &isppl  );
 primepow(  q , &pq, &nq, &isppq  );
 
 if(  !isppq  ){
-  fprintf(stderr,"The Bose-Bush construction requires that q be a prime\n");
-  fprintf(stderr,"raised to a positive integral power. q=%d was requested\n",q);
-  fprintf(stderr," and is not such a prime power.\n");
+  ERROR_MACRO("The Bose-Bush construction requires that q be a prime\n");
+  ERROR_MACRO("raised to a positive integral power. q=%d was requested\n",q);
+  ERROR_MACRO(" and is not such a prime power.\n");
   exit(1);
 }
 
 if(  !isppl  ){
-  fprintf(stderr,"The Bose-Bush construction requires that lambda be a prime\n");
-  fprintf(stderr,"raised to a positive integral power. lambda=%d was requested\n",lam);
-  fprintf(stderr," and is not such a prime power.\n");
+  ERROR_MACRO("The Bose-Bush construction requires that lambda be a prime\n");
+  ERROR_MACRO("raised to a positive integral power. lambda=%d was requested\n",lam);
+  ERROR_MACRO(" and is not such a prime power.\n");
   exit(1);
 }
 
 if(  pl != pq  ){
-  fprintf(stderr,"The Bose-Bush construction requires lambda and q\n");
-  fprintf(stderr,"to be powers of the same prime. So lambda = %d = %d^%d\n",
+  ERROR_MACRO("The Bose-Bush construction requires lambda and q\n");
+  ERROR_MACRO("to be powers of the same prime. So lambda = %d = %d^%d\n",
 	  lam,pl,nl);
-  fprintf(stderr,"and q = %d = %d^%d are not suitable.\n",q,pq,nq);
+  ERROR_MACRO("and q = %d = %d^%d are not suitable.\n",q,pq,nq);
   exit(1);
 }
 
 if(  !GF_getfield(lam*q, &gf)  ){
-  fprintf(stderr,"Could not construct the Galois field needed\n");
-  fprintf(stderr,"for the Bose-Bush design.\n");
+  ERROR_MACRO("Could not construct the Galois field needed\n");
+  ERROR_MACRO("for the Bose-Bush design.\n");
   exit(1);
 }
 
 A = imatrix( 0,lam*q*q-1, 0,ncol-1  );
 if(  !A  ){
-  fprintf(stderr,"Could not allocate array for Bose design.\n");
+  ERROR_MACRO("Could not allocate array for Bose design.\n");
   exit(1);
 }  
 
@@ -95,7 +96,7 @@ if(  bosebushl( &gf, lam, A, ncol )  ){
   exit(0);
 }
 else{
-  fprintf(stderr,"Unable to construct Bose design lambda=%d, q=%d, ncol=%d.\n",
+  ERROR_MACRO("Unable to construct Bose design lambda=%d, q=%d, ncol=%d.\n",
 	  lam,q,ncol);
   exit(1);
 }

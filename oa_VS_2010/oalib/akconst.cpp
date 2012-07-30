@@ -22,6 +22,7 @@ work.
   when q is even. */
 
 #include "akconst.h"
+#include "defines.h"
 
 /*int  *ivector(), **imatrix();*/
 
@@ -65,8 +66,8 @@ for(  i=1; i<q; i++  )
   k[i]=i;
 
 if(  q>4  ){
-  fprintf(stderr,"Addelman Kempthorne designs not yet available for\n");
-  fprintf(stderr,"even q >4.");
+  ERROR_MACRO("Addelman Kempthorne designs not yet available for\n");
+  ERROR_MACRO("even q >4.");
   exit(1);
 
 /*
@@ -191,7 +192,7 @@ else
 for(  i=2; i<q; i++  )
   if( gf->root[i] == -1 )*kay=i;
 if(  *kay==0  ){
-  fprintf(stderr,"Problem: no rootless element in GF(%d).\n",gf->n);
+  ERROR_MACRO("Problem: no rootless element in GF(%d).\n",gf->n);
   return 0;
 }
 

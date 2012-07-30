@@ -33,7 +33,7 @@ work.
 
 #include "galois.h"
 #include "primes.h"
-
+#include "defines.h"
 
 /*  Glossary:
 
@@ -69,7 +69,7 @@ void GF_set_fields()
 /* Declare x-to-the-power-n vectors, for GFs p-to-the-n */
 
 if(   GF_fields_are_set   )
-  fprintf(stderr,"Warning: Fields being re-initialized.  Possible memory waste.\n");
+  ERROR_MACRO("Warning: Fields being re-initialized.  Possible memory waste.\n");
 
 xtnpt1 = ivector(0,0);
 
@@ -256,15 +256,15 @@ if(  !GF_fields_are_set  )
   GF_set_fields();
 
 if(  q<1  ){      /* Impossible argument */
-  fprintf(stderr,"Field must have positive number of elements.\n");
+  ERROR_MACRO("Field must have positive number of elements.\n");
   return 0; }
 if(  q==1 ){      /* Pointless  argument */
-  fprintf(stderr,"Field with 1 element was requested.\n");
+  ERROR_MACRO("Field with 1 element was requested.\n");
   return 0; }
 
 primepow( q,&p,&n,&ispp  );
 if(  !ispp  ){
-  fprintf(stderr,"q=%d is not a prime power.\n",q);
+  ERROR_MACRO("q=%d is not a prime power.\n",q);
   return 0; }
 
 xtn = NULL;
@@ -309,13 +309,13 @@ if(  xtn   ){
   if(  GF_ready( gf,p,n,xtn )  )
     return 1;
   else{
-    fprintf(stderr,"Construction failed for GF(%d).\n",q);
+    ERROR_MACRO("Construction failed for GF(%d).\n",q);
     return 0;
   }
 }
 else {
-  fprintf(stderr,"GF(%d) = GF(%d^%d) is not included in this program.\n",q,p,n);
-  fprintf(stderr,"To add it, consider modifying gfields.c.\n",q);
+  ERROR_MACRO("GF(%d) = GF(%d^%d) is not included in this program.\n",q,p,n);
+  ERROR_MACRO("To add it, consider modifying gfields.c.\n",q);
   return 0;
 }
 }

@@ -21,6 +21,8 @@ work.
 
 #include <cstdio>
 #include "oa.h"
+#include "defines.h"
+
 /*int *ivector(), **imatrix();*/
 
 /* Count Agreements among rows of an array */
@@ -56,18 +58,18 @@ for( i=0; i<nrow; i++  ){
       maxagr = agree;
       mrow1 = i;
       mrow2 = j;
-      printf("New max %d %d %d\n",i,j,agree);
+      PRINT_MACRO("New max %d %d %d\n",i,j,agree);
     }
   }
   if(  i && i % ROWCHECK == 0  )
-    printf("Checked rows <= %d vs all other rows.\n",i);
+    PRINT_MACRO("Checked rows <= %d vs all other rows.\n",i);
 }
 if(  maxagr == 0  )
-  printf("No two distinct rows agree in any columns.\n");
+  PRINT_MACRO("No two distinct rows agree in any columns.\n");
 else{
-  printf("Maximum number of columns matching for two distinct rows is %d.\n",
+  PRINT_MACRO("Maximum number of columns matching for two distinct rows is %d.\n",
 	 maxagr);
-  printf("This is attained by rows %d and %d.\n",mrow1,mrow2);
+  PRINT_MACRO("This is attained by rows %d and %d.\n",mrow1,mrow2);
 }
 return 0;
 }

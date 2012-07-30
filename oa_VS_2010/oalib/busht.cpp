@@ -22,6 +22,7 @@ work.
 #include "galois.h"
 #include "primes.h"
 #include "gfields.h"
+#include "defines.h"
 
 using namespace oa;
 
@@ -55,25 +56,25 @@ if (ncol <= 0)
 	ncol = q+1;
 
 if( str < 2 ){
-  fprintf(stderr,"Bush designs not provided for strength %d.\n",str);
+  ERROR_MACRO("Bush designs not provided for strength %d.\n",str);
   exit(1);
 }
 
 if( ncol > q+1 ){
-  fprintf(stderr,"Only q+1 = %d columns provided in Bush design.\n",q+1);
-  fprintf(stderr,"Columns requested was %d.\n",ncol);
+  ERROR_MACRO("Only q+1 = %d columns provided in Bush design.\n",q+1);
+  ERROR_MACRO("Columns requested was %d.\n",ncol);
   exit(1);
 }
 
 if(  !GF_getfield(q, &gf)  ){
-  fprintf(stderr,"Could not construct the Galois field needed\n");
-  fprintf(stderr,"for the strength %d Bush design on %d levels.\n",str,q);
+  ERROR_MACRO("Could not construct the Galois field needed\n");
+  ERROR_MACRO("for the strength %d Bush design on %d levels.\n",str,q);
   exit(1);
 }
 
 A = imatrix( 0,ipow(q,str)-1, 0,ncol-1  );
 if(  !A  ){
-  fprintf(stderr,"Could not allocate array for Bush design.\n");
+  ERROR_MACRO("Could not allocate array for Bush design.\n");
   exit(1);
 }  
 
@@ -82,7 +83,7 @@ if(  bush( &gf, A, str, ncol )  ){
   exit(0);
 }
 else{
-  fprintf(stderr,"Unable to construct the strength %d Bush design q=%d, ncol=%d.\n",str, q,ncol);
+  ERROR_MACRO("Unable to construct the strength %d Bush design q=%d, ncol=%d.\n",str, q,ncol);
   exit(1);
 }
 }

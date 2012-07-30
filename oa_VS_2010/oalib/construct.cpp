@@ -24,6 +24,7 @@ work.
 #include "construct.h"
 #include "primes.h"
 #include "akconst.h"
+#include "defines.h"
 
 /*  Glossary:
 
@@ -45,12 +46,12 @@ int bosecheck(int q, int ncol )
 /*int q, ncol;*/
 {
 if(  ncol > q+1  ){
-  fprintf(stderr,"Bose's design must have ncol <= q+1.\n");
-  fprintf(stderr,"Had q=%d and ncol=%d.\n",q,ncol);
+  ERROR_MACRO("Bose's design must have ncol <= q+1.\n");
+  ERROR_MACRO("Had q=%d and ncol=%d.\n",q,ncol);
   return 0;
 }
 if(  ncol <= 0  ){
-  fprintf(stderr,"Nonpositive number of columns requested for Bose's design\n");
+  ERROR_MACRO("Nonpositive number of columns requested for Bose's design\n");
   return 0;
 }
 return 1;
@@ -112,21 +113,21 @@ int bushcheck(int q, int str, int ncol)
 /*int q,str,ncol;*/
 {
 if(  ncol > q+1  ){
-  fprintf(stderr,"Bush designs require ncol <= q+1.\n");
-  fprintf(stderr,"Cannot have q = %d and ncol = %d.\n",q,ncol);
+  ERROR_MACRO("Bush designs require ncol <= q+1.\n");
+  ERROR_MACRO("Cannot have q = %d and ncol = %d.\n",q,ncol);
   return 0;
 }
 if(  str > ncol  ){
-  fprintf(stderr,"It doesn't make sense to have an array of strength\n");
-  fprintf(stderr,"%d with only %d columns.\n",str,ncol);
+  ERROR_MACRO("It doesn't make sense to have an array of strength\n");
+  ERROR_MACRO("%d with only %d columns.\n",str,ncol);
   return 0;
 }
 if(  str >= q+1  ){
-  fprintf(stderr,"Bush's (1952) theorem has a condition t<q where t\n");
-  fprintf(stderr,"is the strength of the array and q is the number of symbols.\n");
-  fprintf(stderr,"Here we have t = %d and q = %d.  The array may still\n",str,q);
-  fprintf(stderr,"be useful, but a full factorial would have at least as\n");
-  fprintf(stderr,"many columns.\n");
+  ERROR_MACRO("Bush's (1952) theorem has a condition t<q where t\n");
+  ERROR_MACRO("is the strength of the array and q is the number of symbols.\n");
+  ERROR_MACRO("Here we have t = %d and q = %d.  The array may still\n",str,q);
+  ERROR_MACRO("be useful, but a full factorial would have at least as\n");
+  ERROR_MACRO("many columns.\n");
   return 1;
 }
 
@@ -146,7 +147,7 @@ if(  !bushcheck(q,str,ncol)  )return 0;
 
 coef = ivector( 0,str-1  );  
 if( !coef  ){ /* Very unlikely */
-  fprintf(stderr,"Could not allocate memory for Bush design.\n");
+  ERROR_MACRO("Could not allocate memory for Bush design.\n");
   return 0;
 }
 
@@ -166,25 +167,25 @@ int addelkempcheck(int q, int p, int ncol )
 {
 
 if(  p==2 && q>4 ){
-  fprintf(stderr,"This Addelman-Kempthorne OA(2q^2,ncol,q,2) is only\n");
-  fprintf(stderr,"available for odd prime powers q and for even prime\n");
-  fprintf(stderr,"powers q<=4.  q=%d is not available, but a Bose Bush\n",q);
-  fprintf(stderr,"construction exists for that design.\n");
+  ERROR_MACRO("This Addelman-Kempthorne OA(2q^2,ncol,q,2) is only\n");
+  ERROR_MACRO("available for odd prime powers q and for even prime\n");
+  ERROR_MACRO("powers q<=4.  q=%d is not available, but a Bose Bush\n",q);
+  ERROR_MACRO("construction exists for that design.\n");
   return 0;
 }
 
 if(  ncol > 2*q+1  ){
-  fprintf(stderr,"The Addelman-Kempthorne construction needs ncol <= 2q+1.\n");
-  fprintf(stderr,"Can't have ncol = %d with q = %d,\n",ncol,q);
+  ERROR_MACRO("The Addelman-Kempthorne construction needs ncol <= 2q+1.\n");
+  ERROR_MACRO("Can't have ncol = %d with q = %d,\n",ncol,q);
   return 0;
 }
 
 if(  ncol == 2*q+1  ){
-  fprintf(stderr,"\nWarning: The Addelman-Kempthorne construction with ncol = 2q+1\n");
-  fprintf(stderr,"has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
-  fprintf(stderr,"there exist some pairs of rows that agree in three columns.\n");
-  fprintf(stderr,"The final column in the array is involved in all of these\n");
-  fprintf(stderr,"triple coincidences.\n\n\n");
+  ERROR_MACRO("\nWarning: The Addelman-Kempthorne construction with ncol = 2q+1\n");
+  ERROR_MACRO("has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
+  ERROR_MACRO("there exist some pairs of rows that agree in three columns.\n");
+  ERROR_MACRO("The final column in the array is involved in all of these\n");
+  ERROR_MACRO("triple coincidences.\n\n\n");
 }
 return 1;
 }
@@ -262,20 +263,20 @@ int bosebushcheck(int q, int p, int ncol  )
 {
 
 if(  p!=2  ){
-  fprintf(stderr,"This version of Bose and Bush needs q=2^n for some n.\n");
+  ERROR_MACRO("This version of Bose and Bush needs q=2^n for some n.\n");
   return 0;
 }
 
 if(  ncol > 2*q+1  ){
-  fprintf(stderr,"The Bose-Bush construction needs ncol <= 2q+1.\n");
-  fprintf(stderr,"Can't have ncol = %d with q = %d,\n",ncol,q);
+  ERROR_MACRO("The Bose-Bush construction needs ncol <= 2q+1.\n");
+  ERROR_MACRO("Can't have ncol = %d with q = %d,\n",ncol,q);
   return 0;
 }
 
 if(  ncol == 2*q+1  ){
-  fprintf(stderr,"\nWarning: The Bose-Bush construction with ncol = 2q+1\n");
-  fprintf(stderr,"has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
-  fprintf(stderr,"there exist some pairs of rows that agree in three columns.\n\n\n");
+  ERROR_MACRO("\nWarning: The Bose-Bush construction with ncol = 2q+1\n");
+  ERROR_MACRO("has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
+  ERROR_MACRO("there exist some pairs of rows that agree in three columns.\n\n\n");
 }
 return 1;
 }
@@ -298,7 +299,7 @@ if(  !bosebushcheck( s,p,ncol )  )
 
 A = imatrix(0,s-1,0,q-1);
 if(  !A  ){
-  fprintf(stderr,"Unable to allocate scratch space for Bose-Bush array.\n");
+  ERROR_MACRO("Unable to allocate scratch space for Bose-Bush array.\n");
   return 0;
 }
 
@@ -329,21 +330,21 @@ int bosebushlcheck(int s, int p, int lam, int ncol  )
 {
 
 if(  !isprime(p)  ){
-  fprintf(stderr,"Bose Bush routine given a nonprime.\n");
+  ERROR_MACRO("Bose Bush routine given a nonprime.\n");
   return 0;
 }
 
 if(  ncol > lam*s+1  ){
-  fprintf(stderr,"The Bose-Bush construction needs ncol <= lambda*q+1.\n");
-  fprintf(stderr,"Can't have ncol = %d with lam = %d and q = %d,\n",ncol,lam,s);
+  ERROR_MACRO("The Bose-Bush construction needs ncol <= lambda*q+1.\n");
+  ERROR_MACRO("Can't have ncol = %d with lam = %d and q = %d,\n",ncol,lam,s);
   return 0;
 }
 
 if(  ncol == lam*s+1  ){
-  fprintf(stderr,"\nWarning: The Bose-Bush construction with ncol = lambda*q+1\n");
-  fprintf(stderr,"has a defect.  While it is still an OA(lambda*q^2,lambda*q+1,q,2),\n");
-  fprintf(stderr,"it may have worse coincidence properties than\n");
-  fprintf(stderr,"OA(lambda*q^2,lambda*q+1,q,2).\n");
+  ERROR_MACRO("\nWarning: The Bose-Bush construction with ncol = lambda*q+1\n");
+  ERROR_MACRO("has a defect.  While it is still an OA(lambda*q^2,lambda*q+1,q,2),\n");
+  ERROR_MACRO("it may have worse coincidence properties than\n");
+  ERROR_MACRO("OA(lambda*q^2,lambda*q+1,q,2).\n");
 }
 return 1;
 }
@@ -366,7 +367,7 @@ if(  !bosebushlcheck( s,p,lam,ncol )  )
 
 A = imatrix(0,s-1,0,q-1);
 if(  !A  ){
-  fprintf(stderr,"Unable to allocate scratch space for Bose-Bush array.\n");
+  ERROR_MACRO("Unable to allocate scratch space for Bose-Bush array.\n");
   return 0;
 }
 

@@ -21,6 +21,7 @@ work.
 
 #include <cstdio>
 #include "oa.h"
+#include "defines.h"
 
 /*  
  
@@ -46,11 +47,14 @@ int str;
 //OA_parsein( &q, &nrow, &ncol, &A );
 OA_strength( q,nrow,ncol,A,&str,2 );
 
+std::stringstream strs (std::stringstream::in);
 if(  str <0  ){
-  printf("\nThe array does not even have strength 0, meaning that\n");
-  printf("it is not composed of symbols 0 through %d.\n");
+	strs.clear();
+	strs << "\nThe array does not even have strength 0, meaning that\n";
+	strs << "it is not composed of symbols 0 through %d.\n";
+	WARNING_MACRO(strs.str().c_str());
 }
 else
-  printf("\nThe array has strength %d and no higher strength.\n",str);
+  PRINT_MACRO("\nThe array has strength %d and no higher strength.\n",str);
 return 0;
 }

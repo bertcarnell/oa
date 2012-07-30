@@ -21,6 +21,7 @@ work.
 #include "galois.h"
 #include "construct.h"
 #include "gfields.h"
+#include "defines.h"
 
 using namespace oa;
 
@@ -48,13 +49,13 @@ if (ncol <= 0)
 	ncol = q+1;
 
 if(  !GF_getfield(q, &gf)  ){
-  fprintf(stderr,"Could not construct Galois field needed for Bose design.\n");
+  ERROR_MACRO("Could not construct Galois field needed for Bose design.\n");
   exit(1);
 }
 
 A = imatrix( 0,q*q-1, 0,ncol-1  );
 if(  !A  ){
-  fprintf(stderr,"Could not allocate array for Bose design.\n");
+  ERROR_MACRO("Could not allocate array for Bose design.\n");
   exit(1);
 }  
 
@@ -62,7 +63,7 @@ if(  bose( &gf, A, ncol )  )
   //OA_put( A,q*q,ncol,q );
   exit(0);
 else{
-  fprintf(stderr,"Unable to construct Bose design q=%d, ncol=%d.\n",
+  ERROR_MACRO("Unable to construct Bose design q=%d, ncol=%d.\n",
 	  q,ncol);
   exit(1);
 }

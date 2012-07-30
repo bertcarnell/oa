@@ -22,7 +22,7 @@ work.
 /*     Utilities related to prime numbers.  */
 
 #include "primes.h"
-
+#include "defines.h"
 
 /*  Glossary:
 
@@ -59,7 +59,7 @@ void ispcheck()
 {
 int q;
 for(  q=1; q<2000; q++  )
-  if(  isprime(q)  )printf("%d\n",q);
+  if(  isprime(q)  )PRINT_MACRO("%d\n",q);
 }
 
 void primepow(int q, int* p, int* n, int* isit )
@@ -121,7 +121,7 @@ int q, p, n, ispp;
 for(  q=0; q<=20000; q++  ){
   primepow( q, &p, &n, &ispp );
   if(  ispp  )
-    printf("%5d %5d %5d\n",q,p,n);
+    PRINT_MACRO("%5d %5d %5d\n",q,p,n);
 }
 }
 

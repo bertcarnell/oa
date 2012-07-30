@@ -21,6 +21,7 @@ work.
 #include "construct.h"
 #include "galois.h"
 #include "gfields.h"
+#include "defines.h"
 
 using namespace oa;
 
@@ -47,20 +48,20 @@ else if( argc==2  ){
 if (ncol <= 0)
 	ncol = 2*q;
 if(  ncol > 2*q+1  ){
-  fprintf(stderr,"At most 2q+1 = %d columns are possible\n",2*q+1);
-  fprintf(stderr,"for the Addelman Kempthorne design with q = %d.\n",q);
+  ERROR_MACRO("At most 2q+1 = %d columns are possible\n",2*q+1);
+  ERROR_MACRO("for the Addelman Kempthorne design with q = %d.\n",q);
   exit(1);
 }  
 
 if(  !GF_getfield(q, &gf)  ){
-  fprintf(stderr,"Could not construct the Galois field needed\n");
-  fprintf(stderr,"for the Addelman Kempthorne design.\n");
+  ERROR_MACRO("Could not construct the Galois field needed\n");
+  ERROR_MACRO("for the Addelman Kempthorne design.\n");
   exit(1);
 }
 
 A = imatrix( 0, 2*q*q-1, 0, ncol-1  );
 if(  !A  ){
-  fprintf(stderr,"Could not allocate array for Addelman Kempthorne design.\n");
+  ERROR_MACRO("Could not allocate array for Addelman Kempthorne design.\n");
   exit(1);
 }  
 
@@ -70,7 +71,7 @@ if(  addelkemp( &gf, A, ncol )  ){
   exit(0);
 }
 else{
-  fprintf(stderr,"Unable to construct Addelman Kempthorne design q=%d, ncol=%d.\n",
+  ERROR_MACRO("Unable to construct Addelman Kempthorne design q=%d, ncol=%d.\n",
 	  q,ncol);
   exit(1);
 }

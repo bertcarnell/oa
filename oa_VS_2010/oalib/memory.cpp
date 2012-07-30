@@ -1,6 +1,7 @@
 /*  Use numerical recipes in C styled memory management methods */
 
 #include "memory.h"
+#include "defines.h"
 
 namespace oa {
 
@@ -13,7 +14,7 @@ int **imatrix(int nrl, int nrh, int ncl, int nch)
   //m=(int **) malloc((unsigned) (nrh-nrl+1)*sizeof(int*));
   m = new int*[static_cast<unsigned int>(nrh-nrl+1)];
   if (!m){
-    fprintf(stderr,"Unable to allocate %d int* s.\n",nrh-nrl+1);
+    ERROR_MACRO("Unable to allocate %d int* s.\n",nrh-nrl+1);
     return m;
   }
   m -= nrl;
@@ -22,7 +23,7 @@ int **imatrix(int nrl, int nrh, int ncl, int nch)
     //m[i]=(int *) malloc((unsigned) (nch-ncl+1)*sizeof(int));
 	m[i] = new int[static_cast<unsigned int>(nch-ncl+1)];
     if (!m[i]) {
-      fprintf(stderr,"Unable to allocate %d'th row in an integer matrix.\n",
+      ERROR_MACRO("Unable to allocate %d'th row in an integer matrix.\n",
 	      i-nrl+1);
       return NULL;
     }
@@ -39,7 +40,7 @@ int *ivector(int nl, int nh)
   //v=(int *)malloc((unsigned) (nh-nl+1)*sizeof(int) );
   v = new int[static_cast<unsigned int>(nh-nl+1)];
   if (!v){
-    fprintf(stderr,"Unable to allocate %d int s.\n",nh-nl+1);
+    ERROR_MACRO("Unable to allocate %d int s.\n",nh-nl+1);
     return v;
   }
   return(v-nl);
@@ -85,7 +86,7 @@ double **dmatrix(int nrl, int nrh, int ncl, int nch)
   //m=(double **) malloc((unsigned) (nrh-nrl+1)*sizeof(double*));
   m = new double*[static_cast<unsigned int>(nrh-nrl+1)];
   if (!m){
-    fprintf(stderr,"Unable to allocate %d double* s.\n",nrh-nrl+1);
+    ERROR_MACRO("Unable to allocate %d double* s.\n",nrh-nrl+1);
     return m;
   }
   m -= nrl;
@@ -94,7 +95,7 @@ double **dmatrix(int nrl, int nrh, int ncl, int nch)
     //m[i]=(double *) malloc((unsigned) (nch-ncl+1)*sizeof(double));
 	m[i] = new double[static_cast<unsigned int>(nch-ncl+1)];
     if (!m[i]) {
-      fprintf(stderr,"Unable to allocate %d'th row in an double matrix.\n",
+      ERROR_MACRO("Unable to allocate %d'th row in an double matrix.\n",
 	      i-nrl+1);
       return NULL;
     }
@@ -111,7 +112,7 @@ double *dvector(int nl, int nh)
   //v=(double *)malloc((unsigned) (nh-nl+1)*sizeof(double) );
   v = new double[static_cast<unsigned int>(nh-nl+1)];
   if (!v){
-    fprintf(stderr,"Unable to allocate %d double s.\n",nh-nl+1);
+    ERROR_MACRO("Unable to allocate %d double s.\n",nh-nl+1);
     return v;
   }
   return(v-nl);
@@ -173,7 +174,7 @@ int grow_imatrix_byrows(int*** imat, int oldrowsize, int newrowsize, int colsize
   //	  (unsigned) (newrowsize)*sizeof(int*));
   imat_new = new int*[static_cast<unsigned int>(newrowsize)];
   if (!(imat_new)){
-    fprintf(stderr,"Unable to reallocate %d int* s.\n",newrowsize);
+    ERROR_MACRO("Unable to reallocate %d int* s.\n",newrowsize);
     return 0;
   }
   for (i = 0; i < oldrowsize; i++)
@@ -183,7 +184,7 @@ int grow_imatrix_byrows(int*** imat, int oldrowsize, int newrowsize, int colsize
     //imat[0][i] = (int *) malloc((unsigned) (colsize)*sizeof(int));
 	imat_new[i] = new int[static_cast<unsigned int>(colsize)];
     if (!imat_new[i]) {
-      fprintf(stderr,"Unable to reallocate %d'th row in an integer matrix.\n",
+      ERROR_MACRO("Unable to reallocate %d'th row in an integer matrix.\n",
 	      i);
 	  // delete new memory;
 	  for (int j = oldrowsize; j < i; i++)

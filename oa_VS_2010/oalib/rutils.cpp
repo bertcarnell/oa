@@ -20,6 +20,7 @@ work.
 
 
 #include "rutils.h"
+#include "defines.h"
 
 /*double **dmatrix(), *dvector();*/
 
@@ -46,7 +47,7 @@ double *z;
 
 z = dvector( 0,q-1 );
 if(  !z  ){
-  fprintf(stderr,"Could not allocate memory for random permutation.\n");
+  ERROR_MACRO("Could not allocate memory for random permutation.\n");
   exit(1);
 }
 runif( z,q );
@@ -96,7 +97,7 @@ int    i;
 temp = dmatrix(0,n-1,0,1);
 
 if(  !temp  ){
-  printf("findranks: could not allocate memory to find ranks.\n");
+  ERROR_MACRO("findranks: could not allocate memory to find ranks.\n");
   exit(1);
 }
 

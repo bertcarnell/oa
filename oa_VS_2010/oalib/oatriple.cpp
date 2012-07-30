@@ -18,9 +18,10 @@ work.
 
 */
 
-
 #include <cstdio>
 #include "oa.h"
+#include "defines.h"
+
 /*int *ivector(), **imatrix();*/
 
 /* Count triple agreements among rows of an array */
@@ -50,11 +51,11 @@ for(  j3=j2+1; j3<ncol; j3++  ){
   for( i2=i1+1; i2<nrow; i2++  )
     a3 += ( A[i1][j1]==A[i2][j1] )&&( A[i1][j2]==A[i2][j2] )&&( A[i1][j3]==A[i2][j3] );
   if( a3 ){
-    printf("Cols %d %d %d match in %d distinct pairs of rows.\n",j1,j2,j3,a3 );
+    PRINT_MACRO("Cols %d %d %d match in %d distinct pairs of rows.\n",j1,j2,j3,a3 );
     num3++;
   }
 } 
-printf("There are %d distinct triples of columns that agree\n",num3);
-printf("in at least two distinct rows.\n");
+PRINT_MACRO("There are %d distinct triples of columns that agree\n",num3);
+PRINT_MACRO("in at least two distinct rows.\n");
 return 0;
 }

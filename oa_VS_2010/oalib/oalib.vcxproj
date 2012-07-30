@@ -15,6 +15,7 @@
     <ClInclude Include="akconst.h" />
     <ClInclude Include="akn.h" />
     <ClInclude Include="construct.h" />
+    <ClInclude Include="defines.h" />
     <ClInclude Include="galdec.h" />
     <ClInclude Include="galdef.h" />
     <ClInclude Include="galois.h" />
@@ -89,7 +90,7 @@
       </PrecompiledHeader>
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;VISUAL_STUDIO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4986; 4820; 4514; 4710</DisableSpecificWarnings>
     </ClCompile>
     <Link>

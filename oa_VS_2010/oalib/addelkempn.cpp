@@ -22,6 +22,7 @@ work.
 #include "galois.h"
 #include "primes.h"
 #include "gfields.h"
+#include "defines.h"
 
 using namespace oa;
 
@@ -56,16 +57,16 @@ if (ncol <= 0)
 	ncol = 2*(ipow(q,akn)-1)/(q-1) - 1;
 
 if(  !GF_getfield(q, &gf)  ){
-  fprintf(stderr,"Could not construct the Galois field needed\n");
-  fprintf(stderr,"for the Addelman-Kempthorne (n=%d, q=%d) design.\n",
+  ERROR_MACRO("Could not construct the Galois field needed\n");
+  ERROR_MACRO("for the Addelman-Kempthorne (n=%d, q=%d) design.\n",
 	  akn,q);
   exit(1);
 }
 
 A = imatrix( 0, 2*ipow(q,akn)-1, 0, ncol-1  );
 if(  !A  ){
-  fprintf(stderr,"Could not allocate array for Addelman-Kempthorne\n");
-  fprintf(stderr,"(n=%d, q=%d) design.\n",akn,q);
+  ERROR_MACRO("Could not allocate array for Addelman-Kempthorne\n");
+  ERROR_MACRO("(n=%d, q=%d) design.\n",akn,q);
   exit(1);
 }  
 
@@ -74,8 +75,8 @@ if(  addelkempn( &gf, akn, A, ncol )  ){
   exit(0);
 }
 else{
-  fprintf(stderr,"Unable to construct Addelman-Kempthorne design \n");
-  fprintf(stderr,"with n = %d, q = %d, ncol = %d.\n",akn,q,ncol);
+  ERROR_MACRO("Unable to construct Addelman-Kempthorne design \n");
+  ERROR_MACRO("with n = %d, q = %d, ncol = %d.\n",akn,q,ncol);
   exit(1);
 }
 }

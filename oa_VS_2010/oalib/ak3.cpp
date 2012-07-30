@@ -54,6 +54,7 @@ work.
 */
 
 #include "ak3.h"
+#include "defines.h"
 
 namespace oa {
 
@@ -62,21 +63,21 @@ int addelkemp3check(int q, int p, int ncol)
 {
 
 if(  p==2 && q>4 ){
-  fprintf(stderr,"This Addelman-Kempthorne OA(2q^3,ncol,q,2) is only\n");
-  fprintf(stderr,"available for odd prime powers q and for even prime\n");
-  fprintf(stderr,"powers q<=4.\n");
+  ERROR_MACRO("This Addelman-Kempthorne OA(2q^3,ncol,q,2) is only\n");
+  ERROR_MACRO("available for odd prime powers q and for even prime\n");
+  ERROR_MACRO("powers q<=4.\n");
   return 0;
 }
 
 if(  q==8  ){  /* Moot */
-  fprintf(stderr,"This Addelman-Kempthorne OA(2*8^3,ncol,8,2) is\n");
-  fprintf(stderr,"experimental and not yet working.\n");
+  ERROR_MACRO("This Addelman-Kempthorne OA(2*8^3,ncol,8,2) is\n");
+  ERROR_MACRO("experimental and not yet working.\n");
   return 1;
 }
 
 if(  ncol > 2*q*q + 2*q + 1  ){
-  fprintf(stderr,"The Addelman-Kempthorne (n=3) construction needs\n");
-   fprintf(stderr,"ncol <= 2q^2+2q+1. Can't have ncol = %d with q = %d,\n",ncol,q);
+  ERROR_MACRO("The Addelman-Kempthorne (n=3) construction needs\n");
+   ERROR_MACRO("ncol <= 2q^2+2q+1. Can't have ncol = %d with q = %d,\n",ncol,q);
   return 0;
 }
 

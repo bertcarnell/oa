@@ -60,6 +60,8 @@ F77 test program:
 
 */
 
+#include "defines.h"
+
 namespace oa {
 
 int mod( int a, int b )
@@ -93,9 +95,9 @@ jent=0;
 if(  seedok(is,js,ks,ls)  ){
   i=is;  j=js;  k=ks;  l=ls;
 }else{
-  fprintf(stderr,"Error: Invalid seed %d %d %d %d\n",is,js,ks,ls);
-  fprintf(stderr,"Must be four integers between 1 and 168, and\n");
-  fprintf(stderr,"must not all be 1.  Seed not changed.\n");
+  ERROR_MACRO("Error: Invalid seed %d %d %d %d\n",is,js,ks,ls);
+  ERROR_MACRO("Must be four integers between 1 and 168, and\n");
+  ERROR_MACRO("must not all be 1.  Seed not changed.\n");
 }
 }
 
