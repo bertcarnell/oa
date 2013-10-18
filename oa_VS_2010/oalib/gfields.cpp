@@ -62,7 +62,7 @@ void GF_set_fields()
 
 /* Declare x-to-the-power-n vectors, for GFs p-to-the-n */
 
-if(   GF_fields_are_set   )
+if ( GF_fields_are_set )
   ERROR_MACRO("Warning: Fields being re-initialized.  Possible memory waste.\n");
 
 
@@ -81,18 +81,18 @@ struct GF *gf;*/
 int *xtn;
 int p,n,ispp;
 
-if(  !GF_fields_are_set  )
+if (!GF_fields_are_set)
   GF_set_fields();
 
-if(  q<1  ){      /* Impossible argument */
+if (q<1){      /* Impossible argument */
   ERROR_MACRO("Field must have positive number of elements.\n");
   return 0; }
-if(  q==1 ){      /* Pointless  argument */
+if (q==1 ){      /* Pointless  argument */
   ERROR_MACRO("Field with 1 element was requested.\n");
   return 0; }
 
-primepow( q,&p,&n,&ispp  );
-if(  !ispp  ){
+primepow( q,&p,&n,&ispp);
+if (!ispp){
   ERROR_MACRO("q=%d is not a prime power.\n",q);
   return 0; }
 
@@ -100,10 +100,10 @@ xtn = NULL;
 
 #include "xtndispatch.h"
 
-if(  isprime(q)  )xtn = xtnpt1;  /* Could have tested p=q, or n=1 */
+if (isprime(q))xtn = xtnpt1;  /* Could have tested p=q, or n=1 */
 
-if(  xtn   ){
-  if(  GF_ready( gf,p,n,xtn )  )
+if (xtn ){
+  if (GF_ready( gf,p,n,xtn ))
     return 1;
   else{
     ERROR_MACRO("Construction failed for GF(%d).\n",q);

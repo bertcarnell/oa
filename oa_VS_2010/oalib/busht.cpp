@@ -23,11 +23,12 @@ work.
 #include "primes.h"
 #include "gfields.h"
 #include "defines.h"
+#include "rutils.h"
 
 using namespace oa;
 
 extern "C" {
-	int busht_main(int *_str, int *_q, int *_ncol, int **A)
+	int busht_main(int *_str, int *_q, int *_ncol, int * _A)
 /*int main(int argc, char* argv[])
 int  argc;
 char *argv[];*/
@@ -37,13 +38,14 @@ int str=*_str;
 int q=*_q;
 int ncol=*_ncol;
 GF gf;
+int ** A;
 
-/*if(  argc==1  )
+/*if (argc==1)
   scanf("%d %d %d",&str,&q,&ncol);
-else if( argc==2  ){
+else if ( argc==2){
   sscanf(argv[1],"%d",&str);
   scanf("%d %d",&q,&ncol);
-}else if( argc==3  ){
+}else if ( argc==3){
   sscanf(argv[1],"%d",&str);
   sscanf(argv[2],"%d",&q);
   ncol = q+1;*/  /* can sometimes get 1 more with even q */
@@ -55,36 +57,38 @@ else if( argc==2  ){
 if (ncol <= 0)
 	ncol = q+1;
 
-if( str < 2 ){
+if ( str < 2 ){
   ERROR_MACRO("Bush designs not provided for strength %d.\n",str);
-  exit(1);
+  return(EXIT_FAILURE);
 }
 
-if( ncol > q+1 ){
+if ( ncol > q+1 ){
   ERROR_MACRO("Only q+1 = %d columns provided in Bush design.\n",q+1);
   ERROR_MACRO("Columns requested was %d.\n",ncol);
-  exit(1);
+  return(EXIT_FAILURE);
 }
 
-if(  !GF_getfield(q, &gf)  ){
+if (!GF_getfield(q, &gf)){
   ERROR_MACRO("Could not construct the Galois field needed\n");
   ERROR_MACRO("for the strength %d Bush design on %d levels.\n",str,q);
-  exit(1);
+  return(EXIT_FAILURE);
 }
 
-A = imatrix( 0,ipow(q,str)-1, 0,ncol-1  );
-if(  !A  ){
+A = imatrix( 0,ipow(q,str)-1, 0,ncol-1);
+if (!A){
   ERROR_MACRO("Could not allocate array for Bush design.\n");
-  exit(1);
+  return(EXIT_FAILURE);
 }  
 
-if(  bush( &gf, A, str, ncol )  ){
+if (bush( &gf, A, str, ncol )){
+	int n = ipow(q, str);
+	doubleArrayToSingle(A, _A, n, ncol);
   //OA_put( A,ipow(q,str),ncol,q );
-  exit(0);
+  return(EXIT_SUCCESS);
 }
 else{
   ERROR_MACRO("Unable to construct the strength %d Bush design q=%d, ncol=%d.\n",str, q,ncol);
-  exit(1);
+  return(EXIT_FAILURE);
 }
 }
 }

@@ -53,30 +53,30 @@ int   i,q;//, xtn;
 q = gf->q;
 *kay=1;
 
-if(  q==2  )
+if (q==2)
   b[1] = c[1] = k[1] = 1;
-if(  q==4  ){
+if (q==4){
   b[1] = c[1] = 2;
   b[2] = c[2] = 1;
   b[3] = c[3] = 3;
   k[1] = 1; k[2] = 2; k[3] = 3;
 }
 
-for(  i=1; i<q; i++  )
+for(  i=1; i<q; i++)
   k[i]=i;
 
-if(  q>4  ){
+if (q>4){
   ERROR_MACRO("Addelman Kempthorne designs not yet available for\n");
   ERROR_MACRO("even q >4.");
-  exit(1);
+  return(EXIT_FAILURE);
 
 /*
   fprintf(stderr,"Using experimental values in akconst.\n");
   xtn = 1;
-  for(  i=0; i<gf->n; i++  )
+  for(  i=0; i<gf->n; i++)
     xtn = gf->times[xtn][2];
   xtn = gf->times[xtn][xtn];
-  for(  i=1; i<q; i++  ){
+  for(  i=1; i<q; i++){
     b[i] = gf->times[xtn][gf->inv[i]];
     c[i] = gf->times[xtn][gf->times[i][i]];
   }*/
@@ -90,16 +90,16 @@ posc  = imatrix(0,q-1,0,q-1);
 vals1 = ivector(0,q-1);
 vals2 = ivector(0,q-1);
 
-for(  i=1; i<q; i++  )
-for(  j=1; j<q; j++  )
+for(  i=1; i<q; i++)
+for(  j=1; j<q; j++)
   posb[i][j]=posc[i][j] = 1;
 */
 
 
 /* Rule out some b */
 /*
-for(  i =1; i <q;  i++  )       
-for(  x1=0; x1<q; x1++  ){
+for(  i =1; i <q;  i++)       
+for(  x1=0; x1<q; x1++){
   temp  = gf->times[x1][gf->inv[i]];
   square= gf->times[x1][x1];
   temp  = gf->plus[square][gf->neg[temp]];
@@ -108,8 +108,8 @@ for(  x1=0; x1<q; x1++  ){
 
 /* Rule out some c */
 /*
-for(  i =1; i <q;  i++  )       
-for(  x1=0; x1<q; x1++  ){
+for(  i =1; i <q;  i++)       
+for(  x1=0; x1<q; x1++){
   temp = gf->times[x1][i];
   square=gf->times[x1][x1];
   temp = gf->plus[square][temp];
@@ -125,15 +125,15 @@ OA_put( posc,q,q,2 );
 
 /* Search for b[i],c[i]  */
 /*
-for(  i=1; i<q; i++  ){       
+for(  i=1; i<q; i++){       
   done = 0;
-  for(  ib=1; ib<q && !done; ib++  ){
-    if(  !posb[i][ib]  )continue;
-    for(  ic=1; ic<q && !done; ic++  ){
-      if(  !posc[i][ic]  )continue;
-      for(  j=0; j<q; j++  )
+  for(  ib=1; ib<q && !done; ib++){
+    if (!posb[i][ib])continue;
+    for(  ic=1; ic<q && !done; ic++){
+      if (!posc[i][ic])continue;
+      for(  j=0; j<q; j++)
 	vals1[j] = vals2[j] = 0;
-      for(  x1=0; x1<q; x1++  ){
+      for(  x1=0; x1<q; x1++){
 	square = gf->times[x1][x1];
 	x2 = gf->plus[x1][ib];
 	x2 = gf->times[x2][gf->inv[i]];
@@ -151,9 +151,9 @@ for(  i=1; i<q; i++  ){
 	v2 = gf->plus[v2][x2];
 	vals2[ v2 ] =1;
       }
-      for(  j=0; j<q; j++  )
+      for(  j=0; j<q; j++)
 	done += (vals2[j] + vals1[j] == 1);
-      if(  done<q  )
+      if (done<q)
 	done=0;
       else{
 	b[i] = ib;
@@ -161,7 +161,7 @@ for(  i=1; i<q; i++  ){
       }
     }
   }
-  if(  !done  )
+  if (!done)
     printf("No b[%d] c[%d] combination works.\n",i,i);
   else
     printf("b[%d] = %d and c[%d] = %d works\n",i,b[i],i,c[i]);
@@ -183,20 +183,20 @@ int   i, q, p, num, den, four;
 
 q = gf->q; p = gf->p;
 
-if(  p!=3  )
+if (p!=3)
   four = 4;
 else
   four = 1;
 
 *kay=0;
-for(  i=2; i<q; i++  )
-  if( gf->root[i] == -1 )*kay=i;
-if(  *kay==0  ){
+for(  i=2; i<q; i++)
+  if ( gf->root[i] == -1 )*kay=i;
+if (*kay==0){
   ERROR_MACRO("Problem: no rootless element in GF(%d).\n",gf->n);
   return 0;
 }
 
-for(  i=1; i<q; i++  ){
+for(  i=1; i<q; i++){
   num = gf->plus[*kay][p-1];  /* -1 = +(p-1) */
   den = gf->times[*kay][four];
   den = gf->times[den][i];

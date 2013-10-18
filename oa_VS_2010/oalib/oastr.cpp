@@ -48,7 +48,7 @@ int str;
 OA_strength( q,nrow,ncol,A,&str,2 );
 
 std::stringstream strs (std::stringstream::in);
-if(  str <0  ){
+if (str <0){
 	strs.clear();
 	strs << "\nThe array does not even have strength 0, meaning that\n";
 	strs << "it is not composed of symbols 0 through %d.\n";

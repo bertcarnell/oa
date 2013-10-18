@@ -20,7 +20,7 @@ c
     seed( is,js,ks,ls )    sets seed integers, rejects invalid input
     ranums( z,n )          sets z[0] through z[n-1] 
                            to the next n random uniforms between 0 and 1
-    runif( z,n )           same as ranums
+    runif ( z,n )           same as ranums
 
   The C and f77 programs shown below find the first 2000 random
   numbers starting at 0 and print them to 10 places.  The maximum
@@ -41,7 +41,7 @@ main()
 {
 int i;
 ranums( z,N );
-for(  i=0; i<N; i++  )
+for(  i=0; i<N; i++)
   printf("%14.10g\n",z[i]);
 }
 
@@ -69,7 +69,7 @@ int mod( int a, int b )
 {
 int ans;
 ans = a % b;
-if(  ans>=0  )return ans;
+if (ans>=0)return ans;
 else return ans+b;
 }
 
@@ -80,19 +80,23 @@ static double u[97+1],                          c,cd,cm;
 int seedok(int is, int js, int ks, int ls )   /*  1 iff seed is ok   */
 /*int is,js,ks,ls;*/
 {
-if(  is==1  && js==1  && ks==1  && ls==1   )return 0;
-if(  is<1   || js<1   || ks<1   || ls<1    )return 0;
-if(  is>168 || js>168 || ks>168 || ls>168  )return 0;
+if (is==1  && js==1  && ks==1  && ls==1 )return 0;
+if (is<1   || js<1   || ks<1   || ls<1  )return 0;
+if (is>168 || js>168 || ks>168 || ls>168)return 0;
 return 1;
 }
 
-
+#ifndef VISUAL_STUDIO
+void seed(int is, int js, int ks, int ls )
+{
+}
+#else
 void seed(int is, int js, int ks, int ls )
 /*int is,js,ks,ls;*/
 {
 jent=0;
 
-if(  seedok(is,js,ks,ls)  ){
+if (seedok(is,js,ks,ls)){
   i=is;  j=js;  k=ks;  l=ls;
 }else{
   ERROR_MACRO("Error: Invalid seed %d %d %d %d\n",is,js,ks,ls);
@@ -100,14 +104,26 @@ if(  seedok(is,js,ks,ls)  ){
   ERROR_MACRO("must not all be 1.  Seed not changed.\n");
 }
 }
+#endif
 
-void runif(double *x, int n)
+#ifndef VISUAL_STUDIO
+void runif (double *x, int n)
+{
+	GetRNGstate();
+	for (int i = 0; i < n; i++)
+	{
+		x[i] = unif_rand();
+	}
+	PutRNGstate();
+}
+#else
+void runif (double *x, int n)
 /*int     n;
 double *x;*/
 {
 ranums(x,n);
 }
-
+#endif
 void ranums(double *x, int n)
 /*int     n;
 double *x;*/
@@ -115,12 +131,12 @@ double *x;*/
 int    ii, jj, m;
 double s,t,uni;
 
-if(jent != 0) goto L30;
+if (jent != 0) goto L30;
 jent=1;
-for(  ii=1; ii<=97; ii++  ){     /* do 20 ii=1,97 */
+for(  ii=1; ii<=97; ii++){     /* do 20 ii=1,97 */
   s=0.0;
   t=0.5;
-  for(  jj=1; jj<=24; jj++  ){   /* do 10 jj=1,24 */
+  for(  jj=1; jj<=24; jj++){   /* do 10 jj=1,24 */
     m=mod(mod(i*j,179)*k,179);
     i=j;
     j=k;
@@ -138,7 +154,7 @@ cm = 16777213.0/16777216.0;
 ip = 97;
 jp = 33;
 
- L30:  for(  ii=1; ii<=n; ii++  ){ /*  ii do 40 ii=1,n */
+ L30:  for(  ii=1; ii<=n; ii++){ /*  ii do 40 ii=1,n */
    uni=u[ip]-u[jp];
    if (uni < 0.0) uni=uni+1.0;
    u[ip]=uni;

@@ -55,7 +55,7 @@ int **m;*/
 	if (m == NULL)
 		return;
 	int i;
-	for(  i=nrh;i>=nrl;i--  )
+	for(  i=nrh;i>=nrl;i--)
 		//free( (char*) (m[i]+ncl) );
 		delete[] (m[i]+ncl);
 	//free((char*) (m+nrl));
@@ -127,7 +127,7 @@ double **m;*/
 	if (m == NULL)
 		return;
 	int i;
-	for(  i=nrh;i>=nrl;i--  )
+	for(  i=nrh;i>=nrl;i--)
 		//free( (char*) (m[i]+ncl) );
 		delete[] (m[i]+ncl);
 	//free((char*) (m+nrl));

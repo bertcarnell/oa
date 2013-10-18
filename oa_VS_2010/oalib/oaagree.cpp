@@ -49,22 +49,22 @@ int mrow1, mrow2;
 
 maxagr = mrow1 = mrow2 = 0;
 
-for( i=0; i<nrow; i++  ){
-  for( j=i+1; j<nrow; j++  ){
+for( i=0; i<nrow; i++){
+  for( j=i+1; j<nrow; j++){
     agree = 0;
-    for( k=0; k<ncol; k++  )
+    for( k=0; k<ncol; k++)
       agree += (A[i][k]==A[j][k]);
-    if(  agree>maxagr  ){
+    if (agree>maxagr){
       maxagr = agree;
       mrow1 = i;
       mrow2 = j;
       PRINT_MACRO("New max %d %d %d\n",i,j,agree);
     }
   }
-  if(  i && i % ROWCHECK == 0  )
+  if (i && i % ROWCHECK == 0)
     PRINT_MACRO("Checked rows <= %d vs all other rows.\n",i);
 }
-if(  maxagr == 0  )
+if (maxagr == 0)
   PRINT_MACRO("No two distinct rows agree in any columns.\n");
 else{
   PRINT_MACRO("Maximum number of columns matching for two distinct rows is %d.\n",

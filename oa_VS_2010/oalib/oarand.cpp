@@ -43,7 +43,7 @@ int ncol=*_ncol;
 int i, j, *pi;
 //int is,js,ks,ls;
 
-//if(  argc >= 5  ){  /* Take random seed */
+//if (argc >= 5){  /* Take random seed */
 //  sscanf(argv[argc-1],"%d",&is);
 //  sscanf(argv[argc-2],"%d",&js);
 //  sscanf(argv[argc-3],"%d",&ks);
@@ -55,12 +55,12 @@ int i, j, *pi;
 
 pi = ivector( 0,q-1 );
 
-for(  j=0; j<ncol; j++  ){
+for(  j=0; j<ncol; j++){
   unifperm( pi,q );
-  for(  i=0; i<nrow; i++  )
+  for(  i=0; i<nrow; i++)
     A[i][j] = pi[ A[i][j] ];
 }
 
 //OA_put( A,nrow,ncol,q );
-exit(0);
+return(EXIT_SUCCESS);
 }

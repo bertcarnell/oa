@@ -35,8 +35,8 @@ namespace oa {
 
 void unifperm( int* pi, int q )  
 /* 
-   In S one just does rank(runif(q)).  Here we want
-something like rank(runif(q))-1 since the symbols to
+   In S one just does rank(runif (q)).  Here we want
+something like rank(runif (q))-1 since the symbols to
 be permuted are 0..q-1.  
 */
 
@@ -46,15 +46,15 @@ int i;
 double *z;
 
 z = dvector( 0,q-1 );
-if(  !z  ){
+if (!z){
   ERROR_MACRO("Could not allocate memory for random permutation.\n");
-  exit(1);
+  exit(EXIT_FAILURE);
 }
-runif( z,q );
+runif ( z,q );
 
 findranks( q,z,pi );
 
-for(  i=0; i<q; i++  )
+for(  i=0; i<q; i++)
   pi[i] -= 1;
 
 free_dvector( z,0,q-1);
@@ -68,8 +68,8 @@ int rankcomp( double** a, double** b )
 /*double **a, **b;*/
 {
 /*printf("Randcomp a = (%g,%g) b=(%g,%g)\n",a[0][0],a[0][1],b[0][0],b[0][1]);*/
-if(  a[0][0] < b[0][0]  )return(-1);
-if(  a[0][0] > b[0][0]  )return( 1);
+if (a[0][0] < b[0][0])return(-1);
+if (a[0][0] > b[0][0])return( 1);
 return(0);
 }
 
@@ -96,19 +96,19 @@ int    i;
 
 temp = dmatrix(0,n-1,0,1);
 
-if(  !temp  ){
+if (!temp){
   ERROR_MACRO("findranks: could not allocate memory to find ranks.\n");
-  exit(1);
+  return(EXIT_FAILURE);
 }
 
-for( i=0; i<n; i++  ){
+for( i=0; i<n; i++){
   temp[i][0] = v[i];
   temp[i][1] = (double) i;
 }
 //qsort((void *)temp,(size_t) n,sizeof(temp[0]),rankcomp);
 std::qsort(static_cast<void *>(temp), static_cast<size_t>(n), sizeof(double), rankcomp<double>);
 
-for(  i=0; i<n; i++  )
+for(  i=0; i<n; i++)
   r[ (int)temp[i][1] ] = i+1; /*Ranks go 1..n */
 
 return 0;
@@ -118,8 +118,43 @@ return 0;
 int doubcomp( double a, double b )
 /*double a,b;*/
 {
-if(  a < b  )return(-1);
-if(  a > b  )return( 1);
+if (a < b)return(-1);
+if (a > b)return( 1);
 return(0);
+}
+
+void doubleArrayToSingle(int ** A, int * _A, int nrows, int ncols)
+{
+	int count = 0;
+	for (int c = 0; c < ncols; c++)
+	{
+		for (int r = 0; r < nrows; r++)
+		{
+			_A[count] = A[r][c];
+			count++;
+		}
+	}
+}
+
+bool dotProduct(std::vector<int> A, int nrows, int ncols)
+{
+	int sum = 0;
+	int baseSum = -1;
+	bool ret = true;
+	for (int col1 = 0; col1 < ncols - 1; col1++)
+	{
+		for (int col2 = col1 + 1; col2 < ncols; col2++)
+		{
+			sum = 0;
+			for (int row = 0; row < nrows; row++)
+			{
+				sum += A[static_cast<size_t>(col1*nrows+row)]*A[static_cast<size_t>(col2*nrows + row)];
+			}
+			if (baseSum < 1) baseSum = sum;
+			else if (baseSum == sum) ret = ret & true;
+			else return false;
+		}
+	}
+	return ret;
 }
 }

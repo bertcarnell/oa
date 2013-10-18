@@ -43,14 +43,14 @@ int num3;
 //OA_parsein( argc,argv, &q, &nrow, &ncol, &A );
 
 num3 = 0;
-for(  j1=0;    j1<ncol; j1++  )
-for(  j2=j1+1; j2<ncol; j2++  )
-for(  j3=j2+1; j3<ncol; j3++  ){
+for(  j1=0;    j1<ncol; j1++)
+for(  j2=j1+1; j2<ncol; j2++)
+for(  j3=j2+1; j3<ncol; j3++){
   a3 = 0;
-  for( i1=0;    i1<nrow; i1++  )
-  for( i2=i1+1; i2<nrow; i2++  )
+  for( i1=0;    i1<nrow; i1++)
+  for( i2=i1+1; i2<nrow; i2++)
     a3 += ( A[i1][j1]==A[i2][j1] )&&( A[i1][j2]==A[i2][j2] )&&( A[i1][j3]==A[i2][j3] );
-  if( a3 ){
+  if ( a3 ){
     PRINT_MACRO("Cols %d %d %d match in %d distinct pairs of rows.\n",j1,j2,j3,a3 );
     num3++;
   }

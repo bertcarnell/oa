@@ -48,7 +48,7 @@ void GF_poly_sum(int p, int n, int* p1, int* p2, int* sum )
 {
 int i;
 
-for(  i=0; i<n; i++  )
+for(  i=0; i<n; i++)
   sum[i] = (p1[i]+p2[i]) % p;
 }
 
@@ -65,15 +65,15 @@ int i,j, *longprod;
 
 longprod = ivector(0,2*n-2);
 
-for(  i=0; i<2*n-1; i++  )
+for(  i=0; i<2*n-1; i++)
   longprod[i] = 0;
-for(  i=0; i<n; i++  )
-for(  j=0; j<n; j++  )
+for(  i=0; i<n; i++)
+for(  j=0; j<n; j++)
   longprod[i+j] += p1[i]*p2[j];
-for(  i=2*n-2; i>n-1; i--  )
-for(  j=0; j<n; j++  )
+for(  i=2*n-2; i>n-1; i--)
+for(  j=0; j<n; j++)
   longprod[i-n+j] += xton[j]*longprod[i];
-for(  i=0; i<n; i++  )
+for(  i=0; i<n; i++)
   prod[i] = longprod[i] % p;
 
 free_ivector(longprod,0,2*n-2);
@@ -88,7 +88,7 @@ int GF_poly2int( int p, int n, int* poly )
 int ans, i;
 
 ans = 0;
-for(  i=n-1; i>0; i--  )
+for(  i=n-1; i>0; i--)
   ans = (ans+poly[i])*p;
 ans += poly[0];
 
@@ -113,66 +113,66 @@ poly = ivector(0,n-1);
 gf->n = n;
 gf->p = p;
 q = 1;
-for(  i=0; i<n; i++  )
+for(  i=0; i<n; i++)
   q *= p;
 gf->q = q;
-gf->xton = ivector(0,n-1);        if(  !gf->xton  )GFPUNT;
-for(  i=0; i<n; i++  )
+gf->xton = ivector(0,n-1);        if (!gf->xton)GFPUNT;
+for(  i=0; i<n; i++)
   gf->xton[i] = xton[i];
-gf->plus = imatrix(0,q-1,0,q-1);  if(  !gf->plus  )GFPUNT;
-gf->times= imatrix(0,q-1,0,q-1);  if(  !gf->times )GFPUNT;
-gf->inv  = ivector(0,q-1);        if(  !gf->inv   )GFPUNT;
-gf->neg  = ivector(0,q-1);        if(  !gf->neg   )GFPUNT;
-gf->root = ivector(0,q-1);        if(  !gf->root  )GFPUNT;
-gf->poly = imatrix(0,q-1,0,n-1);  if(  !gf->poly  )GFPUNT;
+gf->plus = imatrix(0,q-1,0,q-1);  if (!gf->plus)GFPUNT;
+gf->times= imatrix(0,q-1,0,q-1);  if (!gf->times )GFPUNT;
+gf->inv  = ivector(0,q-1);        if (!gf->inv )GFPUNT;
+gf->neg  = ivector(0,q-1);        if (!gf->neg )GFPUNT;
+gf->root = ivector(0,q-1);        if (!gf->root)GFPUNT;
+gf->poly = imatrix(0,q-1,0,n-1);  if (!gf->poly)GFPUNT;
 
-for(  i=0; i<n; i++  )
+for(  i=0; i<n; i++)
   gf->poly[0][i] = 0;
 
-for( i=1; i<q; i++  ){
-  for( click=0; gf->poly[i-1][click]==(p-1); click++  )
+for( i=1; i<q; i++){
+  for( click=0; gf->poly[i-1][click]==(p-1); click++)
     gf->poly[i][click] = 0;
   gf->poly[i][click] = gf->poly[i-1][click]+1;
-  for(  j=click+1; j<n; j++  )
+  for(  j=click+1; j<n; j++)
     gf->poly[i][j] = gf->poly[i-1][j];
 }
 
-for(  i=0; i<q; i++  )
-for(  j=0; j<q; j++  ){
+for(  i=0; i<q; i++)
+for(  j=0; j<q; j++){
   GF_poly_sum( p,n,gf->poly[i],gf->poly[j],poly );
   gf->plus[i][j] = GF_poly2int( p,n,poly );
   GF_poly_prod( p,n,xton,gf->poly[i],gf->poly[j],poly );
   gf->times[i][j] = GF_poly2int( p,n,poly );
 }
 
-for(  i=0; i<q; i++  ){
+for(  i=0; i<q; i++){
   gf->inv[i] = -1;
-  for(  j=0; j<q;  j++  )
-    if(  gf->times[i][j]==1  )
+  for(  j=0; j<q;  j++)
+    if (gf->times[i][j]==1)
       gf->inv[i] = j;
-  if(  i>0 && gf->inv[i] <= 0  ){
+  if (i>0 && gf->inv[i] <= 0){
     ERROR_MACRO("There is something wrong with the Galois field\n");
     ERROR_MACRO("used for q=%d.  Element %d has no reciprocal.\n",q,i);
     return 0;
   }
 }
 
-for(  i=0; i<q; i++  ){
+for(  i=0; i<q; i++){
   gf->neg[i] = -1;
-  for(  j=0; j<q;  j++  )
-    if(  gf->plus[i][j]==0  )
+  for(  j=0; j<q;  j++)
+    if (gf->plus[i][j]==0)
       gf->neg[i] = j;
-  if(  i>0 && gf->neg[i] <= 0  ){
+  if (i>0 && gf->neg[i] <= 0){
     ERROR_MACRO("There is something wrong with the Galois field\n");
     ERROR_MACRO("used for q=%d.  Element %d has no negative.\n",q,i);
     return 0;
   }
 }
 
-for(  i=0; i<q; i++  ){
+for(  i=0; i<q; i++){
   gf->root[i] = -1;
-  for(  j=0; j<q;  j++  )
-    if(  gf->times[j][j]==i  )
+  for(  j=0; j<q;  j++)
+    if (gf->times[j][j]==i)
       gf->root[i] = j;
 }
 
@@ -190,44 +190,44 @@ int i,j,n,p,q;
 
 n=gf->n, p=gf->p, q=gf->q;
 
-if( q>999 )ERROR_MACRO("Warning q=%d will overflow print field.\n",q);
+if ( q>999 )ERROR_MACRO("Warning q=%d will overflow print field.\n",q);
 
 PRINT_MACRO("\nFor GF(%d) p=%d n=%d\n",q,p,n);
 PRINT_MACRO("x**n = (");
-for( i=0; i<n-1; i++  )
+for( i=0; i<n-1; i++)
   PRINT_MACRO("%d,",gf->xton[i]);
 PRINT_MACRO("%d)\n",gf->xton[n-1]);
 PRINT_MACRO("\n\nGF(%d) Polynomial coefficients:\n",q);
-for(  i=0; i<q; i++  ){
+for(  i=0; i<q; i++){
   PRINT_MACRO("  %3d  ",i);
-  for(  j=0; j<n; j++  )
+  for(  j=0; j<n; j++)
     PRINT_MACRO("%3d ",gf->poly[i][j]);
   PRINT_MACRO("\n");
 }
 PRINT_MACRO("\n\nGF(%d) Addition Table\n",q);
-for(  i=0; i<q; i++  ){
+for(  i=0; i<q; i++){
   PRINT_MACRO("  ");
-  for(  j=0; j<q; j++  )
+  for(  j=0; j<q; j++)
     PRINT_MACRO(" %3d",gf->plus[i][j]);
   PRINT_MACRO("\n");
 }
 PRINT_MACRO("\n\nGF(%d) Multiplication table\n",q);
-for(  i=0; i<q; i++  ){
+for(  i=0; i<q; i++){
   PRINT_MACRO("  ");
-  for(  j=0; j<q; j++  )
+  for(  j=0; j<q; j++)
     PRINT_MACRO(" %3d",gf->times[i][j]);
   PRINT_MACRO("\n");
 }
 PRINT_MACRO("\n\nGF(%d) Reciprocals\n",q);
-for(  i=1; i<q; i++  )
+for(  i=1; i<q; i++)
   PRINT_MACRO(" %3d %3d\n",i,gf->inv[i]);
 
 PRINT_MACRO("\n\nGF(%d) Negatives\n",q);
-for(  i=0; i<q; i++  )
+for(  i=0; i<q; i++)
   PRINT_MACRO(" %3d %3d\n",i,gf->neg[i]);
 
 PRINT_MACRO("\n\nGF(%d) Square roots\n",q);
-for(  i=0; i<q; i++  )
+for(  i=0; i<q; i++)
   PRINT_MACRO(" %3d %3d\n",i,gf->root[i]);
 }
 

@@ -22,58 +22,64 @@ work.
 #include "galois.h"
 #include "gfields.h"
 #include "defines.h"
+#include "rutils.h"
 
 using namespace oa;
 
+/* n=2*q*q
+ * 0 < ncol <= 2*q + 1
+ * A=length(n*ncol) 
+ */
 extern "C" {
-	int addelkemp_main(int* _q, int* _ncol, int* n, int** A)
-/*int main(int argc, char* argv[])
-int  argc;
-char *argv[];*/
+int addelkemp_main(int* _q, int* _ncol, int* _n, int* _A)
 {
-int q = *_q;
-int ncol = *_ncol;
-GF gf;
+	int q = *_q;
+	int ncol = *_ncol;
+	int n = *_n;
+	GF gf;
+	int ** A;
 
-/*if(  argc==1  )
-  scanf("%d %d",&q,&ncol);
-else if( argc==2  ){
-  sscanf(argv[1],"%d",&q);
-  ncol = 2*q;    /* Can get 2q without defect, 2q+1 with defect */ /*
-}else{
-  sscanf(argv[1],"%d",&q);
-  sscanf(argv[2],"%d",&ncol);
-}*/
+	if (ncol <= 0)
+	{
+		ERROR_MACRO("ncol cannot be less than or equal to 0\n",2*q+1);
+		return(EXIT_FAILURE);
+	}
+	if (ncol > 2*q+1)
+	{
+		ERROR_MACRO("At most 2q+1 = %d columns are possible\n",2*q+1);
+		ERROR_MACRO("for the Addelman Kempthorne design with q = %d.\n",q);
+		return(EXIT_FAILURE);
+	}
+	if (n != 2*q*q)
+	{
+		ERROR_MACRO("n must be equal to 2*q*q");
+		return(EXIT_FAILURE);
+	}
+	if (!GF_getfield(q, &gf))
+	{
+		ERROR_MACRO("Could not construct the Galois field needed\n");
+		ERROR_MACRO("for the Addelman Kempthorne design.\n");
+		return(EXIT_FAILURE);
+	}
 
-if (ncol <= 0)
-	ncol = 2*q;
-if(  ncol > 2*q+1  ){
-  ERROR_MACRO("At most 2q+1 = %d columns are possible\n",2*q+1);
-  ERROR_MACRO("for the Addelman Kempthorne design with q = %d.\n",q);
-  exit(1);
-}  
+	A = imatrix(0, n-1, 0, ncol-1);
 
-if(  !GF_getfield(q, &gf)  ){
-  ERROR_MACRO("Could not construct the Galois field needed\n");
-  ERROR_MACRO("for the Addelman Kempthorne design.\n");
-  exit(1);
-}
+	if (!A)
+	{
+		ERROR_MACRO("Could not allocate array for Addelman Kempthorne design.\n");
+		return(EXIT_FAILURE);
+	}  
 
-A = imatrix( 0, 2*q*q-1, 0, ncol-1  );
-if(  !A  ){
-  ERROR_MACRO("Could not allocate array for Addelman Kempthorne design.\n");
-  exit(1);
-}  
-
-if(  addelkemp( &gf, A, ncol )  ){
-	*n = 2*q*q;
-  /*OA_put( A, 2*q*q, ncol, q );*/
-  exit(0);
-}
-else{
-  ERROR_MACRO("Unable to construct Addelman Kempthorne design q=%d, ncol=%d.\n",
-	  q,ncol);
-  exit(1);
-}
+	if (addelkemp( &gf, A, ncol ))
+	{
+		doubleArrayToSingle(A, _A, n, ncol);
+		return(EXIT_SUCCESS);
+	}
+	else
+	{
+		ERROR_MACRO("Unable to construct Addelman Kempthorne design q=%d, ncol=%d.\n",
+			q,ncol);
+		return(EXIT_FAILURE);
+	}
 }
 }

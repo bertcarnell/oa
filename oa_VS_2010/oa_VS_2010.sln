@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oalib", "oalib\oalib.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oa", "oa\oa.vcxproj", "{4E344C35-B070-44D3-B585-0AD42F1054D6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oatest", "oatest\oatest.vcxproj", "{BF81CA1C-A330-43E6-ADF3-C82C640D4AD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{4E344C35-B070-44D3-B585-0AD42F1054D6}.Debug|Win32.Build.0 = Debug|Win32
 		{4E344C35-B070-44D3-B585-0AD42F1054D6}.Release|Win32.ActiveCfg = Release|Win32
 		{4E344C35-B070-44D3-B585-0AD42F1054D6}.Release|Win32.Build.0 = Release|Win32
+		{BF81CA1C-A330-43E6-ADF3-C82C640D4AD5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BF81CA1C-A330-43E6-ADF3-C82C640D4AD5}.Debug|Win32.Build.0 = Debug|Win32
+		{BF81CA1C-A330-43E6-ADF3-C82C640D4AD5}.Release|Win32.ActiveCfg = Release|Win32
+		{BF81CA1C-A330-43E6-ADF3-C82C640D4AD5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

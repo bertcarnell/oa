@@ -62,20 +62,20 @@ int addelkemp3check(int q, int p, int ncol)
 //int q,p,ncol;
 {
 
-if(  p==2 && q>4 ){
+if (p==2 && q>4 ){
   ERROR_MACRO("This Addelman-Kempthorne OA(2q^3,ncol,q,2) is only\n");
   ERROR_MACRO("available for odd prime powers q and for even prime\n");
   ERROR_MACRO("powers q<=4.\n");
   return 0;
 }
 
-if(  q==8  ){  /* Moot */
+if (q==8){  /* Moot */
   ERROR_MACRO("This Addelman-Kempthorne OA(2*8^3,ncol,8,2) is\n");
   ERROR_MACRO("experimental and not yet working.\n");
   return 1;
 }
 
-if(  ncol > 2*q*q + 2*q + 1  ){
+if (ncol > 2*q*q + 2*q + 1){
   ERROR_MACRO("The Addelman-Kempthorne (n=3) construction needs\n");
    ERROR_MACRO("ncol <= 2q^2+2q+1. Can't have ncol = %d with q = %d,\n",ncol,q);
   return 0;
@@ -97,42 +97,42 @@ int row, col, square, ksquare;
 
 p=gf->p, q=gf->q;
 
-if(  !addelkemp3check( q,p,ncol  )  )return 0;
+if (!addelkemp3check( q,p,ncol))return 0;
 
 b = ivector( 0,q-1 );
 c = ivector( 0,q-1 );
 k = ivector( 0,q-1 );
 
-for(  i1=0; i1<q; i1++  ){           /* First q^3 rows */
+for(  i1=0; i1<q; i1++){           /* First q^3 rows */
   square = gf->times[i1][i1];
-  for(  i2=0; i2<q; i2++  )
-  for(  i3=0; i3<q; i3++  ){
+  for(  i2=0; i2<q; i2++)
+  for(  i3=0; i3<q; i3++){
     row = i3 + q*i2 + q*q*i1;
     col = 0;
-    if(  col<ncol  )A[row][col++]=i2;                     /*      y       */
-    for(  m1=1; m1<q && col<ncol; m1++  )                 /* x + my       */
+    if (col<ncol)A[row][col++]=i2;                     /*      y       */
+    for(  m1=1; m1<q && col<ncol; m1++)                 /* x + my       */
       A[row][col++] = gf->plus[i1][gf->times[m1][i2]];
-    if(  col<ncol  )A[row][col++]=i3;                     /*           z  */
-    for(  m2=1; m2<q && col<ncol; m2++  )                 /* x      + mz  */
+    if (col<ncol)A[row][col++]=i3;                     /*           z  */
+    for(  m2=1; m2<q && col<ncol; m2++)                 /* x      + mz  */
       A[row][col++] = gf->plus[i1][gf->times[m2][i3]];
-    for(  m2=1; m2<q && col<ncol; m2++  )                 /*      y + mz  */
+    for(  m2=1; m2<q && col<ncol; m2++)                 /*      y + mz  */
       A[row][col++] = gf->plus[i2][gf->times[m2][i3]];
-    for(  m1=1; m1<q && col<ncol; m1++  )                 /* x + my + nz  */
-    for(  m2=1; m2<q && col<ncol; m2++  )
+    for(  m1=1; m1<q && col<ncol; m1++)                 /* x + my + nz  */
+    for(  m2=1; m2<q && col<ncol; m2++)
       A[row][col++] = 
         gf->plus[i1][gf->plus[gf->times[m1][i2]][gf->times[m2][i3]]];
-    for(  m1=0; m1<q && col<ncol; m1++  )                 /* x^2 + mx + y */
+    for(  m1=0; m1<q && col<ncol; m1++)                 /* x^2 + mx + y */
       A[row][col++] = gf->plus[square][
                        gf->plus[i2][
                        gf->times[m1][i1]]];
 
-    for(  m1=0; m1<q && col<ncol; m1++  )                 /* x^2 + mx + z */
+    for(  m1=0; m1<q && col<ncol; m1++)                 /* x^2 + mx + z */
       A[row][col++] = gf->plus[square][
 		       gf->plus[i3][
                        gf->times[m1][i1]]];
 
-    for(  m1=0; m1<q && col<ncol; m1++  )              /* x^2 + mx + y + nz */
-    for(  m2=1; m2<q && col<ncol; m2++  )              
+    for(  m1=0; m1<q && col<ncol; m1++)              /* x^2 + mx + y + nz */
+    for(  m2=1; m2<q && col<ncol; m2++)              
       A[row][col++] 
 	= gf->plus[square][
             gf->plus[i2][
@@ -141,80 +141,71 @@ for(  i1=0; i1<q; i1++  ){           /* First q^3 rows */
                 ]
               ]
             ];
-    if(  col<ncol  )A[row][col++]=i1;                     /* x            */
+    if (col<ncol)A[row][col++]=i1;                     /* x            */
   }
 }
 
-if(  p!=2  )
+if (p!=2)
   akodd(  gf,&kay,b,c,k ); /* Get kay,b,c,k for odd p  */
 else                             
   akeven( gf,&kay,b,c,k ); /* Constants kay,b,c,k for even p */
 
-for(  i1=0; i1<q; i1++  ){           /* Second q^3 rows */
-  square = gf->times[i1][i1];
-  ksquare = gf->times[kay][square];
-  for(  i2=0; i2<q; i2++  )
-  for(  i3=0; i3<q; i3++  ){
-    row = i3 + q*i2 + q*q*i1 + q*q*q;
-    col = 0;
-    if(  col<ncol  )A[row][col++]=i2;                /*     y        */
+	for(  i1=0; i1<q; i1++){           /* Second q^3 rows */
+		square = gf->times[i1][i1];
+		ksquare = gf->times[kay][square];
+		for(  i2=0; i2<q; i2++)
+			for(  i3=0; i3<q; i3++){
+				row = i3 + q*i2 + q*q*i1 + q*q*q;
+				col = 0;
+				if (col<ncol) A[row][col++]=i2;                /*     y        */
 
-    for(  m1=1; m1<q && col<ncol; m1++  ){           /* x + my + b(m)      */
-      A[row][col] = gf->plus[i1][gf->times[m1][i2]];
-      A[row][col] = gf->plus[A[row][col]][b[m1]];
-      col++;
-    }
-    if(  col<ncol  )A[row][col++]=i3;                /*           z  */
+				for(  m1=1; m1<q && col<ncol; m1++){           /* x + my + b(m)      */
+					A[row][col] = gf->plus[i1][gf->times[m1][i2]];
+					A[row][col] = gf->plus[A[row][col]][b[m1]];
+					col++;
+				}
+				if (col<ncol)A[row][col++]=i3;                /*           z  */
 
-    for(  m2=1; m2<q && col<ncol; m2++  ){      /* x      + mz + b(m) */
-      A[row][col] =   gf->plus[i1][gf->times[m2][i3]];
-      A[row][col] = gf->plus[A[row][col]][b[m2]];
-      col++;
-    }
-    for(  m2=1; m2<q && col<ncol; m2++  )            /*      y + mz  */
-      A[row][col++] = gf->plus[i2][gf->times[m2][i3]];
+				for(  m2=1; m2<q && col<ncol; m2++){      /* x      + mz + b(m) */
+					A[row][col] =   gf->plus[i1][gf->times[m2][i3]];
+					A[row][col] = gf->plus[A[row][col]][b[m2]];
+					col++;
+				}
+				for(  m2=1; m2<q && col<ncol; m2++)            /*      y + mz  */
+					A[row][col++] = gf->plus[i2][gf->times[m2][i3]];
 
-    for(  m1=1; m1<q && col<ncol; m1++  )      /* x + my + nz + b(m) */
-    for(  m2=1; m2<q && col<ncol; m2++  ){
-      A[row][col] = 
-        gf->plus[i1][gf->plus[gf->times[m1][i2]][gf->times[m2][i3]]];
-      A[row][col] = gf->plus[A[row][col]][b[m1]];
-      col++;
-    }      
+				for(  m1=1; m1<q && col<ncol; m1++)      /* x + my + nz + b(m) */
+					for(  m2=1; m2<q && col<ncol; m2++){
+						A[row][col] = gf->plus[i1][gf->plus[gf->times[m1][i2]][gf->times[m2][i3]]];
+						A[row][col] = gf->plus[A[row][col]][b[m1]];
+						col++;
+					}
 
-    for(  m1=0; m1<q && col<ncol; m1++  ){      /* kx^2 + k(m)x + y + c(m)*/
-      A[row][col] = gf->plus[ksquare][
-                       gf->plus[i2][
-                       gf->times[k[m1]][i1]]];
-      A[row][col] = gf->plus[A[row][col]][c[m1]];
-      col++;
-    }
+				//for(  m1=0; m1<q && col<ncol; m1++){      /* kx^2 + k(m)x + y + c(m)*/
+				for(  m1=1; m1<q && col<ncol; m1++){      /* kx^2 + k(m)x + y + c(m)*/
+					A[row][col] = gf->plus[ksquare][gf->plus[i2][gf->times[k[m1]][i1]]];
+					A[row][col] = gf->plus[A[row][col]][c[m1]];
+					col++;
+				}
 
-    for(  m1=0; m1<q && col<ncol; m1++  ){      /* kx^2 + k(m)x + z + c(m)*/
-      A[row][col] = gf->plus[ksquare][
-                       gf->plus[i3][
-                       gf->times[k[m1]][i1]]];
-      A[row][col] = gf->plus[A[row][col]][c[m1]];
-      col++;
-    }
+				//for(  m1=0; m1<q && col<ncol; m1++){      /* kx^2 + k(m)x + z + c(m)*/
+				for(  m1=1; m1<q && col<ncol; m1++){      /* kx^2 + k(m)x + z + c(m)*/
+					A[row][col] = gf->plus[ksquare][gf->plus[i3][gf->times[k[m1]][i1]]];
+					A[row][col] = gf->plus[A[row][col]][c[m1]];
+					col++;
+				}
 
-    for(  m1=0; m1<q && col<ncol; m1++  )    /* kx^2 + k(m)x + y + nz +c(m) */
-    for(  m2=1; m2<q && col<ncol; m2++  ){
-      A[row][col] 
-	= gf->plus[ksquare][
-            gf->plus[i2][
-              gf->plus[ gf->times[m2][i3] ][
-                        gf->times[k[m1]][i1] 
-                ]
-              ]
-            ];
-      A[row][col] = gf->plus[ A[row][col] ][ c[m1] ];
-      col++;
-    }
-    if(  col<ncol  )A[row][col++]=i1;                /* x            */
-  }
-}
-return 1;
+				//for(  m1=0; m1<q && col<ncol; m1++)    /* kx^2 + k(m)x + y + nz +c(m) */
+				for(  m1=1; m1<q && col<ncol; m1++)    /* kx^2 + k(m)x + y + nz +c(m) */
+					for(  m2=1; m2<q && col<ncol; m2++){
+						A[row][col] = gf->plus[ksquare][gf->plus[i2][gf->plus[ gf->times[m2][i3] ][gf->times[k[m1]][i1] ]]];
+						A[row][col] = gf->plus[ A[row][col] ][ c[m1] ];
+						col++;
+					}
+				if (col<ncol)A[row][col++]=i1;                /* x            */
+			}
+	}
+	return 1;
 }
 
 

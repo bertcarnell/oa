@@ -68,7 +68,7 @@ void GF_set_fields()
 
 /* Declare x-to-the-power-n vectors, for GFs p-to-the-n */
 
-if(   GF_fields_are_set   )
+if ( GF_fields_are_set )
   ERROR_MACRO("Warning: Fields being re-initialized.  Possible memory waste.\n");
 
 xtnpt1 = ivector(0,0);
@@ -252,61 +252,61 @@ struct GF *gf;*/
 int *xtn;
 int p,n,ispp;
 
-if(  !GF_fields_are_set  )
+if (!GF_fields_are_set)
   GF_set_fields();
 
-if(  q<1  ){      /* Impossible argument */
+if (q<1){      /* Impossible argument */
   ERROR_MACRO("Field must have positive number of elements.\n");
   return 0; }
-if(  q==1 ){      /* Pointless  argument */
+if (q==1 ){      /* Pointless  argument */
   ERROR_MACRO("Field with 1 element was requested.\n");
   return 0; }
 
-primepow( q,&p,&n,&ispp  );
-if(  !ispp  ){
+primepow( q,&p,&n,&ispp);
+if (!ispp){
   ERROR_MACRO("q=%d is not a prime power.\n",q);
   return 0; }
 
 xtn = NULL;
 
 /*   4 8 16 32 64 128 256 512 */
-if(  q== ipow(2,2)  )xtn = xtn2t2;
-if(  q== ipow(2,3)  )xtn = xtn2t3;
-if(  q== ipow(2,4)  )xtn = xtn2t4;
-if(  q== ipow(2,5)  )xtn = xtn2t5;
-if(  q== ipow(2,6)  )xtn = xtn2t6;
-if(  q== ipow(2,7)  )xtn = xtn2t7;
-if(  q== ipow(2,8)  )xtn = xtn2t8;
-if(  q== ipow(2,9)  )xtn = xtn2t9;
+if (q== ipow(2,2))xtn = xtn2t2;
+if (q== ipow(2,3))xtn = xtn2t3;
+if (q== ipow(2,4))xtn = xtn2t4;
+if (q== ipow(2,5))xtn = xtn2t5;
+if (q== ipow(2,6))xtn = xtn2t6;
+if (q== ipow(2,7))xtn = xtn2t7;
+if (q== ipow(2,8))xtn = xtn2t8;
+if (q== ipow(2,9))xtn = xtn2t9;
 
 /*   9 27 81 243 729          */
-if(  q== ipow(3,2)  )xtn = xtn3t2;
-if(  q== ipow(3,3)  )xtn = xtn3t3;
-if(  q== ipow(3,4)  )xtn = xtn3t4;
-if(  q== ipow(3,5)  )xtn = xtn3t5;
-if(  q== ipow(3,6)  )xtn = xtn3t6;
+if (q== ipow(3,2))xtn = xtn3t2;
+if (q== ipow(3,3))xtn = xtn3t3;
+if (q== ipow(3,4))xtn = xtn3t4;
+if (q== ipow(3,5))xtn = xtn3t5;
+if (q== ipow(3,6))xtn = xtn3t6;
 
 /*   25 125 625 3125 15625    */
-if(  q== ipow(5,2)  )xtn = xtn5t2;
-if(  q== ipow(5,3)  )xtn = xtn5t3;
-if(  q== ipow(5,4)  )xtn = xtn5t4;
-if(  q== ipow(5,5)  )xtn = xtn5t5;
-if(  q== ipow(5,6)  )xtn = xtn5t6;
+if (q== ipow(5,2))xtn = xtn5t2;
+if (q== ipow(5,3))xtn = xtn5t3;
+if (q== ipow(5,4))xtn = xtn5t4;
+if (q== ipow(5,5))xtn = xtn5t5;
+if (q== ipow(5,6))xtn = xtn5t6;
 
 /*   49 343 2401 16807        */
-if(  q== ipow(7,2)  )xtn = xtn7t2;
-if(  q== ipow(7,3)  )xtn = xtn7t3;
-if(  q== ipow(7,4)  )xtn = xtn7t4;
-if(  q== ipow(7,5)  )xtn = xtn7t5;
+if (q== ipow(7,2))xtn = xtn7t2;
+if (q== ipow(7,3))xtn = xtn7t3;
+if (q== ipow(7,4))xtn = xtn7t4;
+if (q== ipow(7,5))xtn = xtn7t5;
 
 /*   121 169                  */
-if(  q== ipow(11,2) )xtn = xtn11t2;
-if(  q== ipow(13,2) )xtn = xtn13t2;
+if (q== ipow(11,2) )xtn = xtn11t2;
+if (q== ipow(13,2) )xtn = xtn13t2;
 
-if(  isprime(q)  )xtn = xtnpt1;  /* Could have tested p=q, or n=1 */
+if (isprime(q))xtn = xtnpt1;  /* Could have tested p=q, or n=1 */
 
-if(  xtn   ){
-  if(  GF_ready( gf,p,n,xtn )  )
+if (xtn ){
+  if (GF_ready( gf,p,n,xtn ))
     return 1;
   else{
     ERROR_MACRO("Construction failed for GF(%d).\n",q);

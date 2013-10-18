@@ -28,7 +28,7 @@ work.
 
 /*  Glossary:
 
-    bose:            OA( q^2, q+1, q, 2  )
+    bose:            OA( q^2, q+1, q, 2)
                      R.C. Bose (1938) Sankhya Vol 3 pp 323-338
     bosecheck:       test input to bose
 
@@ -45,12 +45,12 @@ namespace oa {
 int bosecheck(int q, int ncol )
 /*int q, ncol;*/
 {
-if(  ncol > q+1  ){
+if (ncol > q+1){
   ERROR_MACRO("Bose's design must have ncol <= q+1.\n");
   ERROR_MACRO("Had q=%d and ncol=%d.\n",q,ncol);
   return 0;
 }
-if(  ncol <= 0  ){
+if (ncol <= 0){
   ERROR_MACRO("Nonpositive number of columns requested for Bose's design\n");
   return 0;
 }
@@ -64,14 +64,14 @@ int    **A, ncol;*/
 {
 int i,j, icol,  q=gf->q, irow;
 
-if(  !bosecheck(q,ncol)  )return 0;
+if (!bosecheck(q,ncol))return 0;
 
 irow = 0;
-for(  i=0; i<q; i++  )
-for(  j=0; j<q; j++  ){
+for(  i=0; i<q; i++)
+for(  j=0; j<q; j++){
   icol=0;
   A[ irow ][ icol++ ] = i;
-  if(  ncol > 1 )A[ irow  ][ icol++ ] = j;
+  if (ncol > 1 )A[ irow  ][ icol++ ] = j;
   for(  icol=2; icol<ncol; icol++ )
     A[ irow ][ icol ] = gf->plus[j][gf->times[i][icol-1]];
   irow++;
@@ -86,7 +86,7 @@ void itopoly(int n, int q, int d, int* coef )
 {
 int i;
 
-for(  i=0; i<=d; i++  ){
+for(  i=0; i<=d; i++){
   coef[i] = n % q;
   n = n/q;
 }
@@ -103,7 +103,7 @@ int    d, *poly, arg, *value;*/
 int   i,ans;
 
 ans = 0;
-for(  i= d; i>=0; i--  )  /* Horner's rule */
+for(  i= d; i>=0; i--)  /* Horner's rule */
   ans = gf->plus[  gf->times[ans][arg]  ][  poly[i] ];
 
 *value = ans;
@@ -112,17 +112,17 @@ for(  i= d; i>=0; i--  )  /* Horner's rule */
 int bushcheck(int q, int str, int ncol)
 /*int q,str,ncol;*/
 {
-if(  ncol > q+1  ){
+if (ncol > q+1){
   ERROR_MACRO("Bush designs require ncol <= q+1.\n");
   ERROR_MACRO("Cannot have q = %d and ncol = %d.\n",q,ncol);
   return 0;
 }
-if(  str > ncol  ){
+if (str > ncol){
   ERROR_MACRO("It doesn't make sense to have an array of strength\n");
   ERROR_MACRO("%d with only %d columns.\n",str,ncol);
   return 0;
 }
-if(  str >= q+1  ){
+if (str >= q+1){
   ERROR_MACRO("Bush's (1952) theorem has a condition t<q where t\n");
   ERROR_MACRO("is the strength of the array and q is the number of symbols.\n");
   ERROR_MACRO("Here we have t = %d and q = %d.  The array may still\n",str,q);
@@ -135,7 +135,7 @@ return 1;
 }
 
 
-int bush(GF* gf, int** A, int str, int ncol  )
+int bush(GF* gf, int** A, int str, int ncol)
 /*struct GF *gf;
 int       **A, str, ncol;*/
 {
@@ -143,21 +143,21 @@ int   *coef;
 int   q, i,j;
 
 q = gf->q;
-if(  !bushcheck(q,str,ncol)  )return 0;
+if (!bushcheck(q,str,ncol))return 0;
 
-coef = ivector( 0,str-1  );  
-if( !coef  ){ /* Very unlikely */
+coef = ivector( 0,str-1);  
+if ( !coef){ /* Very unlikely */
   ERROR_MACRO("Could not allocate memory for Bush design.\n");
   return 0;
 }
 
-for(  i=0; i<ipow(q,str); i++  ){
+for(  i=0; i<ipow(q,str); i++){
   itopoly( i,q,str-1,coef );
   A[i][0] = coef[str-1];  
-  for(  j=0; j<ncol-1; j++  )
+  for(  j=0; j<ncol-1; j++)
     polyeval( gf, str-1, coef, j, &A[i][1+j] );
 }
-free_ivector( coef,0,str-1  );  
+free_ivector( coef,0,str-1);  
 return 1;
 }
 
@@ -166,7 +166,7 @@ int addelkempcheck(int q, int p, int ncol )
 /*int  q,p,ncol;*/
 {
 
-if(  p==2 && q>4 ){
+if (p==2 && q>4 ){
   ERROR_MACRO("This Addelman-Kempthorne OA(2q^2,ncol,q,2) is only\n");
   ERROR_MACRO("available for odd prime powers q and for even prime\n");
   ERROR_MACRO("powers q<=4.  q=%d is not available, but a Bose Bush\n",q);
@@ -174,13 +174,13 @@ if(  p==2 && q>4 ){
   return 0;
 }
 
-if(  ncol > 2*q+1  ){
+if (ncol > 2*q+1){
   ERROR_MACRO("The Addelman-Kempthorne construction needs ncol <= 2q+1.\n");
   ERROR_MACRO("Can't have ncol = %d with q = %d,\n",ncol,q);
   return 0;
 }
 
-if(  ncol == 2*q+1  ){
+if (ncol == 2*q+1){
   ERROR_MACRO("\nWarning: The Addelman-Kempthorne construction with ncol = 2q+1\n");
   ERROR_MACRO("has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
   ERROR_MACRO("there exist some pairs of rows that agree in three columns.\n");
@@ -202,55 +202,55 @@ int row, col, square, ksquare, temp;
 
 p=gf->p, q=gf->q;
 
-if(  !addelkempcheck( q,p,ncol )  )return 0;
+if (!addelkempcheck( q,p,ncol ))return 0;
 
 b = ivector( 0,q-1 );
 c = ivector( 0,q-1 );
 k = ivector( 0,q-1 );
 
-for(  i=0; i<q; i++  ){           /* First q*q rows */
+for(  i=0; i<q; i++){           /* First q*q rows */
   square = gf->times[i][i];
-  for(  j=0; j<q; j++  ){
+  for(  j=0; j<q; j++){
     row = i*q+j;
     col = 0;
-    if( col<ncol  )A[row][col++]=j;
-    for(  m=1; m<q && col<ncol; m++  )
+    if ( col<ncol)A[row][col++]=j;
+    for(  m=1; m<q && col<ncol; m++)
       A[row][col++] = gf->plus[i][gf->times[m][j]];
-    for(  m=0; m<q && col<ncol; m++  ){
+    for(  m=0; m<q && col<ncol; m++){
       temp = gf->plus[j][gf->times[m][i]];
       A[row][col++] = gf->plus[temp][square]; /* Rgt cols */
     }
-    if( col<ncol  )A[row][col++]=i;
+    if ( col<ncol)A[row][col++]=i;
   }
 }
 
-if(  p !=2  )                    /* Constants kay,b,c,k for odd p */
+if (p !=2)                    /* Constants kay,b,c,k for odd p */
   akodd(  gf,&kay,b,c,k );
 else                             /* Constants kay,b,c,k for even p */
   akeven( gf,&kay,b,c,k );
 
-for(  i=0; i<q; i++  ){           /* Second q*q rows */
+for(  i=0; i<q; i++){           /* Second q*q rows */
   square = gf->times[i][i];
   ksquare = gf->times[kay][square];
-  for(  j=0; j<q; j++  ){
+  for(  j=0; j<q; j++){
     row = q*q+i*q+j;
     col = 0;
-    if( col<ncol  )A[row][col++]=j;
-    for(  m=1; m<q && col<ncol; m++,col++  )
+    if ( col<ncol)A[row][col++]=j;
+    for(  m=1; m<q && col<ncol; m++,col++)
       A[row][col] = gf->plus[A[row-q*q][col]][b[m]];
-    if( col<ncol  )A[row][col++] = gf->plus[ksquare][j]; /* q+1 */
-    for(  m=1; m<q && col<ncol; m++  ){
+    if ( col<ncol)A[row][col++] = gf->plus[ksquare][j]; /* q+1 */
+    for(  m=1; m<q && col<ncol; m++){
       temp = gf->times[i][k[m]];
       temp = gf->plus[ksquare][temp];
       temp = gf->plus[j][temp];
       A[row][col++] = gf->plus[temp][c[m]];
     }
-    if( col<ncol  )A[row][col++]=i;
+    if ( col<ncol)A[row][col++]=i;
   }
 }
 
-/*for(  i=0; i<2*q*q; i++  )
-for(  j=0; j<ncol; j++  )
+/*for(  i=0; i<2*q*q; i++)
+for(  j=0; j<ncol; j++)
   printf("%3d%s",A[i][j],j==(ncol-1)?"\n":" ");
 */
 
@@ -258,22 +258,22 @@ return 1;
 }
 
 
-int bosebushcheck(int q, int p, int ncol  )
+int bosebushcheck(int q, int p, int ncol)
 /*int  q,p,ncol;*/
 {
 
-if(  p!=2  ){
+if (p!=2){
   ERROR_MACRO("This version of Bose and Bush needs q=2^n for some n.\n");
   return 0;
 }
 
-if(  ncol > 2*q+1  ){
+if (ncol > 2*q+1){
   ERROR_MACRO("The Bose-Bush construction needs ncol <= 2q+1.\n");
   ERROR_MACRO("Can't have ncol = %d with q = %d,\n",ncol,q);
   return 0;
 }
 
-if(  ncol == 2*q+1  ){
+if (ncol == 2*q+1){
   ERROR_MACRO("\nWarning: The Bose-Bush construction with ncol = 2q+1\n");
   ERROR_MACRO("has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
   ERROR_MACRO("there exist some pairs of rows that agree in three columns.\n\n\n");
@@ -294,28 +294,28 @@ p=gf->p,   /* GF(q) used to generate design with q/2 levels */
 q=gf->q;
 s=q/2;     /* number of levels in design */
 
-if(  !bosebushcheck( s,p,ncol )  )
+if (!bosebushcheck( s,p,ncol ))
   return 0;
 
 A = imatrix(0,s-1,0,q-1);
-if(  !A  ){
+if (!A){
   ERROR_MACRO("Unable to allocate scratch space for Bose-Bush array.\n");
   return 0;
 }
 
 irow = 0;
-for(  i=0; i<q; i++  ){
-  for(  j=0; j<q; j++  ){
+for(  i=0; i<q; i++){
+  for(  j=0; j<q; j++){
     mul = gf->times[i][j];
     mul = mul % s;
-    for( k=0; k<s; k++  )
+    for( k=0; k<s; k++)
 /*      A[k][j] = gf->plus[mul][k];*/
       A[k][j] = gf->plus[mul][k];
   }
-  for(  k=0; k<s; k++  ){
+  for(  k=0; k<s; k++){
     for( j=0; j<ncol && j<2*s+1; j++ )
       B[irow][j] = A[k][j];
-    if(  ncol==2*s+1  )
+    if (ncol==2*s+1)
       B[irow][ncol-1] = i%s;
     irow++;
   }
@@ -325,22 +325,22 @@ return 1;
 }
   
   
-int bosebushlcheck(int s, int p, int lam, int ncol  )
+int bosebushlcheck(int s, int p, int lam, int ncol)
 /*int  s,p,lam,ncol;*/
 {
 
-if(  !isprime(p)  ){
+if (!isprime(p)){
   ERROR_MACRO("Bose Bush routine given a nonprime.\n");
   return 0;
 }
 
-if(  ncol > lam*s+1  ){
+if (ncol > lam*s+1){
   ERROR_MACRO("The Bose-Bush construction needs ncol <= lambda*q+1.\n");
   ERROR_MACRO("Can't have ncol = %d with lam = %d and q = %d,\n",ncol,lam,s);
   return 0;
 }
 
-if(  ncol == lam*s+1  ){
+if (ncol == lam*s+1){
   ERROR_MACRO("\nWarning: The Bose-Bush construction with ncol = lambda*q+1\n");
   ERROR_MACRO("has a defect.  While it is still an OA(lambda*q^2,lambda*q+1,q,2),\n");
   ERROR_MACRO("it may have worse coincidence properties than\n");
@@ -362,28 +362,28 @@ p=gf->p,   /* GF(q) used to generate design with q/lam levels */
 q=gf->q;
 s=q/lam;     /* number of levels in design */
 
-if(  !bosebushlcheck( s,p,lam,ncol )  )
+if (!bosebushlcheck( s,p,lam,ncol ))
   return 0;
 
 A = imatrix(0,s-1,0,q-1);
-if(  !A  ){
+if (!A){
   ERROR_MACRO("Unable to allocate scratch space for Bose-Bush array.\n");
   return 0;
 }
 
 irow = 0;
-for(  i=0; i<q; i++  ){
-  for(  j=0; j<q; j++  ){
+for(  i=0; i<q; i++){
+  for(  j=0; j<q; j++){
     mul = gf->times[i][j];
     mul = mul % s;
-    for( k=0; k<s; k++  )
+    for( k=0; k<s; k++)
 /*      A[k][j] = gf->plus[mul][k];*/
       A[k][j] = gf->plus[mul][k];
   }
-  for(  k=0; k<s; k++  ){
+  for(  k=0; k<s; k++){
     for( j=0; j<ncol && j<lam*s+1; j++ )
       B[irow][j] = A[k][j];
-    if(  ncol==lam*s+1  )
+    if (ncol==lam*s+1)
       B[irow][ncol-1] = i%s;
     irow++;
   }

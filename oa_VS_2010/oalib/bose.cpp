@@ -22,11 +22,12 @@ work.
 #include "construct.h"
 #include "gfields.h"
 #include "defines.h"
+#include "rutils.h"
 
 using namespace oa;
 
 extern "C" {
-	int bose_main(int * _q, int * _ncol, int ** A)
+	int bose_main(int * _q, int * _ncol, int * _A)
 /*int main(int argc, char* argv[])
 int  argc;
 char *argv[];*/
@@ -34,10 +35,11 @@ char *argv[];*/
 int q = *_q;
 int ncol = *_ncol;
 GF gf;
+int ** A;
 
-/*if(  argc==1  )
+/*if (argc==1)
   scanf("%d %d",&q,&ncol);
-else if( argc==2  ){
+else if ( argc==2){
   sscanf(argv[1],"%d",&q);
   ncol = q+1;
 }else{
@@ -48,24 +50,27 @@ else if( argc==2  ){
 if (ncol <= 0)
 	ncol = q+1;
 
-if(  !GF_getfield(q, &gf)  ){
+if (!GF_getfield(q, &gf)){
   ERROR_MACRO("Could not construct Galois field needed for Bose design.\n");
-  exit(1);
+  return(EXIT_FAILURE);
 }
 
-A = imatrix( 0,q*q-1, 0,ncol-1  );
-if(  !A  ){
+A = imatrix( 0,q*q-1, 0,ncol-1);
+if (!A){
   ERROR_MACRO("Could not allocate array for Bose design.\n");
-  exit(1);
+  return(EXIT_FAILURE);
 }  
 
-if(  bose( &gf, A, ncol )  )
+if (bose( &gf, A, ncol ))
+{
   //OA_put( A,q*q,ncol,q );
-  exit(0);
+	doubleArrayToSingle(A, _A, q*q, ncol);
+	return(EXIT_SUCCESS);
+}
 else{
   ERROR_MACRO("Unable to construct Bose design q=%d, ncol=%d.\n",
 	  q,ncol);
-  exit(1);
+  return(EXIT_FAILURE);
 }
 }
 }

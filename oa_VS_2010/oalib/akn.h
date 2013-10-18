@@ -9,7 +9,7 @@
 #include "primes.h"
 
 namespace oa {
-	int addelkempncheck(int q, int p, int akn, int ncol  );
+	int addelkempncheck(int q, int p, int akn, int ncol);
 	int addelkempn(GF* gf, int akn, int** A, int ncol );
 }
 

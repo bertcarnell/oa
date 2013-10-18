@@ -32,12 +32,12 @@ namespace oa {
 	//int OA_parsein( int argc, char *argv[], int *q, int *nrow, int *ncol, int ***A);
 	void OA_strworkcheck(double work, int str);
 	void OA_strength(int q, int nrow, int ncol, int **A, int* str, int verbose );
-	int OA_str0(int q, int nrow, int ncol, int** A, int verbose   );
-	int OA_str1( int q, int nrow, int ncol, int** A, int verbose   );
-	int OA_str2(int q, int nrow, int ncol, int** A, int verbose   );
+	int OA_str0(int q, int nrow, int ncol, int** A, int verbose );
+	int OA_str1( int q, int nrow, int ncol, int** A, int verbose );
+	int OA_str2(int q, int nrow, int ncol, int** A, int verbose );
 	int OA_str3(int q, int nrow, int ncol, int** A, int verbose );
-	int OA_str4(int q, int nrow, int ncol, int** A, int verbose   );
-	int OA_strt(int q, int nrow, int ncol, int **A, int t, int verbose   );
+	int OA_str4(int q, int nrow, int ncol, int** A, int verbose );
+	int OA_strt(int q, int nrow, int ncol, int **A, int t, int verbose );
 }
 
 #endif
