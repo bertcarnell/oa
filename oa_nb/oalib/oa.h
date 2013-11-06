@@ -1,7 +1,7 @@
 /**
  * @file oa.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 
@@ -28,7 +28,8 @@
  * </blockquote>
  */
 
-#pragma once
+#ifndef OA_H
+#define OA_H
 
 /*  
 
@@ -42,12 +43,10 @@ Only change it if you implement the higher strength
 checks!
 
 */
-#include <stdlib.h>
-#include <stdio.h>
-#include <string>
+
+#include "CommonDefines.h"
 #include "primes.h"
 #include "matrix.h"
-#include "CommonDefines.h"
 
 #define BIGWORK 100000000
 #define MEDWORK BIGWORK/10
@@ -74,3 +73,5 @@ namespace oacpp {
 		static int OA_strt(int q, int nrow, int ncol, matrix<int> & A, int t, int verbose   );
 	};
 }// end namespace
+
+#endif

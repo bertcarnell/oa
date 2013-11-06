@@ -1,7 +1,7 @@
 /**
  * @file construct.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 
@@ -28,12 +28,11 @@
  * </blockquote>
  */
 
-#pragma once
+#ifndef CONSTRUCT_H
+#define CONSTRUCT_H
 
 /*  Constructions for designs using Galois fields */
 
-#include <math.h>
-#include <stdio.h>
 #include "CommonDefines.h"
 #include "galois.h"
 #include "ak.h"
@@ -70,3 +69,5 @@ namespace oacpp {
 		static int addelkempcheck(int q, int p, int ncol );
 	};
 }// end namespace
+
+#endif

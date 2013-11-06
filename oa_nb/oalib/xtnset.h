@@ -1,7 +1,7 @@
 /**
  * @file xtnset.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 

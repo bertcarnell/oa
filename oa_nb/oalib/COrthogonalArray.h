@@ -1,9 +1,21 @@
 /**
  * @file COrthogonalArray.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
- * License:
+ * @license <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * Reference:
  * <ul><li><a href="http://lib.stat.cmu.edu/designs/">Statlib Designs</a></li>
@@ -493,7 +505,7 @@ namespace oacpp {
          * orthogonal array accessor
          * @return the orthogonal array
          */
-        const matrix<int> & getoa();//{return m_A;}
+        const matrix<int> & getoa();
 
 	private:
 		struct GF m_gf; /**< Galois Field */
@@ -539,10 +551,26 @@ namespace oacpp {
 		PRINT_OUTPUT("to have %d symbols, since the largest symbol is %d.\n", m_q, m_q-1);
 	}
 
-	inline int COrthogonalArray::getnrows() {return m_nrow;}
-	inline int COrthogonalArray::getncols() {return m_ncol;}
-	inline int COrthogonalArray::getq() {return m_q;}
-    inline const matrix<int> & COrthogonalArray::getoa() {return m_A;}
+	inline 
+    int COrthogonalArray::getnrows() 
+    {
+        return m_nrow;
+    }
+	inline 
+    int COrthogonalArray::getncols() 
+    {
+        return m_ncol;
+    }
+	inline 
+    int COrthogonalArray::getq() 
+    {
+        return m_q;
+    }
+    inline 
+    const matrix<int> & COrthogonalArray::getoa() 
+    {
+        return m_A;
+    }
 }
 
 #endif

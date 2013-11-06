@@ -1,69 +1,35 @@
 /**
  * @file main.cpp
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
- * License:
+ * @license <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License (GPL v3)</a>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdlib>
-#include <cstdio>
-#include <vector>
 #include "TestClass.h"
 #include "rutilsTest.h"
 #include "matrixTest.h"
 #include "COrthogonalArrayTest.h"
 
-#define CREATE_TEST(x) \
-	tests.push_back(dynamic_cast<TestClass*>(new x()))
-
 using namespace oaTest;
-
-/*struct Foo {
-    Foo(int num) : num_(num) {}
-    void print_add(int i) const { std::cout << num_+i << '\n'; }
-    int num_;
-};
- 
-void print_num(int i)
-{
-    std::cout << i << '\n';
-}
- 
-struct PrintNum {
-    void operator()(int i) const
-    {
-        std::cout << i << '\n';
-    }
-};
- 
-int main()
-{
-    // store a free function
-    std::function<void(int)> f_display = print_num;
-    f_display(-9);
- 
-    // store a lambda
-    std::function<void()> f_display_42 = []() { print_num(42); };
-    f_display_42();
- 
-    // store the result of a call to std::bind
-    std::function<void()> f_display_31337 = std::bind(print_num, 31337);
-    f_display_31337();
- 
-    // store a call to a member function
-    std::function<void(const Foo&, int)> f_add_display = &Foo::print_add;
-    Foo foo(314159);
-    f_add_display(foo, 1);
- 
-    // store a call to a function object
-    std::function<void(int)> f_display_obj = PrintNum();
-    f_display_obj(18);
-}*/
 
 int main(int argc, const char* argv[] )
 {
-	printf("Starting oatest...\n");
+    omp_set_num_threads(NUM_THREADS_USED);
+
+	printf("Starting oatest with %d threads...\n", NUM_THREADS_USED);
 	std::vector<TestClass*> tests = std::vector<TestClass*>();
     CREATE_TEST(COrthogonalArrayTest);
     CREATE_TEST(rutilsTest);

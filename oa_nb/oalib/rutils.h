@@ -1,7 +1,7 @@
 /**
  * @file rutils.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 
@@ -28,14 +28,10 @@
  * </blockquote>
  */
 
-#pragma once
+#ifndef RUTILS_H
+#define RUTILS_H
 
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <algorithm>
-#include <vector>
-#include <stdexcept>
+#include "CommonDefines.h"
 #include "runif.h"
 
 namespace oacpp
@@ -102,3 +98,5 @@ namespace oacpp
         }
     }
 } // end namespace
+
+#endif

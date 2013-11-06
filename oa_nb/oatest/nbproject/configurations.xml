@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="88">
+<configurationDescriptor version="89">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -40,6 +40,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>RTools|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -52,7 +54,7 @@
             <pElem>C:/Users/carnellr/Documents/Repositories/boost</pElem>
             <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r</pElem>
           </incDir>
-          <commandLine>-std=c++0x</commandLine>
+          <commandLine>-std=c++0x -fopenmp</commandLine>
         </ccTool>
         <asmTool>
           <architecture>2</architecture>
@@ -101,6 +103,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>

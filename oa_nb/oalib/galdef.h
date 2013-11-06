@@ -1,7 +1,7 @@
 /**
  * @file galdef.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 
@@ -31,24 +31,24 @@
 #ifndef GALDEF_H
 #define GALDEF_H
 
-#include <vector>
+#include "CommonDefines.h"
 #include "matrix.h"
 
 /* Definitions for Galois Field code */
 namespace oacpp {
-struct GF {
-  int n,p,q;
-  //int *xton;
-  std::vector<int> xton, inv, neg, root;
-  //int **plus;
-  matrix<int> plus, times, poly;
-  //int **times;
-  //int *inv;
-  //int *neg;
-  //int *root;
-  //int **poly;
-};
-
+    struct GF 
+    {
+        int n,p,q;
+        //int *xton;
+        std::vector<int> xton, inv, neg, root;
+        //int **plus;
+        matrix<int> plus, times, poly;
+        //int **times;
+        //int *inv;
+        //int *neg;
+        //int *root;
+        //int **poly;
+    };
 } // end namespace
 
 #endif

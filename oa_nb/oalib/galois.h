@@ -1,7 +1,7 @@
 /**
  * @file galois.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 
@@ -27,11 +27,9 @@
  * work.
  * </blockquote>
  */
+#ifndef GALOIS_H
+#define GALOIS_H
 
-#pragma once
-
-#include <stdio.h>
-#include <math.h>
 #include "CommonDefines.h"
 #include "galdef.h"
 #include "primes.h"
@@ -62,3 +60,4 @@ namespace oacpp {
 	};
 }
 
+#endif

@@ -1,7 +1,7 @@
 /**
  * @file primes.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 
@@ -28,12 +28,11 @@
  * </blockquote>
  */
 
-#pragma once
+#ifndef PRIMES_H
+#define PRIMES_H
 
 /*     Utilities related to prime numbers.  */
 
-#include <math.h>
-#include <stdio.h>
 #include "CommonDefines.h"
 
 /*  Glossary:
@@ -59,3 +58,5 @@ namespace oacpp {
 		static void fqpncheck();
 	};
 }// end namespace
+
+#endif

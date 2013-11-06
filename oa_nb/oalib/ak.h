@@ -1,7 +1,7 @@
 /**
  * @file ak.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
  * License:  This file may be freely used and shared according to the original license.
  * 
@@ -28,7 +28,8 @@
  * </blockquote>
  */
 
-#pragma once
+#ifndef AK_H
+#define AK_H
 
 /*     Addelman-Kempthorne Constructions with n = 3.
 
@@ -79,9 +80,6 @@ It seemed to be impossible to find a constant b[1],c[1] pair.
 
 */
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "CommonDefines.h"
 #include "galois.h"
 #include "primes.h"
@@ -99,3 +97,5 @@ namespace oacpp {
 		static int addelkemp3(GF & gf, matrix<int> & A, int ncol );
 	};
 }
+
+#endif

@@ -1,17 +1,26 @@
 /**
  * @file COrthogonalArrayTest.cpp
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
  * 
- * License:
+ * @license <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License (GPL v3)</a>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "COrthogonalArrayTest.h"
 
 namespace oaTest{
-    int multiplyByTwo(int a){return a*2;}
-    int powerOfTwo(int a){return std::pow<int>(2,a);}
-
 	void COrthogonalArrayTest::Run()
 	{
 		printf("\tCOrthogonalArray...");
@@ -34,17 +43,26 @@ namespace oaTest{
         assert(q.size() == ncol.size());
         oacpp::COrthogonalArray coa;
         int n = 0;
-        for (int i = 0; i < q.size(); i++)
+        
+        int i;
+        int chunk = PARALLEL_CHUNK_SIZE;
+        int threadid;
+
+        #pragma omp parallel shared(chunk,q,ncol,f) private(i, threadid, coa, n)
         {
-            try
+            #pragma omp for schedule(dynamic,chunk)
+            for (i = 0; i < q.size(); i++)
             {
-                f(coa, q[i], ncol[i], &n);
-                standardChecks(coa.getoa(), q[i], ncol[i]);
-            }
-            catch (std::exception & e)
-            {
-                std::printf("\n ** q=%d ncol=%d *****\n", q[i], ncol[i]);
-                std::printf("%s\n", e.what());
+                try
+                {
+                    f(coa, q[i], ncol[i], &n);
+                    standardChecks(coa.getoa(), q[i], ncol[i]);
+                }
+                catch (std::exception & e)
+                {
+                    std::printf("\n ** q=%d ncol=%d *****\n", q[i], ncol[i]);
+                    std::printf("%s\n", e.what());
+                }
             }
         }
     }
@@ -96,8 +114,8 @@ namespace oaTest{
     
 	void COrthogonalArrayTest::testAddelkempRange()
 	{
-        //std::vector<int> q = {2,3,4,5,7,11,13,17,19,23,29,31,37,41,43,49}; // requires -std=c++0x in gcc >= 4.6.3
-        std::vector<int> q = {2,3,4,5,7};
+        std::vector<int> q = {2,3,4,5,7,9,11,13,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
+        //std::vector<int> q = {2,3,4,5,7};
         std::vector<int> ncol(q.size());
         std::transform(q.begin(), q.end(), ncol.begin(), multiplyByTwo);
         std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::addelkemp;
@@ -131,8 +149,8 @@ namespace oaTest{
 
 	void COrthogonalArrayTest::testAddelkemp3Range()
 	{
-        //std::vector<int> q = {2,3,4,5,7,11,13,17,19,23,29,31,37,41,43,49}; // requires -std=c++0x in gcc >= 4.6.3
-        std::vector<int> q = {2,3,4,5,7};
+        std::vector<int> q = {2,3,4,5,7,9,11,13,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
+        //std::vector<int> q = {2,3,4,5,7};
         std::vector<int> ncol(q.size());
         std::transform(q.begin(), q.end(), ncol.begin(), multiplyByTwo);
         std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::addelkemp3;
@@ -184,8 +202,8 @@ namespace oaTest{
 
 	void COrthogonalArrayTest::testBoseRange()
 	{
-        //std::vector<int> q = {2,3,4,5,7,11,13,17,19,23,29,31,37,41,43,49}; // requires -std=c++0x in gcc >= 4.6.3
-        std::vector<int> q = {2,3,4,5,7,8,9};
+        std::vector<int> q = {2,3,4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
+        //std::vector<int> q = {2,3,4,5,7,8,9};
         std::vector<int> ncol(q);
         std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::bose;
         testRange(f, q, ncol);
@@ -205,8 +223,8 @@ namespace oaTest{
 
 	void COrthogonalArrayTest::testBushRange()
 	{
-        //std::vector<int> q = {2,3,4,5,7,11,13,17,19,23,29,31,37,41,43,49}; // requires -std=c++0x in gcc >= 4.6.3
-        std::vector<int> q = {2,3,4,5,7,11};
+        std::vector<int> q = {2,3,4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
+        //std::vector<int> q = {2,3,4,5,7,11};
         std::vector<int> ncol(q);
         std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::bush;
         testRange(f, q, ncol);

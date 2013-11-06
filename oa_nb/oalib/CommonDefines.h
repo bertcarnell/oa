@@ -1,9 +1,20 @@
 /**
  * @file CommonDefines.h
  * @author Robert Carnell
- * @copyright Robert Carnell 2013
+ * @copyright Copyright (c) 2013, Robert Carnell
+ * @license <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  * 
- * License:
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * Reference:
  * <ul><li><a href="http://lib.stat.cmu.edu/designs/">Statlib Designs</a></li>
@@ -17,6 +28,10 @@
 #include <string>
 #include <vector>
 #include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <algorithm>
+#include <stdexcept>
 #include "boost/format.hpp"
 
 #ifdef RCOMPILE
@@ -31,9 +46,7 @@
 /**
  * @mainpage Orthogonal Array Library
  * 
- * @todo Change this documentation to include the <code></code> blocks
- * 
- * From the original documentation:
+ * From the original documentation by Owen:
  * 
  *<blockquote>
  * From: owen@stat.stanford.edu
@@ -62,22 +75,22 @@
  * 
  * @section orthogonal_arrays_sec Orthogonal Arrays
  * <blockquote>
- * An orthogonal array A is a matrix of n rows, k 
- * columns with every element being one of q symbols
- * 0,...,q-1.  The array has strength t if, in every n by t
- * submatrix, the q^t possible distinct rows, all appear
+ * An orthogonal array <code>A</code> is a matrix of <code>n</code> rows, <code>k</code> 
+ * columns with every element being one of <code>q</code> symbols
+ * <code>0,...,q-1</code>.  The array has strength <code>t</code> if, in every <code>n</code> by <code>t</code>
+ * submatrix, the <code>q^t</code> possible distinct rows, all appear
  * the same number of times.  This number is the index
- * of the array, commonly denoted lambda.  Clearly, 
- * lambda*q^t=n. Geometrically, if one were to "plot" the 
- * submatrix with one plotting axis for each of the t columns
- * and one point in t dimensional space for each row, the
- * result would be a grid of q^t distinct points.  There would
- * be lambda "overstrikes" at each point of the grid.
+ * of the array, commonly denoted <code>lambda</code>.  Clearly, 
+ * <code>lambda*q^t = n</code>. Geometrically, if one were to "plot" the 
+ * submatrix with one plotting axis for each of the <code>t</code> columns
+ * and one point in <code>t</code> dimensional space for each row, the
+ * result would be a grid of <code>q^t</code> distinct points.  There would
+ * be <code>lambda</code> "overstrikes" at each point of the grid.
  * 
- * The notation for such an array is OA( n, k, q, t ).
+ * The notation for such an array is <code>OA( n, k, q, t )</code>.
  * 
- * If n <= q^(t+1), then the n rows "should" plot as
- * n distinct points in every n by t+1 dimensional subarray.
+ * If <code>n <= q^(t+1)</code>, then the <code>n</code> rows "should" plot as
+ * <code>n</code> distinct points in every <code>n</code> by <code>t+1</code> dimensional subarray.
  * When this fails to hold, the array has the "coincidence
  * defect".
  * 
@@ -85,8 +98,8 @@
  * orthogonal arrays, in numerical integration, computer
  * experiments and visualization of functions.  Those
  * references contain further references to the literature,
- * that provide further explanations.  A strength
- * 1 randomized orthogonal array is a Latin hypercube
+ * that provide further explanations.  A strength 1 randomized 
+ * orthogonal array is a Latin hypercube
  * sample, essentially so or exactly so, depending on
  * the definition used for Latin hypercube sampling.
  * The arrays constructed here have strength 2 or more, it
@@ -95,21 +108,21 @@
  * The randomization is achieved by independent
  * uniform permutation of the symbols in each column.
  * 
- * To investigate a function f of d variables, one
- * has to have an array with k >= d.  One may also
- * have a maximum value of n in mind and a minimum value
- * for the number q of distinct levels to investigate.
+ * To investigate a function <code>f</code> of <code>d</code> variables, one
+ * has to have an array with <code>k >= d</code>.  One may also
+ * have a maximum value of <code>n</code> in mind and a minimum value
+ * for the number <code>q</code> of distinct levels to investigate.
  * 
- * It is entirely possible that no array of strength t>1
+ * It is entirely possible that no array of strength <code>t > 1</code>
  * is compatible with these conditions.  The programs
  * below provide some choices to pick from, hopefully
  * without too much of a compromise.
  * 
  * The constructions used are based on published
  * algorithms that exploit properties of Galois fields.
- * Because of this the number of levels q must be
- * a prime power.  That is q = p^r where p is prime
- * and r>=1 is an integer.
+ * Because of this the number of levels <code>q</code> must be
+ * a prime power.  That is <code>q = p^r</code> where <code>p</code> is prime
+ * and <code>r >= 1</code> is an integer.
  * 
  * The Galois field arithmetic for the prime powers is
  * based on tables published by Knuth and Alanen (1964)
@@ -127,28 +140,27 @@
  * following prime powers:
  * 
  * All Primes
- * All prime powers q = p^r where p < 50 and q < 10^9
+ * All prime powers <code>q = p^r</code> where <code>p < 50</code> and <code>q < 10^9</code>
  * 
  * Here are some of the smaller prime powers:
  * 
- * Powers of 2:  4 8 16 32 64 128 256 512
- * Powers of 3:  9 27 81 243 729
- * Powers of 5:  25 125 625
- * Powers of 7:  49 343 
- * Square of 11: 121
- * Square of 13: 169
+ * - Powers of 2:  4 8 16 32 64 128 256 512
+ * - Powers of 3:  9 27 81 243 729
+ * - Powers of 5:  25 125 625
+ * - Powers of 7:  49 343 
+ * - Square of 11: 121
+ * - Square of 13: 169
  * 
  * Here are some useful primes:
  * 
- * 2,3,5,7,11,13,17,19,23,29,31,37, 
- * 101,251,401
+ * - 2,3,5,7,11,13,17,19,23,29,31,37,101,251,401
  * 
  * The first row are small primes, the second row are
  * primes that are 1 more than a "round number".  The small
  * primes lead to small arrays.  An array with 101 levels
  * is useful for exploring a function at levels 0.00 0.01
  * through 1.00.  Keep in mind that a strength 2 array on
- * 101 levels requires 101^2 = 10201 experimental runs,
+ * 101 levels requires <code>101^2 = 10201</code> experimental runs,
  * so it is only useful where large experiments are possible.
  * 
  * Note that some of these will require more
@@ -157,25 +169,25 @@
  * the Galois field, but can't allocate enough
  * memory:
  * 
- * bose 10663
- * Unable to allocate 1927'th row in an integer matrix.
- * Unable to allocate space for Galois field on 10663 elements.
- * Construction failed for GF(10663).
- * Could not construct Galois field needed for Bose design.
+ * <code>bose 10663</code>
+ * - Unable to allocate 1927'th row in an integer matrix.
+ * - Unable to allocate space for Galois field on 10663 elements.
+ * - Construction failed for <code>GF(10663)</code>.
+ * - Could not construct Galois field needed for Bose design.
  * 
- * The smallest prime power not covered is 53^2 = 2809.
+ * The smallest prime power not covered is <code>53^2 = 2809</code>.
  * The smallest strength 2 array with 2809 symbols has
- * 2809^2 = 7890481 rows.  Therefore the missing prime powers
+ * <code>2809^2 = 7890481</code> rows.  Therefore the missing prime powers
  * are only needed in certain enormous arrays, not in the
  * small ones of most practical use.  In any event there
  * are some large primes and prime powers in the program
  * if an enormous array is needed.
  * 
- * To add GF(p^r) for some new prime power p^r,
+ * To add <code>GF(p^r)</code> for some new prime power p^r,
  * consult Alanen and Knuth for instructions on how
  * to search for an appropriate indexing polynomial,
  * and for how to translate that polynomial into a
- * replacement rule for "x^r".  
+ * replacement rule for <code>x^r</code>.  
  * </blockquote>
  * 
  * @section methods Methods
@@ -204,13 +216,13 @@
  * <blockquote>
  * It is faster to generate only the columns you need.
  * For example
- * bose 101 4 | oarand 101 10201 4
+ * <code>bose 101 4</code>
  * only generates the first 4 columns of the array, whereas
- * bose 101 | oarand 101 10201 102
+ * <code>bose 101</code>
  * generates 102 columns.  If you only want 4 columns the
  * former saves a lot of time.
  * 
- * Passing the q n k on the command line is more difficult
+ * Passing the <code>q n k</code> on the command line is more difficult
  * than letting the computer figure them out, but it
  * allows more error checking.
  * 
@@ -256,7 +268,7 @@
  * </blockquote>
  * 
  * @section implement Implementation Details
-
+ * 
  * <blockquote>
  * Galois fields are implemented through arrays that
  * store their addition and multiplication tables.  Some
@@ -267,11 +279,11 @@
  * was not considered to be a burden.   Subtraction and
  * division are implemented through vectors of additive
  * and multiplicative inverses, derived from the tables.
- * The tables for GF(p^r) are constructed using a 
- * representation of the field elements as polynomials in x
- * with coefficients as integers modulo p and a special
+ * The tables for <code>GF(p^r)</code> are constructed using a 
+ * representation of the field elements as polynomials in <code>x</code>
+ * with coefficients as integers modulo <code>p</code> and a special
  * rule (derived from minimal polynomials) for handling
- * products involving x^r.  These rules are taken from
+ * products involving <code>x^r</code>.  These rules are taken from
  * published references.  The rules have not all
  * been checked for accuracy, because some of the fields are 
  * very large (e.g. 16807 elements).
@@ -290,10 +302,9 @@
  * to place the elements on an output stream as they
  * are computed and do away with the storage.
  * 
- * The functions that test the strengh of the
+ * The functions that test the strength of the
  * arrays may be very far from optimally fast.
  * </blockquote>
  */
 
 #endif	/* COMMONDEFINES_H */
-
