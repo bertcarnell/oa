@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=MinGW_TDM-Windows
+CND_PLATFORM=RTools-Windows
 CND_CONF=Release
 CND_DISTDIR=dist
 CND_BUILDDIR=build

@@ -27,9 +27,11 @@ using namespace oaTest;
 
 int main(int argc, const char* argv[] )
 {
+#ifdef _OPENMP
     omp_set_num_threads(NUM_THREADS_USED);
+#endif
 
-	printf("Starting oatest with %d threads...\n", NUM_THREADS_USED);
+	printf("Starting oatest with %d thread(s)...\n", NUM_THREADS_USED);
 	std::vector<TestClass*> tests = std::vector<TestClass*>();
     CREATE_TEST(COrthogonalArrayTest);
     CREATE_TEST(rutilsTest);

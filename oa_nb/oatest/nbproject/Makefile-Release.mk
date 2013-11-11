@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=MinGW_TDM-Windows
+CND_PLATFORM=RTools-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Release
 CND_DISTDIR=dist
@@ -46,8 +46,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-m64 -std=c++0x -fopenmp
+CXXFLAGS=-m64 -std=c++0x -fopenmp
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -56,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib/dist/Debug/RTools-Windows -loalib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -69,27 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/oatest.exe: ${OBJECTFILES}
 ${OBJECTDIR}/COrthogonalArrayTest.o: COrthogonalArrayTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/COrthogonalArrayTest.o COrthogonalArrayTest.cpp
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -I/C/Users/carnellr/Documents/Repositories/boost -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/COrthogonalArrayTest.o COrthogonalArrayTest.cpp
 
 ${OBJECTDIR}/TestClass.o: TestClass.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/TestClass.o TestClass.cpp
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -I/C/Users/carnellr/Documents/Repositories/boost -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/TestClass.o TestClass.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -I/C/Users/carnellr/Documents/Repositories/boost -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/matrixTest.o: matrixTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -I/C/Users/carnellr/Documents/Repositories/boost -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
 
 ${OBJECTDIR}/rutilsTest.o: rutilsTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/rutilsTest.o rutilsTest.cpp
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -I/C/Users/carnellr/Documents/Repositories/boost -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/rutilsTest.o rutilsTest.cpp
 
 # Subprojects
 .build-subprojects:

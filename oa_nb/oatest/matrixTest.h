@@ -25,11 +25,26 @@
 #include "matrix.h"
 
 namespace oaTest {
+    /**
+     * A class to test the matrix implementation
+     */
 	class matrixTest : public TestClass
 	{
 		void Run();
+        /**
+         * @test Test the matrix constructor
+         * @see oacpp::matrix
+         */
 		void testConstructor();
+        /**
+         * @test Test the matrix property accessor methods
+         * @see oacpp::matrix
+         */
         void testAccessor();
+        /**
+         * @test Test the matrix operators
+         * @see oacpp::matrix
+         */
         void testOperators();
 	};
 }

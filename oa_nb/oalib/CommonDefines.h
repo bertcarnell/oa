@@ -36,12 +36,38 @@
 
 #ifdef RCOMPILE
 #include <Rcpp.h>
+/**
+ * A print macro to enable operation with or without R
+ */
 #define PRINT_OUTPUT Rprintf
 #else
+/**
+ * A print macro to enable operation with or without R
+ */
 #define PRINT_OUTPUT std::printf
 #endif
 
+/**
+ * if NDEBUG is not defined, then debug mode is likely enabled
+ */
+#ifndef NDEBUG
+#ifndef RANGE_DEBUG
+#define RANGE_DEBUG
+#endif
+#endif
+
+/**
+ * When a method returns an int to indicate success
+ */
 #define SUCCESS_CHECK 1
+/**
+ * When a method returns an int to indicate failure
+ */
+#define FAILURE_CHECK 0
+/**
+ * When a method returns an int which is not normally checked
+ */
+#define UNCHECKED_RETURN 0
 
 /**
  * @mainpage Orthogonal Array Library
@@ -305,6 +331,11 @@
  * The functions that test the strength of the
  * arrays may be very far from optimally fast.
  * </blockquote>
+ * 
+ * @section Compiling <code>oalib</code>
+ * When compiling <code>oalib</code> these preprocessor directives are used:
+ * - NDEBUG defined for a release build
+ * - RCOMPILE defined for building with R
  */
 
 #endif	/* COMMONDEFINES_H */

@@ -24,8 +24,17 @@
 #include <Rcpp.h>
 #include "matrix.h"
 
+/**
+ * @namespace oarutils A namespace for R connection utilities
+ */
 namespace oarutils {
 
+    /**
+     * A method to contert an oacpp::matrix to an Rcpp::IntegerMatrix
+     * @tparam T an atomic type that is convertible to <code>int</code> through a <code>static_cast<int>(T t)</code>
+     * @param A an orthogonal array matrix
+     * @return an integer matrix
+     */
     template <class T>
     Rcpp::IntegerMatrix convertToIntegerMatrix(const oacpp::matrix<T> & A)
     {

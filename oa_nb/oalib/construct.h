@@ -55,7 +55,21 @@ namespace oacpp {
 	class OAConstruct
 	{
 	public:
+        /**
+         * Check the input to the bose algorithm
+         * @param q the number of symbols
+         * @param ncol the number of columns
+         * @return an indicator of success
+         */
 		static int bosecheck(int q, int ncol );
+        /**
+         * Construct an orthogonal array using the bose algorithm
+         * 
+         * @param gf galois field
+         * @param A an orthogonal array
+         * @param ncol the number of columns
+         * @return an indicator of success
+         */
 		static int bose(GF & gf, matrix<int> & A, int ncol );
 		static int itopoly(int n, int q, int d, std::vector<int> & coef );
 		static int polyeval(GF & gf, int d, std::vector<int> & poly, int arg, int* value );

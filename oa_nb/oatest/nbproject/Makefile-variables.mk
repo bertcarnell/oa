@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/RTools-Windows/package
 CND_PACKAGE_NAME_Debug=oatest.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/RTools-Windows/package/oatest.tar
 # Release configuration
-CND_PLATFORM_Release=MinGW_TDM-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/MinGW_TDM-Windows
+CND_PLATFORM_Release=RTools-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/RTools-Windows
 CND_ARTIFACT_NAME_Release=oatest
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW_TDM-Windows/oatest
-CND_PACKAGE_DIR_Release=dist/Release/MinGW_TDM-Windows/package
+CND_ARTIFACT_PATH_Release=dist/Release/RTools-Windows/oatest
+CND_PACKAGE_DIR_Release=dist/Release/RTools-Windows/package
 CND_PACKAGE_NAME_Release=oatest.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW_TDM-Windows/package/oatest.tar
+CND_PACKAGE_PATH_Release=dist/Release/RTools-Windows/package/oatest.tar
 #
 # include compiler specific variables
 #

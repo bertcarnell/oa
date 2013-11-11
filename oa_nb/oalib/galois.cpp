@@ -56,7 +56,7 @@ namespace oacpp
      */
     {
         size_t nu = static_cast<size_t>(n);
-        std::vector<int> longprod(2*n-1);
+        std::vector<int> longprod(2*nu-1);
 
         longprod.assign(2*nu-1, 0);
         for (size_t i = 0; i < nu; i++)
@@ -66,11 +66,12 @@ namespace oacpp
                 longprod[i + j] += p1[i] * p2[j];
             }
         }
-        for (size_t i = 2 * nu - 2; i > nu - 1; i--)
+        for (int i = 2 * n - 2; i > n - 1; i--) // has to be an int to decrement less than zero
         {
+            size_t ui = static_cast<size_t>(i);
             for (size_t j = 0; j < nu; j++)
             {
-                longprod[i - nu + j] += xton[j] * longprod[i];
+                longprod[ui - nu + j] += xton[j] * longprod[ui];
             }
         }
         for (size_t i = 0; i < nu; i++)
@@ -81,11 +82,13 @@ namespace oacpp
 
     int GaloisField::GF_poly2int(int p, int n, std::vector<int> & poly)
     {
-        int ans;
+        int ans = 0;
 
-        ans = 0;
-        for (size_t i = static_cast<size_t>(n) - 1; i > 0; i--)
-            ans = (ans + poly[i]) * p;
+        for (int i = n - 1; i > 0; i--) // has to be an int to decrement less than zero
+        {
+            size_t ui = static_cast<size_t>(i);
+            ans = (ans + poly[ui]) * p;
+        }
         ans += poly[0];
 
         return ans;

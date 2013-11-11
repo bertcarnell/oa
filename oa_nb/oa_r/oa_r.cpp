@@ -20,10 +20,6 @@
 
 #include "oa_r.h"
 
-// Notes:  if q, ncol, n is a vector, Rcpp::as<int> should throw
-// NA's are not caught
-// infinites are not caught
-// should do tests in C for all of these to determine what must be checked in R
 RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n)
 {
     Rcpp::IntegerMatrix rcppA = R_NilValue;
@@ -50,7 +46,7 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP
         {
             oa.addelkemp3(qlocal, ncollocal, &nlocal);
         }
-        else if (stype == "addelkemp_c")
+        else if (stype == "addelkemp")
         {
             oa.addelkemp(qlocal, ncollocal, &nlocal);
         }

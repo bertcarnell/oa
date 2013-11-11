@@ -54,7 +54,7 @@
             <pElem>C:/Users/carnellr/Documents/Repositories/boost</pElem>
             <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r</pElem>
           </incDir>
-          <commandLine>-std=c++0x -fopenmp</commandLine>
+          <commandLine>-std=c++0x</commandLine>
         </ccTool>
         <asmTool>
           <architecture>2</architecture>
@@ -102,7 +102,7 @@
     <conf name="Release" type="1">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
-        <compilerSet>default</compilerSet>
+        <compilerSet>RTools|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -112,6 +112,16 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <incDir>
+            <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib</pElem>
+            <pElem>C:/Users/carnellr/Documents/Repositories/boost</pElem>
+            <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r</pElem>
+          </incDir>
+          <commandLine>-std=c++0x -fopenmp</commandLine>
+          <preprocessorList>
+            <Elem>NDEBUG</Elem>
+          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -119,6 +129,14 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib/dist/Debug/RTools-Windows</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>oalib</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="COrthogonalArrayTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

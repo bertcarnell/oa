@@ -28,11 +28,13 @@ namespace oaTest{
         testAddelkempRange();
 		testAddelkemp3();
         testAddelkemp3Range();
-        //testAddelkempn(); // Unknown exception
+        //testAddelkempn(); // deprecated
         testBose();
         testBoseRange();
         testBoseBushRange();
-        //testBushRange();
+        testBushRange();
+        testBoseBushl();
+        testBusht();
 		printf("passed\n");
 	}
     
@@ -60,8 +62,8 @@ namespace oaTest{
                 }
                 catch (std::exception & e)
                 {
-                    std::printf("\n ** q=%d ncol=%d *****\n", q[i], ncol[i]);
-                    std::printf("%s\n", e.what());
+                    std::printf("\n ** error on q=%d ncol=%d *****\n", q[i], ncol[i]);
+                    std::printf("error = %s\n", e.what());
                 }
             }
         }
@@ -223,10 +225,33 @@ namespace oaTest{
 
 	void COrthogonalArrayTest::testBushRange()
 	{
-        std::vector<int> q = {2,3,4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
-        //std::vector<int> q = {2,3,4,5,7,11};
+        // start at 4 since this is strength 3 for the standard bush design
+        std::vector<int> q = {4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
+        //std::vector<int> q = {4,5};
         std::vector<int> ncol(q);
         std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::bush;
         testRange(f, q, ncol);
+    }
+    
+    void COrthogonalArrayTest::testBoseBushl()
+    {
+		int q = 2;
+		int ncol = q;
+        int lambda = 2;
+		int n = 0;
+        oacpp::COrthogonalArray coa;
+		coa.bosebushl(lambda, q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+    }
+    
+    void COrthogonalArrayTest::testBusht()
+    {
+		int q = 3;
+		int ncol = 3;
+        int str = 2;
+		int n = 0;
+        oacpp::COrthogonalArray coa;
+		coa.busht(str, q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
     }
 } // end namespace

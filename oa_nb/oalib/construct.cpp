@@ -53,9 +53,10 @@ namespace oacpp
         size_t icol, irow;
         size_t q = static_cast<size_t>(gf.q);
 
-        if (!bosecheck(q, ncol))
+        int test = bosecheck(q, ncol);
+        if (test != SUCCESS_CHECK)
         {
-            return 0;
+            return FAILURE_CHECK;
         }
 
         irow = 0;
@@ -77,7 +78,7 @@ namespace oacpp
             }
         }
 
-        return 1;
+        return SUCCESS_CHECK;
     }
 
     int OAConstruct::itopoly(int n, int q, int d, std::vector<int> & coef)
@@ -87,23 +88,62 @@ namespace oacpp
             coef[i] = n % q;
             n = n / q;
         }
-        return 0;
+        return UNCHECKED_RETURN;
     }
 
-    int OAConstruct::polyeval(GF & gf, int d, std::vector<int> & poly, int arg, int* value)
     /*  find  value = poly(arg) where poly is a polynomial of degree d  
         and all the arithmetic takes place in the given Galois field.*/
+    int OAConstruct::polyeval(GF & gf, int d, std::vector<int> & poly, int arg, int* value)
     {
-        int ans;
-
-        ans = 0;
-        for (size_t i = d; i >= 0; i--) /* Horner's rule */
+        int ans = 0;
+#ifdef RANGE_DEBUG
+        if (static_cast<int>(poly.size()) <= d || static_cast<int>(gf.times.colsize()) <= arg)
         {
-            ans = gf.plus(gf.times(ans,arg),poly[i]);
+            std::printf("\nd=%d is too big for poly (%d) or arg=%d is too big in poly", 
+                    d, static_cast<int>(poly.size()), arg);
+        }
+#endif
+
+        /* note: cannot decrement with a size type because it is always > 0.  this needs to go < 1 to stop */
+        //for (size_t i = static_cast<size_t>(d); i >= 0; --i) /* Horner's rule */
+        for (int i = d; i >= 0; i--) /* Horner's rule */
+        {
+#ifdef RANGE_DEBUG
+            if (static_cast<int>(gf.times.rowsize()) <= ans)
+            {
+                std::printf("\nans=%d is too big for gf (%d x %d) in poly", ans,
+                        static_cast<int>(gf.plus.rowsize()),
+                        static_cast<int>(gf.plus.colsize()));
+            }
+            if (static_cast<size_t>(gf.times.at(ans,arg)) >= gf.plus.rowsize() ||
+                    gf.times.at(ans,arg) < 0 ||
+                    static_cast<size_t>(poly.at(i)) >= gf.plus.colsize() ||
+                    poly.at(i) < 0)
+            {
+                std::printf("\ngf.times(ans,arg)=%d or poly(i)=%d is too large for gf.plus (%lu x %lu)",
+                        gf.times.at(ans,arg),
+                        poly.at(i),
+                        static_cast<long unsigned int>(gf.plus.rowsize()),
+                        static_cast<long unsigned int>(gf.plus.colsize()));
+            }
+#endif
+            size_t ui = static_cast<size_t>(i);
+            size_t uans = static_cast<size_t>(ans);
+            size_t uarg = static_cast<size_t>(arg);
+#ifdef RANGE_DEBUG
+            size_t plusRow = static_cast<size_t>(gf.times.at(uans,uarg));
+            size_t plusCol = static_cast<size_t>(poly.at(ui));
+            ans = gf.plus.at(plusRow, plusCol);
+#else
+            //ans = gf.plus(gf.times(ans,arg),poly[i]);
+            size_t plusRow = static_cast<size_t>(gf.times(uans,uarg));
+            size_t plusCol = static_cast<size_t>(poly[ui]);
+            ans = gf.plus(plusRow, plusCol);
+#endif
         }
 
         *value = ans;
-        return 0;
+        return UNCHECKED_RETURN;
     }
 
     int OAConstruct::bushcheck(int q, int str, int ncol)
@@ -134,9 +174,10 @@ namespace oacpp
     int OAConstruct::bush(GF & gf, matrix<int> & A, int str, int ncol)
     {
         int q = gf.q;
-        if (!bushcheck(q, str, ncol))
+        int test = bushcheck(q, str, ncol);
+        if (test != SUCCESS_CHECK)
         {
-            return 0;
+            return FAILURE_CHECK;
         }
 
         std::vector<int> coef(str);
@@ -150,7 +191,7 @@ namespace oacpp
                 polyeval(gf, str - 1, coef, j, &(A(i,1 + j)));
             }
         }
-        return 1;
+        return SUCCESS_CHECK;
     }
 
     int OAConstruct::addelkempcheck(int q, int p, int ncol)
@@ -188,7 +229,11 @@ namespace oacpp
         int p = gf.p;
         size_t q = gf.q;
 
-        if (!addelkempcheck(q, p, ncol))return 0;
+        int test = addelkempcheck(q, p, ncol);
+        if (test != SUCCESS_CHECK)
+        {
+            return FAILURE_CHECK;
+        }
 
         std::vector<int> b(q);
         std::vector<int> c(q);
@@ -264,7 +309,7 @@ namespace oacpp
             }
         }
 
-        return 1;
+        return SUCCESS_CHECK;
     }
 
     int OAConstruct::bosebushcheck(int q, int p, int ncol)
@@ -302,9 +347,10 @@ namespace oacpp
         size_t s = q / 2; /* number of levels in design */
         matrix<int> A(s, q);
 
-        if (!bosebushcheck(s, p, ncol))
+        int test = bosebushcheck(s, p, ncol);
+        if (test != SUCCESS_CHECK)
         {
-            return 0;
+            return FAILURE_CHECK;
         }
 
         irow = 0;
@@ -332,7 +378,7 @@ namespace oacpp
                 irow++;
             }
         }
-        return 1;
+        return SUCCESS_CHECK;
     }
 
     int OAConstruct::bosebushlcheck(int s, int p, int lam, int ncol)
@@ -371,9 +417,10 @@ namespace oacpp
         size_t s = q / lam; /* number of levels in design */
         matrix<int> A(s,q);
 
-        if (!bosebushlcheck(s, p, lam, ncol))
+        int test = bosebushlcheck(s, p, lam, ncol);
+        if (test != SUCCESS_CHECK)
         {
-            return 0;
+            return FAILURE_CHECK;
         }
 
         irow = 0;
@@ -401,7 +448,7 @@ namespace oacpp
                 irow++;
             }
         }
-        return 1;
+        return SUCCESS_CHECK;
     }
 
 } // end namespace  

@@ -21,114 +21,245 @@
 #ifndef MATRIX_H
 #define	MATRIX_H
 
-#include <stdexcept>
 #include <vector>
+#include <stdexcept>
+#include <boost/format.hpp>
+
 namespace oacpp {
-    
+
+/**
+ * Matrix Class
+ * @tparam a generic type of the kind that can be used in std::vector
+ */
 template<class T>
 class matrix {
    private:
-      size_t rows;  // number of rows
-      size_t cols;  // number of columns
-      std::vector<T> elements; // array of elements
+      size_t rows;  /**< number of rows */
+      size_t cols;  /**< number of columns */
+      std::vector<T> elements; /**< array of elements */
    public:
-       size_t rowsize() const {return rows;}
-       size_t colsize() const {return cols;}
+       /**
+        * row size
+        * @return the number of rows in the matrix
+        */
+       size_t rowsize() const 
+       {
+           return rows;
+       }
+       /**
+        * column size
+        * @return the number of columns in the matrix
+        */
+       size_t colsize() const 
+       {
+           return cols;
+       }
       
-      T& operator()( size_t i, size_t j ) {
+      /**
+       * matrix element access
+       * @note does not check for index in range
+       * @param i row index (zero based)
+       * @param j column index (zero based)
+       * @return a reference to the requested element
+       */
+      T& operator()( size_t i, size_t j ) 
+      {
           return elements[i*cols+j];
       }
-      const T& operator()( size_t i, size_t j ) const {
-         return elements[i*cols+j];
-      }
-      const T& element(size_t i, size_t j) const {
-         return elements[i*cols+j];
-      }
-      T& element(size_t i, size_t j) {
-         return elements[i*cols+j];
-      }
-      T& element(size_t loc)
+      /**
+       * matrix element access
+       * @note does not check for arguments out of range
+       * @param i row index (zero based)
+       * @param j column index (zero based)
+       * @return a const reference to the requested element
+       */
+      const T& operator()( size_t i, size_t j ) const 
       {
-          return elements[loc];
+         return elements[i*cols+j];
       }
-      const T& element(size_t loc) const
+      /**
+       * matrix element access
+       * @throws std::out_of_range from the internal std::vector
+       * @param i row index (zero based)
+       * @param j column index (zero based)
+       * @return a const reference to the requested element
+       */
+      const T& at(size_t i, size_t j) const 
       {
-          return elements[loc];
+         return elements.at(i*cols+j);
       }
+      /**
+       * matrix element access
+       * @throws std::out_of_range from the internal std::vector
+       * @param i row index (zero based)
+       * @param j column index (zero based)
+       * @return a reference to the requested element
+       */
+      T& at(size_t i, size_t j) 
+      {
+         return elements.at(i*cols+j);
+      }
+      /**
+       * matrix element access
+       * @throws std::out_of_range from the internal std::vector
+       * @param i vector index (zero based)
+       * @return a reference to the requested element
+       */
+      T& at(size_t loc)
+      {
+          return elements.at(loc);
+      }
+      /**
+       * matrix element access
+       * @throws std::out_of_range from the internal std::vector
+       * @param i vector index (zero based)
+       * @return const a reference to the requested element
+       */
+      const T& at(size_t loc) const
+      {
+          return elements.at(loc);
+      }
+      /**
+       * a pointer to the internal data array
+       * @return a pointer
+       */
       T* data()
       {
           return elements.data();
       }
-      // constructors
-      matrix(){rows = 0; cols=0; elements = std::vector<T>();}
+      /**
+       * Default Constructor with zero rows and zero columns
+       */
+      matrix();
+      /**
+       * Constructor
+       * @param rows the number of rows in the matrix
+       * @param cols the number of columns in the matrix
+       */
       matrix( size_t rows, size_t cols );
+      /**
+       * Constructor
+       * @param rows the number of rows in the matrix
+       * @param cols the number of columns in the matrix
+       * @param elementArray an array to use as the initial values
+       */
       matrix( size_t rows, size_t cols, const T* elementArray );
+      /**
+       * Constructor
+       * @param rows the number of rows in the matrix
+       * @param cols the number of columns in the matrix
+       * @param elementVector a std::vector to use as the initial values
+       */
       matrix( size_t rows, size_t cols, std::vector<T> elementVector );
+      /**
+       * Copy Constructor
+       * @param the matrix to be copied
+       */
       matrix( const matrix<T>& );
-      // destructor
+      /**
+       * Destructor
+       */
       ~matrix();
 
-      // assignment
+      /**
+       * Matrix assignment
+       * @param right hand side matrix
+       * @return the left hand side matrix
+       */
       matrix<T>& operator=( const matrix<T>& );
 
-      // comparison
+      /**
+       * Equality comparison operator
+       * @param the right hand side matrix
+       * @return true if the matrices are equivalent
+       */
       bool operator==( const matrix<T>& ) const;
 
-      // vector operations
-      std::vector<T> getrow(size_t i) const
-      {
-          std::vector<T> a = std::vector<T>(cols);
-          for (size_t j = 0; j < cols; j++)
-          {
-              a[j] = elements[i*cols + j];
-          }
-          return a;
-      }
-      matrix<T> getRowMatrix( size_t i ) const
-      {
-          // the simple method has an extra loop of assignment
-          //std::vector<T> a = this->getrow(i);
-          //return matrix<T>(1,cols,a);
-          matrix<T> a(1,cols);
-          for (size_t j = 0; j < cols; j++)
-          {
-              a(0,j) = elements[i*cols + j];
-          }
-          return a;
-      };
+      /**
+       * Get a row of the matrix as a std::vector
+       * @note does not check to ensure the row is in range
+       * @param i the row number
+       * @return a vector representation of that row
+       */
+      std::vector<T> getrow(size_t i) const;
+      /**
+       * Get a row of the matrix as a std::vector
+       * @throws std::out_of_range when the row is not in range
+       * @param i the row number
+       * @return a vector representation of that row
+       */
+      std::vector<T> getrow_at(size_t i) const;
+      /**
+       * Get a row of the matrix as a row matrix
+       * @note does not check to ensure argument is in range
+       * @param i the row number
+       * @return a matrix representation of that row
+       */
+      matrix<T> getRowMatrix( size_t i ) const;
+      /**
+       * Get a row of the matrix as a row matrix
+       * @throws an out of range exception for an argument out of range
+       * @param i the row number
+       * @return a matrix representation of that row
+       */
+      matrix<T> getRowMatrix_at( size_t i ) const;
+
+      /**
+       * get a column of the matrix as a vector
+       * @note does not check the array bounds
+       * @param j column number
+       * @return a vector of the requested column
+       */
+      std::vector<T> getcol(size_t j) const;
+      /**
+       * Get a column of the matrix as a vector
+       * @throws out_of_range error if the column requested is out of bounds
+       * @param j the column number
+       * @return a vector of the requested column
+       */
+      std::vector<T> getcol_at(size_t j) const;
+      /**
+       * Get a column of the matrix as a column matrix
+       * @note does not check if the requested column is in bounds
+       * @param j the column number
+       * @return a column matrix of the requested column
+       */
+      matrix<T> getColumnMatrix( size_t j ) const;
+      /**
+       * Get a column of the matrix as a column matrix
+       * @throws if the requested column is out of range
+       * @param j the column number
+       * @return a column matrix of the requested column
+       */
+      matrix<T> getColumnMatrix_at( size_t j ) const;
       
-      std::vector<T> getcol(size_t j) const
+      /**
+       * fill the matrix with a value
+       * @param x the value to fill the matrix with
+       */
+      void fill(T & x)
       {
-          std::vector<T> a = std::vector<T>(rows);
-          for (size_t i = 0; i < rows; i++)
-          {
-              a[i] = elements[i*cols + j];
-          }
-          return a;
+          elements.assign(rows*cols, x);
       };
-      
-      matrix<T> getColumnMatrix( size_t j ) const
-      {
-          matrix<T> a(rows,1);
-          for (size_t i = 0; i < rows; i++)
-          {
-              a(i,0) = elements[i*cols + j];
-          }
-          return a;
-      };
-      
+
+      /**
+       * fill the matrix with a value
+       * @param x the value to fill the matrix with
+       */
       void fill(T x)
       {
           elements.assign(rows*cols, x);
       };
       
-      void clear()
-      {
-          elements.clear();
-          rows = 0;
-          cols = 0;
-      };
-      
+      /**
+       * clear the matrix to zero rows and columns
+       */
+      void clear();
+
+      /**
+       * Check if the matrix is empty
+       * @return true if the matrix is empty
+       */
       bool isEmpty()
       {
           return elements.empty();
@@ -222,7 +353,113 @@ bool matrix<T>::operator==(const matrix<T>& cp) const
     return true;
 }
 
+template<class T>
+std::vector<T> matrix<T>::getrow(size_t i) const
+{
+    std::vector<T> a = std::vector<T>(cols);
+    for (size_t j = 0; j < cols; j++)
+    {
+        a[j] = elements[i*cols + j];
+    }
+    return a;
+}
+
+template<class T>
+std::vector<T> matrix<T>::getrow_at(size_t i) const
+{
+    if (i >= rows)
+    {
+        std::string msg = boost::str(boost::format("row %d was requested, but the matrix has %d rows") % i % rows);
+        throw std::out_of_range(msg.c_str());
+    }
+    return getrow(i);
+}
+
+template<class T>
+matrix<T> matrix<T>::getRowMatrix( size_t i ) const
+{
+    // the simple method has an extra loop of assignment
+    //std::vector<T> a = this->getrow(i);
+    //return matrix<T>(1,cols,a);
+    matrix<T> a(1,cols);
+    for (size_t j = 0; j < cols; j++)
+    {
+        a(0,j) = elements[i*cols + j];
+    }
+    return a;
+}
+
+template<class T>
+matrix<T> matrix<T>::getRowMatrix_at(size_t i) const
+{
+    if (i >= rows)
+    {
+        std::string msg = boost::str(boost::format("row %d was requested, but the matrix has %d rows") % i % rows);
+        throw std::out_of_range(msg.c_str());
+    }
+    return getRowMatrix(i);
+}
+
+template<class T>
+std::vector<T> matrix<T>::getcol(size_t j) const
+{
+    std::vector<T> a = std::vector<T>(rows);
+    for (size_t i = 0; i < rows; i++)
+    {
+        a[i] = elements[i*cols + j];
+    }
+    return a;
+}
+
+template<class T>
+std::vector<T> matrix<T>::getcol_at(size_t j) const
+{
+    if (j >= cols)
+    {
+        std::string msg = boost::str(boost::format("column %d was requested, but the matrix has %d columns") % j % cols);
+        throw std::out_of_range(msg.c_str());
+    }
+    return getcol(j);
+}
+
+template<class T>
+matrix<T> matrix<T>::getColumnMatrix( size_t j ) const
+{
+    matrix<T> a(rows,1);
+    for (size_t i = 0; i < rows; i++)
+    {
+        a(i,0) = elements[i*cols + j];
+    }
+    return a;
+}
+
+template<class T>
+matrix<T> matrix<T>::getColumnMatrix_at(size_t j) const
+{
+    if (j >= cols)
+    {
+        std::string msg = boost::str(boost::format("column %d was requested, but the matrix has %d columns") % j % cols);
+        throw std::out_of_range(msg.c_str());
+    }
+    return getColumnMatrix(j);
+}
+
+template<class T>
+void matrix<T>::clear()
+{
+    elements.clear();
+    rows = 0;
+    cols = 0;
+}
+
+template<class T>
+matrix<T>::matrix()
+{
+    rows = 0; 
+    cols = 0; 
+    elements = std::vector<T>();
+}
+
 } // end namespace
 
 #endif	/* MATRIX_H */
-

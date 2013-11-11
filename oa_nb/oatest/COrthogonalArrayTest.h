@@ -30,21 +30,57 @@ namespace oaTest {
     {
     public:
 		void Run();
+        /**
+         * @test Test the oacpp::COrthogonalArray::addelkemp algorithm
+         */
+		void testAddelkemp();
+        /**
+         * @test Test the oacpp::COrthogonalArray::addelkemp algorithm with a range of values
+         */
+        void testAddelkempRange();
+        /**
+         * @test Test the oacpp::COrthogonalArray::addelkemp3 algorithm
+         */
+        void testAddelkemp3();
+        /**
+         * @test Test the oacpp::COrthogonalArray::addelkemp3 algorithm with a range of values
+         */
+        void testAddelkemp3Range();
+        /**
+         * @test Test the oacpp::COrthogonalArray::addelkempn algorithm
+         */
+        void testAddelkempn();
+        /**
+         * @test Test the oacpp::COrthogonalArray::bose algorithm
+         */
+        void testBose();
+        /**
+         * @test Test the oacpp::COrthogonalArray::bose algorithm with a range of values
+         */
+        void testBoseRange();
+        /**
+         * @test Test the oacpp::COrthogonalArray::bosebush algorithm with a range of values
+         */
+        void testBoseBushRange();
+        /**
+         * @test Test the oacpp::COrthogonalArray::bush algorithm with a range of values
+         */
+        void testBushRange();
+        /**
+         * @test Test the oacpp::COrthogonalArray::bosebushl algorithm
+         */
+        void testBoseBushl();
+        /**
+         * @test Test the oacpp::COrthogonalArray::busht algorithm
+         */
+        void testBusht();
+    private:
         void testRange(
             std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             std::vector<int> & q, std::vector<int> & ncol);
         void testException(
             std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             int q, int ncol);
-		void testAddelkemp();
-        void testAddelkempRange();
-        void testAddelkemp3();
-        void testAddelkemp3Range();
-        void testAddelkempn();
-        void testBose();
-        void testBoseRange();
-        void testBoseBushRange();
-        void testBushRange();
 	};
 }
 

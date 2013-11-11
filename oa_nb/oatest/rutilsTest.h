@@ -21,7 +21,6 @@
 #ifndef RUTILSTEST_H
 #define	RUTILSTEST_H
 
-#include <cstdlib>
 #include "TestClass.h"
 #include "rutils.h"
 
@@ -29,6 +28,9 @@ namespace oaTest {
 	class rutilsTest : public TestClass
 	{
 		void Run();
+        /**
+         * @test Test the oacpp::findRanks algorithm to find the ranks of vector of numbers
+         */
 		void testFindRanks();
 	};
 }

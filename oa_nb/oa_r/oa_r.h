@@ -26,7 +26,37 @@
 #include "matrix.h"
 #include "oa_r_utils.h"
 
+/**
+ * An entry point for a set of Orthogonal Array algorithms
+ * 
+ * @see oacpp::COrthogonalArray::bose
+ * @see oacpp::COrthogonalArray::bosebush
+ * @see oacpp::COrthogonalArray::bush
+ * @see oacpp::COrthogonalArray::addelkemp
+ * @see oacpp::COrthogonalArray::addelkemp3
+ * @todo test if q, ncol, n is a vector, Rcpp::as<int> should throw
+ * @todo test of NA's are not caught as expected
+ * @todo test if infinities are not caught as expected
+ * @todo do tests in c++ for all to determine what must be checked in R
+ * @param type The type of orthogonal array algorithm to use <ul><li>bose</li><li>bosebush</li><li>bush</li><li>addelkemp</li><li>addelkemp3</li></ul>
+ * @param q the number of symbols in the array
+ * @param ncol the number of columns in the array
+ * @param n [out] the number of rows in the array
+ * @return an integer matrix
+ */
 RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n);
+/**
+ * An entry point for a set of Orthogonal Array algorithms
+ * @see oacpp::COrthogonalArray::busht
+ * @see oacpp::COrthogonalArray::bosebushl
+ * @see oacpp::COrthogonalArray::addelkempn
+ * @param type The type of orthogonal array algorithm to use <ul><li>busht</li><li>bosebushl</li><li>addelkempn</li></ul>
+ * @param int1 a paramter that depends on the context <ul><li>busht: the strength</li><li>bosebush: lambda</li><li>addelkemp: the exponent on q</li></ul>
+ * @param q the number of symbols in the array
+ * @param ncol the number of columns in the array
+ * @param n [out] the number of rows in the array
+ * @return an integer matrix
+ */
 RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n);
 
 #endif	/* OA_R_H */

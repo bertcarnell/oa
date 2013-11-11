@@ -29,8 +29,10 @@ namespace oaTest
         }
 	}
 
-    bool TestClass::isDotProductConstant(oacpp::matrix<int> A, int nrows, int ncols)
+    bool TestClass::isDotProductConstant(oacpp::matrix<int> A)
     {
+        size_t nrows = A.rowsize();
+        size_t ncols = A.colsize();
         int sum = 0;
         int baseSum = -1;
         //bool ret = true;
@@ -69,6 +71,6 @@ namespace oaTest
 				Assert(A(row, col) >= 0 && A(row,col) <= expectedq - 1, "Values in A do not match  q");
 			}
 		}
-		Assert(isDotProductConstant(A, n, expectedCols), "Dot product is not consistent in A");
+		Assert(isDotProductConstant(A), "Dot product is not consistent in A");
     }
 }

@@ -66,11 +66,14 @@ namespace oacpp
         size_t numin;
         size_t aknu = static_cast<size_t> (akn);
 
-        p = gf.p, q = gf.q;
+        p = gf.p;
+        q = gf.q;
+        
+        int test = addelkempncheck(q, p, akn, ncol);
 
-        if (!addelkempncheck(q, p, akn, ncol))
+        if (test != SUCCESS_CHECK)
         {
-            return 0;
+            return FAILURE_CHECK;
         }
 
         std::vector<int> b(q);
@@ -81,20 +84,18 @@ namespace oacpp
         std::vector<int> coef(aknu);
         std::vector<int> indx(aknu);
 
-        x.assign(aknu, 0); // this might not be necessary?
-        /*for (size_t i = 0; i < aknu; i++)
+        for (size_t i = 0; i < aknu; i++)
         {
             x[i] = 0;
-        }*/
+        }
         for (size_t row = 0; row < static_cast<size_t>(Primes::ipow(q, akn)); row++)
         { /* First q^akn rows */
             col = 0;
-            s.assign(aknu, 0);
             s[0] = 1;
-            //for (size_t i = 1; i < aknu; i++) /* first subset */
-            //{
-            //    s[i] = 0; /* nonempty subsets of x indices */
-            //}
+            for (size_t i = 1; i < aknu; i++) /* first subset */
+            {
+                s[i] = 0; /* nonempty subsets of x indices */
+            }
             
             for (size_t sub = 1; sub < static_cast<size_t>(Primes::ipow(2, akn)) && col < ncol; sub++)
             {
@@ -108,10 +109,15 @@ namespace oacpp
                         {
                             monic = i;
                         }
-                        else
+                        // TODO: this might be an else on the if(s[i])
+                        /*else
                         {
                             indx[numin++] = i;
-                        }
+                        }*/
+                    }
+                    else
+                    {
+                        indx[numin++] = i;
                     }
                 }
                 for (size_t i = 0; i < numin; i++)
@@ -126,16 +132,17 @@ namespace oacpp
                         elt = gf.plus(elt, gf.times(coef[i],x[indx[i]]));
                     }
                     A(row,col++) = elt;
-                    for (size_t i = numin - 1; i >= 0; i--)
+                    for (int i = numin - 1; i >= 0; i--) // has to be an int to decrement
                     {
-                        coef[i] = (coef[i] + 1) % q;
-                        if (coef[i])
+                        size_t ui = static_cast<size_t>(i);
+                        coef[ui] = (coef[ui] + 1) % q;
+                        if (coef[ui])
                         {
                             break;
                         }
                         else
                         {
-                            coef[i] = 1;
+                            coef[ui] = 1;
                         }
                     }
                 }
@@ -168,10 +175,15 @@ namespace oacpp
                         {
                             monic = i;
                         }
-                        else
+                        // this might be an else on the if(s[i])
+                        /*else
                         {
                             indx[numin++] = i;
-                        }
+                        }*/
+                    }
+                    else
+                    {
+                        indx[numin++] = i;
                     }
                 }
                 coef[0] = 0;
@@ -188,10 +200,11 @@ namespace oacpp
                         elt = gf.plus(elt,gf.times(coef[i],x[indx[i - 1]]));
                     }
                     A(row,col++) = elt;
-                    for (size_t i = numin + 1 - 1; i >= 0; i--)
+                    for (int i = numin + 1 - 1; i >= 0; i--) // has to be an int
                     {
-                        coef[i] = (coef[i] + 1) % q;
-                        if (coef[i])
+                        size_t ui = static_cast<size_t>(i);
+                        coef[ui] = (coef[ui] + 1) % q;
+                        if (coef[ui])
                         {
                             break;
                         }
@@ -199,7 +212,7 @@ namespace oacpp
                         {
                             if (i > 0)
                             {
-                                coef[i] = 1;
+                                coef[ui] = 1;
                             }
                         }
                     }
@@ -214,10 +227,11 @@ namespace oacpp
                 }
             }
 
-            for (size_t i = aknu - 1; i >= 0; i--)
+            for (int i = akn - 1; i >= 0; i--) // has to be an int to decrement
             {
-                x[i] = (x[i] + 1) % q;
-                if (x[i])
+                size_t ui = static_cast<size_t>(ui);
+                x[ui] = (x[ui] + 1) % q;
+                if (x[ui])
                 {
                     break;
                 }
@@ -233,20 +247,18 @@ namespace oacpp
             akeven(gf, &kay, b, c, k);
         }
 
-        x.assign(aknu, 0);
-        /*for (size_t i = 0; i < aknu; i++)
+        for (size_t i = 0; i < aknu; i++)
         {
             x[i] = 0;
-        }*/
+        }
         for (size_t row = static_cast<size_t>(Primes::ipow(q, akn)); row < static_cast<size_t>(2 * Primes::ipow(q, akn)); row++) /* Second q^akn rows */
         {
             col = 0;
-            s.assign(aknu, 0);
             s[0] = 1;
-            //for (size_t i = 1; i < aknu; i++) /* first subset */
-            //{
-            //    s[i] = 0; /* nonempty subsets of x indices */
-            //}
+            for (size_t i = 1; i < aknu; i++) /* first subset */
+            {
+                s[i] = 0; /* nonempty subsets of x indices */
+            }
             for (size_t sub = 1; sub < static_cast<size_t>(Primes::ipow(2, akn)) && col < ncol; sub++)
             {
                 monic = -1;
@@ -259,10 +271,15 @@ namespace oacpp
                         {
                             monic = i;
                         }
-                        else
+                        // this might be an else on the if(s[i])
+                        /*else
                         {
                             indx[numin++] = i;
-                        }
+                        }*/
+                    }
+                    else
+                    {
+                        indx[numin++] = i;
                     }
                 }
                 for (size_t i = 0; i < numin; i++)
@@ -281,16 +298,17 @@ namespace oacpp
                         elt = gf.plus(elt,gf.times(coef[i],x[indx[i]]));
                     }
                     A(row,col++) = elt;
-                    for (size_t i = numin - 1; i >= 0; i--)
+                    for (int i = numin - 1; i >= 0; i--) // has to be an int to decrement
                     {
-                        coef[i] = (coef[i] + 1) % q;
-                        if (coef[i])
+                        size_t ui = static_cast<size_t>(i);
+                        coef[ui] = (coef[ui] + 1) % q;
+                        if (coef[ui])
                         {
                             break;
                         }
                         else
                         {
-                            coef[i] = 1;
+                            coef[ui] = 1;
                         }
                     }
                 }
@@ -323,10 +341,15 @@ namespace oacpp
                         {
                             monic = i;
                         }
-                        else
+                        // this might be an else on the if(s[i])
+                        /*else
                         {
                             indx[numin++] = i;
-                        }
+                        }*/
+                    }
+                    else
+                    {
+                        indx[numin++] = i;
                     }
                 }
                 coef[0] = 0;
@@ -344,16 +367,17 @@ namespace oacpp
                         elt = gf.plus(elt,gf.times(coef[i],x[indx[i - 1]]));
                     }
                     A(row,col++) = elt;
-                    for (size_t i = numin + 1 - 1; i >= 0; i--)
+                    for (int i = numin + 1 - 1; i >= 0; i--) // has to be an int to decrement // don't understand + 1 - 1
                     {
-                        coef[i] = (coef[i] + 1) % q;
-                        if (coef[i])
+                        size_t ui = static_cast<size_t>(i);
+                        coef[ui] = (coef[ui] + 1) % q;
+                        if (coef[ui])
                         {
                             break;
                         }
                         else
                         {
-                            coef[i] = i > 0 ? 1 : 0;
+                            coef[ui] = i > 0 ? 1 : 0;
                         }
                     }
                 }
@@ -367,17 +391,18 @@ namespace oacpp
                 }
             }
 
-            for (size_t i = aknu - 1; i >= 0; i--)
+            for (int i = aknu - 1; i >= 0; i--) // has to be an int to decrement
             {
-                x[i] = (x[i] + 1) % q;
-                if (x[i])
+                size_t ui = static_cast<size_t>(i);
+                x[ui] = (x[ui] + 1) % q;
+                if (x[ui])
                 {
                     break;
                 }
             }
         }
 
-        return 1;
+        return SUCCESS_CHECK;
     }
 
 } // end namespace

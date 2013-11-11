@@ -130,8 +130,6 @@ namespace oaTest {
         Assert(H(2,0) == 1, "temp.22");
         Assert(H(2,1) == 3, "temp.33");
         
-        Assert(H.element(1,1) == 2000, "element matrix access");
-        Assert(H.element(3) == 2000, "element vector access");
         Assert(H.isEmpty() == false, "is empty false");
         Assert(A.isEmpty() == true, "is empty true");
         

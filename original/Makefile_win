@@ -116,7 +116,7 @@ oastr: oastr.o memory.o oa.o primes.o oa.h
 
 
 allstr: oastr1 oastr2 oastr3 oastr4 oastr
-alldes:   bose bush busht bosebush bosebushl addelkemp addelkemp3
+alldes:   bose bush busht bosebush bosebushl addelkemp addelkemp3 addelkempn
 
 all: allstr alldes oarand oatriple oadimen oaagree
 	echo "To remove .o files: make cleanup"

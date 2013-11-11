@@ -127,6 +127,33 @@ namespace oacpp {
          * As for addelkemp above, 4 is replaced by 1 in fields that
          * do not have an element 4.  Also powers of 2 larger than 4
          * are not allowed, as described above for addelkemp.
+         * 
+         * The article is quite vague on this.  Page 1173 states
+         * "When n>2 the same procedure will yield the desired plans
+         * if Lemma 5a is used in place of Lemma 5."  Page 1175
+         * provides the example n=3,q=3 which is OA( 54,25,3,2 ).
+         * Based on this example it is possible to make an educated
+         * guess as to how the construction generalizes to n=3.
+         * The resulting OA's are seen, by brute force to be of
+         * strength 2 for q=2,3,4,5,7,11.  These OAs are:
+         * - OA(   16,  13,  2, 2 )   
+         * - OA(   54,  25,  3, 2 )
+         * - OA(  128,  41,  4, 2 )   
+         * - OA(  250,  61,  5, 2 )
+         * - OA(  686, 113,  7, 2 )
+         * - OA( 1458, 181,  9, 2 )
+         * - OA( 2662, 265, 11, 2 )
+         * 
+         * The one with q=7 required 212709392 comparisons to determine
+         * that it really is of strength 2.  This took roughly 11.5 minutes
+         * on a DEC 5000/240 workstation (real and elapsed in this case).
+         * The array with q=11 took 1.12671e+10 comparisons to verify its strength.
+         * This took roughly 10 1/2 hours.  
+         * 
+         * For even q, only q= 2 or 4 are available.  The prescription
+         * given in Addelman and Kempthorne (1961) does not appear to work.
+         * Commented out code below attempts to implement that prescription.
+         * It seemed to be impossible to find a constant b[1],c[1] pair.
          * </blockquote>
          * 
          * @param q the number of symbols <code>(0,...,q-1)</code>
@@ -138,6 +165,21 @@ namespace oacpp {
         
         /**
          * Construct an orthogonal array using the Addelman Kempthorne algorithm
+         * 
+         * @deprecated This method is not included by default in Art Owens's
+         * project.  The method is in the code, but it is not compiled in
+         * the makefile.  Adding it as a target to the makefile creates a successful build,
+         * but running addelkempn 3 3 (which should be equivalent to addelkemp3 3)
+         * does not function in the MinGW64 build.
+         * 
+         * From the original documentation:
+         * <blockquote>
+         * The article is quite vague on this.  Page 1173 states
+         * "When n>2 the same procedure will yield the desired plans
+         * if Lemma 5a is used in place of Lemma 5."  Page 1175
+         * provides the example n=3,q=3 which is OA( 54,25,3,2 ).
+         * Based on this example it is possible to make an educated
+         * guess as to how the construction generalizes.
          * 
          * @param akn the exponent on <code>q</code> for the number of rows <code>n = 2q^akn</code>
          * @param q the number of symbols <code>(0,...,q-1)</code>
