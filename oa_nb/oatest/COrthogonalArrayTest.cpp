@@ -34,6 +34,7 @@ namespace oaTest{
         testBoseBushRange();
         testBushRange();
         testBoseBushl();
+        testBoseBushlRange();
         testBusht();
 		printf("passed\n");
 	}
@@ -69,6 +70,39 @@ namespace oaTest{
         }
     }
     
+    void COrthogonalArrayTest::testRange2(
+            std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> & f,
+            std::vector<int> & int1,
+            std::vector<int> & q, 
+            std::vector<int> & ncol)
+	{
+        assert(q.size() == ncol.size());
+        oacpp::COrthogonalArray coa;
+        int n = 0;
+        
+        int i;
+        int chunk = PARALLEL_CHUNK_SIZE;
+        int threadid;
+
+        #pragma omp parallel shared(chunk,q,ncol,f) private(i, threadid, coa, n)
+        {
+            #pragma omp for schedule(dynamic,chunk)
+            for (i = 0; i < q.size(); i++)
+            {
+                try
+                {
+                    f(coa, int1[i], q[i], ncol[i], &n);
+                    standardChecks(coa.getoa(), q[i], ncol[i]);
+                }
+                catch (std::exception & e)
+                {
+                    std::printf("\n ** error on q=%d ncol=%d *****\n", q[i], ncol[i]);
+                    std::printf("error = %s\n", e.what());
+                }
+            }
+        }
+    }
+
     void COrthogonalArrayTest::testException(
             std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             int q, int ncol)
@@ -243,6 +277,15 @@ namespace oaTest{
 		coa.bosebushl(lambda, q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
     }
+
+    void COrthogonalArrayTest::testBoseBushlRange()
+    {
+        std::vector<int> q =      {2,4,3,9,27}; // requires -std=c++0x in gcc >= 4.6.3
+        std::vector<int> ncol(q);
+        std::vector<int> lambda = {2,2,3,3,3};
+        std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> f = &oacpp::COrthogonalArray::bosebushl;
+        testRange2(f, lambda, q, ncol);
+    }
     
     void COrthogonalArrayTest::testBusht()
     {
@@ -253,5 +296,14 @@ namespace oaTest{
         oacpp::COrthogonalArray coa;
 		coa.busht(str, q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+    }
+
+    void COrthogonalArrayTest::testBushtRange()
+    {
+        std::vector<int> q = {4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
+        std::vector<int> ncol(q);
+        std::vector<int> str = {2,2,2,3,3,3,3,3,4,4,4,4,4};
+        std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> f = &oacpp::COrthogonalArray::busht;
+        testRange2(f, str, q, ncol);
     }
 } // end namespace

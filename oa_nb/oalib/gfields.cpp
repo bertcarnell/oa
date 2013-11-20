@@ -38,7 +38,7 @@ namespace oacpp
 
     int GF_fields_are_set = 0;
 
-    void GaloisField::GF_set_fields()
+    void galoisfield::GF_set_fields()
     {
         /* Brute force set up of defining vectors, from Carmichael */
 
@@ -57,10 +57,11 @@ namespace oacpp
         GF_fields_are_set = 1;
     }
 
-    int GaloisField::GF_getfield(int q, GF & gf)
+    int galoisfield::GF_getfield(int q, GF & gf)
     {
         std::vector<int> xtn;
         int p, n, ispp;
+        std::ostringstream msg;
 
         if (!GF_fields_are_set)
         {
@@ -69,26 +70,26 @@ namespace oacpp
 
         if (q < 1)
         { /* Impossible argument */
-            std::string msg = "Field must have positive number of elements.\n";
-            throw std::runtime_error(msg.c_str());
+            msg << "Field must have positive number of elements.\n";
+            throw std::runtime_error(msg.str().c_str());
         }
         if (q == 1)
         { /* Pointless  argument */
-            std::string msg = "Field with 1 element was requested. \n";
-            throw std::runtime_error(msg.c_str());
+            msg << "Field with 1 element was requested. \n";
+            throw std::runtime_error(msg.str().c_str());
         }
 
-        Primes::primepow(q, &p, &n, &ispp);
+        primes::primepow(q, &p, &n, &ispp);
         if (!ispp)
         {
-            std::string msg = boost::str(boost::format("q=%d is not a prime power.\n") % q);
-            throw std::runtime_error(msg.c_str());
+            msg << "q=" << q << " is not a prime power.\n";
+            throw std::runtime_error(msg.str().c_str());
         }
 
         // include generated code
 #include "xtndispatch.h"
 
-        if (Primes::isprime(q))
+        if (primes::isprime(q))
         {
             xtn = xtnpt1; /* Could have tested p=q, or n=1 */
         }
@@ -101,14 +102,15 @@ namespace oacpp
             }
             else
             {
-                std::string msg = boost::str(boost::format("Construction failed for GF(%d).\n") % q);
-                throw std::runtime_error(msg.c_str());
+                msg << "Construction failed for GF(" << q << ").\n";
+                throw std::runtime_error(msg.str().c_str());
             }
         }
         else
         {
-            std::string msg = boost::str(boost::format("GF(%d) = GF(%d^%d) is not included in this program. To add it, consider modifying gfields.c. \n") % q % p % n);
-            throw std::runtime_error(msg.c_str());
+            msg << "GF(" << q << ") = GF(" << p << "^" << n << ") is not\n";
+            msg << "included in this program. To add it, consider modifying gfields.c.\n";
+            throw std::runtime_error(msg.str().c_str());
         }
         return SUCCESS_CHECK;
     }

@@ -25,6 +25,7 @@ namespace oaTest{
 	{
 		printf("\trutilsTest...");
 		testFindRanks();
+        testUnifPerm();
 		printf("passed\n");
 	}
 
@@ -34,23 +35,68 @@ namespace oaTest{
         std::vector<int> ind(5);
         
         v[0] = 1.0; v[1] = 4.3; v[2] = 2.2; v[3] = 5.5; v[4] = 0.4;
-        oacpp::findranks_slow<double>(v, ind);
+        oacpp::rutils::findranks_slow<double>(v, ind);
         Assert(ind[0] == 2 && ind[1] == 4 && ind[2] == 3 && ind[3] == 5 && ind[4] == 1, "testFindRanks Error 1");
         ind.clear();
         ind.resize(5);
-        oacpp::findranks<double>(v, ind);
+        oacpp::rutils::findranks<double>(v, ind);
         Assert(ind[0] == 2 && ind[1] == 4 && ind[2] == 3 && ind[3] == 5 && ind[4] == 1, "testFindRanks Error 1.2");
         
         v[0] = 0.1; v[1] = 0.2; v[2] = 0.3; v[3] = 0.4; v[4] = 0.5;
-        oacpp::findranks<double>(v, ind);
+        oacpp::rutils::findranks<double>(v, ind);
         Assert(ind[0] == 1 && ind[1] == 2 && ind[2] == 3 && ind[3] == 4 && ind[4] == 5, "testFindRanks Error 2");
         
         v[4] = 0.1; v[3] = 0.2; v[2] = 0.3; v[1] = 0.4; v[0] = 0.5;
-        oacpp::findranks<double>(v, ind);
+        oacpp::rutils::findranks<double>(v, ind);
         Assert(ind[0] == 5 && ind[1] == 4 && ind[2] == 3 && ind[3] == 2 && ind[4] == 1, "testFindRanks Error 3");
 
         v[4] = 0.0; v[3] = 0.0; v[2] = 0.0; v[1] = 0.0; v[0] = 0.0;
-        oacpp::findranks<double>(v, ind);
+        oacpp::rutils::findranks<double>(v, ind);
         Assert(ind[0] == 1 && ind[1] == 2 && ind[2] == 3 && ind[3] == 4 && ind[4] == 5, "testFindRanks Error 4");
+    }
+    
+    void rutilsTest::testUnifPerm()
+    {
+        int q = 10;
+        std::vector<int> pi(q);
+        oacpp::RUnif ran = oacpp::RUnif();
+        ran.seed(10,20,30,40);
+        oacpp::rutils::unifperm(pi, q, ran);
+        // test that each integer is available 0 to q-1
+        for (int i = 0; i < q; i++)
+        {
+            Assert(std::find(pi.begin(), pi.end(), i) != pi.end(), "integer found when required");
+            std::vector<int>::iterator it = std::find(pi.begin(), pi.end(), i);
+            Assert(*it == i, "integer not found properly");
+        }
+        // test that other integers are not found
+        Assert(std::find(pi.begin(), pi.end(), -1) == pi.end(), "not found");
+        Assert(std::find(pi.begin(), pi.end(), q) == pi.end(), "not found");
+        Assert(std::find(pi.begin(), pi.end(), q+1) == pi.end(), "not found");
+        Assert(std::accumulate(pi.begin(), pi.end(), 0) == (q-1)*q / 2, "wrong sum");
+        
+        oacpp::RUnif ran2 = oacpp::RUnif();
+        ran2.seed(1,2,3,4);
+        std::vector<int> pi2(q);
+        oacpp::rutils::unifperm(pi2, q, ran2);
+        // assert that at least one difference exists
+        bool test = false;
+        for (size_t i = 0; i < q; i++)
+        {
+            test = test | (pi[i] != pi2[i]);
+        }
+        Assert(test, "at least one difference does not exist");
+        
+        oacpp::RUnif ran3 = oacpp::RUnif();
+        ran3.seed(10,20,30,40);
+        std::vector<int> pi3(q);
+        oacpp::rutils::unifperm(pi3, q, ran3);
+        // assert that all are equal
+        test = true;
+        for (size_t i = 0; i < q; i++)
+        {
+            test = test & (pi[i] == pi3[i]);
+        }
+        Assert(test, "no differences does not exist");
     }
 }

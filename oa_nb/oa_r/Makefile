@@ -58,13 +58,6 @@ build: .build-post
 
 # Add your post 'build' code here...
 .build-post: .build-impl
-	# $(CP) "/c/Program Files/R/R-3.0.1/bin/x64/R.dll" $(CND_DISTDIR)/$(CONF)/$(CND_PLATFORM_${CONF})
-	# $(CP) "/c/Program Files/R/R-3.0.1/bin/x64/R.dll" $(CND_BUILDDIR)/$(CONF)/$(CND_PLATFORM_${CONF})/tests/TestFiles
-	# $(CP) "/c/Program Files/R/R-3.0.1/bin/x64/Rblas.dll" $(CND_DISTDIR)/$(CONF)/$(CND_PLATFORM_${CONF})
-	# $(CP) "/c/Program Files/R/R-3.0.1/bin/x64/Rblas.dll" $(CND_BUILDDIR)/$(CONF)/$(CND_PLATFORM_${CONF})/tests/TestFiles
-	# $(CP) "/c/Program Files/R/R-3.0.1/bin/x64/Rgraphapp.dll" $(CND_BUILDDIR)/$(CONF)/$(CND_PLATFORM_${CONF})/tests/TestFiles
-	# $(CP) "/c/Program Files/R/R-3.0.1/bin/x64/Riconv.dll" $(CND_BUILDDIR)/$(CONF)/$(CND_PLATFORM_${CONF})/tests/TestFiles
-	# $(CP) "/c/Program Files/R/R-3.0.1/bin/x64/Rzlib.dll" $(CND_BUILDDIR)/$(CONF)/$(CND_PLATFORM_${CONF})/tests/TestFiles
 
 # clean
 clean: .clean-post

@@ -42,9 +42,10 @@
  * @param q the number of symbols in the array
  * @param ncol the number of columns in the array
  * @param n [out] the number of rows in the array
+ * @param bRandom whether the array should be randomized
  * @return an integer matrix
  */
-RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n);
+RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n, SEXP /*bool*/ bRandom);
 /**
  * An entry point for a set of Orthogonal Array algorithms
  * @see oacpp::COrthogonalArray::busht

@@ -21,8 +21,10 @@
 #ifndef OA_R_UTILS_H
 #define	OA_R_UTILS_H
 
+#include <stdexcept>
 #include <Rcpp.h>
 #include "matrix.h"
+#include "rutils.h"
 
 /**
  * @namespace oarutils A namespace for R connection utilities
@@ -30,17 +32,20 @@
 namespace oarutils {
 
     /**
-     * A method to contert an oacpp::matrix to an Rcpp::IntegerMatrix
+     * A method to convert an oacpp::matrix to an Rcpp::IntegerMatrix
      * @tparam T an atomic type that is convertible to <code>int</code> through a <code>static_cast<int>(T t)</code>
      * @param A an orthogonal array matrix
      * @return an integer matrix
      */
     template <class T>
-    Rcpp::IntegerMatrix convertToIntegerMatrix(const oacpp::matrix<T> & A)
+    void convertToIntegerMatrix(const oacpp::matrix<T> & A, Rcpp::IntegerMatrix & rcppA)
     {
         size_t nrows = A.rowsize();
         size_t ncols = A.colsize();
-        Rcpp::IntegerMatrix rcppA(nrows, ncols);
+        if (rcppA.rows() != static_cast<int>(nrows) || rcppA.cols() != static_cast<int>(ncols))
+        {
+            rcppA = Rcpp::IntegerMatrix(nrows, ncols);
+        }
         for (size_t i = 0; i < nrows; i++)
         {
             for (size_t j = 0; j < ncols; j++)
@@ -48,7 +53,26 @@ namespace oarutils {
                 rcppA(i,j) = static_cast<int>(A(i,j));
             }
         }
-        return rcppA;
+    }
+    
+    void randomizeOA(Rcpp::IntegerMatrix & oa, int q)
+    {
+        // get the random number scope from R
+        Rcpp::RNGScope scope;
+        size_t rows = oa.rows();
+        size_t cols = oa.cols();
+        Rcpp::NumericVector perm;
+        std::vector<int> ranks(q);
+        // Permute the symbols in each column
+        for (size_t j = 0; j < cols; j++)
+        {
+            perm = Rcpp::runif(q);
+            oacpp::rutils::findranks_zero<double>(Rcpp::as<std::vector<double> >(perm), ranks);
+            for (size_t i = 0; i < rows; i++)
+            {
+                oa(i,j) = ranks[oa(i,j)];
+            }
+        }
     }
     
 } // end namespace

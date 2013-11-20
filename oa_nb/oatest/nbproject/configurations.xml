@@ -7,6 +7,8 @@
       <itemPath>COrthogonalArrayTest.h</itemPath>
       <itemPath>TestClass.h</itemPath>
       <itemPath>matrixTest.h</itemPath>
+      <itemPath>primesTest.h</itemPath>
+      <itemPath>runifTest.h</itemPath>
       <itemPath>rutilsTest.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -20,6 +22,8 @@
       <itemPath>TestClass.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>matrixTest.cpp</itemPath>
+      <itemPath>primesTest.cpp</itemPath>
+      <itemPath>runifTest.cpp</itemPath>
       <itemPath>rutilsTest.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -51,8 +55,6 @@
           <architecture>2</architecture>
           <incDir>
             <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib</pElem>
-            <pElem>C:/Users/carnellr/Documents/Repositories/boost</pElem>
-            <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r</pElem>
           </incDir>
           <commandLine>-std=c++0x</commandLine>
         </ccTool>
@@ -94,6 +96,14 @@
       </item>
       <item path="matrixTest.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="primesTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="primesTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="runifTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="runifTest.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="rutilsTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="rutilsTest.h" ex="false" tool="3" flavor2="0">
@@ -115,8 +125,6 @@
           <architecture>2</architecture>
           <incDir>
             <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib</pElem>
-            <pElem>C:/Users/carnellr/Documents/Repositories/boost</pElem>
-            <pElem>C:/Users/carnellr/Documents/Repositories/oa/oa_nb/oa_r</pElem>
           </incDir>
           <commandLine>-std=c++0x -fopenmp</commandLine>
           <preprocessorList>
@@ -151,6 +159,14 @@
       <item path="matrixTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="matrixTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="primesTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="primesTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="runifTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="runifTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="rutilsTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

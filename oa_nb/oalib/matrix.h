@@ -23,7 +23,8 @@
 
 #include <vector>
 #include <stdexcept>
-#include <boost/format.hpp>
+#include <string>
+#include <sstream>
 
 namespace oacpp {
 
@@ -369,8 +370,9 @@ std::vector<T> matrix<T>::getrow_at(size_t i) const
 {
     if (i >= rows)
     {
-        std::string msg = boost::str(boost::format("row %d was requested, but the matrix has %d rows") % i % rows);
-        throw std::out_of_range(msg.c_str());
+        std::ostringstream msg;
+        msg << "row " << i << " was requested, but the matrix has " << rows << " rows";
+        throw std::out_of_range(msg.str().c_str());
     }
     return getrow(i);
 }
@@ -394,8 +396,9 @@ matrix<T> matrix<T>::getRowMatrix_at(size_t i) const
 {
     if (i >= rows)
     {
-        std::string msg = boost::str(boost::format("row %d was requested, but the matrix has %d rows") % i % rows);
-        throw std::out_of_range(msg.c_str());
+        std::ostringstream msg;
+        msg << "Row " << i << " was requested, but the matrix has " << rows << " rows";
+        throw std::out_of_range(msg.str().c_str());
     }
     return getRowMatrix(i);
 }
@@ -416,8 +419,9 @@ std::vector<T> matrix<T>::getcol_at(size_t j) const
 {
     if (j >= cols)
     {
-        std::string msg = boost::str(boost::format("column %d was requested, but the matrix has %d columns") % j % cols);
-        throw std::out_of_range(msg.c_str());
+        std::ostringstream msg;
+        msg << "Column " << j << " was requested, but the matrix has " << cols << " columns";
+        throw std::out_of_range(msg.str().c_str());
     }
     return getcol(j);
 }
@@ -438,8 +442,9 @@ matrix<T> matrix<T>::getColumnMatrix_at(size_t j) const
 {
     if (j >= cols)
     {
-        std::string msg = boost::str(boost::format("column %d was requested, but the matrix has %d columns") % j % cols);
-        throw std::out_of_range(msg.c_str());
+        std::ostringstream msg;
+        msg << "Column " << j << " was requested, but the matrix has " << cols << " columns";
+        throw std::out_of_range(msg.str().c_str());
     }
     return getColumnMatrix(j);
 }

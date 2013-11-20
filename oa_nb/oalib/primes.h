@@ -31,32 +31,56 @@
 #ifndef PRIMES_H
 #define PRIMES_H
 
-/*     Utilities related to prime numbers.  */
-
 #include "CommonDefines.h"
 
-/*  Glossary:
+#define ISPRIMETRUE 1
+#define ISPRIMEFALSE 0
 
-       isprime           returns 1 for prime argument
-       ispcheck          was used to test isprime
-
-       primepow          find q=p^n if q is a prime power with n>0
-       isprimepow        returns 1 for prime power argument
-       ipow              pow() with integer arguments and value
-       fqpncheck         was used to test primepow
-
-*/
 namespace oacpp {
-	class Primes
+    /**
+     * Utilities related to prime numbers
+     */
+	namespace primes
 	{
-	public:
-		static int isprime(int p );
-		static void ispcheck();
-		static void primepow(int q, int* p, int* n, int* isit );
-		static int isprimepow(int q );
-		static int ipow( int a, int b );
-		static void fqpncheck();
-	};
+        /**
+         * returns 1 for prime argument
+         * @param p prime number
+         * @return 1 if <code>p</code> is prime
+         */
+		int isprime(unsigned int n);
+
+        /**
+         * Is the number prime
+         * @deprecated due to slowness
+         * @param p number
+         * @return 1 if prime, 0 otherwise
+         */
+        int isprime_old(int p);
+        
+        /**
+         * find q=p^n if q is a prime power with n>0
+         * @param q
+         * @param p
+         * @param n
+         * @param isit
+         */
+		void primepow(int q, int* p, int* n, int* isit );
+        
+        /**
+         * returns 1 for prime power argument
+         * @param q
+         * @return 
+         */
+		int isprimepow(int q );
+        
+        /**
+         * pow() with integer arguments and value
+         * @param a
+         * @param b
+         * @return 
+         */
+		int ipow( int a, int b );
+	} // end namespace
 }// end namespace
 
 #endif

@@ -39,49 +39,140 @@
 
 /*  Glossary:
 
-    bose:            OA( q^2, q+1, q, 2  )
-                     R.C. Bose (1938) Sankhya Vol 3 pp 323-338
-    bosecheck:       test input to bose
 
-    bosebush:        OA( 2q^2, 2q+1, q, 2 ), only implemented for q=2^n
-    bosebushcheck:   test input to bosebush
-
-    polyeval:        evaluate a polynomial with coefficients, argument
-                     and result in a Galois field
 
 */
 
 namespace oacpp {
-	class OAConstruct
+    /**
+     * Namespace to construct Orthogonal Arrays using various algorithms
+     */
+	namespace oaconstruct
 	{
-	public:
-        /**
-         * Check the input to the bose algorithm
-         * @param q the number of symbols
-         * @param ncol the number of columns
-         * @return an indicator of success
-         */
-		static int bosecheck(int q, int ncol );
         /**
          * Construct an orthogonal array using the bose algorithm
+         * 
+         * OA( q^2, q+1, q, 2  )
+         * R.C. Bose (1938) Sankhya Vol 3 pp 323-338
          * 
          * @param gf galois field
          * @param A an orthogonal array
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		static int bose(GF & gf, matrix<int> & A, int ncol );
-		static int itopoly(int n, int q, int d, std::vector<int> & coef );
-		static int polyeval(GF & gf, int d, std::vector<int> & poly, int arg, int* value );
-		static int bushcheck(int q, int str, int ncol);
-		static int bush(GF & gf, matrix<int> &  A, int str, int ncol  );
-		static int addelkemp(GF & gf, matrix<int> & A, int ncol );
-		static int bosebushcheck(int q, int p, int ncol  );
-		static int bosebush(GF & gf, matrix<int> & B, int ncol );
-		static int bosebushlcheck(int s, int p, int lam, int ncol  );
-		static int bosebushl(GF & gf, int lam, matrix<int> & B, int ncol );
-		static int addelkempcheck(int q, int p, int ncol );
-	};
+		int bose(GF & gf, matrix<int> & A, int ncol );
+        
+        /**
+         * Construct an orthogonal array using the bush algorithm
+         * @param gf
+         * @param A
+         * @param str
+         * @param ncol
+         * @return 
+         */
+		int bush(GF & gf, matrix<int> &  A, int str, int ncol  );
+        
+        /**
+         * 
+         * Implement Addelman and Kempthorne's 1961 A.M.S. method with n=2
+         * 
+         * @param gf
+         * @param A
+         * @param ncol
+         * @return 
+         */
+		int addelkemp(GF & gf, matrix<int> & A, int ncol );
+        
+        /**
+         * Construct an orthogonal array using the bosebush algorithm
+         * 
+         * OA( 2q^2, 2q+1, q, 2 ), only implemented for q=2^n
+         * Implement Bose and Bush's 1952 A.M.S. method with p=2, u=1
+         * 
+         * @param gf
+         * @param B
+         * @param ncol
+         * @return 
+         */
+		int bosebush(GF & gf, matrix<int> & B, int ncol );
+        
+        /**
+         * Construct an orthogonal array using the bose-bush algorithm
+         * 
+         * @param gf
+         * @param lam
+         * @param B
+         * @param ncol
+         * @return 
+         */
+		int bosebushl(GF & gf, int lam, matrix<int> & B, int ncol );
+
+        /**
+         * Check the input to the bose algorithm
+         * @param q the number of symbols
+         * @param ncol the number of columns
+         * @return an indicator of success
+         */
+		int bosecheck(int q, int ncol );
+        
+        /**
+         * 
+         * @param n
+         * @param q
+         * @param d
+         * @param coef
+         * @return 
+         */
+		int itopoly(int n, int q, int d, std::vector<int> & coef );
+        
+        /**
+         * Evaluate a polynomial with coefficients, argument and result in a Galois field
+         * @param gf a Galois field
+         * @param d
+         * @param poly
+         * @param arg
+         * @param value
+         * @return 
+         */
+		int polyeval(GF & gf, int d, std::vector<int> & poly, int arg, int* value );
+        
+        /**
+         * 
+         * @param q
+         * @param str
+         * @param ncol
+         * @return 
+         */
+		int bushcheck(int q, int str, int ncol);
+        
+        /**
+         * 
+         * @param q
+         * @param p
+         * @param ncol
+         * @return 
+         */
+		int bosebushcheck(int q, int p, int ncol  );
+        
+        /**
+         * 
+         * @param s
+         * @param p
+         * @param lam
+         * @param ncol
+         * @return 
+         */
+		int bosebushlcheck(int s, int p, int lam, int ncol  );
+        
+        /**
+         * 
+         * @param q
+         * @param p
+         * @param ncol
+         * @return 
+         */
+		int addelkempcheck(int q, int p, int ncol );
+	}
 }// end namespace
 
 #endif

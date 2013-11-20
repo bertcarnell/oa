@@ -32,24 +32,14 @@
 
 namespace oacpp
 {
-    /* 
-       In S one just does rank(runif(q)).  Here we want
-    something like rank(runif(q))-1 since the symbols to
-    be permuted are 0..q-1.  
-     */
-    void RUtils::unifperm(std::vector<int> & pi, int q)
+    namespace rutils
     {
-        int i;
-        std::vector<double> z = std::vector<double>(q);
-        if (!z.empty())
+        void unifperm(std::vector<int> & pi, int q, RUnif & randomClass)
         {
-            throw std::runtime_error("Could not allocate memory for random permutation.\n");
+            std::vector<double> z(q);
+            randomClass.runif(z, q);
+
+            findranks_zero<double>(z, pi);
         }
-        RUnif::runif(z, q);
-
-        findranks(z, pi);
-
-        for (i = 0; i < q; i++)
-            pi[i] -= 1;
-    }
+    } // end namespace
 } // end namespace

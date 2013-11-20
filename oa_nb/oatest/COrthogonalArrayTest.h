@@ -24,6 +24,7 @@
 #include <functional> // c++0x
 #include "TestClass.h"
 #include "COrthogonalArray.h"
+#include <cassert>
 
 namespace oaTest {
 	class COrthogonalArrayTest : public TestClass 
@@ -66,18 +67,35 @@ namespace oaTest {
          * @test Test the oacpp::COrthogonalArray::bush algorithm with a range of values
          */
         void testBushRange();
+        
         /**
          * @test Test the oacpp::COrthogonalArray::bosebushl algorithm
          */
         void testBoseBushl();
+        
+        /**
+         * @test Test the oacpp::COrthogonalArray::bosebushl algorithm with a range of values
+         */
+        void testBoseBushlRange();
+        
         /**
          * @test Test the oacpp::COrthogonalArray::busht algorithm
          */
         void testBusht();
+        
+        /**
+         * @test Test the oacpp::COrthogonalArray::busht algorithm with a range of values
+         */
+        void testBushtRange();
     private:
         void testRange(
             std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             std::vector<int> & q, std::vector<int> & ncol);
+        void testRange2(
+            std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> & f,
+            std::vector<int> & int1,
+            std::vector<int> & q, 
+            std::vector<int> & ncol);
         void testException(
             std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             int q, int ncol);

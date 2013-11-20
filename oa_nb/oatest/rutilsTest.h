@@ -32,6 +32,7 @@ namespace oaTest {
          * @test Test the oacpp::findRanks algorithm to find the ranks of vector of numbers
          */
 		void testFindRanks();
+        void testUnifPerm();
 	};
 }
 

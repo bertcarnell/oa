@@ -32,6 +32,7 @@
 #include "runif.h"
 #include "rutils.h"
 #include "oa.h"
+#include "primes.h"
 
 #define ROWCHECK 50
 #define NOMESSAGES 0
@@ -555,6 +556,7 @@ namespace oacpp {
 		int m_nrow; /**< the number of rows in orthogonal array */
         int m_ncol; /**< the number of columns in the orthogonal array */
         int m_q; /**< the number of symbols in the orthogonal array */
+        RUnif m_randomClass;
 
 		/**
          * Create a Galois Field

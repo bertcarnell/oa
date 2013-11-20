@@ -28,7 +28,7 @@ namespace oacpp {
 
 void COrthogonalArray::createGaloisField(int q)
 {
-    bool test = GaloisField::GF_getfield(q, m_gf);
+    bool test = galoisfield::GF_getfield(q, m_gf);
 	if (!test)
 	{
 		throw std::runtime_error("Could not construct the Galois field");
@@ -51,8 +51,9 @@ int COrthogonalArray::checkMaxColumns(int k, int maxColumns)
 	}
 	else if (k > maxColumns)
 	{
-		std::string s = boost::str(boost::format("At most %d columns are possible for the design.") % maxColumns);
-		throw std::runtime_error(s.c_str());
+        std::ostringstream s;
+        s << "At most " << maxColumns << "columns are possible for the design.";
+		throw std::runtime_error(s.str().c_str());
 	}
 	else
 	{
@@ -78,7 +79,7 @@ void COrthogonalArray::addelkemp(int q, int k, int* n)
 	createGaloisField(q);
     m_A = matrix<int>(2*q*q, k);
 	checkDesignMemory();
-	int result = OAConstruct::addelkemp(m_gf, m_A, k);
+	int result = oaconstruct::addelkemp(m_gf, m_A, k);
 	checkResult(result, 2*q*q, n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
@@ -89,19 +90,19 @@ void COrthogonalArray::addelkemp3(int q, int k, int* n)
 	createGaloisField(q);
     m_A = matrix<int>(2*q*q*q, k);
 	checkDesignMemory();
-	int result = Addelkemp::addelkemp3(m_gf, m_A, k);
+	int result = oaaddelkemp::addelkemp3(m_gf, m_A, k);
 	checkResult(result, 2*q*q*q, n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
 
 void COrthogonalArray::addelkempn(int akn, int q, int k, int* n)
 {
-	k = checkMaxColumns(k, 2*(Primes::ipow(q,akn)-1)/(q-1) - 1); /*  2(q^3-1)/(q-1) - 1  */
+	k = checkMaxColumns(k, 2*(primes::ipow(q,akn)-1)/(q-1) - 1); /*  2(q^3-1)/(q-1) - 1  */
 	createGaloisField(q);
-    m_A = matrix<int>(2*Primes::ipow(q,akn), k);
+    m_A = matrix<int>(2*primes::ipow(q,akn), k);
 	checkDesignMemory();
-	int result = Addelkemp::addelkempn(m_gf, akn, m_A, k);
-	checkResult(result, 2*Primes::ipow(q,akn), n);
+	int result = oaaddelkemp::addelkempn(m_gf, akn, m_A, k);
+	checkResult(result, 2*primes::ipow(q,akn), n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
 
@@ -111,7 +112,7 @@ void COrthogonalArray::bose(int q, int k, int* n)
 	createGaloisField(q);
     m_A = matrix<int>(q*q, k);
 	checkDesignMemory();
-	int result = OAConstruct::bose(m_gf, m_A, k);
+	int result = oaconstruct::bose(m_gf, m_A, k);
 	checkResult(result, q*q, n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
@@ -126,7 +127,7 @@ void COrthogonalArray::bosebush(int q, int k, int *n)
 	createGaloisField(2*q);
     m_A = matrix<int>(2*q*q, k);
 	checkDesignMemory();
-	int result = OAConstruct::bosebush(m_gf, m_A, k);
+	int result = oaconstruct::bosebush(m_gf, m_A, k);
 	checkResult(result, 2*q*q, n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
@@ -137,8 +138,8 @@ void COrthogonalArray::bosebushl(int lambda, int q, int k, int* n)
 
 	k = checkMaxColumns(k, q*lambda);
 
-	Primes::primepow(lambda, &pl, &nl, &isppl);
-	Primes::primepow(q , &pq, &nq, &isppq);
+	primes::primepow(lambda, &pl, &nl, &isppl);
+	primes::primepow(q , &pq, &nq, &isppq);
 
 	if (!isppq)
 	{
@@ -156,7 +157,7 @@ void COrthogonalArray::bosebushl(int lambda, int q, int k, int* n)
 	createGaloisField(lambda*q);
     m_A = matrix<int>(lambda*q*q, k);
 	checkDesignMemory();
-	int result = OAConstruct::bosebushl(m_gf, lambda, m_A, k);
+	int result = oaconstruct::bosebushl(m_gf, lambda, m_A, k);
 	checkResult(result, lambda*q*q, n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
@@ -167,7 +168,7 @@ void COrthogonalArray::bush(int q, int k, int* n)
 	createGaloisField(q);
     m_A = matrix<int>(q*q*q, k);
 	checkDesignMemory();
-	int result = OAConstruct::bush(m_gf, m_A, 3, k);
+	int result = oaconstruct::bush(m_gf, m_A, 3, k);
 	checkResult(result, q*q*q, n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
@@ -181,10 +182,10 @@ void COrthogonalArray::busht(int str, int q, int k, int* n)
 	}
 
 	createGaloisField(q);
-    m_A = matrix<int>(Primes::ipow(q,str), k);
+    m_A = matrix<int>(primes::ipow(q,str), k);
 	checkDesignMemory();
-	int result = OAConstruct::bush(m_gf, m_A, str, k);
-	checkResult(result, Primes::ipow(q,str), n);
+	int result = oaconstruct::bush(m_gf, m_A, str, k);
+	checkResult(result, primes::ipow(q,str), n);
     m_q = q; m_ncol=k; m_nrow=*n;
 }
 
@@ -272,11 +273,11 @@ int COrthogonalArray::oatriple(bool verbose)
 
 void COrthogonalArray::oarand(int is, int js, int ks, int ls)
 {
-	RUnif::seed(is, js, ks, ls);
+    m_randomClass.seed(is, js, ks, ls);
     std::vector<int> pi = std::vector<int>(m_q);
 	for (int j = 0; j < m_ncol; j++)
 	{
-		RUtils::unifperm(pi, m_q);
+        rutils::unifperm(pi, m_q, m_randomClass);
 		for (int i = 0; i < m_nrow; i++)
 		{
 			m_A(i,j) = pi[ m_A(i,j) ];
@@ -287,7 +288,7 @@ void COrthogonalArray::oarand(int is, int js, int ks, int ls)
 int COrthogonalArray::oastr(bool verbose)
 {
 	int str;
-	OrthogonalArrayStrength::OA_strength(m_q, m_nrow, m_ncol, m_A, &str, 2);
+	oastrength::OA_strength(m_q, m_A, &str, 2);
 
 	if (verbose)
 	{
@@ -307,51 +308,25 @@ int COrthogonalArray::oastr(bool verbose)
 bool COrthogonalArray::oastr1(bool verbose)
 {
 	int bverb = (verbose) ? ALLMESSAGES : NOMESSAGES;
-	if (OrthogonalArrayStrength::OA_str1(m_q, m_nrow, m_ncol, m_A, bverb))
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+    return (oastrength::OA_str1(m_q, m_A, bverb) == SUCCESS_CHECK);
 }
 
 bool COrthogonalArray::oastr2(bool verbose)
 {
 	int bverb = (verbose) ? ALLMESSAGES : NOMESSAGES;
-	if (OrthogonalArrayStrength::OA_str2(m_q, m_nrow, m_ncol, m_A, bverb))
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+    return (oastrength::OA_str2(m_q, m_A, bverb) == SUCCESS_CHECK);
 }
+
 bool COrthogonalArray::oastr3(bool verbose)
 {
 	int bverb = (verbose) ? ALLMESSAGES : NOMESSAGES;
-	if (OrthogonalArrayStrength::OA_str3(m_q, m_nrow, m_ncol, m_A, bverb))
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+    return (oastrength::OA_str3(m_q, m_A, bverb) == SUCCESS_CHECK);
 }
+
 bool COrthogonalArray::oastr4(bool verbose)
 {
 	int bverb = (verbose) ? ALLMESSAGES : NOMESSAGES;
-	if (OrthogonalArrayStrength::OA_str4(m_q, m_nrow, m_ncol, m_A, bverb))
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+    return (oastrength::OA_str4(m_q, m_A, bverb) == SUCCESS_CHECK);
 }
 
 } // end namespace

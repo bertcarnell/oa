@@ -40,9 +40,8 @@ namespace oacpp {
     /**
      * Addelkemp class
      */
-	class Addelkemp 
+	namespace oaaddelkemp 
 	{
-	public:
         /**
          * Check that the parameters of the addelkemp3 algorithm are consistent
          * 
@@ -53,7 +52,8 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		static int addelkemp3check(int q, int p, int ncol);
+		int addelkemp3check(int q, int p, int ncol);
+        
         /**
          * Addelkemp algorithm for even <code>p</code>
          * 
@@ -65,7 +65,8 @@ namespace oacpp {
          * @param k
          * @return an indicator of success
          */
-		static int akeven(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
+		int akeven(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
+        
         /**
          * Addelkemp algorithm for odd <code>p</code>
          * 
@@ -77,7 +78,8 @@ namespace oacpp {
          * @param k
          * @return an indicator of success
          */
-		static int akodd(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
+		int akodd(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
+        
         /**
          * Check that the parameters are consistent for the addelkempn algorithm
          * 
@@ -89,7 +91,8 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		static int addelkempncheck(int q, int p, int akn, int ncol  );
+		int addelkempncheck(int q, int p, int akn, int ncol  );
+        
         /**
          * The addelkemp algorithm for general n
          * 
@@ -101,7 +104,8 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		static int addelkempn(GF & gf, int akn, matrix<int> & A, int ncol );
+		int addelkempn(GF & gf, int akn, matrix<int> & A, int ncol );
+        
         /**
          * The addelkemp algorithm for n=3
          * 
@@ -110,8 +114,8 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		static int addelkemp3(GF & gf, matrix<int> & A, int ncol );
-	};
+		int addelkemp3(GF & gf, matrix<int> & A, int ncol );
+	}
 }
 
 #endif

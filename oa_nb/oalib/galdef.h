@@ -34,20 +34,22 @@
 #include "CommonDefines.h"
 #include "matrix.h"
 
-/* Definitions for Galois Field code */
 namespace oacpp {
+    /**
+     * Struct to define a Galois Field
+     */
     struct GF 
     {
-        int n,p,q;
-        //int *xton;
-        std::vector<int> xton, inv, neg, root;
-        //int **plus;
-        matrix<int> plus, times, poly;
-        //int **times;
-        //int *inv;
-        //int *neg;
-        //int *root;
-        //int **poly;
+        int n;
+        int p;
+        int q;
+        std::vector<int> xton;
+        std::vector<int> inv;
+        std::vector<int> neg;
+        std::vector<int> root;
+        matrix<int> plus;
+        matrix<int> times;
+        matrix<int> poly;
     };
 } // end namespace
 

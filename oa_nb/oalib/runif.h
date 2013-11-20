@@ -32,52 +32,90 @@
 #define RUNIF_H
 
 #include "CommonDefines.h"
+#define SEEDOK 1
+#define SEEDBAD 0
 
-/*
-c
-c Marsaglia - Zaman universal random number generator.
-c
-c reinitialization: call seed(is,js,ks,ls), with integer arguments
-c from 1 to 168, not all 1.
-c
-c generate n uniform random numbers and store in x(n): call ranums(x,n).
-c
+namespace oacpp 
+{
+    struct SeedSet
+    {
+        int is;
+        int js;
+        int ks;
+        int ls;
+    };
 
-
-  Transliterated from FORTRAN to C by Art Owen, 4 March 1993.
-
-  Functions:
-
-    mod( a,b )             a mod b
-    seedok( is,js,ks,ls )  1 if seeds ok, 0 otherwise
-    seed( is,js,ks,ls )    sets seed integers, rejects invalid input
-    ranums( z,n )          sets z[0] through z[n-1] 
-                           to the next n random uniforms between 0 and 1
-    runif( z,n )           same as ranums
-
-  The C and f77 programs shown below find the first 2000 random
-  numbers starting at 0 and print them to 10 places.  The maximum
-  difference between any two corresponding random numbers was
-  5e-11.  Equality held in 1822 of the cases.  The original FORTRAN 
-  subroutines are appended in a comment at the end of this file.
-*/
-
-namespace oacpp {
-
+    /**
+     * Marsaglia - Zaman universal random number generator.
+     * 
+     * reinitialization: call seed(is,js,ks,ls), with integer arguments
+     * from 1 to 168, not all 1.  
+     * generate n uniform random numbers and store in x(n): call ranums(x,n).
+     * 
+     * Transliterated from FORTRAN to C by Art Owen, 4 March 1993.
+     */
 	class RUnif
 	{
 	public:
-		static void seed(int is, int js, int ks, int ls );
-		static void runif(std::vector<double> & x, int n);
+        RUnif() {};
+        RUnif(int is, int js, int ks, int ls);
+        RUnif(SeedSet seedSet);
+        
+        ~RUnif() {};
+        
+        /**
+         * sets seed integers, rejects invalid input
+         * @param is seed
+         * @param js seed
+         * @param ks seed
+         * @param ls seed
+         */
+		void seed(int is, int js, int ks, int ls );
+        
+        /**
+         * 
+         * @param seedset
+         */
+        void seed(SeedSet seedSet);
+        
+        SeedSet getSeedSet();
+
+        /**
+         * 
+         * @param x
+         * @param n
+         */
+		void runif(std::vector<double> & x, int n);
 
 	private:
+        /**
+         * a mod b
+         * @param a
+         * @param b
+         * @return 
+         */
 		static int mod( int a, int b );
+        
+        /**
+         * 1 if seeds ok, 0 otherwise
+         * @param is seed
+         * @param js seed
+         * @param ks seed
+         * @param ls seed
+         * @return 1 if seeds ok, 0 otherwise
+         */
 		static int seedok(int is, int js, int ks, int ls );
-		static void ranums(std::vector<double> & x, int n);
+        
+        /**
+         * sets z[0] through z[n-1] to the next n random uniforms between 0 and 1
+         * @param x
+         * @param n
+         */
+		void ranums(std::vector<double> & x, int n);
 
-		static int m_jent, m_i, m_j, m_k, m_l, ip, jp;
-		static double u[97+1];
-		static double c, cd, cm;
+		int m_jent, m_i, m_j, m_k, m_l, ip, jp;
+		double u[97+1];
+		double c, cd, cm;
 	};
 }
 

@@ -32,83 +32,86 @@
 
 namespace oacpp
 {
-    /*  Find constants for Addelman Kempthorne designs
-      when q is even. */
-    int Addelkemp::akeven(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k)
+    namespace oaaddelkemp
     {
-        size_t q = static_cast<size_t>(gf.q);
-
-        *kay = 1;
-
-        if (q == 2)
+        /*  Find constants for Addelman Kempthorne designs
+          when q is even. */
+        int akeven(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k)
         {
-            b[1] = c[1] = k[1] = 1;
-        }
-        if (q == 4)
-        {
-            b[1] = c[1] = 2;
-            b[2] = c[2] = 1;
-            b[3] = c[3] = 3;
-            k[1] = 1;
-            k[2] = 2;
-            k[3] = 3;
-        }
+            size_t q = static_cast<size_t>(gf.q);
 
-        for (size_t i = 1; i < q; i++)
-        {
-            k[i] = i;
-        }
+            *kay = 1;
 
-        if (q > 4)
-        {
-            std::string msg = "Addelman Kempthorne designs not yet available for \n even q >4.";
-            throw std::runtime_error(msg.c_str());
-        }
-        return 0;
-    }
-
-    int Addelkemp::akodd(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k)
-    {
-        int num, den, four;
-
-        size_t q = static_cast<size_t>(gf.q);
-        size_t p = static_cast<size_t>(gf.p);
-
-        if (p != 3)
-        {
-            four = 4;
-        }
-        else
-        {
-            four = 1;
-        }
-
-        *kay = 0;
-        for (size_t i = 2; i < q; i++)
-        {
-            if (gf.root[i] == -1)
+            if (q == 2)
             {
-                *kay = i;
+                b[1] = c[1] = k[1] = 1;
             }
-        }
-        if (*kay == 0)
-        {
-            std::string msg = boost::str(boost::format("Problem: no rootless element in GF(%d).\n") % gf.n);
-            throw std::runtime_error(msg.c_str());
+            if (q == 4)
+            {
+                b[1] = c[1] = 2;
+                b[2] = c[2] = 1;
+                b[3] = c[3] = 3;
+                k[1] = 1;
+                k[2] = 2;
+                k[3] = 3;
+            }
+
+            for (size_t i = 1; i < q; i++)
+            {
+                k[i] = i;
+            }
+
+            if (q > 4)
+            {
+                std::string msg = "Addelman Kempthorne designs not yet available for \n even q >4.";
+                throw std::runtime_error(msg.c_str());
+            }
+            return 0;
         }
 
-        for (size_t i = 1; i < q; i++)
+        int akodd(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k)
         {
-            num = gf.plus(*kay,p - 1); /* -1 = +(p-1) */
-            den = gf.times(*kay,four);
-            den = gf.times(den,i);
-            b[i] = gf.times(num,gf.inv[den]);
-            k[i] = gf.times(*kay,i);
-            c[i] = gf.times(i,i);
-            c[i] = gf.times(c[i],num);
-            c[i] = gf.times(c[i],gf.inv[four]);
-        }
-        return 0;
-    }
+            int num, den, four;
 
+            size_t q = static_cast<size_t>(gf.q);
+            size_t p = static_cast<size_t>(gf.p);
+
+            if (p != 3)
+            {
+                four = 4;
+            }
+            else
+            {
+                four = 1;
+            }
+
+            *kay = 0;
+            for (size_t i = 2; i < q; i++)
+            {
+                if (gf.root[i] == -1)
+                {
+                    *kay = i;
+                }
+            }
+            if (*kay == 0)
+            {
+                std::ostringstream s;
+                s << "Problem: no rootless element in GF(" << gf.n << ").\n";
+                throw std::runtime_error(s.str().c_str());
+            }
+
+            for (size_t i = 1; i < q; i++)
+            {
+                num = gf.plus(*kay,p - 1); /* -1 = +(p-1) */
+                den = gf.times(*kay,four);
+                den = gf.times(den,i);
+                b[i] = gf.times(num,gf.inv[den]);
+                k[i] = gf.times(*kay,i);
+                c[i] = gf.times(i,i);
+                c[i] = gf.times(c[i],num);
+                c[i] = gf.times(c[i],gf.inv[four]);
+            }
+            return 0;
+        }
+    } // end namespace
 } // end namespace

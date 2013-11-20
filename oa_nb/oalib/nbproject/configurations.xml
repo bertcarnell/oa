@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="88">
+<configurationDescriptor version="89">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -56,6 +56,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>RTools|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -70,7 +72,6 @@
           <architecture>2</architecture>
           <standard>4</standard>
           <incDir>
-            <pElem>../../../boost</pElem>
             <pElem>.</pElem>
           </incDir>
           <commandLine>-pedantic -Wall -Wno-long-long -mtune=core2</commandLine>
@@ -142,6 +143,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>RTools|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -158,7 +161,6 @@
           <architecture>2</architecture>
           <standard>4</standard>
           <incDir>
-            <pElem>../../../boost</pElem>
             <pElem>.</pElem>
           </incDir>
           <commandLine>-pedantic -Wall -Wno-long-long -mtune=core2 -O2</commandLine>

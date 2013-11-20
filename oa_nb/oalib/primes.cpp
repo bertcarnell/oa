@@ -32,110 +32,124 @@
 
 namespace oacpp
 {
-    int Primes::isprime(int p)
-    /*int p;*/
+    namespace primes
     {
-        int k;
-
-        if (p < 2)return 0;
-
-        /*  This is not the fastest, but it is likely to
-        take negligible time compared to that used in constructing
-        the Galois field or the experimental design
-         */
-
-        for (k = 2; k < sqrt((double) (p + 1)); k++)
-            if ((p / k) * k == p)return 0;
-        return 1;
-    }
-
-    void Primes::ispcheck()
-    {
-        int q;
-        for (q = 1; q < 2000; q++)
+        int isprime_old(int p)
         {
+            if (p < 2)
+            {
+                return ISPRIMEFALSE;
+            }
+
+            /*  This is not the fastest, but it is likely to
+            take negligible time compared to that used in constructing
+            the Galois field or the experimental design
+             */
+            double maxDivisor = sqrt(static_cast<double>(p + 1));
+            for (int k = 2; static_cast<double>(k) < maxDivisor; k++)
+            {
+                if ((p / k) * k == p)
+                {
+                    return ISPRIMEFALSE;
+                }
+            }
+            return ISPRIMETRUE;
+        }
+        
+        int isprime(unsigned int n)
+        {
+            // 0, 1
+            if (n < 2) 
+            {
+                return ISPRIMEFALSE;
+            }
+            // 2, 3
+            if (n < 4)
+            {
+                return ISPRIMETRUE;
+            }
+            // if n is divisible by 2, it is not prime // 4,6,8,10,...
+            if (n % 2 == 0)
+            {
+                return ISPRIMEFALSE;
+            }
+            // 5 => sqrt(5)=2.1 => iMax=3 => i=3 => 5%3!=0 => prime
+            // 7 => sqrt(7)=2.5 => iMax=3 => i=3 => 7%3!=0 => prime
+            // 9 => sqrt(9)=3 => iMax=3 => i=3 => 9%3=0 => not prime
+            size_t iMax = static_cast<size_t>(sqrt(static_cast<double>(n))) + 1;
+            for (size_t i = 3; i <= iMax; i += 2)
+            {
+                if (n % i == 0)
+                {
+                    return ISPRIMEFALSE;
+                }
+            }
+
+            return ISPRIMETRUE;
+        }
+
+
+        void primepow(int q, int* p, int* n, int* isit)
+        {
+            int firstfactor = 0; // maybe uninitialized otherwise
+
+            *p = *n = *isit = 0;
+            if (q <= 1)
+            {
+                return;
+            }
+
             if (isprime(q))
             {
-                PRINT_OUTPUT("%d\n", q);
-            }
-        }
-    }
-
-    void Primes::primepow(int q, int* p, int* n, int* isit)
-    {
-        int firstfactor = 0; // maybe uninitialized otherwise
-
-        *p = *n = *isit = 0;
-        if (q <= 1)
-        {
-            return;
-        }
-
-        if (isprime(q))
-        {
-            *p = q;
-            *n = 1;
-            *isit = 1;
-            return;
-        }
-
-        for (int k = 2; k < sqrt((double) (q + 1)); k++)
-        {
-            if ((q % k) == 0)
-            {
-                firstfactor = k;
-                break;
-            }
-        }
-        if (!isprime(firstfactor))
-        {
-            return;
-        }
-
-        while (1)
-        {
-            if (q == 1)
-            {
+                *p = q;
+                *n = 1;
                 *isit = 1;
-                *p = firstfactor;
                 return;
             }
-            if (q % firstfactor == 0)
+
+            for (int k = 2; k < sqrt((double) (q + 1)); k++)
             {
-                *n += 1;
-                q /= firstfactor;
+                if ((q % k) == 0)
+                {
+                    firstfactor = k;
+                    break;
+                }
             }
-            else
+            if (!isprime(firstfactor))
             {
                 return;
+            }
+
+            while (1)
+            {
+                if (q == 1)
+                {
+                    *isit = 1;
+                    *p = firstfactor;
+                    return;
+                }
+                if (q % firstfactor == 0)
+                {
+                    *n += 1;
+                    q /= firstfactor;
+                }
+                else
+                {
+                    return;
+                }
             }
         }
-    }
 
-    int Primes::isprimepow(int q)
-    {
-        int p, n, ispp;
-        primepow(q, &p, &n, &ispp);
-        return ispp;
-    }
-
-    int Primes::ipow(int a, int b)
-    {
-        return (int) pow((double) a, (double) b);
-    }
-
-    void Primes::fqpncheck()
-    {
-        int q, p, n, ispp;
-
-        for (q = 0; q <= 20000; q++)
+        int isprimepow(int q)
         {
+            int p, n, ispp;
             primepow(q, &p, &n, &ispp);
-            if (ispp)
-            {
-                PRINT_OUTPUT("%5d %5d %5d\n", q, p, n);
-            }
+            return ispp;
         }
-    }
 
+        int ipow(int a, int b)
+        {
+            return (int) pow((double) a, (double) b);
+        }
+    } // end namespace
 } // end namespace

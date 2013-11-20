@@ -8,17 +8,17 @@ CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=RTools-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/RTools-Windows
-CND_ARTIFACT_NAME_Debug=liboa_r.dll
-CND_ARTIFACT_PATH_Debug=dist/Debug/RTools-Windows/liboa_r.dll
+CND_ARTIFACT_DIR_Debug=build/Debug/RTools-Windows/tests/TestFiles
+CND_ARTIFACT_NAME_Debug=f1
+CND_ARTIFACT_PATH_Debug=build/Debug/RTools-Windows/tests/TestFiles/f1
 CND_PACKAGE_DIR_Debug=dist/Debug/RTools-Windows/package
 CND_PACKAGE_NAME_Debug=liboar.dll.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/RTools-Windows/package/liboar.dll.tar
 # Release configuration
 CND_PLATFORM_Release=RTools-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/RTools-Windows
-CND_ARTIFACT_NAME_Release=liboa_r.dll
-CND_ARTIFACT_PATH_Release=dist/Release/RTools-Windows/liboa_r.dll
+CND_ARTIFACT_DIR_Release=build/Release/RTools-Windows/tests/TestFiles
+CND_ARTIFACT_NAME_Release=f1
+CND_ARTIFACT_PATH_Release=build/Release/RTools-Windows/tests/TestFiles/f1
 CND_PACKAGE_DIR_Release=dist/Release/RTools-Windows/package
 CND_PACKAGE_NAME_Release=liboar.dll.tar
 CND_PACKAGE_PATH_Release=dist/Release/RTools-Windows/package/liboar.dll.tar

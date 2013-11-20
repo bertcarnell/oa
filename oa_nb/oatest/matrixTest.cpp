@@ -20,6 +20,22 @@
 
 #include "matrixTest.h"
 
+#define ASSERT_THROW_RANGE(X) \
+        try \
+        { \
+            X; \
+            Assert(false, "not executed if above throws"); \
+        } \
+        catch (std::out_of_range & e) \
+        { \
+            Assert(true, "correct item thrown"); \
+        } \
+        catch (...) \
+        { \
+            Assert(false, "any other throw is incorrect"); \
+        }
+
+
 namespace oaTest {
   	void matrixTest::Run()
 	{
@@ -165,6 +181,17 @@ namespace oaTest {
         Assert(Hrowvec.size() == 2, "get row vec");
         Assert(Hrowvec[0] == 2, "one6");
         Assert(Hrowvec[1] == 20, "two6");
+        
+        std::vector<int> A1 = {1,2,3,4,5,6}; // c++0x
+        oacpp::matrix<int> A2(3,2,A1);
+        Assert(A2.at(0,0) == 1, "pass2");
+        Assert(A2.at(1,1) == 4, "pass4");
+        ASSERT_THROW_RANGE(A2.at(5,6))
+        ASSERT_THROW_RANGE(A2.at(20))
+        ASSERT_THROW_RANGE(A2.getColumnMatrix_at(7))
+        ASSERT_THROW_RANGE(A2.getRowMatrix_at(4))
+        ASSERT_THROW_RANGE(A2.getcol_at(6))
+        ASSERT_THROW_RANGE(A2.getrow_at(10))
     }
 
     void matrixTest::testOperators()

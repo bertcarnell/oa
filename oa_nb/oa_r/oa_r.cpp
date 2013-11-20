@@ -20,9 +20,45 @@
 
 #include "oa_r.h"
 
-RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n)
+RcppExport SEXP test(SEXP n)
 {
-    Rcpp::IntegerMatrix rcppA = R_NilValue;
+    Rcpp::IntegerVector ivn(n);
+    Rcpp::IntegerVector output(1);
+    output[0] = 0;
+    for (int i = 0; i < ivn.size(); i++)
+    {
+        output[0] += ivn[i];
+    }
+    return output;
+}
+
+#include <sstream>
+RcppExport SEXP test2(SEXP one, SEXP two, SEXP three, SEXP four)
+{
+    Rprintf("\nstarting test2\n");
+    Rcpp::IntegerVector itwo(two);
+    Rcpp::IntegerVector ithree(three);
+    Rcpp::IntegerVector ifour(four);
+    Rcpp::CharacterVector ione(one);
+    
+    Rcpp::IntegerVector output(1);
+    output[0] = 0;
+    for (int i = 0; i < itwo.size(); i++)
+    {
+        output[0] += itwo[i] + ithree[i] + ifour[i];
+    }
+    std::ostringstream s;
+    s << (char *) ione[0] << output[0];
+    ione[0] = s.str().c_str();
+    return ione;
+}
+
+#include <algorithm>
+RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, 
+        SEXP /*int*/ ncol, SEXP /*int*/ n, SEXP /*bool*/ bRandom)
+{
+    SEXP output = R_NilValue;
+    Rcpp::IntegerMatrix rcppA;
     oacpp::COrthogonalArray oa;
     try
     {
@@ -30,13 +66,15 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP
         int ncollocal = Rcpp::as<int>(ncol);
         int nlocal = Rcpp::as<int>(n);
         std::string stype = Rcpp::as<std::string>(type);
+        bool bRandomLocal = Rcpp::as<bool>(bRandom);
+        
         if (stype == "bose")
         {
             oa.bose(qlocal, ncollocal, &nlocal);
         }
         else if (stype == "bosebush")
         {
-            oa.bosebush(qlocal, ncollocal,&nlocal);
+            oa.bosebush(qlocal, ncollocal, &nlocal);
         }
         else if (stype == "bush")
         {
@@ -52,24 +90,30 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP
         }
         else
         {
-            throw new std::runtime_error("Unrecognized orthogonal array algorithm in oa_type1");
+            throw std::runtime_error("Unrecognized orthogonal array algorithm in function oa_type1");
         }
-        rcppA = oarutils::convertToIntegerMatrix<int>(oa.getoa());
+        
+        oarutils::convertToIntegerMatrix<int>(oa.getoa(), rcppA);
+        if (bRandomLocal)
+        {
+            oarutils::randomizeOA(rcppA, qlocal);
+        }
+        output = rcppA;
     }
     catch (std::exception & e)
     {
-        throw new Rcpp::exception(e.what());
+        throw Rcpp::exception(e.what());
     }
     catch (...)
     {
-        throw new Rcpp::exception("Unknown Message");
+        throw Rcpp::exception("Unknown Exception in oa_type1");
     }
-    return rcppA;
+    return output;
 }
 
 RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n)
 {
-    Rcpp::IntegerMatrix rcppA = R_NilValue;
+    Rcpp::IntegerMatrix rcppA;
     oacpp::COrthogonalArray oa;
     try
     { 
@@ -95,17 +139,17 @@ RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, S
         }
         else
         {
-            throw new std::runtime_error("Unrecognized orthogonal array algorithm in oa_type2");
+            throw std::runtime_error("Unrecognized orthogonal array algorithm in oa_type2");
         }
-        rcppA = oarutils::convertToIntegerMatrix<int>(oa.getoa());
+        oarutils::convertToIntegerMatrix<int>(oa.getoa(), rcppA);
     }
     catch (std::exception & e)
     {
-        throw new Rcpp::exception(e.what());
+        throw Rcpp::exception(e.what());
     }
     catch (...)
     {
-        throw new Rcpp::exception("Unknown Message");
+        throw Rcpp::exception("Unknown Message");
     }
     return rcppA;
 }

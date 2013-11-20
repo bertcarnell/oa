@@ -32,43 +32,57 @@
 
 namespace oacpp
 {
-    // must define static member variables in the .cpp file
-    int RUnif::m_i;
-    int RUnif::m_j;
-    int RUnif::m_jent;
-    int RUnif::m_k;
-    int RUnif::m_l;
-    double RUnif::u[97 + 1];
-    double RUnif::c;
-    double RUnif::cd;
-    double RUnif::cm;
-    int RUnif::ip;
-    int RUnif::jp;
-
+    RUnif::RUnif(int is, int js, int ks, int ls)
+    {
+        RUnif::seed(is, js, ks, ls);
+    }
+    
+    RUnif::RUnif(SeedSet seedSet)
+    {
+        RUnif::seed(seedSet.is, seedSet.js, seedSet.ks, seedSet.ls);
+    }
+    
+    void RUnif::seed(SeedSet seedSet)
+    {
+        RUnif::seed(seedSet.is, seedSet.js, seedSet.ks, seedSet.ls);
+    }
+    
     int RUnif::mod(int a, int b)
-    /*int  a,b;*/
     {
         int ans;
         ans = a % b;
-        if (ans >= 0)return ans;
-        else return ans + b;
+        if (ans >= 0)
+        {
+            return ans;
+        }
+        else
+        {
+            return ans + b;
+        }
     }
 
-    int RUnif::seedok(int is, int js, int ks, int ls) /*  1 iff seed is ok   */
-    /*int is,js,ks,ls;*/
+    int RUnif::seedok(int is, int js, int ks, int ls)
     {
-        if (is == 1 && js == 1 && ks == 1 && ls == 1)return 0;
-        if (is < 1 || js < 1 || ks < 1 || ls < 1)return 0;
-        if (is > 168 || js > 168 || ks > 168 || ls > 168)return 0;
-        return 1;
+        if (is == 1 && js == 1 && ks == 1 && ls == 1)
+        {
+            return SEEDBAD;
+        }
+        if (is < 1 || js < 1 || ks < 1 || ls < 1)
+        {
+            return SEEDBAD;
+        }
+        if (is > 168 || js > 168 || ks > 168 || ls > 168)
+        {
+            return SEEDBAD;
+        }
+        return SEEDOK;
     }
 
     void RUnif::seed(int is, int js, int ks, int ls)
-    /*int is,js,ks,ls;*/
     {
         m_jent = 0;
 
-        if (seedok(is, js, ks, ls))
+        if (seedok(is, js, ks, ls) == SEEDOK)
         {
             m_i = is;
             m_j = js;
@@ -81,6 +95,16 @@ namespace oacpp
             PRINT_OUTPUT("Must be four integers between 1 and 168, and\n");
             PRINT_OUTPUT("must not all be 1.  Seed not changed.\n");
         }
+    }
+    
+    SeedSet RUnif::getSeedSet()
+    {
+        SeedSet s;
+        s.is = m_i;
+        s.js = m_j;
+        s.ks = m_k;
+        s.ls = m_l;
+        return s;
     }
 
     void RUnif::runif(std::vector<double> & x, int n)
@@ -98,8 +122,6 @@ namespace oacpp
     }
 
     void RUnif::ranums(std::vector<double> & x, int n)
-    /*int     n;
-    double *x;*/
     {
         int ii, jj, m;
         double s, t, uni;
@@ -114,7 +136,10 @@ namespace oacpp
             m_l = 78;
         }
 
-        if (m_jent != 0) goto L30;
+        if (m_jent != 0)
+        {
+            goto L30;
+        }
         m_jent = 1;
         for (ii = 1; ii <= 97; ii++)
         { /* do 20 ii=1,97 */
@@ -127,7 +152,10 @@ namespace oacpp
                 m_j = m_k;
                 m_k = m;
                 m_l = mod(53 * m_l + 1, 169);
-                if (mod(m_l * m, 64) >= 32) s = s + t;
+                if (mod(m_l * m, 64) >= 32)
+                {
+                    s = s + t;
+                }
                 t = 0.5 * t;
             } /* 10   continue */
             u[ii] = s;
@@ -143,16 +171,31 @@ L30:
         for (ii = 1; ii <= n; ii++)
         { /*  ii do 40 ii=1,n */
             uni = u[ip] - u[jp];
-            if (uni < 0.0) uni = uni + 1.0;
+            if (uni < 0.0)
+            {
+                uni = uni + 1.0;
+            }
             u[ip] = uni;
             ip = ip - 1;
-            if (ip == 0) ip = 97;
+            if (ip == 0)
+            {
+                ip = 97;
+            }
             jp = jp - 1;
-            if (jp == 0) jp = 97;
+            if (jp == 0)
+            {
+                jp = 97;
+            }
             c = c - cd;
-            if (c < 0.0) c = c + cm;
+            if (c < 0.0)
+            {
+                c = c + cm;
+            }
             uni = uni - c;
-            if (uni < 0.0) uni = uni + 1.0;
+            if (uni < 0.0)
+            {
+                uni = uni + 1.0;
+            }
             x[ii - 1] = uni;
         } /* 40   continue */
     }

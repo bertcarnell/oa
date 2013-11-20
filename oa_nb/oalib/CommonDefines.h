@@ -32,7 +32,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <stdexcept>
-#include "boost/format.hpp"
+#include <sstream>
 
 #ifdef RCOMPILE
 #include <Rcpp.h>
