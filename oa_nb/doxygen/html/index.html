@@ -67,7 +67,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li class="level1"><a href="#tips">Tips On Use</a></li>
 <li class="level1"><a href="#references">References</a></li>
 <li class="level1"><a href="#implement">Implementation Details</a></li>
+<li class="level1"><a href="#Compiling"><code>oalib</code></a></li>
 </ul>
 </div>
 <div class="textblock"><p>From the original documentation by Owen:</p>
@@ -240,10 +241,17 @@ Implementation Details</h1>
 <p>The functions that manipulate orthogonal arrays keep the arrays in integer matrices. This might be a problem for applications that require enormous arrays. The reason for keeping them in memory is that it makes it easier for others to lift out the functions and embed them in applications or to put on a GUI front end. It was also thought that any array that is too large to store in a computer, is likely to be too large to use in integration/experimentation on that same computer. The arrays are generated row by row, so it is not too hard to change the program to place the elements on an output stream as they are computed and do away with the storage.</p>
 <p>The functions that test the strength of the arrays may be very far from optimally fast. </p>
 </blockquote>
+<h1><a class="anchor" id="Compiling"></a>
+&lt;code&gt;oalib&lt;/code&gt;</h1>
+<p>When compiling <code>oalib</code> these preprocessor directives are used:</p>
+<ul>
+<li>NDEBUG defined for a release build</li>
+<li>RCOMPILE defined for building with R </li>
+</ul>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 6 2013 21:45:07 for Orthogonal Array Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 19 2013 22:40:46 for Orthogonal Array Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
