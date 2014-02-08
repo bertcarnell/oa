@@ -20,49 +20,14 @@
 
 #include "oa_r.h"
 
-RcppExport SEXP test(SEXP n)
-{
-    Rcpp::IntegerVector ivn(n);
-    Rcpp::IntegerVector output(1);
-    output[0] = 0;
-    for (int i = 0; i < ivn.size(); i++)
-    {
-        output[0] += ivn[i];
-    }
-    return output;
-}
-
-#include <sstream>
-RcppExport SEXP test2(SEXP one, SEXP two, SEXP three, SEXP four)
-{
-    Rprintf("\nstarting test2\n");
-    Rcpp::IntegerVector itwo(two);
-    Rcpp::IntegerVector ithree(three);
-    Rcpp::IntegerVector ifour(four);
-    Rcpp::CharacterVector ione(one);
-    
-    Rcpp::IntegerVector output(1);
-    output[0] = 0;
-    for (int i = 0; i < itwo.size(); i++)
-    {
-        output[0] += itwo[i] + ithree[i] + ifour[i];
-    }
-    std::ostringstream s;
-    s << (char *) ione[0] << output[0];
-    ione[0] = s.str().c_str();
-    return ione;
-}
-
-#include <algorithm>
 RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, 
-        SEXP /*int*/ ncol, SEXP /*int*/ n, SEXP /*bool*/ bRandom)
+        SEXP /*int*/ ncol, SEXP /*bool*/ bRandom)
 {
     SEXP output = R_NilValue;
     Rcpp::IntegerMatrix rcppA;
     oacpp::COrthogonalArray oa;
 
-    if (TYPEOF(q) != INTSXP || TYPEOF(ncol) != INTSXP ||
-            TYPEOF(n) != INTSXP)
+    if (TYPEOF(q) != INTSXP || TYPEOF(ncol) != INTSXP)
     {
         ::Rf_error("q, ncol, and n should be integers");
     }
@@ -73,11 +38,25 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q,
 
     try
     {
+        Rcpp::IntegerVector ivq(q);
+        Rcpp::IntegerVector ivncol(ncol);
+        Rcpp::LogicalVector lvbRandom(bRandom);
+        if (ivq.size() > 1 || ivncol.size() > 1 || lvbRandom.size() > 1)
+        {
+            ::Rf_error("q, ncol, and bRandom can only be of length 1");
+        }
+        
         int qlocal = Rcpp::as<int>(q);
         int ncollocal = Rcpp::as<int>(ncol);
-        int nlocal = Rcpp::as<int>(n);
+        int nlocal = 0;
         std::string stype = Rcpp::as<std::string>(type);
         bool bRandomLocal = Rcpp::as<bool>(bRandom);
+
+        if (qlocal == NA_INTEGER || ncollocal == NA_INTEGER || 
+                bRandomLocal == NA_LOGICAL)
+        {
+            ::Rf_error("q, ncol, and bRandom are not permitted to be NA");
+        }
         
         if (stype == "bose")
         {
@@ -101,7 +80,9 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q,
         }
         else
         {
-            throw std::runtime_error("Unrecognized orthogonal array algorithm in function oa_type1");
+            std::stringstream sstype;
+            sstype << stype << " is an Unrecognized orthogonal array algorithm";
+            ::Rf_error(sstype.str().c_str());
         }
         
         oarutils::convertToIntegerMatrix<int>(oa.getoa(), rcppA);
@@ -123,16 +104,16 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q,
 }
 
 RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, 
-        SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n, SEXP /*bool*/ bRandom)
+        SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*bool*/ bRandom)
 {
     Rcpp::IntegerMatrix rcppA;
     oacpp::COrthogonalArray oa;
     SEXP output = R_NilValue;
 
     if (TYPEOF(q) != INTSXP || TYPEOF(ncol) != INTSXP ||
-            TYPEOF(n) != INTSXP || TYPEOF(int1) != INTSXP)
+            TYPEOF(int1) != INTSXP)
     {
-        ::Rf_error("q, ncol, and n should be integers");
+        ::Rf_error("q, int1, and ncol should be integers");
     }
     if (TYPEOF(type) != STRSXP || TYPEOF(bRandom) != LGLSXP)
     {
@@ -141,30 +122,67 @@ RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1,
 
     try
     { 
+        Rcpp::IntegerVector ivint1(int1);
+        Rcpp::IntegerVector ivq(q);
+        Rcpp::IntegerVector ivncol(ncol);
+        Rcpp::LogicalVector lvbRandom(bRandom);
+        Rcpp::CharacterVector cvtype(type);
+
+        if (ivq.size() > 1 || ivncol.size() > 1 || lvbRandom.size() > 1 || 
+                ivint1.size() > 1 || cvtype.size() > 1)
+        {
+            ::Rf_error("q, ncol, type, and bRandom can only be of length 1");
+        }
+
         int qlocal = Rcpp::as<int>(q);
         int ncollocal = Rcpp::as<int>(ncol);
-        int nlocal = Rcpp::as<int>(n);
+        int nlocal = 0;
         int int1local = Rcpp::as<int>(int1);
-        std::string stype = Rcpp::as<std::string>(type);
         bool bRandomLocal = Rcpp::as<bool>(bRandom);
-        if (stype == "bosebushl")
+
+        if (qlocal == NA_INTEGER || ncollocal == NA_INTEGER ||
+                int1local == NA_INTEGER || bRandomLocal == NA_LOGICAL)
+        {
+            if (cvtype[0] == "bosebushl")
+            {
+                ::Rf_error("q, lambda, and bRandom are not permitted to be NA");
+            }
+            else if (cvtype[0] == "busht")
+            {
+                ::Rf_error("q, str, and bRandom are not permitted to be NA");
+            }
+            else if (cvtype[0] == "addelkempn")
+            {
+                ::Rf_error("q, akn, and bRandom are not permitted to be NA");
+            }
+            else
+            {
+                std::stringstream sstype;
+                sstype << cvtype[0] << " is an Unrecognized orthogonal array algorithm";
+                ::Rf_error(sstype.str().c_str());
+            }
+        }
+
+        if (cvtype[0] == "bosebushl")
         {
             // int1 is lambda
             oa.bosebushl(int1local, qlocal, ncollocal, &nlocal);
         }
-        else if (stype == "busht")
+        else if (cvtype[0] == "busht")
         {
             // int1 is str
             oa.busht(int1local, qlocal, ncollocal, &nlocal);
         }
-        else if (stype == "addelkempn")
+        else if (cvtype[0] == "addelkempn")
         {
             // int1 is akn
             oa.addelkempn(int1local, qlocal, ncollocal, &nlocal);
         }
         else
         {
-            throw std::runtime_error("Unrecognized orthogonal array algorithm in oa_type2");
+            std::stringstream sstype;
+            sstype << cvtype[0] << " is an Unrecognized orthogonal array algorithm";
+            ::Rf_error(sstype.str().c_str());
         }
         oarutils::convertToIntegerMatrix<int>(oa.getoa(), rcppA);
         if (bRandomLocal)
