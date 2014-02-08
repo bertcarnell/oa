@@ -60,6 +60,17 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q,
     SEXP output = R_NilValue;
     Rcpp::IntegerMatrix rcppA;
     oacpp::COrthogonalArray oa;
+
+    if (TYPEOF(q) != INTSXP || TYPEOF(ncol) != INTSXP ||
+            TYPEOF(n) != INTSXP)
+    {
+        ::Rf_error("q, ncol, and n should be integers");
+    }
+    if (TYPEOF(type) != STRSXP || TYPEOF(bRandom) != LGLSXP)
+    {
+        ::Rf_error("type should be a character and bRandom should be a logical");
+    }
+
     try
     {
         int qlocal = Rcpp::as<int>(q);
@@ -102,19 +113,32 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q,
     }
     catch (std::exception & e)
     {
-        throw Rcpp::exception(e.what());
+        ::Rf_error(e.what());
     }
     catch (...)
     {
-        throw Rcpp::exception("Unknown Exception in oa_type1");
+        ::Rf_error("Unknown Exception in oa_type1");
     }
     return output;
 }
 
-RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n)
+RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, 
+        SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n, SEXP /*bool*/ bRandom)
 {
     Rcpp::IntegerMatrix rcppA;
     oacpp::COrthogonalArray oa;
+    SEXP output = R_NilValue;
+
+    if (TYPEOF(q) != INTSXP || TYPEOF(ncol) != INTSXP ||
+            TYPEOF(n) != INTSXP || TYPEOF(int1) != INTSXP)
+    {
+        ::Rf_error("q, ncol, and n should be integers");
+    }
+    if (TYPEOF(type) != STRSXP || TYPEOF(bRandom) != LGLSXP)
+    {
+        ::Rf_error("type should be a character and bRandom should be a logical");
+    }
+
     try
     { 
         int qlocal = Rcpp::as<int>(q);
@@ -122,6 +146,7 @@ RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, S
         int nlocal = Rcpp::as<int>(n);
         int int1local = Rcpp::as<int>(int1);
         std::string stype = Rcpp::as<std::string>(type);
+        bool bRandomLocal = Rcpp::as<bool>(bRandom);
         if (stype == "bosebushl")
         {
             // int1 is lambda
@@ -142,15 +167,20 @@ RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, S
             throw std::runtime_error("Unrecognized orthogonal array algorithm in oa_type2");
         }
         oarutils::convertToIntegerMatrix<int>(oa.getoa(), rcppA);
+        if (bRandomLocal)
+        {
+            oarutils::randomizeOA(rcppA, qlocal);
+        }
+        output = rcppA;
     }
     catch (std::exception & e)
     {
-        throw Rcpp::exception(e.what());
+        ::Rf_error(e.what());
     }
     catch (...)
     {
-        throw Rcpp::exception("Unknown Message");
+        ::Rf_error("Unknown Message in oa_type2");
     }
-    return rcppA;
+    return output;
 }
 

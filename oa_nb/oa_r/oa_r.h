@@ -52,13 +52,14 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP
  * @see oacpp::COrthogonalArray::bosebushl
  * @see oacpp::COrthogonalArray::addelkempn
  * @param type The type of orthogonal array algorithm to use <ul><li>busht</li><li>bosebushl</li><li>addelkempn</li></ul>
- * @param int1 a paramter that depends on the context <ul><li>busht: the strength</li><li>bosebush: lambda</li><li>addelkemp: the exponent on q</li></ul>
+ * @param int1 a parameter that depends on the context <ul><li>busht: the strength</li><li>bosebush: lambda</li><li>addelkemp: the exponent on q</li></ul>
  * @param q the number of symbols in the array
  * @param ncol the number of columns in the array
  * @param n [out] the number of rows in the array
+ * @param bRandom whether the array should be randomized
  * @return an integer matrix
  */
-RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n);
+RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*int*/ n, SEXP /*bool*/ bRandom);
 
 #endif	/* OA_R_H */
 
