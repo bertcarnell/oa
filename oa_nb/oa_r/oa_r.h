@@ -61,5 +61,17 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q, SEXP
  */
 RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1, SEXP /*int*/ q, SEXP /*int*/ ncol, SEXP /*bool*/ bRandom);
 
+namespace typeConstants
+{
+    const char * BUSH = "bush";
+    const char * BOSE = "bose";
+    const char * BOSEBUSH = "bosebush";
+    const char * BUSHT = "busht";
+    const char * BOSEBUSHL = "bosebushl";
+    const char * ADDELKEMP = "addelkemp";
+    const char * ADDELKEMP3 = "addelkemp3";
+    const char * ADDELKEMPN = "addelkempn";
+} // end namespace
+
 #endif	/* OA_R_H */
 

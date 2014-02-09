@@ -58,23 +58,23 @@ RcppExport SEXP /*int matrix*/ oa_type1(SEXP /*char*/ type, SEXP /*int*/ q,
             ::Rf_error("q, ncol, and bRandom are not permitted to be NA");
         }
         
-        if (stype == "bose")
+        if (stype == typeConstants::BOSE)
         {
             oa.bose(qlocal, ncollocal, &nlocal);
         }
-        else if (stype == "bosebush")
+        else if (stype == typeConstants::BOSEBUSH)
         {
             oa.bosebush(qlocal, ncollocal, &nlocal);
         }
-        else if (stype == "bush")
+        else if (stype == typeConstants::BUSH)
         {
             oa.bush(qlocal, ncollocal, &nlocal);
         }
-        else if (stype == "addelkemp3")
+        else if (stype == typeConstants::ADDELKEMP3)
         {
             oa.addelkemp3(qlocal, ncollocal, &nlocal);
         }
-        else if (stype == "addelkemp")
+        else if (stype == typeConstants::ADDELKEMP)
         {
             oa.addelkemp(qlocal, ncollocal, &nlocal);
         }
@@ -143,15 +143,15 @@ RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1,
         if (qlocal == NA_INTEGER || ncollocal == NA_INTEGER ||
                 int1local == NA_INTEGER || bRandomLocal == NA_LOGICAL)
         {
-            if (cvtype[0] == "bosebushl")
+            if (cvtype[0] == typeConstants::BOSEBUSHL)
             {
                 ::Rf_error("q, lambda, and bRandom are not permitted to be NA");
             }
-            else if (cvtype[0] == "busht")
+            else if (cvtype[0] == typeConstants::BUSHT)
             {
                 ::Rf_error("q, str, and bRandom are not permitted to be NA");
             }
-            else if (cvtype[0] == "addelkempn")
+            else if (cvtype[0] == typeConstants::ADDELKEMPN)
             {
                 ::Rf_error("q, akn, and bRandom are not permitted to be NA");
             }
@@ -163,17 +163,17 @@ RcppExport SEXP /*int matrix*/ oa_type2(SEXP /*char*/ type, SEXP /*int*/ int1,
             }
         }
 
-        if (cvtype[0] == "bosebushl")
+        if (cvtype[0] == typeConstants::BOSEBUSHL)
         {
             // int1 is lambda
             oa.bosebushl(int1local, qlocal, ncollocal, &nlocal);
         }
-        else if (cvtype[0] == "busht")
+        else if (cvtype[0] == typeConstants::BUSHT)
         {
             // int1 is str
             oa.busht(int1local, qlocal, ncollocal, &nlocal);
         }
-        else if (cvtype[0] == "addelkempn")
+        else if (cvtype[0] == typeConstants::ADDELKEMPN)
         {
             // int1 is akn
             oa.addelkempn(int1local, qlocal, ncollocal, &nlocal);
