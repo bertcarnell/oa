@@ -18,14 +18,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TESTCLASS_H
-#define TESTCLASS_H
+#ifndef OATESTCLASS_H
+#define OATESTCLASS_H
 
 #define CREATE_TEST(x) \
 	tests.push_back(dynamic_cast<TestClass*>(new x()))
 
 #include "CommonDefines.h"
 #include "matrix.h"
+#include "TestClass.h"
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -44,7 +45,7 @@ namespace oaTest
     /**
      * An abstract test class
      */
-	class TestClass
+	class OATestClass : public bclib::TestClass
 	{
 	public:
         /**
