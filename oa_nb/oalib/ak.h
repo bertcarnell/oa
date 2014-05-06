@@ -104,7 +104,7 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		int addelkempn(GF & gf, int akn, matrix<int> & A, int ncol );
+		int addelkempn(GF & gf, int akn, bclib::matrix<int> & A, int ncol );
         
         /**
          * The addelkemp algorithm for n=3
@@ -114,7 +114,7 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		int addelkemp3(GF & gf, matrix<int> & A, int ncol );
+		int addelkemp3(GF & gf, bclib::matrix<int> & A, int ncol );
 	}
 }
 

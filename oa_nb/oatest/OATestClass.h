@@ -21,12 +21,10 @@
 #ifndef OATESTCLASS_H
 #define OATESTCLASS_H
 
-#define CREATE_TEST(x) \
-	tests.push_back(dynamic_cast<TestClass*>(new x()))
-
 #include "CommonDefines.h"
 #include "matrix.h"
 #include "TestClass.h"
+#include "simpleAssert.h"
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -36,6 +34,13 @@
 #define NUM_THREADS_USED 1
 #define PARALLEL_CHUNK_SIZE 1
 #endif
+
+/**
+ * Macro to create an individual test and instantiate it's class if it 
+ * inherits from TestClass.h
+ */
+#define CREATE_TEST_OA(x) \
+	tests.push_back(dynamic_cast<oaTest::OATestClass*>(new x()))
 
 /**
  * @namespace oaTest Orthogonal Array Test
@@ -53,24 +58,18 @@ namespace oaTest
          */
 		virtual void Run(){};
         /**
-         * Assert a test statement
-         * @param test a statement to test
-         * @param msg a message to print if the test statement is <code>false</code>
-         */
-		void Assert(bool test, std::string msg);
-        /**
          * Is the dot product of the columns of an orthogonal array a constant value?
          * @param A an orthogonal array matrix
          * @return the result of the test
          */
-        bool isDotProductConstant(oacpp::matrix<int> A);
+        bool isDotProductConstant(bclib::matrix<int> A);
         /**
          * A set of standard tests to apply to an orthogonal array
          * @param A an orthogonal array matrix
          * @param expectedq the expected <code>q</code> for the matrix
          * @param expectedCols the expected number of columns in the matrix
          */
-        void standardChecks(oacpp::matrix<int> A, int expectedq, int expectedCols);
+        void standardChecks(bclib::matrix<int> A, int expectedq, int expectedCols);
 	};
     
     /**

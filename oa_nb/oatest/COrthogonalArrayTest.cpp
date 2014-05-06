@@ -43,7 +43,7 @@ namespace oaTest{
             std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             std::vector<int> & q, std::vector<int> & ncol)
 	{
-        assert(q.size() == ncol.size());
+        bclib::Assert(q.size() == ncol.size());
         oacpp::COrthogonalArray coa;
         int n = 0;
         
@@ -76,7 +76,7 @@ namespace oaTest{
             std::vector<int> & q, 
             std::vector<int> & ncol)
 	{
-        assert(q.size() == ncol.size());
+        bclib::Assert(q.size() == ncol.size());
         oacpp::COrthogonalArray coa;
         int n = 0;
         
@@ -115,10 +115,10 @@ namespace oaTest{
         }
         catch (...)
         {
-            Assert(true, "Exception Thrown as Expected");
+            bclib::Assert(true, "Exception Thrown as Expected");
             return;
         }
-        Assert(false, "failed to throw exception\n");
+        bclib::Assert(false, "failed to throw exception\n");
     }
     
 	void COrthogonalArrayTest::testAddelkemp()

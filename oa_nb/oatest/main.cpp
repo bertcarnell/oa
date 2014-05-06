@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TestClass.h"
+#include "OATestClass.h"
 #include "rutilsTest.h"
 #include "matrixTest.h"
 #include "primesTest.h"
@@ -33,11 +33,11 @@ int main(int argc, const char* argv[] )
 #endif
 
 	printf("Starting oatest with %d thread(s)...\n", NUM_THREADS_USED);
-	std::vector<TestClass*> tests = std::vector<TestClass*>();
-    CREATE_TEST(primesTest);
-    CREATE_TEST(COrthogonalArrayTest);
-    CREATE_TEST(rutilsTest);
-    CREATE_TEST(matrixTest);
+	std::vector<OATestClass*> tests = std::vector<OATestClass*>();
+    CREATE_TEST_OA(primesTest);
+    CREATE_TEST_OA(COrthogonalArrayTest);
+    CREATE_TEST_OA(rutilsTest);
+    CREATE_TEST_OA(matrixTest);
 
 	for (size_t i = 0; i < tests.size(); i++)
 	{

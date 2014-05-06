@@ -36,23 +36,23 @@ namespace oaTest{
         
         v[0] = 1.0; v[1] = 4.3; v[2] = 2.2; v[3] = 5.5; v[4] = 0.4;
         oacpp::rutils::findranks_slow<double>(v, ind);
-        Assert(ind[0] == 2 && ind[1] == 4 && ind[2] == 3 && ind[3] == 5 && ind[4] == 1, "testFindRanks Error 1");
+        bclib::Assert(ind[0] == 2 && ind[1] == 4 && ind[2] == 3 && ind[3] == 5 && ind[4] == 1, "testFindRanks Error 1");
         ind.clear();
         ind.resize(5);
         oacpp::rutils::findranks<double>(v, ind);
-        Assert(ind[0] == 2 && ind[1] == 4 && ind[2] == 3 && ind[3] == 5 && ind[4] == 1, "testFindRanks Error 1.2");
+        bclib::Assert(ind[0] == 2 && ind[1] == 4 && ind[2] == 3 && ind[3] == 5 && ind[4] == 1, "testFindRanks Error 1.2");
         
         v[0] = 0.1; v[1] = 0.2; v[2] = 0.3; v[3] = 0.4; v[4] = 0.5;
         oacpp::rutils::findranks<double>(v, ind);
-        Assert(ind[0] == 1 && ind[1] == 2 && ind[2] == 3 && ind[3] == 4 && ind[4] == 5, "testFindRanks Error 2");
+        bclib::Assert(ind[0] == 1 && ind[1] == 2 && ind[2] == 3 && ind[3] == 4 && ind[4] == 5, "testFindRanks Error 2");
         
         v[4] = 0.1; v[3] = 0.2; v[2] = 0.3; v[1] = 0.4; v[0] = 0.5;
         oacpp::rutils::findranks<double>(v, ind);
-        Assert(ind[0] == 5 && ind[1] == 4 && ind[2] == 3 && ind[3] == 2 && ind[4] == 1, "testFindRanks Error 3");
+        bclib::Assert(ind[0] == 5 && ind[1] == 4 && ind[2] == 3 && ind[3] == 2 && ind[4] == 1, "testFindRanks Error 3");
 
         v[4] = 0.0; v[3] = 0.0; v[2] = 0.0; v[1] = 0.0; v[0] = 0.0;
         oacpp::rutils::findranks<double>(v, ind);
-        Assert(ind[0] == 1 && ind[1] == 2 && ind[2] == 3 && ind[3] == 4 && ind[4] == 5, "testFindRanks Error 4");
+        bclib::Assert(ind[0] == 1 && ind[1] == 2 && ind[2] == 3 && ind[3] == 4 && ind[4] == 5, "testFindRanks Error 4");
     }
     
     void rutilsTest::testUnifPerm()
@@ -65,15 +65,15 @@ namespace oaTest{
         // test that each integer is available 0 to q-1
         for (int i = 0; i < q; i++)
         {
-            Assert(std::find(pi.begin(), pi.end(), i) != pi.end(), "integer found when required");
+            bclib::Assert(std::find(pi.begin(), pi.end(), i) != pi.end(), "integer found when required");
             std::vector<int>::iterator it = std::find(pi.begin(), pi.end(), i);
-            Assert(*it == i, "integer not found properly");
+            bclib::Assert(*it == i, "integer not found properly");
         }
         // test that other integers are not found
-        Assert(std::find(pi.begin(), pi.end(), -1) == pi.end(), "not found");
-        Assert(std::find(pi.begin(), pi.end(), q) == pi.end(), "not found");
-        Assert(std::find(pi.begin(), pi.end(), q+1) == pi.end(), "not found");
-        Assert(std::accumulate(pi.begin(), pi.end(), 0) == (q-1)*q / 2, "wrong sum");
+        bclib::Assert(std::find(pi.begin(), pi.end(), -1) == pi.end(), "not found");
+        bclib::Assert(std::find(pi.begin(), pi.end(), q) == pi.end(), "not found");
+        bclib::Assert(std::find(pi.begin(), pi.end(), q+1) == pi.end(), "not found");
+        bclib::Assert(std::accumulate(pi.begin(), pi.end(), 0) == (q-1)*q / 2, "wrong sum");
         
         oacpp::RUnif ran2 = oacpp::RUnif();
         ran2.seed(1,2,3,4);
@@ -85,7 +85,7 @@ namespace oaTest{
         {
             test = test | (pi[i] != pi2[i]);
         }
-        Assert(test, "at least one difference does not exist");
+        bclib::Assert(test, "at least one difference does not exist");
         
         oacpp::RUnif ran3 = oacpp::RUnif();
         ran3.seed(10,20,30,40);
@@ -97,6 +97,6 @@ namespace oaTest{
         {
             test = test & (pi[i] == pi3[i]);
         }
-        Assert(test, "no differences does not exist");
+        bclib::Assert(test, "no differences does not exist");
     }
 }

@@ -35,8 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/879778936/OATestClass.o \
 	${OBJECTDIR}/COrthogonalArrayTest.o \
-	${OBJECTDIR}/TestClass.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/matrixTest.o \
 	${OBJECTDIR}/primesTest.o \
@@ -68,40 +68,40 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/oatest.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/oatest ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/_ext/879778936/OATestClass.o: /C/Users/Rob/Documents/Repositories/oa/oa_nb/oatest/OATestClass.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/879778936
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/879778936/OATestClass.o /C/Users/Rob/Documents/Repositories/oa/oa_nb/oatest/OATestClass.cpp
+
 ${OBJECTDIR}/COrthogonalArrayTest.o: COrthogonalArrayTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/COrthogonalArrayTest.o COrthogonalArrayTest.cpp
-
-${OBJECTDIR}/TestClass.o: TestClass.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/TestClass.o TestClass.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/COrthogonalArrayTest.o COrthogonalArrayTest.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/matrixTest.o: matrixTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
 
 ${OBJECTDIR}/primesTest.o: primesTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/primesTest.o primesTest.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/primesTest.o primesTest.cpp
 
 ${OBJECTDIR}/runifTest.o: runifTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/runifTest.o runifTest.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/runifTest.o runifTest.cpp
 
 ${OBJECTDIR}/rutilsTest.o: rutilsTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -std=c++0x -fopenmp -MMD -MP -MF $@.d -o ${OBJECTDIR}/rutilsTest.o rutilsTest.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -DNDEBUG -I/C/Users/carnellr/Documents/Repositories/oa/oa_nb/oalib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutilsTest.o rutilsTest.cpp
 
 # Subprojects
 .build-subprojects:

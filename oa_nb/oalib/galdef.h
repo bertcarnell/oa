@@ -47,9 +47,9 @@ namespace oacpp {
         std::vector<int> inv;
         std::vector<int> neg;
         std::vector<int> root;
-        matrix<int> plus;
-        matrix<int> times;
-        matrix<int> poly;
+        bclib::matrix<int> plus;
+        bclib::matrix<int> times;
+        bclib::matrix<int> poly;
     };
 } // end namespace
 

@@ -60,7 +60,7 @@ namespace oacpp
         }
 
         /* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
-        int addelkemp3(GF & gf, matrix<int> & A, int ncol)
+        int addelkemp3(GF & gf, bclib::matrix<int> & A, int ncol)
         {
             int kay;
             //std::vector<int> b, c, k; /* A&K notation */

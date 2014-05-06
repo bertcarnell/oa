@@ -52,7 +52,7 @@ FFLAGS=-m64
 ASFLAGS=--64
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/C/Program\ Files/R/R-3.0.1/bin/x64 -L/C/Program\ Files/R/R-3.0.1/library/Rcpp/lib/x64 ../oalib/dist/Debug/RTools-Windows/liboalib.a -lRcpp -lR
+LDLIBSOPTIONS=-L/C/Program\ Files/R/R-3.0.2/bin/x64 -L/C/Program\ Files/R/R-3.0.2/library/Rcpp/libs/x64 ../oalib/dist/Debug/RTools-Windows/liboalib.a -lRcpp -lR
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -66,8 +66,8 @@ ${TESTDIR}/TestFiles/f1: ${OBJECTFILES}
 
 ${OBJECTDIR}/oa_r.o: oa_r.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -DRCOMPILE -I../../../../../../../Program\ Files/R/R-3.0.1/library/Rcpp/include -I../../../../../../../Program\ Files/R/R-3.0.1/include -I../oalib -I. -std=c++98 -mtune=core2 -Wall -pedantic  -MMD -MP -MF $@.d -o ${OBJECTDIR}/oa_r.o oa_r.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -DRCOMPILE -I/C/Program\ Files/R/R-3.0.2/library/Rcpp/include -I/C/Program\ Files/R/R-3.0.2/include -I../oalib -I. -std=c++98  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/oa_r.o oa_r.cpp
 
 # Subprojects
 .build-subprojects:

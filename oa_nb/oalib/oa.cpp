@@ -57,7 +57,7 @@ namespace oacpp
             }
         }
 
-        void OA_strength(int q, matrix<int> & A, int* str, int verbose)
+        void OA_strength(int q, bclib::matrix<int> & A, int* str, int verbose)
         {
             *str = -1;
 
@@ -91,7 +91,7 @@ namespace oacpp
             return;
         }
 
-        int OA_str0(int q, matrix<int> & A, int verbose)
+        int OA_str0(int q, bclib::matrix<int> & A, int verbose)
         {
             size_t nrow = A.rowsize();
             size_t ncol = A.colsize();
@@ -118,7 +118,7 @@ namespace oacpp
             return SUCCESS_CHECK;
         }
 
-        int OA_str1(int q, matrix<int> & A, int verbose)
+        int OA_str1(int q, bclib::matrix<int> & A, int verbose)
         {
             size_t nrow = A.rowsize();
             size_t ncol = A.colsize();
@@ -172,7 +172,7 @@ namespace oacpp
             return SUCCESS_CHECK;
         }
 
-        int OA_str2(int q, matrix<int> & A, int verbose)
+        int OA_str2(int q, bclib::matrix<int> & A, int verbose)
         {
             size_t nrow = A.rowsize();
             size_t ncol = A.colsize();
@@ -244,7 +244,7 @@ namespace oacpp
             return 1;
         }
 
-        int OA_str3(int q, matrix<int> & A, int verbose)
+        int OA_str3(int q, bclib::matrix<int> & A, int verbose)
         {
             size_t nrow = A.rowsize();
             size_t ncol = A.colsize();
@@ -321,7 +321,7 @@ namespace oacpp
             return 1;
         }
 
-        int OA_str4(int q, matrix<int> & A, int verbose)
+        int OA_str4(int q, bclib::matrix<int> & A, int verbose)
         {
             size_t nrow = A.rowsize();
             size_t ncol = A.colsize();
@@ -406,7 +406,7 @@ namespace oacpp
             return 1;
         }
 
-        int OA_strt(int q, matrix<int> & A, int t, int verbose)
+        int OA_strt(int q, bclib::matrix<int> & A, int t, int verbose)
         {
             size_t nrow = A.rowsize();
             size_t ncol = A.colsize();

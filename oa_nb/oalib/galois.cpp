@@ -119,12 +119,12 @@ namespace oacpp
             {
                 gf.xton[i] = xton[i];
             }
-            gf.plus = matrix<int>(q,q);
-            gf.times = matrix<int>(q,q);
+            gf.plus = bclib::matrix<int>(q,q);
+            gf.times = bclib::matrix<int>(q,q);
             gf.inv = std::vector<int>(q);
             gf.neg = std::vector<int>(q);
             gf.root = std::vector<int>(q);
-            gf.poly = matrix<int>(q, n);
+            gf.poly = bclib::matrix<int>(q, n);
 
             for (size_t i = 0; i < static_cast<size_t>(n); i++)
             {

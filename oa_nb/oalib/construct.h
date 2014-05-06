@@ -60,7 +60,7 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		int bose(GF & gf, matrix<int> & A, int ncol );
+		int bose(GF & gf, bclib::matrix<int> & A, int ncol );
         
         /**
          * Construct an orthogonal array using the bush algorithm
@@ -70,7 +70,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int bush(GF & gf, matrix<int> &  A, int str, int ncol  );
+		int bush(GF & gf, bclib::matrix<int> &  A, int str, int ncol  );
         
         /**
          * 
@@ -81,7 +81,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int addelkemp(GF & gf, matrix<int> & A, int ncol );
+		int addelkemp(GF & gf, bclib::matrix<int> & A, int ncol );
         
         /**
          * Construct an orthogonal array using the bosebush algorithm
@@ -94,7 +94,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int bosebush(GF & gf, matrix<int> & B, int ncol );
+		int bosebush(GF & gf, bclib::matrix<int> & B, int ncol );
         
         /**
          * Construct an orthogonal array using the bose-bush algorithm
@@ -105,7 +105,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int bosebushl(GF & gf, int lam, matrix<int> & B, int ncol );
+		int bosebushl(GF & gf, int lam, bclib::matrix<int> & B, int ncol );
 
         /**
          * Check the input to the bose algorithm

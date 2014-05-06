@@ -548,11 +548,11 @@ namespace oacpp {
          * orthogonal array accessor
          * @return the orthogonal array
          */
-        const matrix<int> & getoa();
+        const bclib::matrix<int> & getoa();
 
 	private:
 		struct GF m_gf; /**< Galois Field */
-        matrix<int> m_A; /**< Orthogonal Array */
+        bclib::matrix<int> m_A; /**< Orthogonal Array */
 		int m_nrow; /**< the number of rows in orthogonal array */
         int m_ncol; /**< the number of columns in the orthogonal array */
         int m_q; /**< the number of symbols in the orthogonal array */
@@ -611,7 +611,7 @@ namespace oacpp {
         return m_q;
     }
     inline 
-    const matrix<int> & COrthogonalArray::getoa() 
+    const bclib::matrix<int> & COrthogonalArray::getoa() 
     {
         return m_A;
     }

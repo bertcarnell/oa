@@ -77,7 +77,7 @@ void COrthogonalArray::addelkemp(int q, int k, int* n)
 {
 	k = checkMaxColumns(k, 2*q+1);
 	createGaloisField(q);
-    m_A = matrix<int>(2*q*q, k);
+    m_A = bclib::matrix<int>(2*q*q, k);
 	checkDesignMemory();
 	int result = oaconstruct::addelkemp(m_gf, m_A, k);
 	checkResult(result, 2*q*q, n);
@@ -88,7 +88,7 @@ void COrthogonalArray::addelkemp3(int q, int k, int* n)
 {
 	k = checkMaxColumns(k, 2*q*q + 2*q + 1); /*  2(q^3-1)/(q-1) - 1  */
 	createGaloisField(q);
-    m_A = matrix<int>(2*q*q*q, k);
+    m_A = bclib::matrix<int>(2*q*q*q, k);
 	checkDesignMemory();
 	int result = oaaddelkemp::addelkemp3(m_gf, m_A, k);
 	checkResult(result, 2*q*q*q, n);
@@ -99,7 +99,7 @@ void COrthogonalArray::addelkempn(int akn, int q, int k, int* n)
 {
 	k = checkMaxColumns(k, 2*(primes::ipow(q,akn)-1)/(q-1) - 1); /*  2(q^3-1)/(q-1) - 1  */
 	createGaloisField(q);
-    m_A = matrix<int>(2*primes::ipow(q,akn), k);
+    m_A = bclib::matrix<int>(2*primes::ipow(q,akn), k);
 	checkDesignMemory();
 	int result = oaaddelkemp::addelkempn(m_gf, akn, m_A, k);
 	checkResult(result, 2*primes::ipow(q,akn), n);
@@ -110,7 +110,7 @@ void COrthogonalArray::bose(int q, int k, int* n)
 {
 	k = checkMaxColumns(k, q+1);
 	createGaloisField(q);
-    m_A = matrix<int>(q*q, k);
+    m_A = bclib::matrix<int>(q*q, k);
 	checkDesignMemory();
 	int result = oaconstruct::bose(m_gf, m_A, k);
 	checkResult(result, q*q, n);
@@ -125,7 +125,7 @@ void COrthogonalArray::bosebush(int q, int k, int *n)
 	}
 	k = checkMaxColumns(k, 2*q);
 	createGaloisField(2*q);
-    m_A = matrix<int>(2*q*q, k);
+    m_A = bclib::matrix<int>(2*q*q, k);
 	checkDesignMemory();
 	int result = oaconstruct::bosebush(m_gf, m_A, k);
 	checkResult(result, 2*q*q, n);
@@ -155,7 +155,7 @@ void COrthogonalArray::bosebushl(int lambda, int q, int k, int* n)
 	}
 
 	createGaloisField(lambda*q);
-    m_A = matrix<int>(lambda*q*q, k);
+    m_A = bclib::matrix<int>(lambda*q*q, k);
 	checkDesignMemory();
 	int result = oaconstruct::bosebushl(m_gf, lambda, m_A, k);
 	checkResult(result, lambda*q*q, n);
@@ -166,7 +166,7 @@ void COrthogonalArray::bush(int q, int k, int* n)
 {
 	k = checkMaxColumns(k, q+1);
 	createGaloisField(q);
-    m_A = matrix<int>(q*q*q, k);
+    m_A = bclib::matrix<int>(q*q*q, k);
 	checkDesignMemory();
 	int result = oaconstruct::bush(m_gf, m_A, 3, k);
 	checkResult(result, q*q*q, n);
@@ -182,7 +182,7 @@ void COrthogonalArray::busht(int str, int q, int k, int* n)
 	}
 
 	createGaloisField(q);
-    m_A = matrix<int>(primes::ipow(q,str), k);
+    m_A = bclib::matrix<int>(primes::ipow(q,str), k);
 	checkDesignMemory();
 	int result = oaconstruct::bush(m_gf, m_A, str, k);
 	checkResult(result, primes::ipow(q,str), n);

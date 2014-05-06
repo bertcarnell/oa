@@ -21,15 +21,7 @@
 
 namespace oaTest
 {
-	void TestClass::Assert(bool test, std::string msg)
-	{
-		if (!test)
-        {
-			throw std::runtime_error(msg.append("\n\n").c_str());
-        }
-	}
-
-    bool TestClass::isDotProductConstant(oacpp::matrix<int> A)
+    bool OATestClass::isDotProductConstant(bclib::matrix<int> A)
     {
         size_t nrows = A.rowsize();
         size_t ncols = A.colsize();
@@ -59,18 +51,18 @@ namespace oaTest
         return true;
     }
     
-    void TestClass::standardChecks(oacpp::matrix<int> A, int expectedq, int expectedCols)
+    void OATestClass::standardChecks(bclib::matrix<int> A, int expectedq, int expectedCols)
     {
-        Assert(A.colsize() == expectedCols, "A has the wrong col size");
+        bclib::Assert(A.colsize() == expectedCols, "A has the wrong col size");
         int n = A.rowsize();
 
 		for (int col = 0; col < expectedCols; col++)
 		{
 			for (int row = 0; row < n; row++)
 			{
-				Assert(A(row, col) >= 0 && A(row,col) <= expectedq - 1, "Values in A do not match  q");
+				bclib::Assert(A(row, col) >= 0 && A(row,col) <= expectedq - 1, "Values in A do not match  q");
 			}
 		}
-		Assert(isDotProductConstant(A), "Dot product is not consistent in A");
+		bclib::Assert(isDotProductConstant(A), "Dot product is not consistent in A");
     }
 }

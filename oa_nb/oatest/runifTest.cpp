@@ -35,45 +35,44 @@ namespace oaTest
         oacpp::RUnif ran = oacpp::RUnif();
         ran.seed(1,2,3,4);
         oacpp::SeedSet s = ran.getSeedSet();
-        Assert(s.is == 1, "");
-        Assert(s.js == 2, "");
-        Assert(s.ks == 3, "");
-        Assert(s.ls == 4, "");
+        bclib::Assert(s.is == 1, "");
+        bclib::Assert(s.js == 2, "");
+        bclib::Assert(s.ks == 3, "");
+        bclib::Assert(s.ls == 4, "");
         ran.seed(5,6,7,8);
         s = ran.getSeedSet();
-        Assert(s.is == 5, "");
-        Assert(s.js == 6, "");
-        Assert(s.ks == 7, "");
-        Assert(s.ls == 8, "");
+        bclib::Assert(s.is == 5, "");
+        bclib::Assert(s.js == 6, "");
+        bclib::Assert(s.ks == 7, "");
+        bclib::Assert(s.ls == 8, "");
     }
     
     void runifTest::testRunif()
     {
         oacpp::RUnif ran(1,2,3,4);
         oacpp::SeedSet s = ran.getSeedSet();
-        Assert(s.is == 1, "");
-        Assert(s.js == 2, "");
-        Assert(s.ks == 3, "");
-        Assert(s.ls == 4, "");
+        bclib::Assert(s.is == 1, "");
+        bclib::Assert(s.js == 2, "");
+        bclib::Assert(s.ks == 3, "");
+        bclib::Assert(s.ls == 4, "");
         std::vector<double> x(3);
         ran.runif(x, 3);
-        Assert(s.is != 1, "");
-        Assert(s.js != 2, "");
-        Assert(s.ks != 3, "");
-        Assert(s.ls != 4, "");
+        bclib::Assert(s.is != 1, "");
+        bclib::Assert(s.js != 2, "");
+        bclib::Assert(s.ks != 3, "");
+        bclib::Assert(s.ls != 4, "");
         std::vector<double> x2(3);
         ran.runif(x2, 3);
         for (size_t i = 0; i < 3; i++)
         {
-            Assert(x[i] != x2[i], "random equality");
+            bclib::Assert(x[i] != x2[i], "random equality");
         }
         ran.seed(1,2,3,4);
         std::vector<double> x3(3);
         ran.runif(x3, 3);
         for (size_t i = 0; i < 3; i++)
         {
-            Assert(x[i] == x3[i], "random equality");
+            bclib::Assert(x[i] == x3[i], "random equality");
         }
-        
     }
 } // end Namespace

@@ -21,12 +21,12 @@
 #ifndef RUNIFTEST_H
 #define	RUNIFTEST_H
 
-#include "TestClass.h"
+#include "OATestClass.h"
 #include "runif.h"
 
 namespace oaTest 
 {
-	class runifTest : public TestClass
+	class runifTest : public OATestClass
 	{
 		void Run();
 		void testSeed();

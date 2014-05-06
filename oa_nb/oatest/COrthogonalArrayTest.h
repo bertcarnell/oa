@@ -22,12 +22,11 @@
  */
 
 #include <functional> // c++0x
-#include "TestClass.h"
+#include "OATestClass.h"
 #include "COrthogonalArray.h"
-#include <cassert>
 
 namespace oaTest {
-	class COrthogonalArrayTest : public TestClass 
+	class COrthogonalArrayTest : public OATestClass 
     {
     public:
 		void Run();

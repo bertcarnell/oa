@@ -21,14 +21,14 @@
 #ifndef MATRIXTEST_H
 #define	MATRIXTEST_H
 
-#include "TestClass.h"
+#include "OATestClass.h"
 #include "matrix.h"
 
 namespace oaTest {
     /**
      * A class to test the matrix implementation
      */
-	class matrixTest : public TestClass
+	class matrixTest : public OATestClass
 	{
 		void Run();
         /**

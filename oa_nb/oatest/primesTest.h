@@ -21,14 +21,14 @@
 #ifndef PRIMESTEST_H
 #define	PRIMESTEST_H
 
-#include "TestClass.h"
+#include "OATestClass.h"
 #include "primes.h"
 
 namespace oaTest {
     /**
      * A class to test the primes implementation
      */
-	class primesTest : public TestClass
+	class primesTest : public OATestClass
 	{
 		void Run();
         /**

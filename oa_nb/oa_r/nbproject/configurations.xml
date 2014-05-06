@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="89">
+<configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -32,7 +32,6 @@
   <confs>
     <conf name="Debug" type="2">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>RTools|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -50,8 +49,8 @@
           <architecture>2</architecture>
           <standard>4</standard>
           <incDir>
-            <pElem>../../../../../../../Program Files/R/R-3.0.1/library/Rcpp/include</pElem>
-            <pElem>../../../../../../../Program Files/R/R-3.0.1/include</pElem>
+            <pElem>C:/Program Files/R/R-3.0.2/library/Rcpp/include</pElem>
+            <pElem>C:/Program Files/R/R-3.0.2/include</pElem>
             <pElem>../oalib</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -72,8 +71,8 @@
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f1</output>
           <linkerAddLib>
-            <pElem>C:/Program Files/R/R-3.0.1/bin/x64</pElem>
-            <pElem>C:/Program Files/R/R-3.0.1/library/Rcpp/lib/x64</pElem>
+            <pElem>C:/Program Files/R/R-3.0.2/bin/x64</pElem>
+            <pElem>C:/Program Files/R/R-3.0.2/library/Rcpp/libs/x64</pElem>
           </linkerAddLib>
           <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
@@ -126,7 +125,6 @@
     </conf>
     <conf name="Release" type="2">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>RTools|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>

@@ -59,7 +59,7 @@ namespace oacpp
         }
 
         /* Implement Addelman and Kempthorne's 1961 A.M.S. method with n=3 */
-        int addelkempn(GF & gf, int akn, matrix<int> & A, int ncol)
+        int addelkempn(GF & gf, int akn, bclib::matrix<int> & A, int ncol)
         {
             int p, q;
             int kay; /* A&K notation */

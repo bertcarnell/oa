@@ -31,11 +31,11 @@ namespace oaTest
 
 	void primesTest::testIsPrime()
 	{
-        Assert(oacpp::primes::isprime(2) == ISPRIMETRUE, "error 2 prime");
-        Assert(oacpp::primes::isprime(3) == ISPRIMETRUE, "error 3 prime");
-        Assert(oacpp::primes::isprime(4) == ISPRIMEFALSE, "error 4 not prime");
-        Assert(oacpp::primes::isprime(5) == ISPRIMETRUE, "error 5 prime");
-        Assert(oacpp::primes::isprime(6) == ISPRIMEFALSE, "error 6 not prime");
+        bclib::Assert(oacpp::primes::isprime(2) == ISPRIMETRUE, "error 2 prime");
+        bclib::Assert(oacpp::primes::isprime(3) == ISPRIMETRUE, "error 3 prime");
+        bclib::Assert(oacpp::primes::isprime(4) == ISPRIMEFALSE, "error 4 not prime");
+        bclib::Assert(oacpp::primes::isprime(5) == ISPRIMETRUE, "error 5 prime");
+        bclib::Assert(oacpp::primes::isprime(6) == ISPRIMEFALSE, "error 6 not prime");
     }
 }
 

@@ -24,15 +24,15 @@
         try \
         { \
             X; \
-            Assert(false, "not executed if above throws"); \
+            bclib::Assert(false, "not executed if above throws"); \
         } \
         catch (std::out_of_range & e) \
         { \
-            Assert(true, "correct item thrown"); \
+            bclib::Assert(true, "correct item thrown"); \
         } \
         catch (...) \
         { \
-            Assert(false, "any other throw is incorrect"); \
+            bclib::Assert(false, "any other throw is incorrect"); \
         }
 
 
@@ -48,26 +48,26 @@ namespace oaTest {
 
     void matrixTest::testConstructor()
     {
-        oacpp::matrix<int> A();
-        oacpp::matrix<double> B;
-        B = oacpp::matrix<double>();
+        bclib::matrix<int> A();
+        bclib::matrix<double> B;
+        B = bclib::matrix<double>();
         
         //Assert(A.rowsize() == 0, "default constructor");
         //Assert(A.colsize() == 0, "default constructor");
         //Assert(A.data() == 0, "default constructor");
-        Assert(B.rowsize() == 0, "default constructor1");
-        Assert(B.colsize() == 0, "default constructor2");
-        Assert(B.data() == 0, "default constructor3");
+        bclib::Assert(B.rowsize() == 0, "default constructor1");
+        bclib::Assert(B.colsize() == 0, "default constructor2");
+        bclib::Assert(B.data() == 0, "default constructor3");
 
-        oacpp::matrix<long> C(2,3);
-        Assert(C.rowsize() == 2, "size constructor1");
-        Assert(C.colsize() == 3, "size constructor2");
-        Assert(C.data() != 0, "size constructor3");
+        bclib::matrix<long> C(2,3);
+        bclib::Assert(C.rowsize() == 2, "size constructor1");
+        bclib::Assert(C.colsize() == 3, "size constructor2");
+        bclib::Assert(C.data() != 0, "size constructor3");
         for (size_t i = 0; i < 2; i++)
         {
             for (size_t j = 0; j < 3; j++)
             {
-                Assert(C(i,j) == (long) 0, "loop");
+                bclib::Assert(C(i,j) == (long) 0, "loop");
             }
         }
         
@@ -76,116 +76,116 @@ namespace oaTest {
         {
             arr[i] = i;
         }
-        oacpp::matrix<float> D(4,5,arr);
-        Assert(D.rowsize() == 4, "size constructor4");
-        Assert(D.colsize() == 5, "size constructor5");
-        Assert(D.data() != 0, "temp1");
+        bclib::matrix<float> D(4,5,arr);
+        bclib::Assert(D.rowsize() == 4, "size constructor4");
+        bclib::Assert(D.colsize() == 5, "size constructor5");
+        bclib::Assert(D.data() != 0, "temp1");
         int k = 0;
         for (size_t i = 0; i < 4; i++)
         {
             for (size_t j = 0; j < 5; j++)
             {
-                Assert(D(i,j) == static_cast<float>(k), "temp2");
+                bclib::Assert(D(i,j) == static_cast<float>(k), "temp2");
                 k++;
             }
         }
         int vec[3] = {2,5,9};
-        oacpp::matrix<int> E(1,3,vec);
-        Assert(E.rowsize() == 1, "size constructor6");
-        Assert(E.colsize() == 3, "size constructor7");
+        bclib::matrix<int> E(1,3,vec);
+        bclib::Assert(E.rowsize() == 1, "size constructor6");
+        bclib::Assert(E.colsize() == 3, "size constructor7");
         int * F = E.data();
-        Assert(F[1] == 5, "temp3");
-        Assert(E(0,0) == 2, "temp4");
-        Assert(E(0,1) == 5, "temp5");
-        Assert(E(0,2) == 9, "temp6");
+        bclib::Assert(F[1] == 5, "temp3");
+        bclib::Assert(E(0,0) == 2, "temp4");
+        bclib::Assert(E(0,1) == 5, "temp5");
+        bclib::Assert(E(0,2) == 9, "temp6");
         
         std::vector<int> G = {2,20,200,2000,2,20}; // c++0x
-        oacpp::matrix<int> H(3,2,G);
-        Assert(H.rowsize() == 3, "size constructor8");
-        Assert(H.colsize() == 2, "size constructor9");
-        Assert(H(0,0) == 2, "temp7");
-        Assert(H(0,1) == 20, "temp8");
-        Assert(H(1,0) == 200, "temp9");
-        Assert(H(1,1) == 2000, "temp11");
-        Assert(H(2,0) == 2, "temp22");
-        Assert(H(2,1) == 20, "temp33");
+        bclib::matrix<int> H(3,2,G);
+        bclib::Assert(H.rowsize() == 3, "size constructor8");
+        bclib::Assert(H.colsize() == 2, "size constructor9");
+        bclib::Assert(H(0,0) == 2, "temp7");
+        bclib::Assert(H(0,1) == 20, "temp8");
+        bclib::Assert(H(1,0) == 200, "temp9");
+        bclib::Assert(H(1,1) == 2000, "temp11");
+        bclib::Assert(H(2,0) == 2, "temp22");
+        bclib::Assert(H(2,1) == 20, "temp33");
         
-        oacpp::matrix<int> K(E);
-        Assert(K.rowsize() == 1, "size constructor11");
-        Assert(K.colsize() == 3, "size constructor22");
-        Assert(K(0,0) == 2, "temp44");
-        Assert(K(0,1) == 5, "temp55");
-        Assert(K(0,2) == 9, "temp66");
+        bclib::matrix<int> K(E);
+        bclib::Assert(K.rowsize() == 1, "size constructor11");
+        bclib::Assert(K.colsize() == 3, "size constructor22");
+        bclib::Assert(K(0,0) == 2, "temp44");
+        bclib::Assert(K(0,1) == 5, "temp55");
+        bclib::Assert(K(0,2) == 9, "temp66");
         
         H.fill(8);
-        Assert(H.rowsize() == 3, "size constructor8");
-        Assert(H.colsize() == 2, "size constructor9");
-        Assert(H(0,0) == 8, "temp_7");
-        Assert(H(0,1) == 8, "temp_8");
-        Assert(H(1,0) == 8, "temp_9");
-        Assert(H(1,1) == 8, "temp_11");
-        Assert(H(2,0) == 8, "temp_22");
-        Assert(H(2,1) == 8, "temp_33");
+        bclib::Assert(H.rowsize() == 3, "size constructor8");
+        bclib::Assert(H.colsize() == 2, "size constructor9");
+        bclib::Assert(H(0,0) == 8, "temp_7");
+        bclib::Assert(H(0,1) == 8, "temp_8");
+        bclib::Assert(H(1,0) == 8, "temp_9");
+        bclib::Assert(H(1,1) == 8, "temp_11");
+        bclib::Assert(H(2,0) == 8, "temp_22");
+        bclib::Assert(H(2,1) == 8, "temp_33");
         
         H.clear();
-        Assert(H.rowsize() == 0, "size constructor8");
-        Assert(H.colsize() == 0, "size constructor9");
+        bclib::Assert(H.rowsize() == 0, "size constructor8");
+        bclib::Assert(H.colsize() == 0, "size constructor9");
     }
     
     void matrixTest::testAccessor()
     {
         std::vector<int> G = {2,20,200,2000,1,3}; // c++0x
-        oacpp::matrix<int> H(3,2,G);
-        oacpp::matrix<double> A;
-        Assert(H.rowsize() == 3, "size constructor8");
-        Assert(H.colsize() == 2, "size constructor9");
-        Assert(H(0,0) == 2, "temp.7");
-        Assert(H(0,1) == 20, "temp.8");
-        Assert(H(1,0) == 200, "temp.9");
-        Assert(H(1,1) == 2000, "temp.11");
-        Assert(H(2,0) == 1, "temp.22");
-        Assert(H(2,1) == 3, "temp.33");
+        bclib::matrix<int> H(3,2,G);
+        bclib::matrix<double> A;
+        bclib::Assert(H.rowsize() == 3, "size constructor8");
+        bclib::Assert(H.colsize() == 2, "size constructor9");
+        bclib::Assert(H(0,0) == 2, "temp.7");
+        bclib::Assert(H(0,1) == 20, "temp.8");
+        bclib::Assert(H(1,0) == 200, "temp.9");
+        bclib::Assert(H(1,1) == 2000, "temp.11");
+        bclib::Assert(H(2,0) == 1, "temp.22");
+        bclib::Assert(H(2,1) == 3, "temp.33");
         
-        Assert(H.isEmpty() == false, "is empty false");
-        Assert(A.isEmpty() == true, "is empty true");
+        bclib::Assert(H.isEmpty() == false, "is empty false");
+        bclib::Assert(A.isEmpty() == true, "is empty true");
         
-        oacpp::matrix<int> Hcol = H.getColumnMatrix(0);
-        Assert(Hcol.rowsize() == 3, "get col matrix");
-        Assert(Hcol.colsize() == 1, "get col matrix");
-        Assert(Hcol(0,0) == 2, "one1");
-        Assert(Hcol(1,0) == 200, "two1");
-        Assert(Hcol(2,0) == 1, "three1");
+        bclib::matrix<int> Hcol = H.getColumnMatrix(0);
+        bclib::Assert(Hcol.rowsize() == 3, "get col matrix");
+        bclib::Assert(Hcol.colsize() == 1, "get col matrix");
+        bclib::Assert(Hcol(0,0) == 2, "one1");
+        bclib::Assert(Hcol(1,0) == 200, "two1");
+        bclib::Assert(Hcol(2,0) == 1, "three1");
         Hcol = H.getColumnMatrix(1);
-        Assert(Hcol.rowsize() == 3, "get col matrix");
-        Assert(Hcol.colsize() == 1, "get col matrix");
-        Assert(Hcol(0,0) == 20, "one2");
-        Assert(Hcol(1,0) == 2000, "two2");
-        Assert(Hcol(2,0) == 3, "three2");
+        bclib::Assert(Hcol.rowsize() == 3, "get col matrix");
+        bclib::Assert(Hcol.colsize() == 1, "get col matrix");
+        bclib::Assert(Hcol(0,0) == 20, "one2");
+        bclib::Assert(Hcol(1,0) == 2000, "two2");
+        bclib::Assert(Hcol(2,0) == 3, "three2");
         std::vector<int> Hcolvec = H.getcol(0);
-        Assert(Hcolvec.size() == 3, "get col vec");
-        Assert(Hcolvec[0] == 2, "one3");
-        Assert(Hcolvec[1] == 200, "two3");
-        Assert(Hcolvec[2] == 1, "three3");
+        bclib::Assert(Hcolvec.size() == 3, "get col vec");
+        bclib::Assert(Hcolvec[0] == 2, "one3");
+        bclib::Assert(Hcolvec[1] == 200, "two3");
+        bclib::Assert(Hcolvec[2] == 1, "three3");
         
-        oacpp::matrix<int> Hrow = H.getRowMatrix(0);
-        Assert(Hrow.rowsize() == 1, "get row matrix");
-        Assert(Hrow.colsize() == 2, "get row matrix");
-        Assert(Hrow(0,0) == 2, "one4");
-        Assert(Hrow(0,1) == 20, "two4");
+        bclib::matrix<int> Hrow = H.getRowMatrix(0);
+        bclib::Assert(Hrow.rowsize() == 1, "get row matrix");
+        bclib::Assert(Hrow.colsize() == 2, "get row matrix");
+        bclib::Assert(Hrow(0,0) == 2, "one4");
+        bclib::Assert(Hrow(0,1) == 20, "two4");
         Hrow = H.getRowMatrix(1);
-        Assert(Hrow.rowsize() == 1, "get row matrix");
-        Assert(Hrow.colsize() == 2, "get row matrix");
-        Assert(Hrow(0,0) == 200, "one5");
-        Assert(Hrow(0,1) == 2000, "two5");
+        bclib::Assert(Hrow.rowsize() == 1, "get row matrix");
+        bclib::Assert(Hrow.colsize() == 2, "get row matrix");
+        bclib::Assert(Hrow(0,0) == 200, "one5");
+        bclib::Assert(Hrow(0,1) == 2000, "two5");
         std::vector<int> Hrowvec = H.getrow(0);
-        Assert(Hrowvec.size() == 2, "get row vec");
-        Assert(Hrowvec[0] == 2, "one6");
-        Assert(Hrowvec[1] == 20, "two6");
+        bclib::Assert(Hrowvec.size() == 2, "get row vec");
+        bclib::Assert(Hrowvec[0] == 2, "one6");
+        bclib::Assert(Hrowvec[1] == 20, "two6");
         
         std::vector<int> A1 = {1,2,3,4,5,6}; // c++0x
-        oacpp::matrix<int> A2(3,2,A1);
-        Assert(A2.at(0,0) == 1, "pass2");
-        Assert(A2.at(1,1) == 4, "pass4");
+        bclib::matrix<int> A2(3,2,A1);
+        bclib::Assert(A2.at(0,0) == 1, "pass2");
+        bclib::Assert(A2.at(1,1) == 4, "pass4");
         ASSERT_THROW_RANGE(A2.at(5,6))
         ASSERT_THROW_RANGE(A2.at(20))
         ASSERT_THROW_RANGE(A2.getColumnMatrix_at(7))
@@ -197,22 +197,21 @@ namespace oaTest {
     void matrixTest::testOperators()
     {
         std::vector<int> Avec = {1,2,3,4,5,6};
-        oacpp::matrix<int> A(3,2,Avec);
-        oacpp::matrix<int> B = A;
-        oacpp::matrix<int> D(2,3,Avec);
-        oacpp::matrix<int> E(3,2,Avec);
-        oacpp::matrix<int> F(3,2,Avec);
+        bclib::matrix<int> A(3,2,Avec);
+        bclib::matrix<int> B = A;
+        bclib::matrix<int> D(2,3,Avec);
+        bclib::matrix<int> E(3,2,Avec);
+        bclib::matrix<int> F(3,2,Avec);
         F(0,0) = 4;
-        Assert(F(1,1) == 4, "G");
-        Assert(B.rowsize() == 3, "A");
-        Assert(B.colsize() == 2, "B");
-        Assert(B(0,0) == 1, "C");
-        Assert(B(1,1) == 4, "D");
+        bclib::Assert(F(1,1) == 4, "G");
+        bclib::Assert(B.rowsize() == 3, "A");
+        bclib::Assert(B.colsize() == 2, "B");
+        bclib::Assert(B(0,0) == 1, "C");
+        bclib::Assert(B(1,1) == 4, "D");
         
-        Assert(A == E, "E");
-        Assert(A == B, "H");
-        Assert(!(A == D), "F");
-        Assert(!(A == F), "I");
-        
+        bclib::Assert(A == E, "E");
+        bclib::Assert(A == B, "H");
+        bclib::Assert(!(A == D), "F");
+        bclib::Assert(!(A == F), "I");
     }
 }

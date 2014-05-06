@@ -76,58 +76,58 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liboalib.a: ${OBJECTFILES}
 
 ${OBJECTDIR}/COrthogonalArray.o: COrthogonalArray.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/COrthogonalArray.o COrthogonalArray.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/COrthogonalArray.o COrthogonalArray.cpp
 
 ${OBJECTDIR}/ak3.o: ak3.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/ak3.o ak3.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ak3.o ak3.cpp
 
 ${OBJECTDIR}/akconst.o: akconst.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/akconst.o akconst.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/akconst.o akconst.cpp
 
 ${OBJECTDIR}/akn.o: akn.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/akn.o akn.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/akn.o akn.cpp
 
 ${OBJECTDIR}/construct.o: construct.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/construct.o construct.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/construct.o construct.cpp
 
 ${OBJECTDIR}/galois.o: galois.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/galois.o galois.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/galois.o galois.cpp
 
 ${OBJECTDIR}/gfields.o: gfields.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/gfields.o gfields.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gfields.o gfields.cpp
 
 ${OBJECTDIR}/oa.o: oa.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/oa.o oa.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/oa.o oa.cpp
 
 ${OBJECTDIR}/primes.o: primes.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/primes.o primes.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/primes.o primes.cpp
 
 ${OBJECTDIR}/runif.o: runif.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/runif.o runif.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/runif.o runif.cpp
 
 ${OBJECTDIR}/rutils.o: rutils.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -pedantic -Wall -Wno-long-long -mtune=core2 -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/rutils.o rutils.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -DNDEBUG -I. -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutils.o rutils.cpp
 
 # Subprojects
 .build-subprojects:

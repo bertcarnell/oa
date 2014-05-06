@@ -68,8 +68,8 @@ ${TESTDIR}/TestFiles/f1: ${OBJECTFILES}
 
 ${OBJECTDIR}/oa_r.o: oa_r.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Werror -I../../../../../../../Program\ Files/R/R-3.0.1/library/Rcpp/include -I../../../../../../../Program\ Files/R/R-3.0.1/include -I../oalib -I. -std=c++98 -mtune=core2 -Wall -pedantic -O2  -MMD -MP -MF $@.d -o ${OBJECTDIR}/oa_r.o oa_r.cpp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Werror -I../../../../../../../Program\ Files/R/R-3.0.1/library/Rcpp/include -I../../../../../../../Program\ Files/R/R-3.0.1/include -I../oalib -I. -std=c++98  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/oa_r.o oa_r.cpp
 
 # Subprojects
 .build-subprojects:

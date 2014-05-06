@@ -21,11 +21,11 @@
 #ifndef RUTILSTEST_H
 #define	RUTILSTEST_H
 
-#include "TestClass.h"
+#include "OATestClass.h"
 #include "rutils.h"
 
 namespace oaTest {
-	class rutilsTest : public TestClass
+	class rutilsTest : public OATestClass
 	{
 		void Run();
         /**

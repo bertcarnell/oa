@@ -50,7 +50,7 @@ namespace oacpp
             return SUCCESS_CHECK;
         }
 
-        int bose(GF & gf, matrix<int> & A, int ncol)
+        int bose(GF & gf, bclib::matrix<int> & A, int ncol)
         {
             size_t icol, irow;
             size_t q = static_cast<size_t>(gf.q);
@@ -146,7 +146,7 @@ namespace oacpp
             return SUCCESS_CHECK;
         }
 
-        int bush(GF & gf, matrix<int> & A, int str, int ncol)
+        int bush(GF & gf, bclib::matrix<int> & A, int str, int ncol)
         {
             int q = gf.q;
             int test = bushcheck(q, str, ncol);
@@ -199,7 +199,7 @@ namespace oacpp
             return SUCCESS_CHECK;
         }
 
-        int addelkemp(GF & gf, matrix<int> & A, int ncol)
+        int addelkemp(GF & gf, bclib::matrix<int> & A, int ncol)
         {
             int kay; /* A&K notation */
             int row, col, square, ksquare, temp;
@@ -315,7 +315,7 @@ namespace oacpp
             return SUCCESS_CHECK;
         }
 
-        int bosebush(GF & gf, matrix<int> & B, int ncol)
+        int bosebush(GF & gf, bclib::matrix<int> & B, int ncol)
         {
             int p, irow;
             int mul;
@@ -323,7 +323,7 @@ namespace oacpp
             p = gf.p; /* GF(q) used to generate design with q/2 levels */
             size_t q = static_cast<size_t>(gf.q);
             size_t s = q / 2; /* number of levels in design */
-            matrix<int> A(s, q);
+            bclib::matrix<int> A(s, q);
 
             int test = bosebushcheck(s, p, ncol);
             if (test != SUCCESS_CHECK)
@@ -386,7 +386,7 @@ namespace oacpp
             return SUCCESS_CHECK;
         }
 
-        int bosebushl(GF & gf, int lam, matrix<int> & B, int ncol)
+        int bosebushl(GF & gf, int lam, bclib::matrix<int> & B, int ncol)
         /* Implement Bose and Bush's 1952 A.M.S. method with given lambda */
         {
             int p, irow;
@@ -395,7 +395,7 @@ namespace oacpp
             p = gf.p; /* GF(q) used to generate design with q/lam levels */
             size_t q = static_cast<size_t>(gf.q);
             size_t s = q / lam; /* number of levels in design */
-            matrix<int> A(s,q);
+            bclib::matrix<int> A(s,q);
 
             int test = bosebushlcheck(s, p, lam, ncol);
             if (test != SUCCESS_CHECK)
