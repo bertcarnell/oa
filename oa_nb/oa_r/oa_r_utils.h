@@ -38,7 +38,7 @@ namespace oarutils {
      * @return an integer matrix
      */
     template <class T>
-    void convertToIntegerMatrix(const oacpp::matrix<T> & A, Rcpp::IntegerMatrix & rcppA)
+    void convertToIntegerMatrix(const bclib::matrix<T> & A, Rcpp::IntegerMatrix & rcppA)
     {
         size_t nrows = A.rowsize();
         size_t ncols = A.colsize();

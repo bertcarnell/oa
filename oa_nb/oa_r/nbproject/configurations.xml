@@ -53,6 +53,7 @@
             <pElem>C:/Program Files/R/R-3.0.2/include</pElem>
             <pElem>../oalib</pElem>
             <pElem>.</pElem>
+            <pElem>../bclib</pElem>
           </incDir>
           <commandLine>-mtune=core2 -Wall -pedantic</commandLine>
           <preprocessorList>
