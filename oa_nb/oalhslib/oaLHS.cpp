@@ -249,11 +249,11 @@ namespace oalhslib
         }
         
         std::vector<std::string> types = std::vector<std::string>();
+        std::vector<int> diffs = std::vector<int>();
         types.push_back("addelkemp");
         types.push_back("addelkemp3");
         types.push_back("bose");
         types.push_back("bosebush");
-        std::vector<int> diffs = std::vector<int>();
         diffs.push_back(fabs((double) (n-n_addelkemp)));
         diffs.push_back(fabs((double) (n-n_addelkemp3)));
         diffs.push_back(fabs((double) (n-n_bose)));
