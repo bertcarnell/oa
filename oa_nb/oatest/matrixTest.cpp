@@ -26,7 +26,7 @@
             X; \
             bclib::Assert(false, "not executed if above throws"); \
         } \
-        catch (std::out_of_range & e) \
+        catch (std::out_of_range &) \
         { \
             bclib::Assert(true, "correct item thrown"); \
         } \
@@ -48,7 +48,7 @@ namespace oaTest {
 
     void matrixTest::testConstructor()
     {
-        bclib::matrix<int> A();
+        //bclib::matrix<int> A();
         bclib::matrix<double> B;
         B = bclib::matrix<double>();
         
@@ -74,7 +74,7 @@ namespace oaTest {
         float arr[20];
         for (size_t i = 0; i < 20; i++)
         {
-            arr[i] = i;
+            arr[i] = static_cast<float>(i);
         }
         bclib::matrix<float> D(4,5,arr);
         bclib::Assert(D.rowsize() == 4, "size constructor4");

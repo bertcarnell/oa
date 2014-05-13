@@ -254,10 +254,10 @@ namespace oalhslib
         types.push_back("addelkemp3");
         types.push_back("bose");
         types.push_back("bosebush");
-        diffs.push_back(fabs((double) (n-n_addelkemp)));
-        diffs.push_back(fabs((double) (n-n_addelkemp3)));
-        diffs.push_back(fabs((double) (n-n_bose)));
-        diffs.push_back(fabs((double) (n-n_bosebush)));
+        diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_addelkemp))));
+		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_addelkemp3))));
+		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_bose))));
+		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_bosebush))));
         
         // which is the smallest?
         std::vector<int> orders = std::vector<int>(diffs.size());

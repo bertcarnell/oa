@@ -48,8 +48,8 @@ OBJECTFILES= \
 CFLAGS=-m64
 
 # CC Compiler Flags
-CCFLAGS=-m64 -std=c++0x
-CXXFLAGS=-m64 -std=c++0x
+CCFLAGS=-m64 -std=c++0x -Wall -Wno-unknown-pragmas
+CXXFLAGS=-m64 -std=c++0x -Wall -Wno-unknown-pragmas
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -71,37 +71,37 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/oatest.exe: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/879778936/OATestClass.o: /C/Users/Rob/Documents/Repositories/oa/oa_nb/oatest/OATestClass.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/879778936
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/879778936/OATestClass.o /C/Users/Rob/Documents/Repositories/oa/oa_nb/oatest/OATestClass.cpp
+	$(COMPILE.cc) -g -Werror -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/879778936/OATestClass.o /C/Users/Rob/Documents/Repositories/oa/oa_nb/oatest/OATestClass.cpp
 
 ${OBJECTDIR}/COrthogonalArrayTest.o: COrthogonalArrayTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/COrthogonalArrayTest.o COrthogonalArrayTest.cpp
+	$(COMPILE.cc) -g -Werror -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/COrthogonalArrayTest.o COrthogonalArrayTest.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -Werror -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/matrixTest.o: matrixTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
+	$(COMPILE.cc) -g -Werror -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/matrixTest.o matrixTest.cpp
 
 ${OBJECTDIR}/primesTest.o: primesTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/primesTest.o primesTest.cpp
+	$(COMPILE.cc) -g -Werror -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/primesTest.o primesTest.cpp
 
 ${OBJECTDIR}/runifTest.o: runifTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/runifTest.o runifTest.cpp
+	$(COMPILE.cc) -g -Werror -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/runifTest.o runifTest.cpp
 
 ${OBJECTDIR}/rutilsTest.o: rutilsTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutilsTest.o rutilsTest.cpp
+	$(COMPILE.cc) -g -Werror -I../oalib -I../bclib -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rutilsTest.o rutilsTest.cpp
 
 # Subprojects
 .build-subprojects:

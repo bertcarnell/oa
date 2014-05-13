@@ -1,6 +1,11 @@
 include_directories(${OA_SOURCE_DIR}/bclib)
 include_directories(${OA_SOURCE_DIR}/oalib)
 
+if (MSVC)
+else (MSVC)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+endif (MSVC)
+
 add_executable(oatest COrthogonalArrayTest.cpp
                       main.cpp
 					  matrixTest.cpp

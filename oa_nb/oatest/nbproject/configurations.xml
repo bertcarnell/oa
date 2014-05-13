@@ -56,7 +56,8 @@
             <pElem>../oalib</pElem>
             <pElem>../bclib</pElem>
           </incDir>
-          <commandLine>-std=c++0x</commandLine>
+          <commandLine>-std=c++0x -Wall -Wno-unknown-pragmas</commandLine>
+          <warningLevel>3</warningLevel>
         </ccTool>
         <asmTool>
           <architecture>2</architecture>

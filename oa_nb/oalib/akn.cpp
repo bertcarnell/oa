@@ -231,7 +231,7 @@ namespace oacpp
 
                 for (int i = akn - 1; i >= 0; i--) // has to be an int to decrement
                 {
-                    size_t ui = static_cast<size_t>(ui);
+                    size_t ui = static_cast<size_t>(i);
                     x[ui] = (x[ui] + 1) % q;
                     if (x[ui])
                     {

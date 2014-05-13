@@ -57,23 +57,23 @@ namespace oaTest{
     
     void rutilsTest::testUnifPerm()
     {
-        int q = 10;
+        unsigned int q = 10;
         std::vector<int> pi(q);
         oacpp::RUnif ran = oacpp::RUnif();
         ran.seed(10,20,30,40);
         oacpp::rutils::unifperm(pi, q, ran);
         // test that each integer is available 0 to q-1
-        for (int i = 0; i < q; i++)
+        for (unsigned int i = 0; i < q; i++)
         {
             bclib::Assert(std::find(pi.begin(), pi.end(), i) != pi.end(), "integer found when required");
             std::vector<int>::iterator it = std::find(pi.begin(), pi.end(), i);
-            bclib::Assert(*it == i, "integer not found properly");
+            bclib::Assert(*it == static_cast<int>(i), "integer not found properly");
         }
         // test that other integers are not found
         bclib::Assert(std::find(pi.begin(), pi.end(), -1) == pi.end(), "not found");
         bclib::Assert(std::find(pi.begin(), pi.end(), q) == pi.end(), "not found");
         bclib::Assert(std::find(pi.begin(), pi.end(), q+1) == pi.end(), "not found");
-        bclib::Assert(std::accumulate(pi.begin(), pi.end(), 0) == (q-1)*q / 2, "wrong sum");
+        bclib::Assert(std::accumulate(pi.begin(), pi.end(), 0) == static_cast<int>((q-1)*q / 2), "wrong sum");
         
         oacpp::RUnif ran2 = oacpp::RUnif();
         ran2.seed(1,2,3,4);

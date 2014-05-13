@@ -49,7 +49,7 @@ namespace oalhs_test
         bclib::matrix<int>::iterator iti = resultint.begin();
         for (;it != result.end(); ++it, ++iti)
         {
-            *iti = 1 + floor(static_cast<double>(n) * (*it));
+            *iti = 1 + static_cast<int>(floor(static_cast<double>(n) * (*it)));
         }
         bool ret = isValidLHS(resultint);        
         return ret;
@@ -82,7 +82,7 @@ namespace oalhs_test
         oalhslib::oaLHS(n, k, oa, intlhs, lhs, false, oRandom);
         
         bclib::Assert(oaseq.size(), oa.getDataVector().size());
-        for (int i = 0; i < oaseq.size(); i++)
+        for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -96,7 +96,7 @@ namespace oalhs_test
         
         oalhslib::oaLHS(n, k, oa, intlhs, false);
         bclib::Assert(oaseq.size(), oa.getDataVector().size());
-        for (int i = 0; i < oaseq.size(); i++)
+        for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -108,7 +108,7 @@ namespace oalhs_test
                                   2,3,
                                   3,2,
                                   4,4};
-        for (int i = 0; i < lhsintseq.size(); i++)
+        for (unsigned int i = 0; i < lhsintseq.size(); i++)
         {
             bclib::Assert(lhsintseq[i], intlhs.getDataVector()[i], "deterministic oalhs values");
         }
@@ -138,7 +138,7 @@ namespace oalhs_test
         oalhslib::oaLHS(n, k, oa, intlhs, lhs, false, oRandom);
         
         bclib::Assert(oaseq.size(), oa.getDataVector().size());
-        for (int i = 0; i < oaseq.size(); i++)
+        for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -152,7 +152,7 @@ namespace oalhs_test
         
         oalhslib::oaLHS(n, k, oa, intlhs, false);
         bclib::Assert(oaseq.size(), oa.getDataVector().size());
-        for (int i = 0; i < oaseq.size(); i++)
+        for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -169,7 +169,7 @@ namespace oalhs_test
                                   7,3,6,
                                   8,6,9,
                                   9,9,3};
-        for (int i = 0; i < lhsintseq.size(); i++)
+        for (unsigned int i = 0; i < lhsintseq.size(); i++)
         {
             bclib::Assert(lhsintseq[i], intlhs.getDataVector()[i], "deterministic oalhs values");
         }

@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
+#include <numeric>
 
 #ifdef RCOMPILE
 #include <Rcpp.h>

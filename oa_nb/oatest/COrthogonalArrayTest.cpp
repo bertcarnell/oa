@@ -40,21 +40,23 @@ namespace oaTest{
 	}
     
     void COrthogonalArrayTest::testRange(
-            std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
-            std::vector<int> & q, std::vector<int> & ncol)
+            const std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
+            const std::vector<int> & q, const std::vector<int> & ncol)
 	{
         bclib::Assert(q.size() == ncol.size());
         oacpp::COrthogonalArray coa;
         int n = 0;
         
         int i;
+#ifdef _OPENMP
         int chunk = PARALLEL_CHUNK_SIZE;
         int threadid;
+#endif
 
         #pragma omp parallel shared(chunk,q,ncol,f) private(i, threadid, coa, n)
         {
             #pragma omp for schedule(dynamic,chunk)
-            for (i = 0; i < q.size(); i++)
+            for (i = 0; i < static_cast<int>(q.size()); i++)
             {
                 try
                 {
@@ -81,13 +83,15 @@ namespace oaTest{
         int n = 0;
         
         int i;
+#ifdef _OPENMP
         int chunk = PARALLEL_CHUNK_SIZE;
         int threadid;
+#endif
 
         #pragma omp parallel shared(chunk,q,ncol,f) private(i, threadid, coa, n)
         {
             #pragma omp for schedule(dynamic,chunk)
-            for (i = 0; i < q.size(); i++)
+            for (i = 0; i < static_cast<int>(q.size()); i++)
             {
                 try
                 {
@@ -104,7 +108,7 @@ namespace oaTest{
     }
 
     void COrthogonalArrayTest::testException(
-            std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
+            const std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             int q, int ncol)
     {
         oacpp::COrthogonalArray coa;
@@ -142,7 +146,7 @@ namespace oaTest{
 		coa.addelkemp(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
 
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::addelkemp;
+        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::addelkemp);
         testException(f, 0, 0);
         testException(f, 6, 12);
         testException(f, 10, 2);
@@ -154,7 +158,7 @@ namespace oaTest{
         //std::vector<int> q = {2,3,4,5,7};
         std::vector<int> ncol(q.size());
         std::transform(q.begin(), q.end(), ncol.begin(), multiplyByTwo);
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::addelkemp;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::addelkemp);
         testRange(f, q, ncol);
     }
     
@@ -177,7 +181,7 @@ namespace oaTest{
 		coa.addelkemp3(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
 
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::addelkemp3;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::addelkemp3);
         testException(f, 0, 0);
         testException(f, 1, 12);
         testException(f, 6, 12);
@@ -189,7 +193,7 @@ namespace oaTest{
         //std::vector<int> q = {2,3,4,5,7};
         std::vector<int> ncol(q.size());
         std::transform(q.begin(), q.end(), ncol.begin(), multiplyByTwo);
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::addelkemp3;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::addelkemp3);
         testRange(f, q, ncol);
     }
 
@@ -229,7 +233,7 @@ namespace oaTest{
 		coa.bose(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
 
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::bose;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bose);
         testException(f, 0, 0);
         testException(f, 1, 1);
         testException(f, 6, 3);
@@ -241,7 +245,7 @@ namespace oaTest{
         std::vector<int> q = {2,3,4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
         //std::vector<int> q = {2,3,4,5,7,8,9};
         std::vector<int> ncol(q);
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::bose;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bose);
         testRange(f, q, ncol);
     }
 
@@ -253,7 +257,7 @@ namespace oaTest{
         std::transform(pow.begin(), pow.end(), q.begin(), powerOfTwo);
         std::vector<int> ncol(q.size());
         std::transform(q.begin(), q.end(), ncol.begin(), multiplyByTwo);
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::bosebush;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bosebush);
         testRange(f, q, ncol);
     }
 
@@ -263,7 +267,7 @@ namespace oaTest{
         std::vector<int> q = {4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
         //std::vector<int> q = {4,5};
         std::vector<int> ncol(q);
-        std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = &oacpp::COrthogonalArray::bush;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bush);
         testRange(f, q, ncol);
     }
     
@@ -283,7 +287,7 @@ namespace oaTest{
         std::vector<int> q =      {2,4,3,9,27}; // requires -std=c++0x in gcc >= 4.6.3
         std::vector<int> ncol(q);
         std::vector<int> lambda = {2,2,3,3,3};
-        std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> f = &oacpp::COrthogonalArray::bosebushl;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bosebushl);
         testRange2(f, lambda, q, ncol);
     }
     
@@ -303,7 +307,7 @@ namespace oaTest{
         std::vector<int> q = {4,5,7,9,11,13,16,17,19,23,25,27,29}; // requires -std=c++0x in gcc >= 4.6.3
         std::vector<int> ncol(q);
         std::vector<int> str = {2,2,2,3,3,3,3,3,4,4,4,4,4};
-        std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> f = &oacpp::COrthogonalArray::busht;
+		std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::busht);
         testRange2(f, str, q, ncol);
     }
 } // end namespace

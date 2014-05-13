@@ -45,7 +45,7 @@
             <pElem>../oalhslib</pElem>
             <pElem>C:/Users/Rob/Documents/Repositories/oa/oa_nb/oalib</pElem>
           </incDir>
-          <commandLine>-std=c++0x</commandLine>
+          <commandLine>-std=c++0x -Wall</commandLine>
           <warningLevel>3</warningLevel>
         </ccTool>
         <linkerTool>

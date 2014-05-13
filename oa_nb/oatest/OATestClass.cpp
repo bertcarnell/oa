@@ -53,7 +53,7 @@ namespace oaTest
     
     void OATestClass::standardChecks(bclib::matrix<int> A, int expectedq, int expectedCols)
     {
-        bclib::Assert(A.colsize() == expectedCols, "A has the wrong col size");
+        bclib::Assert(static_cast<int>(A.colsize()) == expectedCols, "A has the wrong col size");
         int n = A.rowsize();
 
 		for (int col = 0; col < expectedCols; col++)

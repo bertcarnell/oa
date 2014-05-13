@@ -88,15 +88,15 @@ namespace oaTest {
         void testBushtRange();
     private:
         void testRange(
-            std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
-            std::vector<int> & q, std::vector<int> & ncol);
+            const std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
+            const std::vector<int> & q, const std::vector<int> & ncol);
         void testRange2(
             std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> & f,
             std::vector<int> & int1,
             std::vector<int> & q, 
             std::vector<int> & ncol);
         void testException(
-            std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
+            const std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,
             int q, int ncol);
 	};
 }

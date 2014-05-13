@@ -91,7 +91,7 @@ namespace oaTest
     inline
     int powerOfTwo(int a)
     {
-        return std::pow<int>(2,a);
+        return static_cast<int>(std::pow<int>(2,a));
     }
 }
 
