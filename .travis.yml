@@ -1,0 +1,11 @@
+language: c++
+
+dist: trusty
+sudo: false
+
+script:
+  - cd oa_nb
+  - cmake -H. -Bbuild
+  - cmake --build build
+  - ./build/oatest/oatest
+  
