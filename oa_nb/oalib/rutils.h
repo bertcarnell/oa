@@ -51,25 +51,6 @@ namespace oacpp
 		void unifperm( std::vector<int> & pi, int q, RUnif & randomClass );
 
         /**
-         * Find the rank of each vector element
-         * 
-         * @deprecated This algorithm is slow, but easier to verify
-         * 
-         * @tparam T numeric argument that can be ranked
-         * @param v the vector to be ranked
-         * @param indx the ranks of the elements
-         */
-        template <class T>
-        void findranks_slow(const std::vector<T> & v, std::vector<int> & indx)
-        {
-            findranks_slow_zero(v, indx);
-            for (size_t i = 0; i < indx.size(); i++)
-            {
-                indx[i] += 1;
-            }
-        }
-
-        /**
          * Find the rank of each vector element (zero based)
          * 
          * @deprecated This algorithm is slow, but easier to verify
@@ -99,6 +80,25 @@ namespace oacpp
         }
 
         /**
+         * Find the rank of each vector element
+         * 
+         * @deprecated This algorithm is slow, but easier to verify
+         * 
+         * @tparam T numeric argument that can be ranked
+         * @param v the vector to be ranked
+         * @param indx the ranks of the elements
+         */
+        template <class T>
+        void findranks_slow(const std::vector<T> & v, std::vector<int> & indx)
+        {
+            findranks_slow_zero(v, indx);
+            for (size_t i = 0; i < indx.size(); i++)
+            {
+                indx[i] += 1;
+            }
+        }
+
+        /**
          * Comparison operator to use in the findranks method
          * @param first the first pair of arguments (value, rank)
          * @param second the second pair of arguments (value, rank)
@@ -108,22 +108,6 @@ namespace oacpp
         bool findranksCompare(const std::pair<T, int> first, const std::pair<T, int> second)
         {
             return (first.first < second.first);
-        }
-
-        /**
-         * Find the rank of each vector element
-         * @tparam T numeric argument that can be ranked
-         * @param v the vector to be ranked
-         * @param indx the ranks of the elements
-         */
-        template <class T>
-        void findranks(const std::vector<T> & v, std::vector<int> & rank)
-        {
-            findranks_zero(v, rank);
-            for (size_t i = 0; i < rank.size(); i++)
-            {
-                rank[i] += 1;
-            }
         }
 
         /**
@@ -156,6 +140,22 @@ namespace oacpp
             for (size_t i = 0; i < v.size(); i++)
             {
                 rank[p[i].second] = static_cast<int>(i);
+            }
+        }
+
+        /**
+         * Find the rank of each vector element
+         * @tparam T numeric argument that can be ranked
+         * @param v the vector to be ranked
+         * @param indx the ranks of the elements
+         */
+        template <class T>
+        void findranks(const std::vector<T> & v, std::vector<int> & rank)
+        {
+            findranks_zero(v, rank);
+            for (size_t i = 0; i < rank.size(); i++)
+            {
+                rank[i] += 1;
             }
         }
     } // end namespace
