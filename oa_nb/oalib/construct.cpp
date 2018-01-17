@@ -55,11 +55,8 @@ namespace oacpp
             size_t icol, irow;
             size_t q = static_cast<size_t>(gf.q);
 
-            int test = bosecheck(q, ncol);
-            if (test != SUCCESS_CHECK)
-            {
-                return FAILURE_CHECK;
-            }
+            // bosecheck throws if it fails
+            bosecheck(q, ncol);
 
             irow = 0;
             for (size_t i = 0; i < q; i++)
@@ -149,13 +146,10 @@ namespace oacpp
         int bush(GF & gf, bclib::matrix<int> & A, int str, int ncol)
         {
             int q = gf.q;
-            int test = bushcheck(q, str, ncol);
-            if (test != SUCCESS_CHECK)
-            {
-                return FAILURE_CHECK;
-            }
-
             std::vector<int> coef(str);
+            
+            // bushcheck throws if it fails
+            bushcheck(q, str, ncol);
 
             for (size_t i = 0; i < static_cast<size_t>(primes::ipow(q, str)); i++)
             {
@@ -207,15 +201,12 @@ namespace oacpp
             int p = gf.p;
             size_t q = gf.q;
 
-            int test = addelkempcheck(q, p, ncol);
-            if (test != SUCCESS_CHECK)
-            {
-                return FAILURE_CHECK;
-            }
-
             std::vector<int> b(q);
             std::vector<int> c(q);
             std::vector<int> k(q);
+
+            // addelkempcheck throws if it fails
+            addelkempcheck(q, p, ncol);
 
             for (size_t i = 0; i < q; i++)
             { /* First q*q rows */
@@ -325,11 +316,8 @@ namespace oacpp
             size_t s = q / 2; /* number of levels in design */
             bclib::matrix<int> A(s, q);
 
-            int test = bosebushcheck(s, p, ncol);
-            if (test != SUCCESS_CHECK)
-            {
-                return FAILURE_CHECK;
-            }
+            // bosebushcheck throws if it fails
+            bosebushcheck(s, p, ncol);
 
             irow = 0;
             for (size_t i = 0; i < q; i++)
@@ -397,11 +385,8 @@ namespace oacpp
             size_t s = q / lam; /* number of levels in design */
             bclib::matrix<int> A(s,q);
 
-            int test = bosebushlcheck(s, p, lam, ncol);
-            if (test != SUCCESS_CHECK)
-            {
-                return FAILURE_CHECK;
-            }
+            // bosebushlcheck throws if it fails
+            bosebushlcheck(s, p, lam, ncol);
 
             irow = 0;
             for (size_t i = 0; i < q; i++)
