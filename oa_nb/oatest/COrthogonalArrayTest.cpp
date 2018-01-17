@@ -33,6 +33,7 @@ namespace oaTest{
         testBoseRange();
         testBoseBush();
         testBoseBushRange();
+		testBush();
         testBushRange();
         testBoseBushl();
         testBoseBushlRange();
