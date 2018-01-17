@@ -281,6 +281,14 @@ namespace oaTest{
         testException(f, 1, 1);
         testException(f, 6, 3);
         testException(f, 3, 9);
+		
+		q = 4;
+		ncol = 10;
+		// Error that ncol > q + 1
+		ASSERT_THROW(oacpp::oaconstruct::bosecheck(q, ncol));
+		ncol = -1;
+		// Error that ncol <= 0
+		ASSERT_THROW(oacpp::oaconstruct::bosecheck(q, ncol));
     }
 
 	void COrthogonalArrayTest::testBoseRange()
