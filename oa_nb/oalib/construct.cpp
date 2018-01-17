@@ -131,14 +131,14 @@ namespace oacpp
                 msg << "It doesn't make sense to have an array of strength " << str << " with only " << ncol << "columns.\n";
                 throw std::runtime_error(msg.str().c_str());
             }
-            if (str >= q + 1)
+            if (str >= q + 1) // LCOV_EXCL_START
             {
                 PRINT_OUTPUT("Bush's (1952) theorem has a condition t<q where t\n");
                 PRINT_OUTPUT("is the strength of the array and q is the number of symbols.\n");
                 PRINT_OUTPUT("Here we have t = %d and q = %d.  The array may still\n", str, q);
                 PRINT_OUTPUT("be useful, but a full factorial would have at least as\n");
                 PRINT_OUTPUT("many columns.\n");
-            }
+            } // LCOV_EXCL_STOP
 
             return SUCCESS_CHECK;
         }
@@ -182,14 +182,15 @@ namespace oacpp
                 throw std::runtime_error(msg.str().c_str());
             }
 
-            if (ncol == 2 * q + 1)
+            if (ncol == 2 * q + 1) // LCOV_EXCL_START
             {
                 PRINT_OUTPUT("\nWarning: The Addelman-Kempthorne construction with ncol = 2q+1\n");
                 PRINT_OUTPUT("has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
                 PRINT_OUTPUT("there exist some pairs of rows that agree in three columns.\n");
                 PRINT_OUTPUT("The final column in the array is involved in all of these\n");
                 PRINT_OUTPUT("triple coincidences.\n");
-            }
+            } // LCOV_EXCL_STOP
+            
             return SUCCESS_CHECK;
         }
 
@@ -297,12 +298,13 @@ namespace oacpp
                 throw std::runtime_error(msg.str().c_str());
             }
 
-            if (ncol == 2 * q + 1)
+            if (ncol == 2 * q + 1) // LCOV_EXCL_START
             {
                 PRINT_OUTPUT("\nWarning: The Bose-Bush construction with ncol = 2q+1\n");
                 PRINT_OUTPUT("has a defect.  While it is still an OA(2q^2,2q+1,q,2),\n");
                 PRINT_OUTPUT("there exist some pairs of rows that agree in three columns.\n\n\n");
-            }
+            } // LCOV_EXCL_STOP
+            
             return SUCCESS_CHECK;
         }
 
@@ -364,13 +366,14 @@ namespace oacpp
                 throw std::runtime_error(msg.str().c_str());
             }
 
-            if (ncol == lam * s + 1)
+            if (ncol == lam * s + 1) // LCOV_EXCL_START
             {
                 PRINT_OUTPUT("\nWarning: The Bose-Bush construction with ncol = lambda*q+1\n");
                 PRINT_OUTPUT("has a defect.  While it is still an OA(lambda*q^2,lambda*q+1,q,2),\n");
                 PRINT_OUTPUT("it may have worse coincidence properties than\n");
                 PRINT_OUTPUT("OA(lambda*q^2,lambda*q+1,q,2).\n");
-            }
+            } // LCOV_EXCL_STOP
+            
             return SUCCESS_CHECK;
         }
 
