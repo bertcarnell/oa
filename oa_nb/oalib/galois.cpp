@@ -203,7 +203,7 @@ namespace oacpp
             return 1;
         }
 
-        void GF_print(GF & gf)
+        void GF_print(GF & gf) // LCOV_EXCL_START
         {
             int n, p, q;
 
@@ -270,6 +270,6 @@ namespace oacpp
             {
                 PRINT_OUTPUT(" %3d %3d\n", i, gf.root[i]);
             }
-        }
+        } // LCOV_EXCL_STOP
     } // end namespace
 } // end namespace
