@@ -580,7 +580,7 @@ namespace oacpp {
         /**
          * Check that the array was created successfully and assign the number of rows
          * 
-         * @param result code indicating if the array was created successfull
+         * @param result code indicating if the array was created successful
          * @param nvalue the expected number of rows in the array
          * @param n [out] the number of rows
          * @throws std::runtime_error

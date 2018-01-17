@@ -40,6 +40,12 @@ namespace oacpp
         {
             size_t q = static_cast<size_t>(gf.q);
 
+            if (q > 4)
+            {
+                std::string msg = "Addelman Kempthorne designs not yet available for \n even q >4.";
+                throw std::runtime_error(msg.c_str());
+            }
+
             *kay = 1;
 
             if (q == 2)
@@ -56,16 +62,12 @@ namespace oacpp
                 k[3] = 3;
             }
 
+            // TODO: isn't this redundant to the above for q <= 4
             for (size_t i = 1; i < q; i++)
             {
                 k[i] = i;
             }
 
-            if (q > 4)
-            {
-                std::string msg = "Addelman Kempthorne designs not yet available for \n even q >4.";
-                throw std::runtime_error(msg.c_str());
-            }
             return 0;
         }
 

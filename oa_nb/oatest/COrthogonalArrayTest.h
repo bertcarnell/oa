@@ -59,6 +59,10 @@ namespace oaTest {
          */
         void testBoseRange();
         /**
+         * @test Test the oacpp::COrthogonalArray::bosebush algorithm
+         */
+        void testBoseBush();
+        /**
          * @test Test the oacpp::COrthogonalArray::bosebush algorithm with a range of values
          */
         void testBoseBushRange();
@@ -86,6 +90,23 @@ namespace oaTest {
          * @test Test the oacpp::COrthogonalArray::busht algorithm with a range of values
          */
         void testBushtRange();
+        
+        /**
+         * @test Test the oacpp::COrthogonalArray::oaagree
+         */
+        void testOaagree();
+        
+        /**
+         * @test Test the oacpp::COrthogonalArray::oatriple
+         */
+        void testOatriple();
+        
+        void testOarand();
+        void testOastr();
+        void testOastr1();
+        void testOastr2();
+        void testOastr3();
+        void testOastr4();
     private:
         void testRange(
             const std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,

@@ -31,7 +31,7 @@ void COrthogonalArray::createGaloisField(int q)
 	bool test = galoisfield::GF_getfield(q, m_gf) == SUCCESS_CHECK ? true : false;
 	if (!test)
 	{
-		throw std::runtime_error("Could not construct the Galois field");
+		throw std::runtime_error("Could not construct the Galois field"); // LCOV_EXCL_TEST
 	}
 }
 
@@ -39,7 +39,7 @@ void COrthogonalArray::checkDesignMemory()
 {
 	if (m_A.isEmpty())
 	{
-		throw std::runtime_error("Could not allocate array for the design memory.");
+		throw std::runtime_error("Could not allocate array for the design memory."); // LCOV_EXCL_TEST
 	}
 }
 
@@ -69,7 +69,7 @@ void COrthogonalArray::checkResult(int result, int nvalue, int * n)
 	}
 	else
 	{
-	  throw std::runtime_error("Unable to construct design");
+	  throw std::runtime_error("Unable to construct design"); // LCOV_EXCL_TEST
 	}
 }
 
@@ -95,7 +95,7 @@ void COrthogonalArray::addelkemp3(int q, int k, int* n)
     m_q = q; m_ncol=k; m_nrow=*n;
 }
 
-void COrthogonalArray::addelkempn(int akn, int q, int k, int* n)
+void COrthogonalArray::addelkempn(int akn, int q, int k, int* n) // LCOV_EXCL_START
 {
 	k = checkMaxColumns(k, 2*(primes::ipow(q,akn)-1)/(q-1) - 1); /*  2(q^3-1)/(q-1) - 1  */
 	createGaloisField(q);
@@ -104,7 +104,7 @@ void COrthogonalArray::addelkempn(int akn, int q, int k, int* n)
 	int result = oaaddelkemp::addelkempn(m_gf, akn, m_A, k);
 	checkResult(result, 2*primes::ipow(q,akn), n);
     m_q = q; m_ncol=k; m_nrow=*n;
-}
+} // LCOV_EXCL_STOP
 
 void COrthogonalArray::bose(int q, int k, int* n)
 {
@@ -211,16 +211,16 @@ int COrthogonalArray::oaagree(bool verbose)
 		  mrow2 = j;
 		  if (verbose)
 		  {
-			PRINT_OUTPUT("New max %d %d %d\n", i, j, agree);
+			PRINT_OUTPUT("New max %d %d %d\n", i, j, agree); // LCOV_EXCL_LINE
 		  }
 		}
 	  }
 	  if (i && i % ROWCHECK == 0 && verbose)
       {
-		PRINT_OUTPUT("Checked rows <= %d vs all other rows.\n",i);
+		PRINT_OUTPUT("Checked rows <= %d vs all other rows.\n",i); // LCOV_EXCL_LINE
       }
 	}
-	if (verbose)
+	if (verbose) // LCOV_EXCL_START
 	{
 		if (maxagr == 0)
 		{
@@ -231,7 +231,7 @@ int COrthogonalArray::oaagree(bool verbose)
 		  PRINT_OUTPUT("Maximum number of columns matching for two distinct rows is %d.\n", maxagr);
 		  PRINT_OUTPUT("This is attained by rows %d and %d.\n", mrow1, mrow2);
 		}
-	}
+	} // LCOV_EXCL_STOP
 	return maxagr;
 }
 
@@ -254,20 +254,23 @@ int COrthogonalArray::oatriple(bool verbose)
 					{
 						a3 += ( m_A(i1,j1)==m_A(i2,j1) )&&( m_A(i1,j2)==m_A(i2,j2) )&&( m_A(i1,j3)==m_A(i2,j3) );
 					}
-					if (a3 && verbose)
+					if (a3)
 					{
-						PRINT_OUTPUT("Cols %d %d %d match in %d distinct pairs of rows.\n", j1, j2, j3, a3);
+                        if (verbose)
+                        {
+                            PRINT_OUTPUT("Cols %d %d %d match in %d distinct pairs of rows.\n", j1, j2, j3, a3); // LCOV_EXCL_LINE
+                        }
 						num3++;
 					}
 				}
 			}
 		}
 	}
-	if (verbose)
+	if (verbose) // LCOV_EXCL_START
 	{
 		PRINT_OUTPUT("There are %d distinct triples of columns that agree\n", num3);
 		PRINT_OUTPUT("in at least two distinct rows.\n");
-	}
+	} // LCOV_EXCL_STOP
 	return num3;
 }
 
@@ -288,9 +291,10 @@ void COrthogonalArray::oarand(int is, int js, int ks, int ls)
 int COrthogonalArray::oastr(bool verbose)
 {
 	int str;
-	oastrength::OA_strength(m_q, m_A, &str, 2);
+	int bverb = (verbose) ? ALLMESSAGES : NOMESSAGES;
+	oastrength::OA_strength(m_q, m_A, &str, bverb);
 
-	if (verbose)
+	if (verbose) // LCOV_EXCL_START
 	{
 		if (str < 0)
 		{
@@ -301,7 +305,7 @@ int COrthogonalArray::oastr(bool verbose)
 		{
 		  PRINT_OUTPUT("\nThe array has strength %d and no higher strength.\n", str);
 		}
-	}
+	} // LCOV_EXCL_STOP
 	return str;
 }
 

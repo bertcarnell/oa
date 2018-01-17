@@ -31,11 +31,20 @@ namespace oaTest{
         //testAddelkempn(); // deprecated
         testBose();
         testBoseRange();
+        testBoseBush();
         testBoseBushRange();
         testBushRange();
         testBoseBushl();
         testBoseBushlRange();
         testBusht();
+        testOaagree();
+        testOatriple();
+        testOarand();
+        testOastr();
+        testOastr1();
+        testOastr2();
+        testOastr3();
+        testOastr4();
 		printf("passed\n");
 	}
     
@@ -150,6 +159,19 @@ namespace oaTest{
         testException(f, 0, 0);
         testException(f, 6, 12);
         testException(f, 10, 2);
+        
+        oacpp::GF gf;
+        gf.q = 6;
+        int kay = 0;
+        std::vector<int> b = std::vector<int>(4);
+        std::vector<int> c = std::vector<int>(4);
+        std::vector<int> k = std::vector<int>(9);
+        ASSERT_THROW(oacpp::oaaddelkemp::akeven(gf, &kay, b, c, k));
+        
+        gf.q = 3;
+        gf.p = 3;
+        gf.root = std::vector<int>(gf.q);
+        ASSERT_THROW(oacpp::oaaddelkemp::akodd(gf, &kay, b, c, k));
 	}
     
 	void COrthogonalArrayTest::testAddelkempRange()
@@ -185,6 +207,27 @@ namespace oaTest{
         testException(f, 0, 0);
         testException(f, 1, 12);
         testException(f, 6, 12);
+        
+        q = 5;
+        int p = 2;
+        ncol = 7;
+        // p == 2 && q > 4
+        ASSERT_THROW(oacpp::oaaddelkemp::addelkemp3check(q, p, ncol));
+        q = 8;
+        // q == 8
+        ASSERT_THROW(oacpp::oaaddelkemp::addelkemp3check(q, p, ncol));
+        q = 3;
+        p = 2;
+        ncol = 2*q*q + 2*q + 1 + 1;
+        // ncol > 2*q*q + 2*q + 1
+        ASSERT_THROW(oacpp::oaaddelkemp::addelkemp3check(q, p, ncol));
+        
+        bclib::matrix<int> A = bclib::matrix<int>(2,2);
+        oacpp::GF gf;
+        gf.p = 2;
+        gf.q = 5;
+        // addlekemp3check fails
+        ASSERT_THROW(oacpp::oaaddelkemp::addelkemp3(gf, A, 3));
 	}
 
 	void COrthogonalArrayTest::testAddelkemp3Range()
@@ -248,6 +291,14 @@ namespace oaTest{
 		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bose);
         testRange(f, q, ncol);
     }
+    
+    void COrthogonalArrayTest::testBoseBush()
+    {
+        int n = 7;
+        oacpp::COrthogonalArray coa;
+        // error for q not a power of 2
+        ASSERT_THROW(coa.bosebush(3, 5, &n));
+    }
 
 	void COrthogonalArrayTest::testBoseBushRange()
 	{
@@ -280,6 +331,14 @@ namespace oaTest{
         oacpp::COrthogonalArray coa;
 		coa.bosebushl(lambda, q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        
+        // errors
+        // q not an integer power of a prime
+        ASSERT_THROW(coa.bosebushl(lambda, 6, ncol, &n));
+        // lambda not an integer power of a prime
+        ASSERT_THROW(coa.bosebushl(6, q, ncol, &n));
+        // lambda and q are not powers of the same prime
+        ASSERT_THROW(coa.bosebushl(4, 9, ncol, &n));
     }
 
     void COrthogonalArrayTest::testBoseBushlRange()
@@ -300,6 +359,9 @@ namespace oaTest{
         oacpp::COrthogonalArray coa;
 		coa.busht(str, q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        
+        // strength must be >= 2
+        ASSERT_THROW(coa.busht(1, q, ncol, &n));
     }
 
     void COrthogonalArrayTest::testBushtRange()
@@ -309,5 +371,77 @@ namespace oaTest{
         std::vector<int> str = {2,2,2,3,3,3,3,3,4,4,4,4,4};
 		std::function<void(oacpp::COrthogonalArray&, int, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::busht);
         testRange2(f, str, q, ncol);
+    }
+    
+    void COrthogonalArrayTest::testOaagree()
+    {
+        oacpp::COrthogonalArray coa; 
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        int maxagr = coa.oaagree(false);
+        bclib::Assert(9, maxagr, "Error in OA Agree");
+    }
+    
+    void COrthogonalArrayTest::testOatriple()
+    {
+        oacpp::COrthogonalArray coa;
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        int num3 = coa.oatriple(false);
+        bclib::Assert(123552, num3, "Error in OA triple");
+    }
+    
+    void COrthogonalArrayTest::testOarand()
+    {
+        oacpp::COrthogonalArray coa;
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        // all between 1 and 168
+        int is = 10;
+        int js = 100;
+        int ks = 101;
+        int ls = 17;
+        coa.oarand(is, js, ks, ls);
+        bclib::Assert(2, coa.getoa().at(0,0), "Error in Oarand");
+    }
+    
+    void COrthogonalArrayTest::testOastr()
+    {
+        oacpp::COrthogonalArray coa;
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        bclib::Assert(2, coa.oastr(false), "Error in oastr");
+    }
+
+    void COrthogonalArrayTest::testOastr1()
+    {
+        oacpp::COrthogonalArray coa;
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        bclib::Assert(coa.oastr1(false));
+    }
+
+    void COrthogonalArrayTest::testOastr2()
+    {
+        oacpp::COrthogonalArray coa;
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        bclib::Assert(coa.oastr2(false));
+    }
+
+    void COrthogonalArrayTest::testOastr3()
+    {
+        oacpp::COrthogonalArray coa;
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        bclib::Assert(!coa.oastr3(false));
+    }
+
+    void COrthogonalArrayTest::testOastr4()
+    {
+        oacpp::COrthogonalArray coa;
+        int n;
+        coa.addelkemp3(3, 25, &n);
+        bclib::Assert(!coa.oastr4(false));
     }
 } // end namespace
