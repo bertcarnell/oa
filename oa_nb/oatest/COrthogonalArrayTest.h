@@ -66,6 +66,7 @@ namespace oaTest {
          * @test Test the oacpp::COrthogonalArray::bosebush algorithm with a range of values
          */
         void testBoseBushRange();
+		void testBush();
         /**
          * @test Test the oacpp::COrthogonalArray::bush algorithm with a range of values
          */
