@@ -34,7 +34,7 @@ namespace oacpp
 {
     namespace primes
     {
-        int isprime_old(int p)
+        int isprime_old(int p) // LCOV_EXCL_START
         {
             if (p < 2)
             {
@@ -54,7 +54,7 @@ namespace oacpp
                 }
             }
             return ISPRIMETRUE;
-        }
+        } // LCOV_EXCL_STOP
         
         int isprime(unsigned int n)
         {
