@@ -172,6 +172,18 @@ namespace oaTest{
         gf.p = 3;
         gf.root = std::vector<int>(gf.q);
         ASSERT_THROW(oacpp::oaaddelkemp::akodd(gf, &kay, b, c, k));
+		
+		int p = 2;
+		q = 5;
+		ncol = 3;
+		// Error when p == 2 and q > 4
+		ASSERT_THROW(oacpp::oaconstruct::addelkempcheck(q, p, ncol));
+		
+		q = 3;
+		p = 2;
+		ncol = 8;
+		// Error when ncol > 2 * q + 1
+		ASSERT_THROW(oacpp::oaconstruct::addelkempcheck(q, p, ncol));
 	}
     
 	void COrthogonalArrayTest::testAddelkempRange()
@@ -306,6 +318,18 @@ namespace oaTest{
         oacpp::COrthogonalArray coa;
         // error for q not a power of 2
         ASSERT_THROW(coa.bosebush(3, 5, &n));
+		
+		int q = 2;
+		int p = 3;
+		int ncol = 5;
+		// Error when p != 2
+		ASSERT_THROW(oacpp::oaconstruct::bosebushcheck(q, p, ncol));
+		
+		q = 2;
+		p = 2;
+		ncol = 7;
+		// Error when ncol > 2*q + 1
+		ASSERT_THROW(oacpp::oaconstruct::bosebushcheck(q, p, ncol));
     }
 
 	void COrthogonalArrayTest::testBoseBushRange()
@@ -319,6 +343,21 @@ namespace oaTest{
 		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bosebush);
         testRange(f, q, ncol);
     }
+	
+	void COrthogonalArrayTest::testBush()
+	{
+		int q = 2;
+		int str = 2;
+		int ncol = 5;
+		// Error when ncol > q + 1
+		ASSERT_THROW(oacpp::oaconstruct::bushcheck(q, str, ncol));
+		
+		q = 2;
+		str = 5;
+		ncol = 3;
+		// Error when str > ncol
+		ASSERT_THROW(oacpp::oaconstruct::bushcheck(q, str, ncol));
+	}
 
 	void COrthogonalArrayTest::testBushRange()
 	{
@@ -347,6 +386,20 @@ namespace oaTest{
         ASSERT_THROW(coa.bosebushl(6, q, ncol, &n));
         // lambda and q are not powers of the same prime
         ASSERT_THROW(coa.bosebushl(4, 9, ncol, &n));
+		
+		int s = 3;
+		int p = 6;
+		lambda = 2;
+		ncol = 7;
+		// Error when p is not prime
+		ASSERT_THROW(oacpp::oaconstruct::bosebushlcheck(s, p, lambda, ncol));
+		
+		s = 3;
+		p = 3;
+		lambda = 2;
+		ncol = 20;
+		// Error when ncol > lambda * s + 1
+		ASSERT_THROW(oacpp::oaconstruct::bosebushlcheck(s, p, lambda, ncol));
     }
 
     void COrthogonalArrayTest::testBoseBushlRange()
