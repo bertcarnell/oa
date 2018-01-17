@@ -46,7 +46,7 @@ namespace oacpp
 
         if (GF_fields_are_set)
         {
-            PRINT_OUTPUT("Warning: Fields being re-initialized.  Possible memory waste.\n");
+            PRINT_OUTPUT("Warning: Fields being re-initialized.  Possible memory waste.\n"); // LCOV_EXCL_LINE
         }
 
         // set variables
