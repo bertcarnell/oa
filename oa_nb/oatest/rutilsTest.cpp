@@ -53,6 +53,15 @@ namespace oaTest{
         v[4] = 0.0; v[3] = 0.0; v[2] = 0.0; v[1] = 0.0; v[0] = 0.0;
         oacpp::rutils::findranks<double>(v, ind);
         bclib::Assert(ind[0] == 1 && ind[1] == 2 && ind[2] == 3 && ind[3] == 4 && ind[4] == 5, "testFindRanks Error 4");
+        
+        std::vector<int> ind2(6);
+        // resize
+        oacpp::rutils::findranks_slow<double>(v, ind2);
+        bclib::Assert(v.size() == ind2.size(), "testFindRanks Error 5");
+
+        std::vector<int> ind3(8);
+        oacpp::rutils::findranks<double>(v, ind3);
+        bclib::Assert(v.size() == ind3.size(), "testFindRanks Error 6");
     }
     
     void rutilsTest::testUnifPerm()
@@ -98,5 +107,20 @@ namespace oaTest{
             test = test & (pi[i] == pi3[i]);
         }
         bclib::Assert(test, "no differences does not exist");
+
+        oacpp::RUnif ran4 = oacpp::RUnif(10, 20, 30, 40);
+        bclib::Assert(ran4.getSeedSet().is == 10);
+        
+        oacpp::SeedSet ss;
+        ss.is = 10;
+        ss.js = 20;
+        ss.ks = 30;
+        ss.ls = 40;
+        oacpp::RUnif ran5 = oacpp::RUnif(ss);
+        bclib::Assert(ran5.getSeedSet().js == 20);
+        
+        oacpp::RUnif ran6 = oacpp::RUnif();
+        ran6.seed(ss);
+        bclib::Assert(ran6.getSeedSet().ks == 30);
     }
 }

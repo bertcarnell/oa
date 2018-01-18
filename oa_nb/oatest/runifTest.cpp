@@ -74,5 +74,10 @@ namespace oaTest
         {
             bclib::Assert(x[i] == x3[i], "random equality");
         }
+        
+        // seed errors
+        oacpp::RUnif ran4 = oacpp::RUnif(1, 1, 1, 1);
+        oacpp::RUnif ran5 = oacpp::RUnif(2, -1, 3, 4);
+        oacpp::RUnif ran6 = oacpp::RUnif(8, 9, 200, 12);
     }
 } // end Namespace
