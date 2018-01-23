@@ -45,5 +45,5 @@ after_success:
   - lcov --list oatest.clean.info
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   - cd $TRAVIS_BUILD_DIR/oa_nb
-  - doxygen -g doxygen.config
+  - doxygen doxygen.config
 
