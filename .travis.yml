@@ -18,6 +18,11 @@ addons:
       - lcov
       - r-base
       - r-base-dev
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
 
 install:
   - sudo R --slave --vanilla -e "install.packages('Rcpp', repos='http://cran.case.edu')"
@@ -39,4 +44,6 @@ after_success:
   - lcov --remove oatest.info 'oatest/*' 'oalhstest/*' '/usr/*' --output-file oatest.clean.info
   - lcov --list oatest.clean.info
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  - cd $TRAVIS_BUILD_DIR/oa_nb
+  - doxygen -g doxygen.config
 
