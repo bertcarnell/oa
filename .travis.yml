@@ -46,7 +46,7 @@ after_success:
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   - cd $TRAVIS_BUILD_DIR/oa_nb
   - doxygen doxygen.config
-  - git add --all
+  - git add $TRAVIS_BUILD_DIR/oa_nb/doxygen/html/*.*
   - git commit -m "Travis Checkin"
 
 #  - git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null
