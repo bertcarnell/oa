@@ -3,6 +3,20 @@ language: c++
 dist: trusty
 sudo: false
 
+# Blacklist
+branches:
+  except:
+    - gh-pages
+
+# Environment variables
+env:
+  global:
+    - GH_REPO_NAME: oa
+    - DOXYFILE: doxygen.config
+    - GH_REPO_REF: github.com/bertcarnell/oa.git
+
+
+# Alternate Commands to get the latest r packages
 #https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
 #  {
 #    "alias": "r-packages-trusty",
@@ -44,9 +58,6 @@ after_success:
   - lcov --remove oatest.info 'oatest/*' 'oalhstest/*' '/usr/*' --output-file oatest.clean.info
   - lcov --list oatest.clean.info
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
-  - cd $TRAVIS_BUILD_DIR/oa_nb
-  - doxygen doxygen.config
-  - git add $TRAVIS_BUILD_DIR/oa_nb/doxygen/html/*.*
-  - git commit -m "Travis Checkin"
+  - cd $TRAVIS_BUILD_DIR
+  - sh generateDoxygen.sh
 
-#  - git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null
