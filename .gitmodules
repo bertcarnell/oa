@@ -1,3 +1,3 @@
-[submodule "oa_nb/bclib"]
-	path = oa_nb/bclib
+[submodule "src/bclib"]
+	path = src/bclib
 	url = https://github.com/bertcarnell/bclib.git

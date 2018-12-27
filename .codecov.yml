@@ -10,8 +10,8 @@ coverage:
   range: "70...100"
   ignore:
     - "/usr/.*"
-    - "oa_nb/oatest/.*"
-    - "oa_nb/oalhstest/.*"
+    - "src/oatest/.*"
+    - "src/oalhstest/.*"
 
   status:
     project: yes
