@@ -1,31 +1,29 @@
-rm -rf cmakebuild
-mkdir cmakebuild
-cd cmakebuild
+rm -rf build
+mkdir build
+cd build
 
 IF "%1"=="MinGW" (GOTO :section1) ELSE (GOTO :section2)
 
 :section1
 
-set path=%path:c:\Rtools\bin;=%
+"C:\Program Files\CMake\bin\cmake.exe" -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=C:/Rtools/mingw_64/bin/g++.exe -DCMAKE_C_COMPILER=C:/Rtools/mingw_64/bin/gcc.exe -DCMAKE_MAKE_PROGRAM=C:/Rtools/mingw_64/bin/mingw32-make.exe -DCMAKE_BUILD_TYPE=Debug ..
+C:\Rtools\mingw_64\bin\mingw32-make.exe
 
-"c:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=C:/Rtools/gcc-4.6.3/bin/g++.exe -DCMAKE_BUILD_TYPE=Debug ..
+.\oatest\oatest.exe
+.\oalhstest\oalhstest.exe
 
-"C:\MinGW\bin\mingw32-make.exe"
-
-oatest\oatest.exe
-oalhstest\oalhstest.exe
-
-PAUSE
-EXIT
+GOTO :section3
 
 :section2
 
-"c:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -G "Visual Studio 12" ..
+cmake .. -G "Visual Studio 15 2017 Win64"
 
-"C:\Program Files (x86)\MSBuild\12.0\Bin\msbuild.exe" OA.sln /t:Rebuild /p:Configuration=Debug
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MsBuild.exe" OA.sln /t:Rebuild /p:Configuration=Debug
 
-oatest\Debug\oatest.exe
-oalhstest\Debug\oalhstest.exe
+.\oatest\Debug\oatest.exe
+.\oalhstest\Debug\oalhstest.exe
 
+GOTO :section3
+
+:section3
 PAUSE
-EXIT

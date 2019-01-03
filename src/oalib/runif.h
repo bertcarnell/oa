@@ -34,6 +34,7 @@
 #include "CommonDefines.h"
 #define SEEDOK 1
 #define SEEDBAD 0
+#define SEED_VECTOR_LENGTH (97+1)
 
 namespace oacpp 
 {
@@ -57,7 +58,7 @@ namespace oacpp
 	class RUnif
 	{
 	public:
-        RUnif() {};
+        RUnif();
         RUnif(int is, int js, int ks, int ls);
         RUnif(SeedSet seedSet);
         
@@ -114,7 +115,7 @@ namespace oacpp
 		void ranums(std::vector<double> & x, int n);
 
 		int m_jent, m_i, m_j, m_k, m_l, ip, jp;
-		double u[97+1];
+		double u[SEED_VECTOR_LENGTH];
 		double c, cd, cm;
 	};
 }

@@ -113,7 +113,7 @@ namespace oacpp
             {
                 q *= p;
             }
-            gf.q = q;
+            gf.q = static_cast<int>(q);
             gf.xton = std::vector<int>(n);
             for (size_t i = 0; i < static_cast<size_t>(n); i++)
             {
@@ -164,7 +164,7 @@ namespace oacpp
                 {
                     if (gf.times(i,j) == 1)
                     {
-                        gf.inv[i] = j;
+                        gf.inv[i] = static_cast<int>(j);
                     }
                 }
                 if (i > 0 && gf.inv[i] <= 0)
@@ -180,7 +180,7 @@ namespace oacpp
                 gf.neg[i] = -1;
                 for (size_t j = 0; j < q; j++)
                     if (gf.plus(i,j) == 0)
-                        gf.neg[i] = j;
+                        gf.neg[i] = static_cast<int>(j);
                 if (i > 0 && gf.neg[i] <= 0)
                 {
                     msg << "There is something wrong with the Galois field\n";
@@ -196,7 +196,7 @@ namespace oacpp
                 {
                     if (gf.times(j,j) == static_cast<int>(i))
                     {
-                        gf.root[i] = j;
+                        gf.root[i] = static_cast<int>(j);
                     }
                 }
             }
@@ -222,7 +222,7 @@ namespace oacpp
             {
                 PRINT_OUTPUT("%d,", gf.xton[i]);
             }
-            PRINT_OUTPUT("%d)\n", gf.xton[n - 1]);
+            PRINT_OUTPUT("%d)\n", gf.xton[static_cast<size_t>(n) - 1]);
             PRINT_OUTPUT("\n\nGF(%d) Polynomial coefficients:\n", q);
             for (int i = 0; i < q; i++)
             {

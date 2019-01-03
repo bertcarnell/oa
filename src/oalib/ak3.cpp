@@ -64,12 +64,13 @@ namespace oacpp
         {
             int kay;
             //std::vector<int> b, c, k; /* A&K notation */
-            int row, col, square, ksquare;
+            int square, ksquare;
+			size_t row, col;
 
             int p = gf.p;
             size_t q = static_cast<size_t>(gf.q);
 
-            if (!addelkemp3check(q, p, ncol))
+            if (!addelkemp3check(static_cast<int>(q), p, ncol))
             {
                 return 0;
             }
@@ -89,7 +90,7 @@ namespace oacpp
                         col = 0;
                         if (col < ncol)
                         {
-                            A(row,col++) = i2; /*      y       */
+                            A(row, col++) = static_cast<int>(i2); /*      y       */
                         }
                         for (size_t m1 = 1; m1 < q && col < ncol; m1++) /* x + my       */
                         {
@@ -97,7 +98,7 @@ namespace oacpp
                         }
                         if (col < ncol)
                         {
-                            A(row,col++) = i3; /*           z  */
+                            A(row, col++) = static_cast<int>(i3); /*           z  */
                         }
                         for (size_t m2 = 1; m2 < q && col < ncol; m2++) /* x      + mz  */
                         {
@@ -145,7 +146,7 @@ namespace oacpp
                         }
                         if (col < ncol)
                         {
-                            A(row,col++) = i1; /* x            */
+                            A(row, col++) = static_cast<int>(i1); /* x            */
                         }
                     }
                 }
@@ -172,7 +173,7 @@ namespace oacpp
                         col = 0;
                         if (col < ncol)
                         {
-                            A(row,col++) = i2; /*     y        */
+                            A(row, col++) = static_cast<int>(i2); /*     y        */
                         }
                         for (size_t m1 = 1; m1 < q && col < ncol; m1++)
                         { /* x + my + b(m)      */
@@ -182,7 +183,7 @@ namespace oacpp
                         }
                         if (col < ncol)
                         {
-                            A(row,col++) = i3; /*           z  */
+                            A(row,col++) = static_cast<int>(i3); /*           z  */
                         }
 
                         for (size_t m2 = 1; m2 < q && col < ncol; m2++)
@@ -243,7 +244,7 @@ namespace oacpp
                         }
                         if (col < ncol)
                         {
-                            A(row,col++) = i1; /* x            */
+                            A(row, col++) = static_cast<int>(i1); /* x            */
                         }
                     }
                 }

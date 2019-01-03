@@ -49,11 +49,12 @@ namespace oalhslib
         {
             for (msize_type irow = 0; irow < static_cast<msize_type>(n); irow++)
             {
-                lhs(irow,jcol) = static_cast<double>(intlhs(irow,jcol) - 1);
+                lhs(irow, jcol) = static_cast<double>(intlhs(irow, jcol)) - 1.0;
             }
         }
-        std::vector<double> randomunif = std::vector<double>(n*k);
-        for (vsize_type i = 0; i < static_cast<vsize_type>(n*k); i++)
+		int veclen = n * k;
+        std::vector<double> randomunif = std::vector<double>(veclen);
+        for (vsize_type i = 0; i < static_cast<vsize_type>(veclen); i++)
         {
             randomunif[i] = oRandom.getNextRandom();
         }
@@ -136,9 +137,9 @@ namespace oalhslib
                 {
                     randdouble = std::vector<double>(tempcount);
                     // get a random ordering for the digits
-                    for (std::vector<double>::iterator i = randdouble.begin(); i != randdouble.end(); i++)
+                    for (std::vector<double>::iterator itt = randdouble.begin(); itt != randdouble.end(); itt++)
                     {
-                        *i = oRandom.getNextRandom();
+                        *itt = oRandom.getNextRandom();
                     }
                     //lhslib::runif_std(tempcount, randdouble, oRandom);
                     bclib::findorder_zero(randdouble, randints);
@@ -254,10 +255,10 @@ namespace oalhslib
         types.push_back("addelkemp3");
         types.push_back("bose");
         types.push_back("bosebush");
-        diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_addelkemp))));
-		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_addelkemp3))));
-		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_bose))));
-		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n - n_bosebush))));
+        diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_addelkemp))));
+		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_addelkemp3))));
+		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_bose))));
+		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_bosebush))));
         
         // which is the smallest?
         std::vector<int> orders = std::vector<int>(diffs.size());

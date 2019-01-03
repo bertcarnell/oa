@@ -56,7 +56,7 @@ namespace oacpp
             size_t q = static_cast<size_t>(gf.q);
 
             // bosecheck throws if it fails
-            bosecheck(q, ncol);
+            bosecheck(static_cast<int>(q), ncol);
 
             irow = 0;
             for (size_t i = 0; i < q; i++)
@@ -64,14 +64,14 @@ namespace oacpp
                 for (size_t j = 0; j < q; j++)
                 {
                     icol = 0;
-                    A(irow,icol++) = i;
+                    A(irow, icol++) = static_cast<int>(i);
                     if (ncol > 1)
                     {
-                        A(irow,icol++) = j;
+                        A(irow, icol++) = static_cast<int>(j);
                     }
-                    for (size_t icol = 2; icol < static_cast<size_t>(ncol); icol++)
+                    for (icol = 2; icol < static_cast<size_t>(ncol); icol++)
                     {
-                        A(irow, icol) = gf.plus(j,gf.times(i,icol - 1));
+                        A(irow, icol) = gf.plus(j, gf.times(i, icol - 1));
                     }
                     irow++;
                 }
@@ -153,11 +153,11 @@ namespace oacpp
 
             for (size_t i = 0; i < static_cast<size_t>(primes::ipow(q, str)); i++)
             {
-                itopoly(i, q, str - 1, coef);
-                A(i,0) = coef[str - 1];
-                for (size_t j = 0; j < static_cast<size_t>(ncol - 1); j++)
+                itopoly(static_cast<int>(i), q, str - 1, coef);
+                A(i, static_cast<size_t>(0)) = coef[static_cast<size_t>(str) - 1];
+                for (size_t j = 0; j < static_cast<size_t>(ncol) - 1; j++)
                 {
-                    polyeval(gf, str - 1, coef, j, &(A(i,1 + j)));
+                    polyeval(gf, str - 1, coef, static_cast<int>(j), &(A(i, 1 + j)));
                 }
             }
             return SUCCESS_CHECK;
@@ -197,7 +197,8 @@ namespace oacpp
         int addelkemp(GF & gf, bclib::matrix<int> & A, int ncol)
         {
             int kay; /* A&K notation */
-            int row, col, square, ksquare, temp;
+            int square, ksquare, temp;
+			size_t row, col;
 
             int p = gf.p;
             size_t q = gf.q;
@@ -207,7 +208,7 @@ namespace oacpp
             std::vector<int> k(q);
 
             // addelkempcheck throws if it fails
-            addelkempcheck(q, p, ncol);
+            addelkempcheck(static_cast<int>(q), p, ncol);
 
             for (size_t i = 0; i < q; i++)
             { /* First q*q rows */
@@ -218,7 +219,7 @@ namespace oacpp
                     col = 0;
                     if (col < ncol)
                     {
-                        A(row,col++) = j;
+                        A(row, col++) = static_cast<int>(j);
                     }
                     for (size_t m = 1; m < q && col < ncol; m++)
                     {
@@ -231,7 +232,7 @@ namespace oacpp
                     }
                     if (col < ncol)
                     {
-                        A(row,col++) = i;
+                        A(row, col++) = static_cast<int>(i);
                     }
                 }
             }
@@ -255,7 +256,7 @@ namespace oacpp
                     col = 0;
                     if (col < ncol)
                     {
-                        A(row,col++) = j;
+                        A(row, col++) = static_cast<int>(j);
                     }
                     for (size_t m = 1; m < q && col < ncol; m++, col++)
                     {
@@ -274,7 +275,7 @@ namespace oacpp
                     }
                     if (col < ncol)
                     {
-                        A(row,col++) = i;
+                        A(row, col++) = static_cast<int>(i);
                     }
                 }
             }
@@ -310,8 +311,9 @@ namespace oacpp
 
         int bosebush(GF & gf, bclib::matrix<int> & B, int ncol)
         {
-            int p, irow;
+            int p;
             int mul;
+			size_t irow;
 
             p = gf.p; /* GF(q) used to generate design with q/2 levels */
             size_t q = static_cast<size_t>(gf.q);
@@ -319,7 +321,7 @@ namespace oacpp
             bclib::matrix<int> A(s, q);
 
             // bosebushcheck throws if it fails
-            bosebushcheck(s, p, ncol);
+            bosebushcheck(static_cast<int>(s), p, ncol);
 
             irow = 0;
             for (size_t i = 0; i < q; i++)
@@ -341,7 +343,7 @@ namespace oacpp
                     }
                     if (static_cast<size_t>(ncol) == 2 * s + 1)
                     {
-                        B(irow,ncol - 1) = i % s;
+                        B(irow, static_cast<size_t>(ncol) - 1) = static_cast<int>(i % s);
                     }
                     irow++;
                 }
@@ -389,7 +391,7 @@ namespace oacpp
             bclib::matrix<int> A(s,q);
 
             // bosebushlcheck throws if it fails
-            bosebushlcheck(s, p, lam, ncol);
+            bosebushlcheck(static_cast<int>(s), p, lam, ncol);
 
             irow = 0;
             for (size_t i = 0; i < q; i++)
@@ -411,7 +413,7 @@ namespace oacpp
                     }
                     if (ncol == lam * static_cast<int>(s) + 1)
                     {
-                        B(irow,ncol - 1) = i % s;
+                        B(irow, static_cast<size_t>(ncol) - 1) = static_cast<int>(i % s);
                     }
                     irow++;
                 }

@@ -81,27 +81,27 @@ namespace oalhs_test
         
         oalhslib::oaLHS(n, k, oa, intlhs, lhs, false, oRandom);
         
-        bclib::Assert(oaseq.size(), oa.getDataVector().size());
+        bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
         for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
         
-        bclib::Assert(k, intlhs.colsize(), "columnsize");
-        bclib::Assert(k, lhs.colsize(), "columnsize");
-        bclib::Assert(n, intlhs.rowsize(), "rowsize");
-        bclib::Assert(n, lhs.rowsize(), "rowsize");
+        bclib::Assert(k, static_cast<int>(intlhs.colsize()), "columnsize");
+        bclib::Assert(k, static_cast<int>(lhs.colsize()), "columnsize");
+        bclib::Assert(n, static_cast<int>(intlhs.rowsize()), "rowsize");
+        bclib::Assert(n, static_cast<int>(lhs.rowsize()), "rowsize");
         bclib::Assert(isValidLHS(intlhs), "valid integer lhs");
         bclib::Assert(isValidLHS(lhs), "valid double lhs");
         
         oalhslib::oaLHS(n, k, oa, intlhs, false);
-        bclib::Assert(oaseq.size(), oa.getDataVector().size());
+        bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
         for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
-        bclib::Assert(k, intlhs.colsize(), "columnsize");
-        bclib::Assert(n, intlhs.rowsize(), "rowsize");
+        bclib::Assert(k, static_cast<int>(intlhs.colsize()), "columnsize");
+        bclib::Assert(n, static_cast<int>(intlhs.rowsize()), "rowsize");
         bclib::Assert(isValidLHS(intlhs), "valid integer lhs for deterministic oalhs");
         
         std::vector<int> lhsintseq = {1,1,
@@ -137,27 +137,27 @@ namespace oalhs_test
         
         oalhslib::oaLHS(n, k, oa, intlhs, lhs, false, oRandom);
         
-        bclib::Assert(oaseq.size(), oa.getDataVector().size());
+        bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
         for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
         
-        bclib::Assert(k, intlhs.colsize(), "columnsize");
-        bclib::Assert(k, lhs.colsize(), "columnsize");
-        bclib::Assert(n, intlhs.rowsize(), "rowsize");
-        bclib::Assert(n, lhs.rowsize(), "rowsize");
+        bclib::Assert(k, static_cast<int>(intlhs.colsize()), "columnsize");
+        bclib::Assert(k, static_cast<int>(lhs.colsize()), "columnsize");
+        bclib::Assert(n, static_cast<int>(intlhs.rowsize()), "rowsize");
+        bclib::Assert(n, static_cast<int>(lhs.rowsize()), "rowsize");
         bclib::Assert(isValidLHS(intlhs), "valid integer lhs");
         bclib::Assert(isValidLHS(lhs), "valid double lhs");
         
         oalhslib::oaLHS(n, k, oa, intlhs, false);
-        bclib::Assert(oaseq.size(), oa.getDataVector().size());
+        bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
         for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
-        bclib::Assert(k, intlhs.colsize(), "columnsize");
-        bclib::Assert(n, intlhs.rowsize(), "rowsize");
+        bclib::Assert(k, static_cast<int>(intlhs.colsize()), "columnsize");
+        bclib::Assert(n, static_cast<int>(intlhs.rowsize()), "rowsize");
         bclib::Assert(isValidLHS(intlhs), "valid integer lhs for deterministic oalhs");
         
         std::vector<int> lhsintseq = {1,1,1,

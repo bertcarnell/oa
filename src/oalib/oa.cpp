@@ -189,7 +189,7 @@ namespace oacpp
                 } // LCOV_EXCL_STOP
                 return 0;
             }
-            if (nrow % (q * q))
+            if (static_cast<int>(nrow) % (q * q))
             {
                 if (verbose > 0) // LCOV_EXCL_START
                 {
@@ -199,7 +199,7 @@ namespace oacpp
                 return 0;
             }
 
-            lambda = nrow / (q * q);
+            lambda = static_cast<int>(nrow) / (q * q);
             work = static_cast<double>(nrow * ncol) * static_cast<double>((ncol - 1.0) * q * q) / 2.0;
             OA_strworkcheck(work, 2);
 
@@ -261,7 +261,7 @@ namespace oacpp
                 } // LCOV_EXCL_STOP
                 return 0;
             }
-            if (nrow % (q * q * q))
+            if (static_cast<int>(nrow) % (q * q * q))
             {
                 if (verbose > 0) // LCOV_EXCL_START
                 {
@@ -271,7 +271,7 @@ namespace oacpp
                 return 0;
             }
 
-            lambda = nrow / (q * q * q);
+            lambda = static_cast<int>(nrow) / (q * q * q);
             work = static_cast<double>(nrow * ncol) * static_cast<double>((ncol - 1.0)*(ncol - 2.0) * q * q * q) / 6.0;
             OA_strworkcheck(work, 3);
 
@@ -338,7 +338,7 @@ namespace oacpp
                 } // LCOV_EXCL_STOP
                 return 0;
             }
-            if (nrow % (q * q * q * q))
+            if (static_cast<int>(nrow) % (q * q * q * q))
             {
                 if (verbose > 0) // LCOV_EXCL_START
                 {
@@ -348,9 +348,12 @@ namespace oacpp
                 return 0;
             }
 
-            lambda = nrow / (q * q * q * q);
-            work = static_cast<double>(nrow * ncol) * static_cast<double>((ncol - 1.0)*(ncol - 2.0)*(ncol - 3.0)) * 
-                    static_cast<double>(q * q * q * q) / 24.0;
+            lambda = static_cast<int>(nrow) / (q * q * q * q);
+			// cast to doubles to prevent overflow
+			double dnrow = static_cast<double>(nrow);
+			double dncol = static_cast<double>(ncol);
+			double dq = static_cast<double>(q);
+            work = dnrow * dncol * (dncol - 1.0) * (dncol - 2.0) * (dncol - 3.0) * dq * dq * dq * dq / 24.0;
             OA_strworkcheck(work, 4);
 
             for (size_t j1 = 0; j1 < ncol; j1++)
@@ -448,7 +451,7 @@ namespace oacpp
                 return 0;
             }
 
-            lambda = nrow / primes::ipow(q, t);
+            lambda = static_cast<int>(nrow) / primes::ipow(q, t);
             work = static_cast<double>(nrow * primes::ipow(q, t));
             ctuples = 1;
 
@@ -458,7 +461,7 @@ namespace oacpp
             for (int i = 0; i < t; i++)
             {
                 work *= static_cast<double>((ncol - i)) / static_cast<double>((i + 1.0));
-                ctuples *= ncol - i;
+                ctuples *= static_cast<int>(ncol) - i;
                 qlist[i] = 0;
                 clist[i] = i;
             }
@@ -516,7 +519,7 @@ namespace oacpp
 
                 for (int i = t - 1; i >= 0; i--) // has to be int
                 {
-                    clist[i] = (clist[i] + 1) % (ncol + i - t + 1);
+                    clist[i] = (clist[i] + 1) % (static_cast<int>(ncol) + i - t + 1);
                     if (clist[i])
                     {
                         break;
@@ -530,7 +533,7 @@ namespace oacpp
                         t, (clist[0] + static_cast<int>(ncol) - 1) % static_cast<int>(ncol)); // LCOV_EXCL_LINE
                 }
 
-                for (int i = 1; i < t; i++)
+                for (size_t i = 1; i < static_cast<size_t>(t); i++)
                 {
                     if (clist[i] <= clist[i - 1])
                     {

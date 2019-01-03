@@ -42,7 +42,7 @@ install:
   - sudo R --slave --vanilla -e "install.packages('Rcpp', repos='http://cran.case.edu')"
 
 script:
-  - cd oa_nb
+  - cd src
   - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release # Test release build options
   - cmake --build build
   - ./build/oatest/oatest

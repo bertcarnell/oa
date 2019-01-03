@@ -66,13 +66,13 @@ namespace oaTest{
     
     void rutilsTest::testUnifPerm()
     {
-        unsigned int q = 10;
+        int q = 10;
         std::vector<int> pi(q);
         oacpp::RUnif ran = oacpp::RUnif();
         ran.seed(10,20,30,40);
         oacpp::rutils::unifperm(pi, q, ran);
         // test that each integer is available 0 to q-1
-        for (unsigned int i = 0; i < q; i++)
+        for (int i = 0; i < q; i++)
         {
             bclib::Assert(std::find(pi.begin(), pi.end(), i) != pi.end(), "integer found when required");
             std::vector<int>::iterator it = std::find(pi.begin(), pi.end(), i);

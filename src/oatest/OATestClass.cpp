@@ -54,13 +54,13 @@ namespace oaTest
     void OATestClass::standardChecks(bclib::matrix<int> A, int expectedq, int expectedCols)
     {
         bclib::Assert(static_cast<int>(A.colsize()) == expectedCols, "A has the wrong col size");
-        int n = A.rowsize();
+        size_t n = A.rowsize();
 
-		for (int col = 0; col < expectedCols; col++)
+		for (size_t col = 0; col < static_cast<size_t>(expectedCols); col++)
 		{
-			for (int row = 0; row < n; row++)
+			for (size_t row = 0; row < n; row++)
 			{
-				bclib::Assert(A(row, col) >= 0 && A(row,col) <= expectedq - 1, "Values in A do not match  q");
+				bclib::Assert(A(row, col) >= 0 && A(row, col) <= expectedq - 1, "Values in A do not match  q");
 			}
 		}
 		bclib::Assert(isDotProductConstant(A), "Dot product is not consistent in A");

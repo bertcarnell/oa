@@ -109,7 +109,7 @@ namespace oacpp
                         {
                             if (monic == -1)
                             {
-                                monic = i;
+                                monic = static_cast<int>(i);
                             }
                             // TODO: this might be an else on the if(s[i])
                             /*else
@@ -119,14 +119,14 @@ namespace oacpp
                         }
                         else
                         {
-                            indx[numin++] = i;
+                            indx[numin++] = static_cast<int>(i);
                         }
                     }
                     for (size_t i = 0; i < numin; i++)
                     {
                         coef[i] = 1;
                     }
-                    for (size_t poly = 0; poly < static_cast<size_t>(primes::ipow(q - 1, numin)) && col < ncol; poly++)
+                    for (size_t poly = 0; poly < static_cast<size_t>(primes::ipow(q - 1, static_cast<int>(numin))) && col < ncol; poly++)
                     {
                         elt = x[monic];
                         for (size_t i = 0; i < numin; i++)
@@ -134,7 +134,7 @@ namespace oacpp
                             elt = gf.plus(elt, gf.times(coef[i],x[indx[i]]));
                         }
                         A(row,col++) = elt;
-                        for (int i = numin - 1; i >= 0; i--) // has to be an int to decrement
+                        for (int i = static_cast<int>(numin) - 1; i >= 0; i--) // has to be an int to decrement
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % q;
@@ -175,7 +175,7 @@ namespace oacpp
                         {
                             if (monic == -1)
                             {
-                                monic = i;
+                                monic = static_cast<int>(i);
                             }
                             // this might be an else on the if(s[i])
                             /*else
@@ -185,7 +185,7 @@ namespace oacpp
                         }
                         else
                         {
-                            indx[numin++] = i;
+                            indx[numin++] = static_cast<int>(i);
                         }
                     }
                     coef[0] = 0;
@@ -193,7 +193,8 @@ namespace oacpp
                     {
                         coef[i] = 1;
                     }
-                    for (size_t poly = 0; poly < static_cast<size_t>(q * primes::ipow(q - 1, numin)) && col < ncol; poly++)
+					int polymax = q * primes::ipow(q - 1, static_cast<int>(numin));
+                    for (size_t poly = 0; poly < static_cast<size_t>(polymax) && col < ncol; poly++)
                     {
                         elt = gf.plus(square,gf.times(x[0],coef[0]));
                         elt = gf.plus(elt,x[monic]);
@@ -202,7 +203,7 @@ namespace oacpp
                             elt = gf.plus(elt,gf.times(coef[i],x[indx[i - 1]]));
                         }
                         A(row,col++) = elt;
-                        for (int i = numin + 1 - 1; i >= 0; i--) // has to be an int
+                        for (int i = static_cast<int>(numin) + 1 - 1; i >= 0; i--) // has to be an int
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % q;
@@ -253,7 +254,8 @@ namespace oacpp
             {
                 x[i] = 0;
             }
-            for (size_t row = static_cast<size_t>(primes::ipow(q, akn)); row < static_cast<size_t>(2 * primes::ipow(q, akn)); row++) /* Second q^akn rows */
+			int rowmax = 2 * primes::ipow(q, akn);
+            for (size_t row = static_cast<size_t>(primes::ipow(q, akn)); row < static_cast<size_t>(rowmax); row++) /* Second q^akn rows */
             {
                 col = 0;
                 s[0] = 1;
@@ -271,7 +273,7 @@ namespace oacpp
                         {
                             if (monic == -1)
                             {
-                                monic = i;
+                                monic = static_cast<int>(i);
                             }
                             // this might be an else on the if(s[i])
                             /*else
@@ -281,14 +283,14 @@ namespace oacpp
                         }
                         else
                         {
-                            indx[numin++] = i;
+                            indx[numin++] = static_cast<int>(i);
                         }
                     }
                     for (size_t i = 0; i < numin; i++)
                     {
                         coef[i] = 1;
                     }
-                    for (size_t poly = 0; poly < static_cast<size_t>(primes::ipow(q - 1, numin)) && col < ncol; poly++)
+                    for (size_t poly = 0; poly < static_cast<size_t>(primes::ipow(q - 1, static_cast<int>(numin))) && col < ncol; poly++)
                     {
                         elt = x[monic];
                         if (numin && s[0])
@@ -300,7 +302,7 @@ namespace oacpp
                             elt = gf.plus(elt,gf.times(coef[i],x[indx[i]]));
                         }
                         A(row,col++) = elt;
-                        for (int i = numin - 1; i >= 0; i--) // has to be an int to decrement
+                        for (int i = static_cast<int>(numin) - 1; i >= 0; i--) // has to be an int to decrement
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % q;
@@ -341,7 +343,7 @@ namespace oacpp
                         {
                             if (monic == -1)
                             {
-                                monic = i;
+                                monic = static_cast<int>(i);
                             }
                             // this might be an else on the if(s[i])
                             /*else
@@ -351,7 +353,7 @@ namespace oacpp
                         }
                         else
                         {
-                            indx[numin++] = i;
+                            indx[numin++] = static_cast<int>(i);
                         }
                     }
                     coef[0] = 0;
@@ -359,7 +361,8 @@ namespace oacpp
                     {
                         coef[i] = 1;
                     }
-                    for (size_t poly = 0; poly < static_cast<size_t>(q * primes::ipow(q - 1, numin)) && col < ncol; poly++)
+					int polymax = q * primes::ipow(q - 1, static_cast<int>(numin));
+                    for (size_t poly = 0; poly < static_cast<size_t>(polymax) && col < ncol; poly++)
                     {
                         elt = gf.plus(ksquare,gf.times(x[0],k[coef[0]]));
                         elt = gf.plus(elt,x[monic]);
@@ -369,7 +372,7 @@ namespace oacpp
                             elt = gf.plus(elt,gf.times(coef[i],x[indx[i - 1]]));
                         }
                         A(row,col++) = elt;
-                        for (int i = numin + 1 - 1; i >= 0; i--) // has to be an int to decrement // don't understand + 1 - 1
+                        for (int i = static_cast<int>(numin) + 1 - 1; i >= 0; i--) // has to be an int to decrement // don't understand + 1 - 1
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % q;
@@ -393,7 +396,7 @@ namespace oacpp
                     }
                 }
 
-                for (int i = aknu - 1; i >= 0; i--) // has to be an int to decrement
+                for (int i = static_cast<int>(aknu) - 1; i >= 0; i--) // has to be an int to decrement
                 {
                     size_t ui = static_cast<size_t>(i);
                     x[ui] = (x[ui] + 1) % q;

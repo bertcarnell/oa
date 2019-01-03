@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 project(OA)
 
 if (MSVC)
-  # disable unreferenced formal parameters and constant conditional expression
-  set(CMAKE_CXX_FLAGS "/EHsc /W4 /WX /wd4100;4127")
+  # disable unreferenced formal parameters (4100) and constant conditional expression (4127) and special noexcept from asserterror (26439) and not initialized variables (26495)
+  set(CMAKE_CXX_FLAGS "/EHsc /W4 /WX /wd4100 /wd4127 /wd26439 /wd26495")
   set(CMAKE_CXX_FLAGS_DEBUG "/Od")
   set(CMAKE_CXX_FLAGS_RELEASE "/O3")
   set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2")
@@ -26,12 +26,9 @@ else ()
   endif()
 
   message(STATUS "Linker FLAGS: ${CMAKE_EXE_LINKER_FLAGS}")
-
-  include(RVariables.cmake)
 endif ()
 
 add_subdirectory(oalib)
 add_subdirectory(oatest)
 add_subdirectory(oalhslib)
 add_subdirectory(oalhstest)
-add_subdirectory(oa_r)

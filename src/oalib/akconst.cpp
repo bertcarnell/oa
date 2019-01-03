@@ -65,7 +65,7 @@ namespace oacpp
             // TODO: isn't this redundant to the above for q <= 4
             for (size_t i = 1; i < q; i++)
             {
-                k[i] = i;
+                k[i] = static_cast<int>(i);
             }
 
             return 0;
@@ -92,7 +92,7 @@ namespace oacpp
             {
                 if (gf.root[i] == -1)
                 {
-                    *kay = i;
+                    *kay = static_cast<int>(i);
                 }
             }
             if (*kay == 0)

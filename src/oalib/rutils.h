@@ -68,14 +68,14 @@ namespace oacpp
             }
             for (size_t i = 0; i < v.size(); i++)
             {
-                indx[i] = i;
+                indx[i] = static_cast<int>(i);
             }
             std::vector<T> vsort(v);
             std::sort<typename std::vector<T>::iterator>(vsort.begin(), vsort.end());
 
             for (size_t i = 0; i < v.size(); i++)
             {
-                indx[i] = std::find(vsort.begin(), vsort.end(), v[i]) - vsort.begin();
+                indx[i] = static_cast<int>(std::find(vsort.begin(), vsort.end(), v[i]) - vsort.begin());
             }
         }
 

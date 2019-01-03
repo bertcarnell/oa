@@ -54,7 +54,7 @@ namespace oacpp {
         /**
          * Default Constructor
          */
-		COrthogonalArray(){};
+		COrthogonalArray();
         /**
          * Default Destructor
          */
