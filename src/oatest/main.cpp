@@ -23,6 +23,7 @@
 #include "matrixTest.h"
 #include "primesTest.h"
 #include "COrthogonalArrayTest.h"
+#include "runifTest.h"
 
 using namespace oaTest;
 
@@ -38,6 +39,7 @@ int main(int argc, const char* argv[] )
     CREATE_TEST_OA(COrthogonalArrayTest);
     CREATE_TEST_OA(rutilsTest);
     CREATE_TEST_OA(matrixTest);
+	CREATE_TEST_OA(runifTest);
 
 	for (size_t i = 0; i < tests.size(); i++)
 	{

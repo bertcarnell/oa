@@ -182,25 +182,25 @@ namespace oalhs_test
         
         printf("\tAsk for a 4, 2 design that should be possible\n");
         oalhslib::generateOALHS(4,2,oalhs,true,true);
-        bclib::Assert(oalhs.rowsize() == 4);
-        bclib::Assert(oalhs.colsize() == 2);
+        bclib::Assert(oalhs.rowsize() == 4, "generate 1");
+        bclib::Assert(oalhs.colsize() == 2, "generate 2");
         
         printf("\tAsk for a 20, 3 that is not possible but needs a larger design\n");
         // ask for a oalhs that is not possible so a larger design is given
         oalhslib::generateOALHS(20,3,oalhs,true,true);
-        bclib::Assert(oalhs.rowsize() == 25);
-        bclib::Assert(oalhs.colsize() == 3);
+        bclib::Assert(oalhs.rowsize() == 25, "generate 3");
+        bclib::Assert(oalhs.colsize() == 3, "generate 4");
 
         printf("\tAsk for a 20, 3 that is not possible but needs a smaller design\n");
         // ask for a oalhs that is not possible so a smaller design is given
         oalhslib::generateOALHS(20,3,oalhs,false,true);
-        bclib::Assert(oalhs.rowsize() == 18);
-        bclib::Assert(oalhs.colsize() == 3);
+        bclib::Assert(oalhs.rowsize() == 18, "generate 5");
+        bclib::Assert(oalhs.colsize() == 3, "generate 6");
         
         printf("\tAsk for a 20, 10 that is not possible but needs a larger design\n");
         // ask for a oalhs that has too many variables and ask for a larger design
         oalhslib::generateOALHS(20,10,oalhs,true,true);
-        bclib::Assert(oalhs.rowsize() == 54);
-        bclib::Assert(oalhs.colsize() == 10);
+        bclib::Assert(oalhs.rowsize() == 54, "generate 7");
+        bclib::Assert(oalhs.colsize() == 10, "generate 8");
     }
 }

@@ -34,23 +34,23 @@ namespace oacpp
 {
 	RUnif::RUnif()
 	{
-		RUnif::seed(1, 2, 3, 4);
 		m_jent = m_i = m_j = m_k = m_l = ip = jp = 0;
 		c = cd = cm = 0.0;
+		RUnif::seed(1, 2, 3, 4);
 	}
 
     RUnif::RUnif(int is, int js, int ks, int ls)
     {
-        RUnif::seed(is, js, ks, ls);
 		m_jent = m_i = m_j = m_k = m_l = ip = jp = 0;
 		c = cd = cm = 0.0;
+		RUnif::seed(is, js, ks, ls);
 	}
     
     RUnif::RUnif(SeedSet seedSet)
     {
-        RUnif::seed(seedSet.is, seedSet.js, seedSet.ks, seedSet.ls);
 		m_jent = m_i = m_j = m_k = m_l = ip = jp = 0;
 		c = cd = cm = 0.0;
+		RUnif::seed(seedSet.is, seedSet.js, seedSet.ks, seedSet.ls);
 	}
     
     void RUnif::seed(SeedSet seedSet)

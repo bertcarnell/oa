@@ -249,24 +249,66 @@ namespace oalhslib
             printf("Candidate OA:  BoseBush with q=%d n=%d k=%d\n", q_bosebush, n_bosebush, k_bosebush); // LCOV_EXCL_LINE
         }
         
+		// Goal:  Find the n and k that are the closest with atleast the required n and k
         std::vector<std::string> types = std::vector<std::string>();
-        std::vector<int> diffs = std::vector<int>();
+        std::vector<int> ndiffs = std::vector<int>();
+		std::vector<int> ks = std::vector<int>();
+		std::vector<int> ns = std::vector<int>();
         types.push_back("addelkemp");
         types.push_back("addelkemp3");
         types.push_back("bose");
         types.push_back("bosebush");
-        diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_addelkemp))));
-		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_addelkemp3))));
-		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_bose))));
-		diffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_bosebush))));
+		ks.push_back(k_addelkemp);
+		ks.push_back(k_addelkemp3);
+		ks.push_back(k_bose);
+		ks.push_back(k_bosebush);
+		ns.push_back(n_addelkemp);
+		ns.push_back(n_addelkemp3);
+		ns.push_back(n_bose);
+		ns.push_back(n_bosebush);
+		// if atleast one of the models has a greater n
+		if (n_addelkemp >= n || n_addelkemp3 >= n || n_bose >= n || n_bosebush >= n)
+		{
+			ndiffs.push_back((n_addelkemp >= n) ? n_addelkemp - n : (n - n_addelkemp) * 100);
+			ndiffs.push_back((n_addelkemp3 >= n) ? n_addelkemp3 - n : (n - n_addelkemp3) * 100);
+			ndiffs.push_back((n_bose >= n) ? n_bose - n : (n - n_bose) * 100);
+			ndiffs.push_back((n_bosebush >= n) ? n_bosebush - n : (n - n_bosebush) * 100);
+		}
+		else
+		{
+			ndiffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_addelkemp))));
+			ndiffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_addelkemp3))));
+			ndiffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_bose))));
+			ndiffs.push_back(static_cast<int>(fabs(static_cast<double>(n) - static_cast<double>(n_bosebush))));
+		}
         
         // which is the smallest?
-        std::vector<int> orders = std::vector<int>(diffs.size());
-        bclib::findorder_zero(diffs, orders);
+        std::vector<int> norders = std::vector<int>(ndiffs.size());
+        bclib::findorder_zero(ndiffs, norders);
         oacpp::COrthogonalArray coa = oacpp::COrthogonalArray();
         
-        std::string selected = types[orders[0]];
-        
+		std::string selected = "";
+		if (ks[norders[0]] >= k)
+		{
+			selected = types[norders[0]];
+		}
+		else if (ks[norders[1]] >= k && ns[norders[1]] >= n)
+		{
+			selected = types[norders[1]];
+		}
+		else if (ks[norders[2]] >= k && ns[norders[2]] >= n)
+		{
+			selected = types[norders[2]];
+		}
+		else if (ks[norders[3]] >= k && ns[norders[3]] >= n)
+		{
+			selected = types[norders[3]];
+		}
+		else
+		{
+			selected = types[norders[0]];
+		}
+
         bclib::matrix<int> intoalhs;
         if (selected == "addelkemp")
         {
