@@ -26,20 +26,13 @@ env:
 
 addons:
   apt:
-    sources:
-      - r-packages-trusty
     packages:
       - lcov
-      - r-base
-      - r-base-dev
       - doxygen
       - doxygen-doc
       - doxygen-latex
       - doxygen-gui
       - graphviz
-
-install:
-  - sudo R --slave --vanilla -e "install.packages('Rcpp', repos='http://cran.case.edu')"
 
 script:
   - cd src
@@ -60,4 +53,3 @@ after_success:
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   - cd $TRAVIS_BUILD_DIR
   - sh generateDoxygen.sh
-
