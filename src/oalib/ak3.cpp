@@ -92,11 +92,11 @@ namespace oacpp
                         {
                             A(row, col++) = static_cast<int>(i2); /*      y       */
                         }
-                        for (size_t m1 = 1; m1 < q && col < static_cast<int>(ncol); m1++) /* x + my       */
+                        for (size_t m1 = 1; m1 < q && col < static_cast<size_t>(ncol); m1++) /* x + my       */
                         {
                             A(row,col++) = gf.plus(i1,gf.times(m1,i2));
                         }
-                        if (col < static_cast<int>(ncol))
+                        if (col < static_cast<size_t>(ncol))
                         {
                             A(row, col++) = static_cast<int>(i3); /*           z  */
                         }
