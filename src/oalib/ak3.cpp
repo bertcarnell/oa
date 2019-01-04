@@ -88,51 +88,51 @@ namespace oacpp
                     {
                         row = i3 + q * i2 + q * q * i1;
                         col = 0;
-                        if (col < ncol)
+                        if (col < static_cast<size_t>(ncol))
                         {
                             A(row, col++) = static_cast<int>(i2); /*      y       */
                         }
-                        for (size_t m1 = 1; m1 < q && col < ncol; m1++) /* x + my       */
+                        for (size_t m1 = 1; m1 < q && col < static_cast<int>(ncol); m1++) /* x + my       */
                         {
                             A(row,col++) = gf.plus(i1,gf.times(m1,i2));
                         }
-                        if (col < ncol)
+                        if (col < static_cast<int>(ncol))
                         {
                             A(row, col++) = static_cast<int>(i3); /*           z  */
                         }
-                        for (size_t m2 = 1; m2 < q && col < ncol; m2++) /* x      + mz  */
+                        for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++) /* x      + mz  */
                         {
                             A(row,col++) = gf.plus(i1,gf.times(m2,i3));
                         }
-                        for (size_t m2 = 1; m2 < q && col < ncol; m2++) /*      y + mz  */
+                        for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++) /*      y + mz  */
                         {
                             A(row,col++) = gf.plus(i2,gf.times(m2,i3));
                         }
-                        for (size_t m1 = 1; m1 < q && col < ncol; m1++) /* x + my + nz  */
+                        for (size_t m1 = 1; m1 < q && col < static_cast<size_t>(ncol); m1++) /* x + my + nz  */
                         {
-                            for (size_t m2 = 1; m2 < q && col < ncol; m2++)
+                            for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++)
                             {
                                 A(row,col++) =
                                     gf.plus(i1,gf.plus(gf.times(m1,i2),gf.times(m2,i3)));
                             }
                         }
-                        for (size_t m1 = 0; m1 < q && col < ncol; m1++) /* x^2 + mx + y */
+                        for (size_t m1 = 0; m1 < q && col < static_cast<size_t>(ncol); m1++) /* x^2 + mx + y */
                         {
                             A(row,col++) = gf.plus(square,
                                 gf.plus(i2,
                                 gf.times(m1,i1)));
                         }
 
-                        for (size_t m1 = 0; m1 < q && col < ncol; m1++) /* x^2 + mx + z */
+                        for (size_t m1 = 0; m1 < q && col < static_cast<size_t>(ncol); m1++) /* x^2 + mx + z */
                         {
                             A(row,col++) = gf.plus(square,
                                 gf.plus(i3,
                                 gf.times(m1,i1)));
                         }
 
-                        for (size_t m1 = 0; m1 < q && col < ncol; m1++) /* x^2 + mx + y + nz */
+                        for (size_t m1 = 0; m1 < q && col < static_cast<size_t>(ncol); m1++) /* x^2 + mx + y + nz */
                         {
-                            for (size_t m2 = 1; m2 < q && col < ncol; m2++)
+                            for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++)
                             {
                                 A(row,col++)
                                     = gf.plus(square,
@@ -144,7 +144,7 @@ namespace oacpp
                                     );
                             }
                         }
-                        if (col < ncol)
+                        if (col < static_cast<size_t>(ncol))
                         {
                             A(row, col++) = static_cast<int>(i1); /* x            */
                         }
@@ -171,35 +171,35 @@ namespace oacpp
                     {
                         row = i3 + q * i2 + q * q * i1 + q * q*q;
                         col = 0;
-                        if (col < ncol)
+                        if (col < static_cast<size_t>(ncol))
                         {
                             A(row, col++) = static_cast<int>(i2); /*     y        */
                         }
-                        for (size_t m1 = 1; m1 < q && col < ncol; m1++)
+                        for (size_t m1 = 1; m1 < q && col < static_cast<size_t>(ncol); m1++)
                         { /* x + my + b(m)      */
                             A(row,col) = gf.plus(i1,gf.times(m1,i2));
                             A(row,col) = gf.plus(A(row,col),b[m1]);
                             col++;
                         }
-                        if (col < ncol)
+                        if (col < static_cast<size_t>(ncol))
                         {
                             A(row,col++) = static_cast<int>(i3); /*           z  */
                         }
 
-                        for (size_t m2 = 1; m2 < q && col < ncol; m2++)
+                        for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++)
                         { /* x      + mz + b(m) */
                             A(row,col) = gf.plus(i1,gf.times(m2,i3));
                             A(row,col) = gf.plus(A(row,col),b[m2]);
                             col++;
                         }
-                        for (size_t m2 = 1; m2 < q && col < ncol; m2++) /*      y + mz  */
+                        for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++) /*      y + mz  */
                         {
                             A(row,col++) = gf.plus(i2,gf.times(m2,i3));
                         }
 
-                        for (size_t m1 = 1; m1 < q && col < ncol; m1++) /* x + my + nz + b(m) */
+                        for (size_t m1 = 1; m1 < q && col < static_cast<size_t>(ncol); m1++) /* x + my + nz + b(m) */
                         {
-                            for (size_t m2 = 1; m2 < q && col < ncol; m2++)
+                            for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++)
                             {
                                 A(row,col) =
                                         gf.plus(i1,gf.plus(gf.times(m1,i2),gf.times(m2,i3)));
@@ -208,7 +208,7 @@ namespace oacpp
                             }
                         }
 
-                        for (size_t m1 = 0; m1 < q && col < ncol; m1++)
+                        for (size_t m1 = 0; m1 < q && col < static_cast<size_t>(ncol); m1++)
                         { /* kx^2 + k(m)x + y + c(m)*/
                             A(row,col) = gf.plus(ksquare,
                                     gf.plus(i2,
@@ -217,7 +217,7 @@ namespace oacpp
                             col++;
                         }
 
-                        for (size_t m1 = 0; m1 < q && col < ncol; m1++)
+                        for (size_t m1 = 0; m1 < q && col < static_cast<size_t>(ncol); m1++)
                         { /* kx^2 + k(m)x + z + c(m)*/
                             A(row,col) = gf.plus(ksquare,
                                     gf.plus(i3,
@@ -226,9 +226,9 @@ namespace oacpp
                             col++;
                         }
 
-                        for (size_t m1 = 0; m1 < q && col < ncol; m1++) /* kx^2 + k(m)x + y + nz +c(m) */
+                        for (size_t m1 = 0; m1 < q && col < static_cast<size_t>(ncol); m1++) /* kx^2 + k(m)x + y + nz +c(m) */
                         {
-                            for (size_t m2 = 1; m2 < q && col < ncol; m2++)
+                            for (size_t m2 = 1; m2 < q && col < static_cast<size_t>(ncol); m2++)
                             {
                                 A(row,col)
                                         = gf.plus(ksquare,
@@ -242,7 +242,7 @@ namespace oacpp
                                 col++;
                             }
                         }
-                        if (col < ncol)
+                        if (col < static_cast<size_t>(ncol))
                         {
                             A(row, col++) = static_cast<int>(i1); /* x            */
                         }
