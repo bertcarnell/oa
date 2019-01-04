@@ -90,7 +90,7 @@ namespace oaTest{
         oacpp::rutils::unifperm(pi2, q, ran2);
         // assert that at least one difference exists
         bool test = false;
-        for (size_t i = 0; i < q; i++)
+        for (size_t i = 0; i < static_cast<size_t>(q); i++)
         {
             test = test | (pi[i] != pi2[i]);
         }
@@ -102,7 +102,7 @@ namespace oaTest{
         oacpp::rutils::unifperm(pi3, q, ran3);
         // assert that all are equal
         test = true;
-        for (size_t i = 0; i < q; i++)
+        for (size_t i = 0; i < static_cast<size_t>(q); i++)
         {
             test = test & (pi[i] == pi3[i]);
         }
