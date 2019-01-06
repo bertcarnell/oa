@@ -59,12 +59,12 @@ namespace oacpp {
         
         /**
          * find q=p^n if q is a prime power with n>0
-         * @param q
-         * @param p
-         * @param n
-         * @param isit
+         * @param q integer that is a prime power
+         * @param p the prime base
+         * @param n the integer power
+         * @param isit an indicator of completion
          */
-		void primepow(int q, int* p, int* n, int* isit );
+		void primepow(int q, int* p, int* n, int* isit);
         
         /**
          * returns 1 for prime power argument

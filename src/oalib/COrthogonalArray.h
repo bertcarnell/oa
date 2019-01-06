@@ -529,6 +529,13 @@ namespace oacpp {
          */
 		bool oastr4(bool verbose);
 
+		/**
+		 * Similar to oastr, but only checking for strength t
+		 * @param t the strength to check for
+		 * @param verbose should diagnostic messages be printed?
+		 */
+		bool oastrt(int t, bool verbose);
+
         /**
          * row accessor
          * @return the number of rows in the orthogonal array

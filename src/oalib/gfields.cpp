@@ -100,11 +100,11 @@ namespace oacpp
             {
                 return 1;
             }
-            else
+            else // LCOV_EXCL_START
             {
                 msg << "Construction failed for GF(" << q << ").\n";
                 throw std::runtime_error(msg.str().c_str());
-            }
+            } // LCOV_EXCL_STOP
         }
         else
         {

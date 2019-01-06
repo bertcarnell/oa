@@ -347,4 +347,10 @@ bool COrthogonalArray::oastr4(bool verbose)
     return (oastrength::OA_str4(m_q, m_A, bverb) == SUCCESS_CHECK);
 }
 
+bool COrthogonalArray::oastrt(int t, bool verbose)
+{
+	int bverb = (verbose) ? ALLMESSAGES : NOMESSAGES;
+	return (oastrength::OA_strt(m_q, m_A, t, bverb) == SUCCESS_CHECK);
+}
+
 } // end namespace

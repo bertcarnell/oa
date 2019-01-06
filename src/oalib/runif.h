@@ -88,15 +88,15 @@ namespace oacpp
          */
 		void runif(std::vector<double> & x, int n);
 
+		/**
+		 * a mod b
+		 * @param a
+		 * @param b
+		 * @return
+		 */
+		static int mod(int a, int b);
+
 	private:
-        /**
-         * a mod b
-         * @param a
-         * @param b
-         * @return 
-         */
-		static int mod( int a, int b );
-        
         /**
          * 1 if seeds ok, 0 otherwise
          * @param is seed

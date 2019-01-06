@@ -1,7 +1,7 @@
 /**
- * @file runifTest.h
+ * @file gfieldsTest.h
  * @author Robert Carnell
- * @copyright Copyright (c) 2013, Robert Carnell
+ * @copyright Copyright (c) 2019, Robert Carnell
  * 
  * @license <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License (GPL v3)</a>
  * This program is free software: you can redistribute it and/or modify
@@ -18,23 +18,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RUNIFTEST_H
-#define	RUNIFTEST_H
+#ifndef GFIELDSTEST_H
+#define	GFIELDSTEST_H
 
 #include "OATestClass.h"
-#include "runif.h"
+#include "galois.h"
+#include "primes.h"
 
-namespace oaTest 
-{
-	class runifTest : public OATestClass
+namespace oaTest {
+    /**
+     * A class to test the Galois Fields implementation
+     */
+	class gfieldsTest : public OATestClass
 	{
 		void Run();
-		void testSeed();
-		void testRunif();
-		void testMod();
+        /**
+         * @test Test isprime
+         * @see oacpp::primes::isprime
+         */
+		void testGF_getfield();
 	};
 }
 
-
-#endif	/* RUNIFTEST_H */
+#endif	/* GFIELDSTEST_H */
 

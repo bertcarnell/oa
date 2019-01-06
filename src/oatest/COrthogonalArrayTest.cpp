@@ -46,6 +46,7 @@ namespace oaTest{
         testOastr2();
         testOastr3();
         testOastr4();
+		testOastrt();
 		printf("passed\n");
 	}
     
@@ -226,6 +227,7 @@ namespace oaTest{
         ncol = 7;
         // p == 2 && q > 4
         ASSERT_THROW(oacpp::oaaddelkemp::addelkemp3check(q, p, ncol));
+		p = 3;
         q = 8;
         // q == 8
         ASSERT_THROW(oacpp::oaaddelkemp::addelkemp3check(q, p, ncol));
@@ -480,7 +482,11 @@ namespace oaTest{
         oacpp::COrthogonalArray coa;
         int n;
         coa.addelkemp3(3, 25, &n);
-        bclib::Assert(coa.oastr1(false));
+        bclib::Assert(coa.oastr1(false), "Error in oastr1");
+
+		oacpp::COrthogonalArray coa2;
+		coa2.bose(2, 1, &n);
+		bclib::Assert(coa2.oastr1(false), "Error 2 in oastr1");
     }
 
     void COrthogonalArrayTest::testOastr2()
@@ -488,22 +494,62 @@ namespace oaTest{
         oacpp::COrthogonalArray coa;
         int n;
         coa.addelkemp3(3, 25, &n);
-        bclib::Assert(coa.oastr2(false));
-    }
+        bclib::Assert(coa.oastr2(false), "Error 1 in oastr2");
+
+		oacpp::COrthogonalArray coa2;
+		coa2.bose(2, 1, &n);
+		bclib::Assert(coa2.oastr2(false), "Error 2 in oastr2");
+
+		oacpp::COrthogonalArray coa3;
+		coa3.bosebush(2, 4, &n);
+		bclib::Assert(coa3.oastr2(false), "Error 3 in oastr2");
+	}
 
     void COrthogonalArrayTest::testOastr3()
     {
         oacpp::COrthogonalArray coa;
         int n;
         coa.addelkemp3(3, 25, &n);
-        bclib::Assert(!coa.oastr3(false));
-    }
+        bclib::Assert(!coa.oastr3(false), "Error 1 in oastr3");
+
+		oacpp::COrthogonalArray coa2;
+		coa2.bose(2, 1, &n);
+		bclib::Assert(!coa2.oastr3(false), "Error 2 in oastr3");
+
+		oacpp::COrthogonalArray coa3;
+		coa3.bosebush(2, 4, &n);
+		bclib::Assert(coa3.oastr3(false), "Error 3 in oastr3");
+	}
 
     void COrthogonalArrayTest::testOastr4()
     {
         oacpp::COrthogonalArray coa;
         int n;
         coa.addelkemp3(3, 25, &n);
-        bclib::Assert(!coa.oastr4(false));
-    }
+        bclib::Assert(!coa.oastr4(false), "Error 1 in oastr4");
+
+		oacpp::COrthogonalArray coa2;
+		coa2.bose(2, 1, &n);
+		bclib::Assert(!coa2.oastr4(false), "Error 2 in oastr4");
+
+		oacpp::COrthogonalArray coa3;
+		coa3.bosebush(2, 4, &n);
+		bclib::Assert(!coa3.oastr4(false), "Error 3 in oastr4");
+	}
+
+	void COrthogonalArrayTest::testOastrt()
+	{
+		oacpp::COrthogonalArray coa;
+		int n;
+		coa.addelkemp3(3, 25, &n);
+		bclib::Assert(!coa.oastrt(5, false), "Error 1 in oastrt");
+
+		oacpp::COrthogonalArray coa2;
+		coa2.bose(2, 1, &n);
+		bclib::Assert(!coa2.oastrt(5, false), "Error 2 in oastrt");
+
+		oacpp::COrthogonalArray coa3;
+		coa3.bosebush(2, 4, &n);
+		bclib::Assert(!coa3.oastrt(5, false), "Error 3 in oastrt");
+	}
 } // end namespace

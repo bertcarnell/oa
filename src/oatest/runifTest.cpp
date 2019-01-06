@@ -77,10 +77,32 @@ namespace oaTest
         }
         
         // seed errors
-		printf("...Printing Errors...");
+		printf("\n\t\t...Printing Errors...\n");
         oacpp::RUnif ran4 = oacpp::RUnif(1, 1, 1, 1);
-        oacpp::RUnif ran5 = oacpp::RUnif(2, -1, 3, 4);
-        oacpp::RUnif ran6 = oacpp::RUnif(8, 9, 200, 12);
-		printf("...Done Printing Errors...");
+		s = ran4.getSeedSet();
+		bclib::Assert(s.is != 1, "Runif Error e.1");
+		bclib::Assert(s.js != 2, "Runif Error e.2");
+		bclib::Assert(s.ks != 3, "Runif Error e.3");
+		bclib::Assert(s.ls != 4, "Runif Error e.4");
+		oacpp::RUnif ran5 = oacpp::RUnif(2, -1, 3, 4);
+		s = ran5.getSeedSet();
+		bclib::Assert(s.is != 1, "Runif Error e.1");
+		bclib::Assert(s.js != 2, "Runif Error e.2");
+		bclib::Assert(s.ks != 3, "Runif Error e.3");
+		bclib::Assert(s.ls != 4, "Runif Error e.4");
+		oacpp::RUnif ran6 = oacpp::RUnif(8, 9, 200, 12);
+		s = ran6.getSeedSet();
+		bclib::Assert(s.is != 1, "Runif Error e.1");
+		bclib::Assert(s.js != 2, "Runif Error e.2");
+		bclib::Assert(s.ks != 3, "Runif Error e.3");
+		bclib::Assert(s.ls != 4, "Runif Error e.4");
+		printf("\t\t...Done Printing Errors...");
     }
+
+	void testMod()
+	{
+		bclib::Assert(oacpp::RUnif::mod(10, 2) == 0, "Error1 in testmod");
+		bclib::Assert(oacpp::RUnif::mod(10, 3) == 1, "Error 2 in testmod");
+		bclib::Assert(oacpp::RUnif::mod(3, -2) == -3, "Error 3 in testmod");
+	}
 } // end Namespace

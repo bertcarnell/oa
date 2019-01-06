@@ -102,12 +102,40 @@ namespace oaTest {
          */
         void testOatriple();
         
+		/**
+		 * @test Test the oacpp::COrthongalArray::oarand
+		 */
         void testOarand();
-        void testOastr();
-        void testOastr1();
-        void testOastr2();
-        void testOastr3();
-        void testOastr4();
+
+		/**
+		 * @test Test the oacpp::COrthongalArray::oastr
+		 */
+		void testOastr();
+
+		/**
+		 * @test Test the oacpp::COrthongalArray::oastr1
+		 */
+		void testOastr1();
+
+		/**
+		 * @test Test the oacpp::COrthongalArray::oastr2
+		 */
+		void testOastr2();
+
+		/**
+		 * @test Test the oacpp::COrthongalArray::oastr3
+		 */
+		void testOastr3();
+
+		/**
+		 * @test Test the oacpp::COrthongalArray::oastr4
+		 */
+		void testOastr4();
+
+		/**
+		 * @test Test the oacpp::COrthongalArray::oastrt
+		 */
+		void testOastrt();
     private:
         void testRange(
             const std::function<void(oacpp::COrthogonalArray&, int, int, int*)> & f,

@@ -1,7 +1,7 @@
 /**
- * @file runifTest.h
+ * @file gfieldsTest.cpp
  * @author Robert Carnell
- * @copyright Copyright (c) 2013, Robert Carnell
+ * @copyright Copyright (c) 2019, Robert Carnell
  * 
  * @license <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License (GPL v3)</a>
  * This program is free software: you can redistribute it and/or modify
@@ -18,23 +18,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RUNIFTEST_H
-#define	RUNIFTEST_H
+#include "gfieldsTest.h"
 
-#include "OATestClass.h"
-#include "runif.h"
-
-namespace oaTest 
+namespace oaTest
 {
-	class runifTest : public OATestClass
+	void gfieldsTest::Run()
 	{
-		void Run();
-		void testSeed();
-		void testRunif();
-		void testMod();
-	};
+		printf("\tgfieldsTest...");
+		testGF_getfield();
+		printf("passed\n");
+	}
+
+	void gfieldsTest::testGF_getfield()
+	{
+		oacpp::GF gf = oacpp::GF();
+		//int q = 3;
+		bclib::Assert(oacpp::galoisfield::GF_getfield(3, gf) == 1);
+		ASSERT_THROW(oacpp::galoisfield::GF_getfield(-3, gf));
+		ASSERT_THROW(oacpp::galoisfield::GF_getfield(1, gf));
+		ASSERT_THROW(oacpp::galoisfield::GF_getfield(100, gf));
+		ASSERT_THROW(oacpp::galoisfield::GF_getfield(oacpp::primes::ipow(2, 30), gf));
+    }
 }
-
-
-#endif	/* RUNIFTEST_H */
 

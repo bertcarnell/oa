@@ -36,6 +36,12 @@ namespace oaTest {
          * @see oacpp::primes::isprime
          */
 		void testIsPrime();
+
+		/**
+		 * @test Test primepow
+		 * @see oacpp::primes::primepow
+		 */
+		void testPrimePow();
 	};
 }
 

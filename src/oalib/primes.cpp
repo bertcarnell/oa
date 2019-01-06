@@ -107,7 +107,7 @@ namespace oacpp
                 return;
             }
 
-            for (int k = 2; k < sqrt((double) (q + 1)); k++)
+            for (int k = 2; k < sqrt(static_cast<double>(q) + 1.0); k++)
             {
                 if ((q % k) == 0)
                 {
@@ -115,10 +115,10 @@ namespace oacpp
                     break;
                 }
             }
-            if (!isprime(firstfactor))
+            if (!isprime(firstfactor)) // LCOV_EXCL_START
             {
                 return;
-            }
+            } // LCOV_EXCL_STOP
 
             while (1)
             {

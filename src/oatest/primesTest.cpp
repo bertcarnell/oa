@@ -26,16 +26,42 @@ namespace oaTest
 	{
 		printf("\tprimesTest...");
 		testIsPrime();
+		testPrimePow();
 		printf("passed\n");
 	}
 
 	void primesTest::testIsPrime()
 	{
-        bclib::Assert(oacpp::primes::isprime(2) == ISPRIMETRUE, "error 2 prime");
+		bclib::Assert(oacpp::primes::isprime(0) == ISPRIMEFALSE, "error 0 prime");
+		bclib::Assert(oacpp::primes::isprime(1) == ISPRIMEFALSE, "error 1 prime");
+		bclib::Assert(oacpp::primes::isprime(2) == ISPRIMETRUE, "error 2 prime");
         bclib::Assert(oacpp::primes::isprime(3) == ISPRIMETRUE, "error 3 prime");
         bclib::Assert(oacpp::primes::isprime(4) == ISPRIMEFALSE, "error 4 not prime");
         bclib::Assert(oacpp::primes::isprime(5) == ISPRIMETRUE, "error 5 prime");
         bclib::Assert(oacpp::primes::isprime(6) == ISPRIMEFALSE, "error 6 not prime");
     }
+
+	void primesTest::testPrimePow()
+	{
+		int p = 0;
+		int n = 0;
+		int isit = 0;
+		oacpp::primes::primepow(8, &p, &n, &isit);
+		bclib::Assert(p == 2 && n == 3 && isit == 1);
+
+		p = n = isit = 0;
+		oacpp::primes::primepow(23, &p, &n, &isit);
+		bclib::Assert(p == 23 && n == 1 && isit == 1);
+
+		// Not Prime
+		p = n = isit = 0;
+		oacpp::primes::primepow(6, &p, &n, &isit);
+		bclib::Assert(p == 0 && n == 1 && isit == 0);
+
+		// q < 1
+		p = n = isit = 0;
+		oacpp::primes::primepow(-1, &p, &n, &isit);
+		bclib::Assert(p == 0 && n == 0 && isit == 0);
+	}
 }
 

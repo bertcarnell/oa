@@ -70,10 +70,8 @@ namespace oacpp
             int p = gf.p;
             size_t q = static_cast<size_t>(gf.q);
 
-            if (!addelkemp3check(static_cast<int>(q), p, ncol))
-            {
-                return 0;
-            }
+			// Throws on any error
+			addelkemp3check(static_cast<int>(q), p, ncol);
 
             std::vector<int> b(q);
             std::vector<int> c(q);
