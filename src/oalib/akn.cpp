@@ -34,7 +34,7 @@ namespace oacpp
 {
     namespace oaaddelkemp
     {
-        int addelkempncheck(int q, int p, int akn, int ncol) //LCOV_EXCL_START
+        int addelkempncheck(int q, int p, int akn, int ncol) // LCOV_EXCL_START
         {
             std::ostringstream msg;
             if (akn < 2)
@@ -408,6 +408,6 @@ namespace oacpp
             }
 
             return SUCCESS_CHECK;
-        } //LCOV_EXCL_STOP
+        } // LCOV_EXCL_STOP
     } // end namespace
 } // end namespace
