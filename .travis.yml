@@ -1,24 +1,13 @@
-language: c++
+language: cpp
 
 dist: trusty
 sudo: false
-
-# Environment variables
-env:
-  global:
-    - GH_REPO_NAME: oa
-    - DOXYFILE: doxygen.config
-    - GH_REPO_REF: github.com/bertcarnell/oa.git
 
 addons:
   apt:
     packages:
       - lcov
-      - doxygen
-      - doxygen-doc
-      - doxygen-latex
-      - doxygen-gui
-      - graphviz
+      - cmake
 
 script:
   - cd src
