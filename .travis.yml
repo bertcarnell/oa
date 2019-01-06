@@ -37,5 +37,3 @@ after_success:
   - lcov --remove oatest.info 'oatest/*' 'oalhstest/*' '/usr/*' --output-file oatest.clean.info
   - lcov --list oatest.clean.info
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
-  - cd $TRAVIS_BUILD_DIR
-  - sh generateDoxygen.sh
