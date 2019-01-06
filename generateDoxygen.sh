@@ -23,9 +23,7 @@
 # branch, please go to https://gist.github.com/vidavidorra/846a2fc7dd51f4fe56a0
 #
 # This script will generate Doxygen documentation and push the documentation to
-# the gh-pages branch of a repository specified by GH_REPO_REF.
-# Before this script is used there should already be a gh-pages branch in the
-# repository.
+# the master branch docs directory
 # 
 ################################################################################
 
@@ -39,7 +37,7 @@ mkdir ../code_docs
 cd ../code_docs
 
 # Get the current gh-pages branch
-git clone -b gh-pages https://git@$GH_REPO_REF
+git clone https://git@$GH_REPO_REF
 cd $GH_REPO_NAME
 
 ##### Configure git.
@@ -54,7 +52,7 @@ git config user.email "travis@travis-ci.org"
 # stayed the same and will only update the changed files. So the gh-pages branch
 # can be safely cleaned, and it is sure that everything pushed later is the new
 # documentation.
-rm -rf *
+rm -rf docs/*.*
 
 # Need to create a .nojekyll file to allow filenames starting with an underscore
 # to be seen on the gh-pages site. Therefore creating an empty .nojekyll file.
@@ -66,18 +64,18 @@ echo "" > .nojekyll
 ##### Generate the Doxygen code documentation and log the output.          #####
 echo 'Generating Doxygen code documentation...'
 # Redirect both stderr and stdout to the log file AND the console.
-cd ${TRAVIS_BUILD_DIR}/oa_nb
+cd ${TRAVIS_BUILD_DIR}/src
 doxygen $DOXYFILE 2>&1 | tee doxygen.log
-cd ${TRAVIS_BUILD_DIR}/../code_docs/oa
+cd ${TRAVIS_BUILD_DIR}/../code_docs/oa/docs
 
-################################################################################
-##### Upload the documentation to the gh-pages branch of the repository.   #####
+########################################
+##### check in the documentation   #####
 # Only upload if Doxygen successfully created the documentation.
 # Check this by verifying that the html directory and the file html/index.html
 # both exist. This is a good indication that Doxygen did it's work.
 if [ -d "html" ] && [ -f "html/index.html" ]; then
 
-    echo 'Uploading documentation to the gh-pages branch...'
+    echo 'Checking in...'
     # Add everything in this directory (the Doxygen code documentation) to the
     # gh-pages branch.
     # GitHub is smart enough to know which files have changed and which files have
@@ -86,7 +84,7 @@ if [ -d "html" ] && [ -f "html/index.html" ]; then
 
     # Commit the added files with a title and description containing the Travis CI
     # build number and the GitHub commit reference that issued this build.
-    git commit -m "Deploy doxygen to gh-pages: ${TRAVIS_BUILD_NUMBER}" -m "Commit: ${TRAVIS_COMMIT}"
+    git commit -m "Deploy doxygen: ${TRAVIS_BUILD_NUMBER}" -m "Commit: ${TRAVIS_COMMIT}"
 
     # Force push to the remote gh-pages branch.
     # The ouput is redirected to /dev/null to hide any sensitive credential data
