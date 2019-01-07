@@ -1,4 +1,11 @@
+# version format
+version: 1.0.{build}
+
 image: Visual Studio 2017
+
+configuration:
+  - Release
+  - Debug
 
 init:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
@@ -7,18 +14,21 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
   - git submodule update --init --recursive
 
-build_script:
+before_build:
   - cd %APPVEYOR_BUILD_FOLDER%\src
   - mkdir build
   - cd build
   - cmake.exe .. -G "Visual Studio 15 2017 Win64"
-  - msbuild.exe OA.sln /t:Rebuild /p:Configuration=Debug
+  
+build:
+  project: OA.sln
 
 test_script:
   - .\oatest\Debug\oatest.exe > oatest_output.log
+  - type oatest_output.log
   - .\oalhstest\Debug\oalhstest.exe > oalhstest_output.log
+  - type oalhstest_output.log
   
 artifacts:
   - path: 'src\**\*_output.log'
     name: TestOuptut
-
