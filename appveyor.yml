@@ -18,7 +18,7 @@ before_build:
   - cd %APPVEYOR_BUILD_FOLDER%\src
   - mkdir build
   - cd build
-  - cmake.exe .. -G "Visual Studio 15 2017 Win64" -D%configuration%
+  - cmake.exe .. -G "Visual Studio 15 2017 Win64"
   
 build:
   project: c:\projects\oa\src\build\OA.sln
