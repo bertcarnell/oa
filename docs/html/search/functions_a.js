@@ -1,26 +1,5 @@
 var searchData=
 [
-  ['testaddelkemp',['testAddelkemp',['../classoa_test_1_1_c_orthogonal_array_test.html#aec17fa8cb2c8f6419873a0e3b5a27220',1,'oaTest::COrthogonalArrayTest']]],
-  ['testaddelkemp3',['testAddelkemp3',['../classoa_test_1_1_c_orthogonal_array_test.html#a756729e2f6b33b388997c86c20d9950b',1,'oaTest::COrthogonalArrayTest']]],
-  ['testaddelkemp3range',['testAddelkemp3Range',['../classoa_test_1_1_c_orthogonal_array_test.html#ab43d2d33d86942025e507ca5a02d1f7b',1,'oaTest::COrthogonalArrayTest']]],
-  ['testaddelkempn',['testAddelkempn',['../classoa_test_1_1_c_orthogonal_array_test.html#a1e65b42e7d001b44ecfba0b00ca7ab3b',1,'oaTest::COrthogonalArrayTest']]],
-  ['testaddelkemprange',['testAddelkempRange',['../classoa_test_1_1_c_orthogonal_array_test.html#aca1931023bfb5b7b5981561b9702053d',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbose',['testBose',['../classoa_test_1_1_c_orthogonal_array_test.html#abe7eb690a946819da7b7600a15cfe2f4',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbosebush',['testBoseBush',['../classoa_test_1_1_c_orthogonal_array_test.html#a4f51f917bce09822cb8730a04c568b49',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbosebushl',['testBoseBushl',['../classoa_test_1_1_c_orthogonal_array_test.html#ad4829e97541e96bd606dffb979af5c3a',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbosebushlrange',['testBoseBushlRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a22ce7771c7b8d4ab4f8642cab1ae4b33',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbosebushrange',['testBoseBushRange',['../classoa_test_1_1_c_orthogonal_array_test.html#af99b0c341020ece2ba3e434cedc2510c',1,'oaTest::COrthogonalArrayTest']]],
-  ['testboserange',['testBoseRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a15838be4d2751b43f6b4b90c6fadea8c',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbushrange',['testBushRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a505ea298d8afe0c1fd9ce68e78430505',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbusht',['testBusht',['../classoa_test_1_1_c_orthogonal_array_test.html#add9838abedf46f64b5eea44af77b7789',1,'oaTest::COrthogonalArrayTest']]],
-  ['testbushtrange',['testBushtRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a2f6c10c3753140f7edcaf53281de78a2',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoaagree',['testOaagree',['../classoa_test_1_1_c_orthogonal_array_test.html#ad9e458fe0d9d74e6b603227d96cb5c2d',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoarand',['testOarand',['../classoa_test_1_1_c_orthogonal_array_test.html#a914bb53d603b2a51050da080b587c1ff',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoastr',['testOastr',['../classoa_test_1_1_c_orthogonal_array_test.html#a5baf36d132c0f752d2317cd4e8547c76',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoastr1',['testOastr1',['../classoa_test_1_1_c_orthogonal_array_test.html#a62a40aa73a8301b35775224f691d098e',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoastr2',['testOastr2',['../classoa_test_1_1_c_orthogonal_array_test.html#a149ea77b432291d70be9ea691ba4e785',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoastr3',['testOastr3',['../classoa_test_1_1_c_orthogonal_array_test.html#a1a0cdd88e8639199f4aae085fe8bbba0',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoastr4',['testOastr4',['../classoa_test_1_1_c_orthogonal_array_test.html#a9a2fad4b9de5f0f29499436934c679f1',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoastrt',['testOastrt',['../classoa_test_1_1_c_orthogonal_array_test.html#a77d192cb3497eb44694bde7744fc8117',1,'oaTest::COrthogonalArrayTest']]],
-  ['testoatriple',['testOatriple',['../classoa_test_1_1_c_orthogonal_array_test.html#a90ce44871f97a79054540f22fcc1f7eb',1,'oaTest::COrthogonalArrayTest']]]
+  ['seed',['seed',['../classoacpp_1_1_r_unif.html#aaead96367210e084053966f901672cf4',1,'oacpp::RUnif::seed(int is, int js, int ks, int ls)'],['../classoacpp_1_1_r_unif.html#a89f3c2d7a81d46c7f69c862d7a134d34',1,'oacpp::RUnif::seed(SeedSet seedSet)']]],
+  ['standardchecks',['standardChecks',['../classoa_test_1_1_o_a_test_class.html#afe7d42f774514264422128ae536917c1',1,'oaTest::OATestClass']]]
 ];

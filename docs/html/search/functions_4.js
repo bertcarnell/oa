@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['ipow',['ipow',['../namespaceoacpp_1_1primes.html#afa92e796424c3e8cd181487a79e5a7db',1,'oacpp::primes']]],
-  ['isdotproductconstant',['isDotProductConstant',['../classoa_test_1_1_o_a_test_class.html#a5cbdf551ef2bc4c5a06f2fa6e36fab40',1,'oaTest::OATestClass']]],
-  ['isprime',['isprime',['../namespaceoacpp_1_1primes.html#a8de7baaea99e7fe578132983228431fa',1,'oacpp::primes']]],
-  ['isprime_5fold',['isprime_old',['../namespaceoacpp_1_1primes.html#a28a596bf95ee501f30280cdeb873265a',1,'oacpp::primes']]],
-  ['isprimepow',['isprimepow',['../namespaceoacpp_1_1primes.html#aed91e3c2df25f831cade6a6e848332b6',1,'oacpp::primes']]],
-  ['itopoly',['itopoly',['../namespaceoacpp_1_1oaconstruct.html#ae2c06e72fcdca2fd39add37c0465c3b1',1,'oacpp::oaconstruct']]]
+  ['getncols',['getncols',['../classoacpp_1_1_c_orthogonal_array.html#a9f78d7a3e50edeba0682601e55d79089',1,'oacpp::COrthogonalArray']]],
+  ['getnrows',['getnrows',['../classoacpp_1_1_c_orthogonal_array.html#a4095fc6f58fd0cfc6580e38a8247f560',1,'oacpp::COrthogonalArray']]],
+  ['getoa',['getoa',['../classoacpp_1_1_c_orthogonal_array.html#a8b39d58348ae1fcf080152ebe5589160',1,'oacpp::COrthogonalArray']]],
+  ['getq',['getq',['../classoacpp_1_1_c_orthogonal_array.html#afd48b4c5fd4b41198d2f0dd63d68747e',1,'oacpp::COrthogonalArray']]],
+  ['gf_5fgetfield',['GF_getfield',['../namespaceoacpp_1_1galoisfield.html#aec0cab3aeb2eefc57f4ef36dc5e74615',1,'oacpp::galoisfield']]],
+  ['gf_5fpoly2int',['GF_poly2int',['../namespaceoacpp_1_1galoisfield.html#afccb08572ded8f2e339b17fa14a3063e',1,'oacpp::galoisfield']]],
+  ['gf_5fpoly_5fprod',['GF_poly_prod',['../namespaceoacpp_1_1galoisfield.html#a2a84e0fe778d1af75f767236187b843d',1,'oacpp::galoisfield']]],
+  ['gf_5fpoly_5fsum',['GF_poly_sum',['../namespaceoacpp_1_1galoisfield.html#ae7d469a2de762030e622ebcd988b52bc',1,'oacpp::galoisfield']]],
+  ['gf_5fprint',['GF_print',['../namespaceoacpp_1_1galoisfield.html#aaf191b2dac61acadce4078ccee02598c',1,'oacpp::galoisfield']]],
+  ['gf_5fready',['GF_ready',['../namespaceoacpp_1_1galoisfield.html#af4c375c991418b8ed41ee3cd5209b0c2',1,'oacpp::galoisfield']]]
 ];

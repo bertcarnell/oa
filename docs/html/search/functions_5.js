@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['mod',['mod',['../classoacpp_1_1_r_unif.html#aaa7a4a02a5a1716bb5398b24326048d4',1,'oacpp::RUnif']]],
-  ['multiplybytwo',['multiplyByTwo',['../namespaceoa_test.html#ad714c3742a60be832aff74f52e1b9dab',1,'oaTest']]]
+  ['ipow',['ipow',['../namespaceoacpp_1_1primes.html#afa92e796424c3e8cd181487a79e5a7db',1,'oacpp::primes']]],
+  ['isdotproductconstant',['isDotProductConstant',['../classoa_test_1_1_o_a_test_class.html#a5cbdf551ef2bc4c5a06f2fa6e36fab40',1,'oaTest::OATestClass']]],
+  ['isprime',['isprime',['../namespaceoacpp_1_1primes.html#a8de7baaea99e7fe578132983228431fa',1,'oacpp::primes']]],
+  ['isprime_5fold',['isprime_old',['../namespaceoacpp_1_1primes.html#a28a596bf95ee501f30280cdeb873265a',1,'oacpp::primes']]],
+  ['isprimepow',['isprimepow',['../namespaceoacpp_1_1primes.html#aed91e3c2df25f831cade6a6e848332b6',1,'oacpp::primes']]],
+  ['isvalidlhs',['isValidLHS',['../classoalhs__test_1_1oa_l_h_s_test.html#a60d13a94f8a05bf6ff3c9f67de2ec7ac',1,'oalhs_test::oaLHSTest']]],
+  ['itopoly',['itopoly',['../namespaceoacpp_1_1oaconstruct.html#ae2c06e72fcdca2fd39add37c0465c3b1',1,'oacpp::oaconstruct']]]
 ];
