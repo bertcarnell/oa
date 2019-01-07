@@ -21,7 +21,7 @@ before_build:
   - cmake.exe .. -G "Visual Studio 15 2017 Win64" -D%configuration%
   
 build:
-  project: "%APPVEYOR_BUILD_FOLDER%\src\build\OA.sln"
+  project: c:\projects\oa\src\build\OA.sln
 
 test_script:
   - %APPVEYOR_BUILD_FOLDER%\src\build\oatest\Debug\oatest.exe > oatest_output.log
