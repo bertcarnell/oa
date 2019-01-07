@@ -1,0 +1,19 @@
+image: Visual Studio 2017
+
+init:
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+
+build_script:
+  - cd src
+  - mkdir build
+  - cd build
+  - cmake.exe .. -G "Visual Studio 15 2017 Win64"
+  - msbuild.exe OA.sln /t:Rebuild /p:Configuration=Debug
+
+test_script:
+  - .\oatest\Debug\oatest.exe > oatest_output.log
+  - .\oalhstest\Debug\oalhstest.exe > oalhstest_output.log
+  
+artifacts:
+  - path: 'src\**\*_output.log'
+    name: TestOuptut
