@@ -25,9 +25,9 @@ build:
 
 test_script:
   - cd %APPVEYOR_BUILD_FOLDER%\src\build
-  - .\oatest\Debug\oatest.exe > oatest_output.log
+  - .\oatest\%configuration%\oatest.exe > oatest_output.log
   - type oatest_output.log
-  - .\oalhstest\Debug\oalhstest.exe > oalhstest_output.log
+  - .\oalhstest\%configuration%\oalhstest.exe > oalhstest_output.log
   - type oalhstest_output.log
   
 artifacts:
