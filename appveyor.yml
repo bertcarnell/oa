@@ -3,8 +3,12 @@ image: Visual Studio 2017
 init:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
+install:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - git submodule update --init --recursive
+
 build_script:
-  - cd src
+  - cd %APPVEYOR_BUILD_FOLDER%\src
   - mkdir build
   - cd build
   - cmake.exe .. -G "Visual Studio 15 2017 Win64"
@@ -17,3 +21,4 @@ test_script:
 artifacts:
   - path: 'src\**\*_output.log'
     name: TestOuptut
+
