@@ -1,5 +1,5 @@
 /**
- * @file CommonDefines.h
+ * @file OACommonDefines.h
  * @author Robert Carnell
  * @copyright Copyright (c) 2013, Robert Carnell
  * @license <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
@@ -21,8 +21,8 @@
  * <li><a href="http://lib.stat.cmu.edu/designs/oa.c">Owen's Orthogonal Array Algorithms</a></li></ul>
  */
 
-#ifndef COMMONDEFINES_H
-#define	COMMONDEFINES_H
+#ifndef OACOMMONDEFINES_H
+#define	OACOMMONDEFINES_H
 
 #include <exception>
 #include <string>
@@ -339,4 +339,4 @@
  * - RCOMPILE defined for building with R
  */
 
-#endif	/* COMMONDEFINES_H */
+#endif	/* OACOMMONDEFINES_H */
