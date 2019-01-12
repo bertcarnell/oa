@@ -33,7 +33,7 @@
 
 /*  Constructions for designs using Galois fields */
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "galois.h"
 #include "ak.h"
 

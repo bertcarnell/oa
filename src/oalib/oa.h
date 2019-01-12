@@ -31,7 +31,7 @@
 #ifndef OA_H
 #define OA_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "primes.h"
 #include "matrix.h"
 

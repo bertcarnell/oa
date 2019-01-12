@@ -8,7 +8,7 @@
 #ifndef OALHS_H
 #define	OALHS_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "matrix.h"
 #include "CRandom.h"
 #include "primes.h"

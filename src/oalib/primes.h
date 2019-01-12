@@ -31,7 +31,7 @@
 #ifndef PRIMES_H
 #define PRIMES_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 
 #define ISPRIMETRUE 1
 #define ISPRIMEFALSE 0

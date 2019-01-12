@@ -31,7 +31,7 @@
 #ifndef GALDEF_H
 #define GALDEF_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "matrix.h"
 
 namespace oacpp {

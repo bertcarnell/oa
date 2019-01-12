@@ -31,7 +31,7 @@
 #ifndef RUTILS_H
 #define RUTILS_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "runif.h"
 
 namespace oacpp

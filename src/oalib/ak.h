@@ -31,7 +31,7 @@
 #ifndef AK_H
 #define AK_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "galois.h"
 #include "primes.h"
 #include "matrix.h"

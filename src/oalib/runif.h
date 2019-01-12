@@ -31,7 +31,7 @@
 #ifndef RUNIF_H
 #define RUNIF_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #define SEEDOK 1
 #define SEEDBAD 0
 #define SEED_VECTOR_LENGTH (97+1)

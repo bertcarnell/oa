@@ -25,7 +25,7 @@
 #ifndef CORTHOGONALARRAY_H
 #define CORTHOGONALARRAY_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "galdef.h"
 #include "galois.h"
 #include "construct.h"

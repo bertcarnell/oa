@@ -21,7 +21,7 @@
 #ifndef OATESTCLASS_H
 #define OATESTCLASS_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "matrix.h"
 #include "TestClass.h"
 #include "simpleAssert.h"

@@ -30,7 +30,7 @@
 #ifndef GALOIS_H
 #define GALOIS_H
 
-#include "CommonDefines.h"
+#include "OACommonDefines.h"
 #include "galdef.h"
 #include "primes.h"
 
