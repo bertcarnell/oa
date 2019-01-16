@@ -161,14 +161,14 @@ namespace oalhs_test
         bclib::Assert(isValidLHS(intlhs), "valid integer lhs for deterministic oalhs");
         
         std::vector<int> lhsintseq = {1,1,1,
-                                  2,4,4,
-                                  3,7,7,
-                                  4,2,8,
-                                  5,5,2,
-                                  6,8,5,
-                                  7,3,6,
-                                  8,6,9,
-                                  9,9,3};
+                                      2,4,4,
+                                      3,7,7,
+                                      4,2,8,
+                                      5,5,2,
+                                      6,8,5,
+                                      7,3,6,
+                                      8,6,9,
+                                      9,9,3};
         for (unsigned int i = 0; i < lhsintseq.size(); i++)
         {
             bclib::Assert(lhsintseq[i], intlhs.getDataVector()[i], "deterministic oalhs values");
@@ -179,33 +179,43 @@ namespace oalhs_test
     void oaLHSTest::testGenerateOALHS()
     {
 		bool methodVerbose = false;
+
         bclib::matrix<double> oalhs = bclib::matrix<double>();
+		bclib::CRandomStandardUniform oRandom = bclib::CRandomStandardUniform();
+		oRandom.setSeed(1976, 1968);
         
 		if (methodVerbose)
 		{
 			printf("\n");
 			printf("\tAsk for a 4, 2 design that should be possible\n");
 		}
-        oalhslib::generateOALHS(4,2,oalhs,true,methodVerbose);
+        oalhslib::generateOALHS(4, 2, oalhs, true, methodVerbose, oRandom);
         bclib::Assert(oalhs.rowsize() == 4, "generate 1");
         bclib::Assert(oalhs.colsize() == 2, "generate 2");
-        
+		bclib::Assert(oalhs(0, 0) != 0.0);
+		bclib::Assert(oalhs(0, 1) != 0.0);
+		bclib::Assert(oalhs(1, 0) != 0.0);
+		bclib::Assert(isValidLHS(oalhs), "GenerateOALhs error 1");
+
         if (methodVerbose)
 			printf("\tAsk for a 20, 3 that is not possible but needs a larger design\n");
-        oalhslib::generateOALHS(20,3,oalhs,true,methodVerbose);
+        oalhslib::generateOALHS(20, 3, oalhs, true, methodVerbose, oRandom);
         bclib::Assert(oalhs.rowsize() == 25, "generate 3");
         bclib::Assert(oalhs.colsize() == 3, "generate 4");
+		bclib::Assert(isValidLHS(oalhs), "GenerateOALhs error 2");
 
         if (methodVerbose)
 			printf("\tAsk for a 20, 3 that is not possible but needs a smaller design\n");
-        oalhslib::generateOALHS(20,3,oalhs,false,methodVerbose);
+        oalhslib::generateOALHS(20, 3, oalhs, false, methodVerbose, oRandom);
         bclib::Assert(oalhs.rowsize() == 18, "generate 5");
         bclib::Assert(oalhs.colsize() == 3, "generate 6");
-        
+		bclib::Assert(isValidLHS(oalhs), "GenerateOALhs error 3");
+
         if (methodVerbose)
 			printf("\tAsk for a 20, 10 that is not possible but needs a larger design\n");
-        oalhslib::generateOALHS(20,10,oalhs,true,methodVerbose);
+        oalhslib::generateOALHS(20, 10, oalhs, true, methodVerbose, oRandom);
         bclib::Assert(oalhs.rowsize() == 54, "generate 7");
         bclib::Assert(oalhs.colsize() == 10, "generate 8");
-    }
+		bclib::Assert(isValidLHS(oalhs), "GenerateOALhs error 4");
+	}
 }
