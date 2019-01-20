@@ -24,14 +24,14 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "Orthogonal Array Library", "index.html", [
-    [ "Array Library", "_orthogonal.html", [
-      [ "Orthogonal Arrays", "_orthogonal.html#orthogonal_arrays_sec", null ],
-      [ "Available Prime Powers", "_orthogonal.html#avail_prime_sec", null ],
-      [ "Methods", "_orthogonal.html#methods", null ],
-      [ "Tips On Use", "_orthogonal.html#tips", null ],
-      [ "References", "_orthogonal.html#references", null ],
-      [ "Implementation Details", "_orthogonal.html#implement", null ],
-      [ "<code>oalib</code>", "_orthogonal.html#Compiling", null ]
+    [ "Orthogonal Array Library", "oa_main_page.html", [
+      [ "Orthogonal Arrays", "oa_main_page.html#orthogonal_arrays_sec", null ],
+      [ "Available Prime Powers", "oa_main_page.html#avail_prime_sec", null ],
+      [ "Methods", "oa_main_page.html#methods", null ],
+      [ "Tips On Use", "oa_main_page.html#tips", null ],
+      [ "References", "oa_main_page.html#references", null ],
+      [ "Implementation Details", "oa_main_page.html#implement", null ],
+      [ "Compiling oalib", "oa_main_page.html#compile_oa", null ]
     ] ],
     [ "Test List", "test.html", null ],
     [ "Todo List", "todo.html", null ],

@@ -3,6 +3,7 @@ var searchData=
   ['galoisfield',['galoisfield',['../namespaceoacpp_1_1galoisfield.html',1,'oacpp']]],
   ['oa_2ecpp',['oa.cpp',['../oa_8cpp.html',1,'']]],
   ['oa_2eh',['oa.h',['../oa_8h.html',1,'']]],
+  ['orthogonal_20array_20library',['Orthogonal Array Library',['../oa_main_page.html',1,'']]],
   ['oa_5fstr0',['OA_str0',['../namespaceoacpp_1_1oastrength.html#a43782ccc0096b853bd6a52f129a47047',1,'oacpp::oastrength']]],
   ['oa_5fstr1',['OA_str1',['../namespaceoacpp_1_1oastrength.html#ac794bac70a082e7100f68c6b90c42905',1,'oacpp::oastrength']]],
   ['oa_5fstr2',['OA_str2',['../namespaceoacpp_1_1oastrength.html#a57be9d0945c56f695997a9fad8237209',1,'oacpp::oastrength']]],

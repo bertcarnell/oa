@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Orthogonal Array Library: Array Library</title>
+<title>Orthogonal Array Library: Orthogonal Array Library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,7 +68,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('_orthogonal.html','');});
+$(document).ready(function(){initNavTree('oa_main_page.html','');});
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('_orthogonal.html','');});
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Array Library </div>  </div>
+<div class="title">Orthogonal Array Library </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('_orthogonal.html','');});
 <li class="level1"><a href="#tips">Tips On Use</a></li>
 <li class="level1"><a href="#references">References</a></li>
 <li class="level1"><a href="#implement">Implementation Details</a></li>
-<li class="level1"><a href="#Compiling">&lt;code&gt;oalib&lt;/code&gt;</a></li>
+<li class="level1"><a href="#compile_oa">Compiling oalib</a></li>
 </ul>
 </div>
 <div class="textblock"><p>From the original documentation by Owen:</p>
@@ -246,8 +246,8 @@ Implementation Details</h1>
 <p>The functions that manipulate orthogonal arrays keep the arrays in integer matrices. This might be a problem for applications that require enormous arrays. The reason for keeping them in memory is that it makes it easier for others to lift out the functions and embed them in applications or to put on a GUI front end. It was also thought that any array that is too large to store in a computer, is likely to be too large to use in integration/experimentation on that same computer. The arrays are generated row by row, so it is not too hard to change the program to place the elements on an output stream as they are computed and do away with the storage.</p>
 <p>The functions that test the strength of the arrays may be very far from optimally fast. </p>
 </blockquote>
-<h1><a class="anchor" id="Compiling"></a>
-&lt;code&gt;oalib&lt;/code&gt;</h1>
+<h1><a class="anchor" id="compile_oa"></a>
+Compiling oalib</h1>
 <p>When compiling <code>oalib</code> these preprocessor directives are used:</p><ul>
 <li>NDEBUG defined for a release build</li>
 <li>RCOMPILE defined for building with R </li>

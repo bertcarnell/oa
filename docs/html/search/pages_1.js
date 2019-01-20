@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]]
+  ['orthogonal_20array_20library',['Orthogonal Array Library',['../oa_main_page.html',1,'']]]
 ];
