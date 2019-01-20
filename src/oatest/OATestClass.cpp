@@ -1,7 +1,7 @@
 /**
- * @file testClass.cpp
+ * @file OATestClass.cpp
  * @author Robert Carnell
- * @copyright Copyright (c) 2013, Robert Carnell
+ * @copyright Copyright (c) 2019, Robert Carnell
  * 
  * @license <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License (GPL v3)</a>
  * This program is free software: you can redistribute it and/or modify

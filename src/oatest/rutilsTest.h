@@ -25,6 +25,9 @@
 #include "rutils.h"
 
 namespace oaTest {
+	/**
+	 * Test of utilities
+	 */
 	class rutilsTest : public OATestClass
 	{
 		void Run();
@@ -32,6 +35,9 @@ namespace oaTest {
          * @test Test the oacpp::findRanks algorithm to find the ranks of vector of numbers
          */
 		void testFindRanks();
+		/**
+		 * @test Test the oacpp::rutils::unifperm algorithm for a uniform permutation
+		 */
         void testUnifPerm();
 	};
 }

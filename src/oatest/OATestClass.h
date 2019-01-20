@@ -1,7 +1,7 @@
 /**
- * @file testClass.h
+ * @file OATestClass.h
  * @author Robert Carnell
- * @copyright Copyright (c) 2013, Robert Carnell
+ * @copyright Copyright (c) 2019, Robert Carnell
  * 
  * @license <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License (GPL v3)</a>
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,9 @@
 #define NUM_THREADS_USED 3
 #define PARALLEL_CHUNK_SIZE 1
 #else
+/** number of threads to use in the test runner */
 #define NUM_THREADS_USED 1
+/** size of the chunks of work performed in parallel */
 #define PARALLEL_CHUNK_SIZE 1
 #endif
 

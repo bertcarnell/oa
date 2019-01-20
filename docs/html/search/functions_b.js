@@ -11,6 +11,7 @@ var searchData=
   ['testbosebushlrange',['testBoseBushlRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a22ce7771c7b8d4ab4f8642cab1ae4b33',1,'oaTest::COrthogonalArrayTest']]],
   ['testbosebushrange',['testBoseBushRange',['../classoa_test_1_1_c_orthogonal_array_test.html#af99b0c341020ece2ba3e434cedc2510c',1,'oaTest::COrthogonalArrayTest']]],
   ['testboserange',['testBoseRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a15838be4d2751b43f6b4b90c6fadea8c',1,'oaTest::COrthogonalArrayTest']]],
+  ['testbush',['testBush',['../classoa_test_1_1_c_orthogonal_array_test.html#ae9efc8795ac704468d71c2b9d212679c',1,'oaTest::COrthogonalArrayTest']]],
   ['testbushrange',['testBushRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a505ea298d8afe0c1fd9ce68e78430505',1,'oaTest::COrthogonalArrayTest']]],
   ['testbusht',['testBusht',['../classoa_test_1_1_c_orthogonal_array_test.html#add9838abedf46f64b5eea44af77b7789',1,'oaTest::COrthogonalArrayTest']]],
   ['testbushtrange',['testBushtRange',['../classoa_test_1_1_c_orthogonal_array_test.html#a2f6c10c3753140f7edcaf53281de78a2',1,'oaTest::COrthogonalArrayTest']]],

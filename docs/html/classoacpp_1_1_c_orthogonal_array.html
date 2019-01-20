@@ -887,7 +887,7 @@ if Lemma 5a is used in place of Lemma 5." Page 1175 provides the example n=3,q=3
 
 <p>Find the strength of an orthogonal array. </p>
 <p>This program reads an orthogonal array strength by brute force computation. In addition to the strength <code>t</code> described above under the heading orthogonal arrays, strength 0 is taken to mean that the array indeed has all its elements in the range 0..q-1.</p>
-<p>An array of strength <code>t &gt; 0</code> is also of strength <code>s</code> for all <code>0 &lt;= s &lt; t</code>. The program starts testing <code>t = 0</code> and increases &lt;ocde&gt;t until it finds <code>t</code> for which the array is not strength <code>t</code>.</p>
+<p>An array of strength <code>t &gt; 0</code> is also of strength <code>s</code> for all <code>0 &lt;= s &lt; t</code>. The program starts testing <code>t = 0</code> and increases <code>t</code> until it finds <code>t</code> for which the array is not strength <code>t</code>.</p>
 <p>Finding the strength of an array by brute force is lightning fast for small arrays but very slow for larger arrays. When the job is large enough, intermediate results are printed so the user can decide whether or not to kill the job, based on how much progress is being made.</p>
 <p>The function that calculates strength has an argument verbose. In oastr the array strength function is called with verbose=2. This prints to standard output a description of progress as the strength check proceeds. If one wants to use this function in other settings, calling it with verbose=1 shuts off standard output but leaves the warnings to standard error, and verbose=0 shuts off all output.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1109,7 +1109,7 @@ if Lemma 5a is used in place of Lemma 5." Page 1175 provides the example n=3,q=3
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceoacpp.html">oacpp</a></li><li class="navelem"><a class="el" href="classoacpp_1_1_c_orthogonal_array.html">COrthogonalArray</a></li>
-    <li class="footer">Generated on Mon Jan 7 2019 21:12:28 for Orthogonal Array Library by
+    <li class="footer">Generated on Sat Jan 19 2019 22:35:25 for Orthogonal Array Library by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>
   </ul>

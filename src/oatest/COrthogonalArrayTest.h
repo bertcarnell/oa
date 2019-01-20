@@ -26,7 +26,12 @@
 #include "COrthogonalArray.h"
 
 namespace oaTest {
-	class COrthogonalArrayTest : public OATestClass 
+
+	/*!
+	 * Test runner for tests of the orthogonal array generation package
+	 *
+	 */
+	class COrthogonalArrayTest : public OATestClass
     {
     public:
 		void Run();
@@ -66,6 +71,9 @@ namespace oaTest {
          * @test Test the oacpp::COrthogonalArray::bosebush algorithm with a range of values
          */
         void testBoseBushRange();
+		/**
+		 * @test Test the oacpp::COrthogonalArray::bush algorithm
+		 */
 		void testBush();
         /**
          * @test Test the oacpp::COrthogonalArray::bush algorithm with a range of values

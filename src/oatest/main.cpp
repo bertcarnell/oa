@@ -1,5 +1,5 @@
 /**
- * @file main.cpp
+ * @file oatest/main.cpp
  * @author Robert Carnell
  * @copyright Copyright (c) 2013, Robert Carnell
  * 
@@ -28,6 +28,7 @@
 
 using namespace oaTest;
 
+/** Run test suite */
 int main(int argc, const char* argv[] )
 {
 #ifdef _OPENMP

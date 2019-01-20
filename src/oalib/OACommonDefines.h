@@ -71,7 +71,7 @@
 #define UNCHECKED_RETURN 0
 
 /**
- * @mainpage Orthogonal Array Library
+ * @page Orthogonal Array Library
  * 
  * From the original documentation by Owen:
  * 

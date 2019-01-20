@@ -8,16 +8,18 @@ var dir_610d9090c5349eaececbe6b3e11e1b54 =
     [ "gfieldsTest.h", "gfields_test_8h.html", [
       [ "gfieldsTest", "classoa_test_1_1gfields_test.html", null ]
     ] ],
+    [ "main.cpp", "oatest_2main_8cpp.html", "oatest_2main_8cpp" ],
     [ "matrixTest.cpp", "matrix_test_8cpp.html", "matrix_test_8cpp" ],
     [ "matrixTest.h", "matrix_test_8h.html", [
       [ "matrixTest", "classoa_test_1_1matrix_test.html", null ]
     ] ],
-    [ "OATestClass.h", "_o_a_test_class_8h_source.html", null ],
+    [ "OATestClass.cpp", "_o_a_test_class_8cpp.html", null ],
+    [ "OATestClass.h", "_o_a_test_class_8h.html", "_o_a_test_class_8h" ],
     [ "primesTest.cpp", "primes_test_8cpp.html", null ],
     [ "primesTest.h", "primes_test_8h.html", [
       [ "primesTest", "classoa_test_1_1primes_test.html", null ]
     ] ],
-    [ "runifTest.cpp", "runif_test_8cpp.html", "runif_test_8cpp" ],
+    [ "runifTest.cpp", "runif_test_8cpp.html", null ],
     [ "runifTest.h", "runif_test_8h.html", [
       [ "runifTest", "classoa_test_1_1runif_test.html", null ]
     ] ],

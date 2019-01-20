@@ -27,6 +27,7 @@ namespace oaTest
 		printf("\trunifTest...");
 		testSeed();
         testRunif();
+		testMod();
 		printf("passed\n");
 	}
 
@@ -99,10 +100,9 @@ namespace oaTest
 		printf("\t\t...Done Printing Errors...");
     }
 
-	void testMod()
+	void runifTest::testMod()
 	{
 		bclib::Assert(oacpp::RUnif::mod(10, 2) == 0, "Error1 in testmod");
 		bclib::Assert(oacpp::RUnif::mod(10, 3) == 1, "Error 2 in testmod");
-		bclib::Assert(oacpp::RUnif::mod(3, -2) == -3, "Error 3 in testmod");
 	}
 } // end Namespace

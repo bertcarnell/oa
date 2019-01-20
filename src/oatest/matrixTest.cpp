@@ -20,6 +20,9 @@
 
 #include "matrixTest.h"
 
+/**
+ * Macro to assert that an out of range error was thrown
+ */
 #define ASSERT_THROW_RANGE(X) \
         try \
         { \

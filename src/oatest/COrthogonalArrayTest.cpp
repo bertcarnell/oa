@@ -20,7 +20,8 @@
 
 #include "COrthogonalArrayTest.h"
 
-namespace oaTest{
+namespace oaTest {
+
 	void COrthogonalArrayTest::Run()
 	{
 		printf("\tCOrthogonalArray...");

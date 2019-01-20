@@ -26,11 +26,26 @@
 
 namespace oaTest 
 {
+	/**
+	 * Class to test the runif methods
+	 */
 	class runifTest : public OATestClass
 	{
+		/**
+		 * Test runner
+		 */
 		void Run();
+		/**
+		 * @test Test the seed methods
+		 */
 		void testSeed();
+		/**
+		 * @test Test the oacpp::RUnif class
+		 */
 		void testRunif();
+		/*
+		 * @test Test the oacpp::RUnif::mod function
+		 */
 		void testMod();
 	};
 }

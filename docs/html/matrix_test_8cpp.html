@@ -104,7 +104,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a30cacff6533c7460c3a69b5515f6b729"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>ASSERT_THROW_RANGE</b>(X)</td></tr>
+<tr class="memitem:a30cacff6533c7460c3a69b5515f6b729"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix_test_8cpp.html#a30cacff6533c7460c3a69b5515f6b729">ASSERT_THROW_RANGE</a>(X)</td></tr>
+<tr class="memdesc:a30cacff6533c7460c3a69b5515f6b729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to assert that an out of range error was thrown.  <a href="#a30cacff6533c7460c3a69b5515f6b729">More...</a><br /></td></tr>
 <tr class="separator:a30cacff6533c7460c3a69b5515f6b729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -130,6 +131,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">try</span> \</div><div class="line">        { \</div><div class="line">            X; \</div><div class="line">            bclib::Assert(<span class="keyword">false</span>, <span class="stringliteral">&quot;not executed if above throws&quot;</span>); \</div><div class="line">        } \</div><div class="line">        catch (std::out_of_range &amp;) \</div><div class="line">        { \</div><div class="line">            bclib::Assert(<span class="keyword">true</span>, <span class="stringliteral">&quot;correct item thrown&quot;</span>); \</div><div class="line">        } \</div><div class="line">        catch (...) \</div><div class="line">        { \</div><div class="line">            bclib::Assert(<span class="keyword">false</span>, <span class="stringliteral">&quot;any other throw is incorrect&quot;</span>); \</div><div class="line">        }</div></div><!-- fragment -->
+<p>Macro to assert that an out of range error was thrown. </p>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -138,7 +141,7 @@ Macros</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_610d9090c5349eaececbe6b3e11e1b54.html">oatest</a></li><li class="navelem"><a class="el" href="matrix_test_8cpp.html">matrixTest.cpp</a></li>
-    <li class="footer">Generated on Mon Jan 7 2019 21:12:27 for Orthogonal Array Library by
+    <li class="footer">Generated on Sat Jan 19 2019 22:35:25 for Orthogonal Array Library by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>
   </ul>

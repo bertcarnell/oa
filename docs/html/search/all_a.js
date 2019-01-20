@@ -1,16 +1,11 @@
 var searchData=
 [
-  ['range_5fdebug',['RANGE_DEBUG',['../_common_defines_8h.html#a6468f990cec8df731c33e2d266588daf',1,'CommonDefines.h']]],
-  ['run',['Run',['../classoa_test_1_1_c_orthogonal_array_test.html#a3d0cadcab01cd0589cbd329d14ee8b3d',1,'oaTest::COrthogonalArrayTest::Run()'],['../classoa_test_1_1_o_a_test_class.html#a5f37549f732094eedf05a1aadd67f709',1,'oaTest::OATestClass::Run()'],['../classoalhs__test_1_1oa_l_h_s_test.html#a7f519b4b03d8d120f3670abda615bbfc',1,'oalhs_test::oaLHSTest::Run()']]],
-  ['runif',['RUnif',['../classoacpp_1_1_r_unif.html',1,'oacpp::RUnif'],['../classoacpp_1_1_r_unif.html#acaec2213843a1c3b8d7d058efbcb6ae1',1,'oacpp::RUnif::runif()']]],
-  ['runif_2ecpp',['runif.cpp',['../runif_8cpp.html',1,'']]],
-  ['runif_2eh',['runif.h',['../runif_8h.html',1,'']]],
-  ['runiftest',['runifTest',['../classoa_test_1_1runif_test.html',1,'oaTest']]],
-  ['runiftest_2ecpp',['runifTest.cpp',['../runif_test_8cpp.html',1,'']]],
-  ['runiftest_2eh',['runifTest.h',['../runif_test_8h.html',1,'']]],
-  ['rutils_2ecpp',['rutils.cpp',['../rutils_8cpp.html',1,'']]],
-  ['rutils_2eh',['rutils.h',['../rutils_8h.html',1,'']]],
-  ['rutilstest',['rutilsTest',['../classoa_test_1_1rutils_test.html',1,'oaTest']]],
-  ['rutilstest_2ecpp',['rutilsTest.cpp',['../rutils_test_8cpp.html',1,'']]],
-  ['rutilstest_2eh',['rutilsTest.h',['../rutils_test_8h.html',1,'']]]
+  ['main',['main',['../oatest_2main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c',1,'main(int argc, const char *argv[]):&#160;main.cpp'],['../oalhstest_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main.cpp']]],
+  ['main_2ecpp',['main.cpp',['../oatest_2main_8cpp.html',1,'(Global Namespace)'],['../oalhstest_2main_8cpp.html',1,'(Global Namespace)']]],
+  ['matrixtest',['matrixTest',['../classoa_test_1_1matrix_test.html',1,'oaTest']]],
+  ['matrixtest_2ecpp',['matrixTest.cpp',['../matrix_test_8cpp.html',1,'']]],
+  ['matrixtest_2eh',['matrixTest.h',['../matrix_test_8h.html',1,'']]],
+  ['medwork',['MEDWORK',['../oa_8h.html#a08a2d82ff899200ca10d87dbf9ad57f9',1,'oa.h']]],
+  ['mod',['mod',['../classoacpp_1_1_r_unif.html#aaa7a4a02a5a1716bb5398b24326048d4',1,'oacpp::RUnif']]],
+  ['multiplybytwo',['multiplyByTwo',['../namespaceoa_test.html#ad714c3742a60be832aff74f52e1b9dab',1,'oaTest']]]
 ];

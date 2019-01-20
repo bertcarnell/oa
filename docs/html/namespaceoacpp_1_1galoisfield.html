@@ -115,9 +115,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:aaf191b2dac61acadce4078ccee02598c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a Galois field.  <a href="#aaf191b2dac61acadce4078ccee02598c">More...</a><br /></td></tr>
 <tr class="separator:aaf191b2dac61acadce4078ccee02598c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec0cab3aeb2eefc57f4ef36dc5e74615"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1galoisfield.html#aec0cab3aeb2eefc57f4ef36dc5e74615">GF_getfield</a> (int q, <a class="el" href="structoacpp_1_1_g_f.html">GF</a> &amp;gf)</td></tr>
+<tr class="memdesc:aec0cab3aeb2eefc57f4ef36dc5e74615"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a Galois field with q arguments.  <a href="#aec0cab3aeb2eefc57f4ef36dc5e74615">More...</a><br /></td></tr>
 <tr class="separator:aec0cab3aeb2eefc57f4ef36dc5e74615"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a304f2fe4ac37c7e9e4f3f77a03dd32b3"><td class="memItemLeft" align="right" valign="top"><a id="a304f2fe4ac37c7e9e4f3f77a03dd32b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1galoisfield.html#a304f2fe4ac37c7e9e4f3f77a03dd32b3">GF_set_fields</a> ()</td></tr>
+<tr class="memdesc:a304f2fe4ac37c7e9e4f3f77a03dd32b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Galois fields. <br /></td></tr>
 <tr class="separator:a304f2fe4ac37c7e9e4f3f77a03dd32b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -148,14 +150,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()<
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get a Galois field with q arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">q</td><td></td></tr>
-    <tr><td class="paramname">gf</td><td></td></tr>
+    <tr><td class="paramname">q</td><td>the number of arguments </td></tr>
+    <tr><td class="paramname">gf</td><td>the Galois field </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 for success </dd></dl>
 
 </div>
 </div>
@@ -194,13 +198,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()<
 <p>Convert polynomial to integer in <code>0..q-1</code> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p</td><td></td></tr>
-    <tr><td class="paramname">n</td><td></td></tr>
-    <tr><td class="paramname">poly</td><td></td></tr>
+    <tr><td class="paramname">p</td><td>polynomial multiplier </td></tr>
+    <tr><td class="paramname">n</td><td>the length of poly </td></tr>
+    <tr><td class="paramname">poly</td><td>the polynomial </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>an integer </dd></dl>
 
 </div>
 </div>
@@ -257,12 +261,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()<
 <p>Multiplication in polynomial representation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p</td><td></td></tr>
-    <tr><td class="paramname">n</td><td></td></tr>
-    <tr><td class="paramname">xton</td><td></td></tr>
-    <tr><td class="paramname">p1</td><td></td></tr>
-    <tr><td class="paramname">p2</td><td></td></tr>
-    <tr><td class="paramname">prod</td><td></td></tr>
+    <tr><td class="paramname">p</td><td>modulus </td></tr>
+    <tr><td class="paramname">n</td><td>length of p1 and p2 </td></tr>
+    <tr><td class="paramname">xton</td><td>representation of x^n </td></tr>
+    <tr><td class="paramname">p1</td><td>polynomial 1 </td></tr>
+    <tr><td class="paramname">p2</td><td>polynomial 2 </td></tr>
+    <tr><td class="paramname">prod</td><td>the product of the polynomials </td></tr>
   </table>
   </dd>
 </dl>
@@ -316,11 +320,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()<
 <p>Addition in polynomial representation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p</td><td></td></tr>
-    <tr><td class="paramname">n</td><td></td></tr>
-    <tr><td class="paramname">p1</td><td></td></tr>
-    <tr><td class="paramname">p2</td><td></td></tr>
-    <tr><td class="paramname">sum</td><td></td></tr>
+    <tr><td class="paramname">p</td><td>modulus </td></tr>
+    <tr><td class="paramname">n</td><td>the length of p1 and p2 </td></tr>
+    <tr><td class="paramname">p1</td><td>polynomial 1 </td></tr>
+    <tr><td class="paramname">p2</td><td>polynomial 2 </td></tr>
+    <tr><td class="paramname">sum</td><td>the sum of the polynomials </td></tr>
   </table>
   </dd>
 </dl>
@@ -346,7 +350,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()<
 <p>Print a Galois field. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gf</td><td></td></tr>
+    <tr><td class="paramname">gf</td><td>a Galois field struct </td></tr>
   </table>
   </dd>
 </dl>
@@ -394,14 +398,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()<
 <p>Prepare (+,*,^-1) lookup tables. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gf</td><td></td></tr>
-    <tr><td class="paramname">p</td><td></td></tr>
-    <tr><td class="paramname">n</td><td></td></tr>
-    <tr><td class="paramname">xton</td><td></td></tr>
+    <tr><td class="paramname">gf</td><td>the Galois field </td></tr>
+    <tr><td class="paramname">p</td><td>the modulus </td></tr>
+    <tr><td class="paramname">n</td><td>the length of xton </td></tr>
+    <tr><td class="paramname">xton</td><td>the x^n vector </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 for success </dd></dl>
 
 </div>
 </div>
@@ -411,7 +415,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>GF_set_fields</b> ()<
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceoacpp.html">oacpp</a></li><li class="navelem"><a class="el" href="namespaceoacpp_1_1galoisfield.html">galoisfield</a></li>
-    <li class="footer">Generated on Mon Jan 7 2019 21:12:28 for Orthogonal Array Library by
+    <li class="footer">Generated on Sat Jan 19 2019 22:35:25 for Orthogonal Array Library by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>
   </ul>
