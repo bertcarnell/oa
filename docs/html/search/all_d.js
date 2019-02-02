@@ -12,5 +12,6 @@ var searchData=
   ['primestest',['primesTest',['../classoa_test_1_1primes_test.html',1,'oaTest']]],
   ['primestest_2ecpp',['primesTest.cpp',['../primes_test_8cpp.html',1,'']]],
   ['primestest_2eh',['primesTest.h',['../primes_test_8h.html',1,'']]],
-  ['print_5foutput',['PRINT_OUTPUT',['../_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589',1,'OACommonDefines.h']]]
+  ['print_5foutput',['PRINT_OUTPUT',['../_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589',1,'OACommonDefines.h']]],
+  ['printoaandunique',['printOAandUnique',['../oa_l_h_s_8cpp.html#a789e7a606ca3d52a57c533aeac31ef76',1,'oalhslib']]]
 ];

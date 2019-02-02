@@ -1,5 +1,16 @@
 var NAVTREEINDEX1 =
 {
+"oatest_2main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c":[6,0,3,4,0],
+"pages.html":[],
+"primes_8cpp.html":[6,0,2,15],
+"primes_8cpp.html#a28a596bf95ee501f30280cdeb873265a":[6,0,2,15,2],
+"primes_8cpp.html#a8de7baaea99e7fe578132983228431fa":[6,0,2,15,1],
+"primes_8cpp.html#ab046a30888ac659d74dc5ea0e48aabb3":[6,0,2,15,4],
+"primes_8cpp.html#aed91e3c2df25f831cade6a6e848332b6":[6,0,2,15,3],
+"primes_8cpp.html#afa92e796424c3e8cd181487a79e5a7db":[6,0,2,15,0],
+"primes_8h.html":[6,0,2,16],
+"primes_8h.html#a28a596bf95ee501f30280cdeb873265a":[6,0,2,16,4],
+"primes_8h.html#a67f6f18352d9f611d87001d54324c68f":[6,0,2,16,1],
 "primes_8h.html#a8de7baaea99e7fe578132983228431fa":[6,0,2,16,3],
 "primes_8h.html#ab046a30888ac659d74dc5ea0e48aabb3":[6,0,2,16,6],
 "primes_8h.html#ad593133fb8fa6cbcdda89dbbd052f894":[6,0,2,16,0],
