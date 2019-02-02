@@ -93,12 +93,13 @@ namespace oalhs_test
         
         oalhslib::oaLHS(n, k, oa, intlhs, lhs, false, oRandom);
         
+		// test that the input oa was unchanged
         bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
         for (unsigned int i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
-        
+
         bclib::Assert(k, static_cast<int>(intlhs.colsize()), "columnsize");
         bclib::Assert(k, static_cast<int>(lhs.colsize()), "columnsize");
         bclib::Assert(n, static_cast<int>(intlhs.rowsize()), "rowsize");
@@ -115,7 +116,7 @@ namespace oalhs_test
         bclib::Assert(k, static_cast<int>(intlhs.colsize()), "columnsize");
         bclib::Assert(n, static_cast<int>(intlhs.rowsize()), "rowsize");
         bclib::Assert(isValidLHS(intlhs), "valid integer lhs for deterministic oalhs");
-        
+
         std::vector<int> lhsintseq = {1,1,
                                   2,3,
                                   3,2,
@@ -125,6 +126,21 @@ namespace oalhs_test
             bclib::Assert(lhsintseq[i], intlhs.getDataVector()[i], "deterministic oalhs values");
         }
         
+		// debugging whether the printing methods have a memory leak
+		oalhslib::oaLHS(n, k, oa, intlhs, lhs, true, oRandom);
+
+		// debugging the same R method that caused the memory leak
+		// #' oa <- createBose(3, 4, TRUE)
+		// #' B <- oa_to_oalhs(9, 4, oa, FALSE)
+		oacpp::COrthogonalArray coa = oacpp::COrthogonalArray();
+		int q = 3;
+		k = 4;
+		n = 0;
+		coa.bose(q, k, &n);
+		bclib::Assert(9, n, "Check Bose output n");
+		oalhslib::oaLHS(n, k, coa.getoa(), intlhs, lhs, true, oRandom);
+		bclib::Assert(oaLHSTest::isValidLHS(intlhs));
+		bclib::Assert(oaLHSTest::isValidLHS(lhs));
 	}
 
 	void oaLHSTest::testOaLHS_2()
