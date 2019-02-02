@@ -483,12 +483,12 @@ namespace oacpp
                             PRINT_OUTPUT << "the number of times (";
                             for (int i = 0; i < t; i++)
                             {
-                                PRINT_OUTPUT << "A(," << clist[i] << ")" << (i == t - 1) ? ")" : ",";
+                                PRINT_OUTPUT << "A(," << clist[i] << ")" << ((i == t - 1) ? ")" : ",");
                             }
                             PRINT_OUTPUT << " = (";
                             for (int i = 0; i < t; i++)
                             {
-                                PRINT_OUTPUT << qlist[i] << (i == t - 1) ? ").\n" : ",";
+                                PRINT_OUTPUT << qlist[i] << ((i == t - 1) ? ").\n" : ",");
                             }
                             PRINT_OUTPUT << "This happened in " << count << " rows, it should have happened in " << lambda << " rows.\n";
                         } // LCOV_EXCL_STOP
