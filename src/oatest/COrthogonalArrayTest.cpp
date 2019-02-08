@@ -318,14 +318,20 @@ namespace oaTest {
     
     void COrthogonalArrayTest::testBoseBush()
     {
-        int n = 7;
-        oacpp::COrthogonalArray coa;
+		int q = 8;
+		int ncol = 5;
+		int n = 0;
+		oacpp::COrthogonalArray coa;
+		coa.bosebush(q, ncol, &n);
+		standardChecks(coa.getoa(), q, ncol);
+
+        n = 7;
         // error for q not a power of 2
         ASSERT_THROW(coa.bosebush(3, 5, &n));
 		
-		int q = 2;
+		q = 2;
 		int p = 3;
-		int ncol = 5;
+		ncol = 5;
 		// Error when p != 2
 		ASSERT_THROW(oacpp::oaconstruct::bosebushcheck(q, p, ncol));
 		
@@ -350,9 +356,16 @@ namespace oaTest {
 	
 	void COrthogonalArrayTest::testBush()
 	{
-		int q = 2;
+		int q = 3;
+		int ncol = 3;
+		int n = 0;
+		oacpp::COrthogonalArray coa;
+		coa.bush(q, ncol, &n);
+		standardChecks(coa.getoa(), q, ncol);
+
+		q = 2;
 		int str = 2;
-		int ncol = 5;
+		ncol = 5;
 		// Error when ncol > q + 1
 		ASSERT_THROW(oacpp::oaconstruct::bushcheck(q, str, ncol));
 		
