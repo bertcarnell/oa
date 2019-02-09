@@ -1,5 +1,11 @@
 var NAVTREEINDEX1 =
 {
+"oa_main_page.html#orthogonal_arrays_sec":[0,0],
+"oa_main_page.html#references":[0,4],
+"oa_main_page.html#tips":[0,3],
+"oalhstest_2main_8cpp.html":[6,0,1,0],
+"oalhstest_2main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627":[6,0,1,0,0],
+"oatest_2main_8cpp.html":[6,0,3,4],
 "oatest_2main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c":[6,0,3,4,0],
 "pages.html":[],
 "primes_8cpp.html":[6,0,2,15],
