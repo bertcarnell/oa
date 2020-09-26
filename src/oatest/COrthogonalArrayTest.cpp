@@ -29,7 +29,7 @@ namespace oaTest {
         testAddelkempRange();
 		testAddelkemp3();
         testAddelkemp3Range();
-        testAddelkempn(); // deprecated
+        testAddelkempn();
         testBose();
         testBoseRange();
         testBoseBush();
@@ -278,6 +278,28 @@ namespace oaTest {
         oacpp::COrthogonalArray coa3;
         coa3.addelkempn(akn, q, ncol, &n);
 		standardChecks(coa3.getoa(), q, ncol);
+
+		q = 3;
+		int p = 2;
+		ncol = 7;
+		akn = 1;
+		// akn < 2
+		ASSERT_THROW(oacpp::oaaddelkemp::addelkempncheck(q, p, akn, ncol));
+		q = 5;
+		// p == 2 && q > 4
+		ASSERT_THROW(oacpp::oaaddelkemp::addelkempncheck(q, p, akn, ncol));
+		p = 2;
+		q = 3;
+		ncol = 100;
+		// ncol > 2*(q^akn - 1) / (q - 1) - 1 = 25
+		ASSERT_THROW(oacpp::oaaddelkemp::addelkempncheck(q, p, akn, ncol));
+
+		bclib::matrix<int> A = bclib::matrix<int>(2, 2);
+		oacpp::GF gf;
+		gf.p = 2;
+		gf.q = 5;
+		// addlekemp3check fails
+		ASSERT_THROW(oacpp::oaaddelkemp::addelkempn(gf, 3, A, 5));
 	}
 
 	void COrthogonalArrayTest::testBose()
