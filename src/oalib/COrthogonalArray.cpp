@@ -149,7 +149,7 @@ void COrthogonalArray::bosebushl(int lambda, int q, int k, int* n)
 {
 	int pq, nq, isppq,  pl, nl, isppl;
 
-	k = checkMaxColumns(k, q*lambda);
+	k = checkMaxColumns(k, q*lambda + 1);
 
 	primes::primepow(lambda, &pl, &nl, &isppl);
 	primes::primepow(q , &pq, &nq, &isppq);
