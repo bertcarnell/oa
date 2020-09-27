@@ -452,6 +452,9 @@ namespace oaTest {
 		// Error when ncol > lambda * s + 1
 		ASSERT_THROW(oacpp::oaconstruct::bosebushlcheck(s, p, lambda, ncol));
 
+		printf("\n\t\tPrinting Warnings\n");
+		
+		// Warning
 		q = 3;
 		lambda = 3;
 		ncol = 10;
@@ -464,6 +467,7 @@ namespace oaTest {
 		coa.bosebushl(lambda, q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
 
+		// Warning
 		q = 4; // 2^2
 		lambda = 2;
 		ncol = 9;
@@ -475,6 +479,8 @@ namespace oaTest {
 		ncol = 10;
 		// Error when ncol > lambda * s + 1
 		ASSERT_THROW(coa.bosebushl(lambda, q, ncol, &n));
+
+		printf("\n\t\tDone Printing Warnings...");
     }
 
     void COrthogonalArrayTest::testBoseBushlRange()
