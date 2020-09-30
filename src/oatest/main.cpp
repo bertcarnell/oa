@@ -55,8 +55,8 @@ int main(int argc, const char* argv[] )
             printf("\nUncaught exception in main\n");
         }
     }
-    for (size_t i = 0; i < tests.size(); i++)
+    for (OATestClass* obj : tests)
     {
-        delete (tests[i]);
+        delete obj;
     }
 }
