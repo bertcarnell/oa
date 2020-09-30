@@ -97,11 +97,12 @@ namespace oacpp
             }
             if (*kay == 0)
             {
-		int gfn = gf.n;
+		/*int gfn = gf.n;
                 std::ostringstream s;
                 s << "Problem: no rootless element in GF(" << gfn << ").\n";
-				const std::string ss = s.str();
-				throw std::runtime_error(ss.c_str());
+                const std::string ss = s.str();*/
+		const std::string ss = "Problem: no rootless element in GF\n";
+                throw std::runtime_error(ss.c_str());
             }
 
             for (size_t i = 1; i < q; i++)
