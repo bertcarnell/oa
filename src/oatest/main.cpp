@@ -35,24 +35,28 @@ int main(int argc, const char* argv[] )
     omp_set_num_threads(NUM_THREADS_USED);
 #endif
 
-	printf("Starting oatest with %d thread(s)...\n", NUM_THREADS_USED);
-	std::vector<OATestClass*> tests = std::vector<OATestClass*>();
+    printf("Starting oatest with %d thread(s)...\n", NUM_THREADS_USED);
+    std::vector<OATestClass*> tests = std::vector<OATestClass*>();
     CREATE_TEST_OA(primesTest);
-	CREATE_TEST_OA(gfieldsTest);
+    CREATE_TEST_OA(gfieldsTest);
     CREATE_TEST_OA(COrthogonalArrayTest);
     CREATE_TEST_OA(rutilsTest);
     CREATE_TEST_OA(matrixTest);
-	CREATE_TEST_OA(runifTest);
+    CREATE_TEST_OA(runifTest);
 
-	for (size_t i = 0; i < tests.size(); i++)
-	{
-		try{
-			tests[i]->Run();
-		} catch (std::exception & e){
+    for (size_t i = 0; i < tests.size(); i++)
+    {
+        try{
+            tests[i]->Run();
+        } catch (std::exception & e){
             printf("\n%s\n", e.what());
-		} catch (...)
+        } catch (...)
         {
             printf("\nUncaught exception in main\n");
         }
-	}
+    }
+    for (size_t i = 0; i < tests.size(); i++)
+    {
+        delete (tests[i]);
+    }
 }
