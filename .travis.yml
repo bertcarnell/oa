@@ -19,11 +19,13 @@ jobs:
       - valgrind ./build/oatest/oatest
       - valgrind ./build/oalhstest/oalhstest
     - script:
+      - cd src
       - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release # Test release build options
       - cmake --build build
       - ./build/oatest/oatest
       - ./build/oalhstest/oalhstest
     - script:
+      - cd src
       - cmake . -Bcoveragebuild -DCMAKE_BUILD_TYPE=Coverage # Test debug build and coverage options
       - cmake --build coveragebuild
       - ./coveragebuild/oatest/oatest
