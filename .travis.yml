@@ -16,8 +16,8 @@ jobs:
       - cd src
       - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Debug
       - cmake --build build
-      - valgrind ./build/oatest/oatest
-      - valgrind ./build/oalhstest/oalhstest
+      - valgrind --tool=memcheck --leak-check=full --track-origins=yes --show-leak-kinds=definite ./build/oatest/oatest
+      - valgrind --tool=memcheck --leak-check=full --track-origins=yes --show-leak-kinds=definite ./build/oalhstest/oalhstest
     - script:
       - cd src
       - cmake . -Bbuild -DCMAKE_BUILD_TYPE=Release # Test release build options
