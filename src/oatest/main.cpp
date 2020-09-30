@@ -36,7 +36,7 @@ int main(int argc, const char* argv[] )
 #endif
 
     printf("Starting oatest with %d thread(s)...\n", NUM_THREADS_USED);
-    std::vector<OATestClass*> tests = std::vector<OATestClass*>();
+    std::vector<std::unique_ptr<OATestClass> > tests = std::vector<std::unique_ptr<OATestClass> >();
     CREATE_TEST_OA(primesTest);
     CREATE_TEST_OA(gfieldsTest);
     CREATE_TEST_OA(COrthogonalArrayTest);
@@ -55,8 +55,5 @@ int main(int argc, const char* argv[] )
             printf("\nUncaught exception in main\n");
         }
     }
-    for (OATestClass* obj : tests)
-    {
-        delete obj;
-    }
+    tests.clear();
 }
