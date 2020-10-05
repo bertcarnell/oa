@@ -47,8 +47,8 @@ jobs:
       shell: bash
       if: ${{matrix.build_type}} == 'Debug'
       run: |
-        valgrind --leak-check=full ./oatest/oatest
-        valgrind --leak-check=full ./oalhstest/oalhstest
+        valgrind --leak-check=full --error-exitcode=1 --track-origins=yes ./oatest/oatest
+        valgrind --leak-check=full --error-exitcode=1 --track-origins=yes ./oalhstest/oalhstest
         
     - name: Test Release
       working-directory: ${{runner.workspace}}/build
