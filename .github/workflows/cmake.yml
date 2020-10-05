@@ -40,14 +40,18 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config ${{matrix.build_type}}
 
-    - name: Test
+    - name: Test Debug Valgrind
       working-directory: ${{runner.workspace}}/build
       shell: bash
       if: ${{matrix.build_type}} == 'Debug'
-        run: |
-          ./oatest/oatest
-          ./oalhstest/oalhstest
+      run: |
+        valgrind --leak-check=full ./oatest/oatest
+        valgrind --leak-check=full ./oalhstest/oalhstest
+        
+    - name: Test Release
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
       if: ${{matrix.build_type}} == 'Release'
-        run: |
-          valgrind --leak-check=full ./oatest/oatest
-          valgrind --leak-check=full ./oalhstest/oalhstest
+      run: |
+        ./oatest/oatest
+        ./oalhstest/oalhstest
