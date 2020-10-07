@@ -145,7 +145,6 @@ namespace oalhslib
         int basecount = 1;
         std::vector<int> randints;
         std::vector<double> randdouble;
-        viterator tempit;
         for (msize_type i = 0; i < oa.colsize(); i++)
         {
             // reset the basecount for each column
