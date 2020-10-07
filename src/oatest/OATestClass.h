@@ -42,7 +42,7 @@
  * inherits from TestClass.h
  */
 #define CREATE_TEST_OA(x) \
-	tests.push_back(dynamic_cast<oaTest::OATestClass*>(new x()))
+	tests.push_back(std::unique_ptr<oaTest::OATestClass>(dynamic_cast<oaTest::OATestClass*>(new x())));
 
 /**
  * @namespace oaTest Orthogonal Array Test

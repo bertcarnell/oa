@@ -5,9 +5,9 @@ Orthogonal Arrays based on Owen from Statlib.  Still available [here](http://ftp
 
 ### Status
 
-|<sub>Linux & MacOS</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|
-|:---:|:---:|:---:|
-|[![Build Status](https://www.travis-ci.org/bertcarnell/oa.svg?branch=master)](https://www.travis-ci.org/bertcarnell/oa)|[![Build status](https://ci.appveyor.com/api/projects/status/c25m7jk7ltx3ovs0?svg=true)](https://ci.appveyor.com/project/bertcarnell/oa)|[![codecov](https://codecov.io/gh/bertcarnell/oa/branch/master/graph/badge.svg)](https://codecov.io/gh/bertcarnell/oa)|
+|<sub>Linux & MacOS</sub>|<sub>Windows</sub>|<sub>Code Coverage</sub>|<sub>Github Actions</sub>|<sub>Github CodeQL</sub>|
+|:---:|:---:|:---:|:---:|:---:|
+|[![Build Status](https://www.travis-ci.org/bertcarnell/oa.svg?branch=master)](https://www.travis-ci.org/bertcarnell/oa)|[![Build status](https://ci.appveyor.com/api/projects/status/c25m7jk7ltx3ovs0?svg=true)](https://ci.appveyor.com/project/bertcarnell/oa)|[![codecov](https://codecov.io/gh/bertcarnell/oa/branch/master/graph/badge.svg)](https://codecov.io/gh/bertcarnell/oa)|![CMake](https://github.com/bertcarnell/oa/workflows/CMake/badge.svg)|![CodeQL](https://github.com/bertcarnell/oa/workflows/CodeQL/badge.svg)|
 
 ### Documentation
 
