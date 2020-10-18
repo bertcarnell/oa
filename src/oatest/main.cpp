@@ -25,6 +25,7 @@
 #include "COrthogonalArrayTest.h"
 #include "runifTest.h"
 #include "gfieldsTest.h"
+#include "galoisTest.h"
 
 using namespace oaTest;
 
@@ -43,6 +44,7 @@ int main(int argc, const char* argv[] )
     CREATE_TEST_OA(rutilsTest);
     CREATE_TEST_OA(matrixTest);
     CREATE_TEST_OA(runifTest);
+    CREATE_TEST_OA(galoisTest);
 
     for (size_t i = 0; i < tests.size(); i++)
     {

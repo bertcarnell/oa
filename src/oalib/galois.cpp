@@ -41,6 +41,7 @@ namespace oacpp
         // TODO:  I am copying the entire object here, there may be a better way to do with with
         //  a row or column iterator in the matrix object since these are read only on p1 and p2
         // TODO: evaluate const for functions better
+        // TODO: ensure the length of p1, p2 and sum are all the same
         void GF_poly_sum(int p, int n, std::vector<int> p1, std::vector<int> p2, std::vector<int> & sum)
         {
             for (size_t i = 0; i < static_cast<size_t>(n); i++)

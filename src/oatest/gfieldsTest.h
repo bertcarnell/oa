@@ -33,8 +33,8 @@ namespace oaTest {
 	{
 		void Run();
         /**
-         * @test Test isprime
-         * @see oacpp::primes::isprime
+         * @test Test GF_getfield
+         * @see oacpp::galoisfield::GF_getfield
          */
 		void testGF_getfield();
 	};

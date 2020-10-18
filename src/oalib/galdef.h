@@ -42,15 +42,15 @@ namespace oacpp {
     {
 		/** Vector Length */
         int n;
-		/** modulus */
+		/** prime modulus */
 		int p;
-		/** q */
+		/** the order of the field q = p^n */
 		int q;
 		/** x^n */
 		std::vector<int> xton;
-		/** inverse polynomial */
+		/** Indicator of which row of poly is the multiplicative inverse of this row */
 		std::vector<int> inv;
-		/** negative polynomial */
+		/** row number of which row of poly is the negative (additive inverse) of this row */
 		std::vector<int> neg;
 		/** root */
 		std::vector<int> root;
