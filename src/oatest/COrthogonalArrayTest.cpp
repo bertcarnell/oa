@@ -163,7 +163,7 @@ namespace oaTest {
         testException(f, 6, 12);
         testException(f, 10, 2);
         
-        oacpp::GF gf;
+        oacpp::GaloisField gf = oacpp::GaloisField();
         gf.q = 6;
         int kay = 0;
         std::vector<int> b = std::vector<int>(4);
@@ -171,9 +171,10 @@ namespace oaTest {
         std::vector<int> k = std::vector<int>(9);
         ASSERT_THROW(oacpp::oaaddelkemp::akeven(gf, &kay, b, c, k));
         
-        gf.q = 3;
-        gf.p = 3;
-        gf.root = std::vector<int>(gf.q);
+        gf = oacpp::GaloisField(3); 
+        //gf.q = 3;
+        //gf.p = 3;
+        gf.root = std::vector<int>(gf.u_q);
         ASSERT_THROW(oacpp::oaaddelkemp::akodd(gf, &kay, b, c, k));
 		
 		int p = 2;
@@ -239,7 +240,7 @@ namespace oaTest {
         ASSERT_THROW(oacpp::oaaddelkemp::addelkemp3check(q, p, ncol));
         
         bclib::matrix<int> A = bclib::matrix<int>(2,2);
-        oacpp::GF gf;
+        oacpp::GaloisField gf = oacpp::GaloisField(5);
         gf.p = 2;
         gf.q = 5;
         // addlekemp3check fails
@@ -295,9 +296,9 @@ namespace oaTest {
 		ASSERT_THROW(oacpp::oaaddelkemp::addelkempncheck(q, p, akn, ncol));
 
 		bclib::matrix<int> A = bclib::matrix<int>(2, 2);
-		oacpp::GF gf;
+		oacpp::GaloisField gf = oacpp::GaloisField(5);
 		gf.p = 2;
-		gf.q = 5;
+		//gf.q = 5;
 		// addlekemp3check fails
 		ASSERT_THROW(oacpp::oaaddelkemp::addelkempn(gf, 3, A, 5));
 	}

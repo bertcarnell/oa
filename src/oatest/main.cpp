@@ -24,8 +24,7 @@
 #include "primesTest.h"
 #include "COrthogonalArrayTest.h"
 #include "runifTest.h"
-#include "gfieldsTest.h"
-#include "galoisTest.h"
+#include "GaloisFieldTest.h"
 
 using namespace oaTest;
 
@@ -39,12 +38,11 @@ int main(int argc, const char* argv[] )
     printf("Starting oatest with %d thread(s)...\n", NUM_THREADS_USED);
     std::vector<std::unique_ptr<OATestClass> > tests = std::vector<std::unique_ptr<OATestClass> >();
     CREATE_TEST_OA(primesTest);
-    CREATE_TEST_OA(gfieldsTest);
+    CREATE_TEST_OA(GaloisFieldTest);
     CREATE_TEST_OA(COrthogonalArrayTest);
     CREATE_TEST_OA(rutilsTest);
     CREATE_TEST_OA(matrixTest);
     CREATE_TEST_OA(runifTest);
-    CREATE_TEST_OA(galoisTest);
 
     for (size_t i = 0; i < tests.size(); i++)
     {

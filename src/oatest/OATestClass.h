@@ -60,6 +60,10 @@ namespace oaTest
          */
 		virtual void Run(){};
         /**
+         * Destructor
+         */
+        virtual ~OATestClass() {};
+        /**
          * Is the dot product of the columns of an orthogonal array a constant value?
          * @param A an orthogonal array matrix
          * @return the result of the test

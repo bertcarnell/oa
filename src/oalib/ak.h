@@ -32,7 +32,7 @@
 #define AK_H
 
 #include "OACommonDefines.h"
-#include "galois.h"
+#include "GaloisField.h"
 #include "primes.h"
 #include "matrix.h"
 
@@ -65,7 +65,7 @@ namespace oacpp {
          * @param k
          * @return an indicator of success
          */
-		int akeven(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
+		int akeven(GaloisField & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
         
         /**
          * Addelkemp algorithm for odd <code>p</code>
@@ -78,7 +78,7 @@ namespace oacpp {
          * @param k
          * @return an indicator of success
          */
-		int akodd(GF & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
+		int akodd(GaloisField & gf, int* kay, std::vector<int> & b, std::vector<int> & c, std::vector<int> & k );
         
         /**
          * Check that the parameters are consistent for the addelkempn algorithm
@@ -104,7 +104,7 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		int addelkempn(GF & gf, int akn, bclib::matrix<int> & A, int ncol );
+		int addelkempn(GaloisField & gf, int akn, bclib::matrix<int> & A, int ncol );
         
         /**
          * The addelkemp algorithm for n=3
@@ -114,7 +114,7 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		int addelkemp3(GF & gf, bclib::matrix<int> & A, int ncol );
+		int addelkemp3(GaloisField & gf, bclib::matrix<int> & A, int ncol );
 	}
 }
 

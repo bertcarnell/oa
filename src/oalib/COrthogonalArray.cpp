@@ -35,11 +35,7 @@ COrthogonalArray::COrthogonalArray()
 
 void COrthogonalArray::createGaloisField(int q)
 {
-	bool test = galoisfield::GF_getfield(q, m_gf) == SUCCESS_CHECK ? true : false;
-	if (!test)
-	{
-		throw std::runtime_error("Could not construct the Galois field"); // LCOV_EXCL_TEST
-	}
+    m_gf = GaloisField(q);
 }
 
 void COrthogonalArray::checkDesignMemory()

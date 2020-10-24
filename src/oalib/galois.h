@@ -84,15 +84,15 @@ namespace oacpp {
          * 
          * @param gf the Galois field
          * @param p the modulus
-         * @param n the length of xton
-         * @param xton the x^n vector
+         * @param n q = p^n
+         * @param xton the characteristic polynomial
          * @return 1 for success
          */
 		int GF_ready(GF & gf, int p, int n, std::vector<int> & xton );
         
         /**
-         * Get a Galois field with q arguments
-         * @param q the number of arguments
+         * Get a Galois field with order q
+         * @param q the order of the field
          * @param gf the Galois field
          * @return 1 for success
          */

@@ -6,3 +6,4 @@ original/*.c
 original/*.o
 original/*.h
 original/*.exe
+.Rproj.user

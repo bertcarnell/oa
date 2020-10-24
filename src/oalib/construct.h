@@ -34,7 +34,7 @@
 /*  Constructions for designs using Galois fields */
 
 #include "OACommonDefines.h"
-#include "galois.h"
+#include "GaloisField.h"
 #include "ak.h"
 
 /*  Glossary:
@@ -60,7 +60,7 @@ namespace oacpp {
          * @param ncol the number of columns
          * @return an indicator of success
          */
-		int bose(GF & gf, bclib::matrix<int> & A, int ncol );
+		int bose(GaloisField & gf, bclib::matrix<int> & A, int ncol );
         
         /**
          * Construct an orthogonal array using the bush algorithm
@@ -70,7 +70,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int bush(GF & gf, bclib::matrix<int> &  A, int str, int ncol  );
+		int bush(GaloisField & gf, bclib::matrix<int> &  A, int str, int ncol  );
         
         /**
          * 
@@ -81,7 +81,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int addelkemp(GF & gf, bclib::matrix<int> & A, int ncol );
+		int addelkemp(GaloisField & gf, bclib::matrix<int> & A, int ncol );
         
         /**
          * Construct an orthogonal array using the bosebush algorithm
@@ -94,7 +94,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int bosebush(GF & gf, bclib::matrix<int> & B, int ncol );
+		int bosebush(GaloisField & gf, bclib::matrix<int> & B, int ncol );
         
         /**
          * Construct an orthogonal array using the bose-bush algorithm
@@ -105,7 +105,7 @@ namespace oacpp {
          * @param ncol
          * @return 
          */
-		int bosebushl(GF & gf, int lam, bclib::matrix<int> & B, int ncol );
+		int bosebushl(GaloisField & gf, int lam, bclib::matrix<int> & B, int ncol );
 
         /**
          * Check the input to the bose algorithm
@@ -134,7 +134,7 @@ namespace oacpp {
          * @param value
          * @return 
          */
-		int polyeval(GF & gf, int d, std::vector<int> & poly, int arg, int* value );
+		int polyeval(GaloisField & gf, int d, std::vector<int> & poly, int arg, int* value );
         
         /**
          * 

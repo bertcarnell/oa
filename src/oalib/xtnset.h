@@ -33,6 +33,18 @@
 #ifndef XTNSET_H
 #define XTNSET_H
 
+/*
+ * for example 
+ * See Table B.3 Power cycle II pg 316 in Block Designs:  A Randomization Approach
+ *
+ * GF(2^2) x^2 = x + 1
+ * GF(2^3) x^3 = x^2 + 1
+ * GF(2^4) x^4 = X^3 + 1
+ * GF(3^2) X^2 = 2x + 1
+ * GF(3^3) x^3 = x^2 + 2
+ * 
+*/
+
 /*  This code was computer generated */
 
 /*  GF( 2 ^ 2 ) = GF( 4 ) */

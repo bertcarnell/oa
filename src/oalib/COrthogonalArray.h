@@ -26,8 +26,7 @@
 #define CORTHOGONALARRAY_H
 
 #include "OACommonDefines.h"
-#include "galdef.h"
-#include "galois.h"
+#include "GaloisField.h"
 #include "construct.h"
 #include "runif.h"
 #include "rutils.h"
@@ -562,7 +561,7 @@ namespace oacpp {
         const bclib::matrix<int> & getoa();
 
 	private:
-		struct GF m_gf; /**< Galois Field */
+        GaloisField m_gf; /**< Galois Field */
         bclib::matrix<int> m_A; /**< Orthogonal Array */
 		int m_nrow; /**< the number of rows in orthogonal array */
         int m_ncol; /**< the number of columns in the orthogonal array */
