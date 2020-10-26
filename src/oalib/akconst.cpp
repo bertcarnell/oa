@@ -40,8 +40,7 @@ namespace oacpp
         {
             if (gf.q > 4)
             {
-                std::string msg = "Addelman Kempthorne designs not yet available for \n even q >4.";
-                throw std::runtime_error(msg.c_str());
+                throw std::runtime_error("Addelman Kempthorne designs not yet available for \n even q >4.");
             }
 
             *kay = 1;
@@ -92,12 +91,7 @@ namespace oacpp
             }
             if (*kay == 0)
             {
-                /*int gfn = gf.n;
-                std::ostringstream s;
-                s << "Problem: no rootless element in GF(" << gfn << ").\n";
-                const std::string ss = s.str();*/
-                const std::string ss = "Problem: no rootless element in GF\n";
-                throw std::runtime_error(ss.c_str());
+                throw std::runtime_error("Problem: no rootless element in GF\n");
             }
 
             for (size_t i = 1; i < gf.u_q; i++)

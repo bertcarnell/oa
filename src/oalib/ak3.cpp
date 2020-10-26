@@ -36,25 +36,21 @@ namespace oacpp
     {
         int addelkemp3check(int q, int p, int ncol)
         {
-            std::string msg;
             if (p == 2 && q > 4)
             {
-                msg = "This Addelman-Kempthorne OA(2q^3,ncol,q,2) is only \n available for odd prime powers q and for even prime \n powers q<=4.\n";
-                throw std::runtime_error(msg.c_str());
+                throw std::runtime_error("This Addelman-Kempthorne OA(2q^3,ncol,q,2) is only \n available for odd prime powers q and for even prime \n powers q<=4.\n");
             }
 
             if (q == 8)
             { /* Moot */
-                msg = "This Addelman-Kempthorne OA(2*8^3,ncol,8,2) is experimental and not yet working.";
-                throw std::runtime_error(msg.c_str());
+                throw std::runtime_error("This Addelman-Kempthorne OA(2*8^3,ncol,8,2) is experimental and not yet working.");
             }
 
             if (ncol > 2 * q * q + 2 * q + 1)
             {
-                std::ostringstream s;
-                s << "The Addelman-Kempthorne (n=3) construction needs ncol <= 2q^2+2q+1. Can't have ncol = " << ncol << " with q = " << q << "\n";
-				const std::string ss = s.str();
-                throw std::runtime_error(ss.c_str());
+                std::ostringstream msg;
+                msg << "The Addelman-Kempthorne (n=3) construction needs ncol <= 2q^2+2q+1. Can't have ncol = " << ncol << " with q = " << q << "\n";
+                ostringstream_runtime_error(msg);
             }
 
             return SUCCESS_CHECK;

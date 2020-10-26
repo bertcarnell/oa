@@ -40,14 +40,12 @@ namespace oacpp
             if (ncol > q + 1)
             {
                 msg << "Bose's design must have ncol <= q+1. Had q=" << q << " and ncol=" << ncol << ".\n";
-				const std::string smsg = msg.str();
-				throw std::runtime_error(smsg.c_str());
+                ostringstream_runtime_error(msg);
 			}
             if (ncol <= 0)
             {
                 msg << "Nonpositive number of columns requested for Bose's design\n";
-				const std::string smsg = msg.str();
-				throw std::runtime_error(smsg.c_str());
+                ostringstream_runtime_error(msg);
             }
             return SUCCESS_CHECK;
         }

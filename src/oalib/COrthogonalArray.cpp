@@ -54,15 +54,11 @@ int COrthogonalArray::checkMaxColumns(int k, int maxColumns)
 	}
 	else if (k > maxColumns)
 	{
-        std::ostringstream s;
-        s << "At most " << maxColumns << " columns are possible for the design.";
-		const std::string ss = s.str();
-		throw std::runtime_error(ss.c_str());
+        std::ostringstream msg;
+        msg << "At most " << maxColumns << " columns are possible for the design.";
+        ostringstream_runtime_error(msg);
 	}
-	else
-	{
-		return k;
-	}
+    return k;
 }
 
 void COrthogonalArray::checkResult(int result, int nvalue, int * n)

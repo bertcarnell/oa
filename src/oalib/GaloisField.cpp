@@ -109,8 +109,7 @@ namespace oacpp
             { // LCOV_EXCL_START
                 msg << "There is something wrong with the Galois field\n";
                 msg << "used for q=" << q << ".  Element " << i << "has no reciprocal.\n";
-                const std::string smsg = msg.str();
-                throw std::runtime_error(smsg.c_str());
+                ostringstream_runtime_error(msg);
             } // LCOV_EXCL_STOP
         }
     }
@@ -118,20 +117,20 @@ namespace oacpp
     void GaloisField::computeNegative()
     {
         assert(u_q > 0 && !plus.isEmpty());
-        neg = std::vector<int>(q);
+        neg = std::vector<int>(u_q);
         std::ostringstream msg;
 
-        for (size_t i = 0; i < q; i++)
+        for (size_t i = 0; i < u_q; i++)
         {
             neg[i] = -1;
-            for (size_t j = 0; j < q; j++)
+            for (size_t j = 0; j < u_q; j++)
                 if (plus(i, j) == 0)
                     neg[i] = static_cast<int>(j);
             if (i > 0 && neg[i] <= 0)
             { // LCOV_EXCL_START
                 msg << "There is something wrong with the Galois field\n";
                 msg << "used for q=" << q << ".  Element " << i << " has no negative.\n";
-                throw std::runtime_error(msg.str().c_str());
+                ostringstream_runtime_error(msg);
             } // LCOV_EXCL_STOP
         }
     }
@@ -163,14 +162,12 @@ namespace oacpp
         if (q < 1)
         { /* Impossible argument */
             msg << "Field must have positive number of elements.\n";
-            const std::string smsg = msg.str();
-            throw std::runtime_error(smsg.c_str());
+            ostringstream_runtime_error(msg);
         }
         if (q == 1)
         { /* Pointless  argument */
             msg << "Field with 1 element was requested. \n";
-            const std::string smsg = msg.str();
-            throw std::runtime_error(smsg.c_str());
+            ostringstream_runtime_error(msg);
         }
 
         primes::primepow(q, &p, &n, &ispp);
@@ -179,8 +176,7 @@ namespace oacpp
         if (!ispp)
         {
             msg << "q=" << q << " is not a prime power.\n";
-            const std::string smsg = msg.str();
-            throw std::runtime_error(smsg.c_str());
+            ostringstream_runtime_error(msg);
         }
 
         if (primes::isprime(q))
@@ -196,8 +192,7 @@ namespace oacpp
         {
             msg << "GF(" << q << ") = GF(" << p << "^" << n << ") is not\n";
             msg << "included in this program. To add it, consider modifying gfields.c.\n";
-            const std::string smsg = msg.str();
-            throw std::runtime_error(smsg.c_str());
+            ostringstream_runtime_error(msg);
         }
 
         // create a matrix containing all polynomials in the Galois Field
