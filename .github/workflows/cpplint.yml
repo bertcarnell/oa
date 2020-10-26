@@ -25,9 +25,9 @@ jobs:
         run: |
           cd src
           sh cmakeshell.sh Debug Clang
-          ls -alh src/clangbuild
-          ls -alh src/clangbuild/oalib
-          ls -alh src/clangbuild/oalhslib
+          ls -alh clangbuild
+          ls -alh clangbuild/oalib
+          ls -alh clangbuild/oalhslib
           cd ..
 
       - name: Run checks
