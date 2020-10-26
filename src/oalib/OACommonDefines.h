@@ -35,6 +35,7 @@
 #include <sstream>
 #include <iostream>
 #include <numeric>
+#include "RWarningException.h"
 
 #ifdef RCOMPILE
 #include <Rcpp.h>
@@ -42,11 +43,13 @@
  * A print macro to enable printing with or without R
  */
 #define PRINT_OUTPUT Rcpp::Rcout
+#define PRINT_WARNINGS false
 #else
  /**
   * A print macro to enable printing with or without R
   */
 #define PRINT_OUTPUT std::cout
+#define PRINT_WARNINGS true
 #endif
 
 /**
@@ -70,6 +73,31 @@
  * When a method returns an int which is not normally checked
  */
 #define UNCHECKED_RETURN 0
+
+/**
+ * Throw with a const string from an ostringstream
+ */
+namespace oacpp {
+    inline void ostringstream_runtime_error(const std::ostringstream & msg)
+    {
+        const std::string smsg = msg.str();
+        throw std::runtime_error(smsg.c_str());
+    }
+
+    inline void ostringstream_warning(const std::ostringstream & msg)
+    {
+        const std::string smsg = msg.str();
+
+        if (PRINT_WARNINGS)
+        {
+            PRINT_OUTPUT << smsg.c_str();
+        }
+        else
+        {
+            throw bclib::RWarningException(smsg);
+        }
+    }
+}
 
 /**
  * @page oa_main_page Orthogonal Array Library

@@ -453,25 +453,34 @@ namespace oaTest {
 		// Error when ncol > lambda * s + 1
 		ASSERT_THROW(oacpp::oaconstruct::bosebushlcheck(s, p, lambda, ncol));
 
-		printf("\n\t\tPrinting Warnings\n");
-		
-		// Warning
-		q = 3;
-		lambda = 3;
-		ncol = 10;
-		coa.bosebushl(lambda, q, ncol, &n);
-		standardChecks(coa.getoa(), q, ncol);
+        // Should send warnings to a buffer instead of std::out
+        std::stringstream buffer;
+        std::streambuf * oldbuffer = std::cout.rdbuf(buffer.rdbuf());
+        try {
+            q = 3;
+            lambda = 3;
+            ncol = 10;
+            coa.bosebushl(lambda, q, ncol, &n);
+            standardChecks(coa.getoa(), q, ncol);
+        
+            q = 4; // 2^2
+            lambda = 2;
+            ncol = 9;
+            coa.bosebushl(lambda, q, ncol, &n);
+            standardChecks(coa.getoa(), q, ncol);
+        }
+        catch (...)
+        {
+            std::cout.rdbuf(oldbuffer);
+            throw;
+        }
+        std::cout.rdbuf(oldbuffer);
+        // check to make sure something was printed
+        bclib::Assert(buffer.str().length() > 0, "No warnings were printed");
 
 		q = 4; // 2^2
 		lambda = 2;
 		ncol = 8;
-		coa.bosebushl(lambda, q, ncol, &n);
-		standardChecks(coa.getoa(), q, ncol);
-
-		// Warning
-		q = 4; // 2^2
-		lambda = 2;
-		ncol = 9;
 		coa.bosebushl(lambda, q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
 
@@ -480,8 +489,6 @@ namespace oaTest {
 		ncol = 10;
 		// Error when ncol > lambda * s + 1
 		ASSERT_THROW(coa.bosebushl(lambda, q, ncol, &n));
-
-		printf("\n\t\tDone Printing Warnings...");
     }
 
     void COrthogonalArrayTest::testBoseBushlRange()

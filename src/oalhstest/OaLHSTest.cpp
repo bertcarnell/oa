@@ -95,7 +95,7 @@ namespace oalhs_test
         
 		// test that the input oa was unchanged
         bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
-        for (unsigned int i = 0; i < oaseq.size(); i++)
+        for (size_t i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -109,7 +109,7 @@ namespace oalhs_test
         
         oalhslib::oaLHS(n, k, oa, intlhs, false);
         bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
-        for (unsigned int i = 0; i < oaseq.size(); i++)
+        for (size_t i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -121,13 +121,13 @@ namespace oalhs_test
                                   2,3,
                                   3,2,
                                   4,4};
-        for (unsigned int i = 0; i < lhsintseq.size(); i++)
+        for (size_t i = 0; i < lhsintseq.size(); i++)
         {
             bclib::Assert(lhsintseq[i], intlhs.getDataVector()[i], "deterministic oalhs values");
         }
         
 		// debugging whether the printing methods have a memory leak
-		oalhslib::oaLHS(n, k, oa, intlhs, lhs, true, oRandom);
+		oalhslib::oaLHS(n, k, oa, intlhs, lhs, false, oRandom);
 
 		// debugging the same R method that caused the memory leak
 		// #' oa <- createBose(3, 4, TRUE)
@@ -138,7 +138,7 @@ namespace oalhs_test
 		n = 0;
 		coa.bose(q, k, &n);
 		bclib::Assert(9, n, "Check Bose output n");
-		oalhslib::oaLHS(n, k, coa.getoa(), intlhs, lhs, true, oRandom);
+		oalhslib::oaLHS(n, k, coa.getoa(), intlhs, lhs, false, oRandom);
 		bclib::Assert(oaLHSTest::isValidLHS(intlhs));
 		bclib::Assert(oaLHSTest::isValidLHS(lhs));
 	}
@@ -166,7 +166,7 @@ namespace oalhs_test
         oalhslib::oaLHS(n, k, oa, intlhs, lhs, false, oRandom);
         
         bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
-        for (unsigned int i = 0; i < oaseq.size(); i++)
+        for (size_t i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -180,7 +180,7 @@ namespace oalhs_test
         
         oalhslib::oaLHS(n, k, oa, intlhs, false);
         bclib::Assert(static_cast<int>(oaseq.size()), static_cast<int>(oa.getDataVector().size()));
-        for (unsigned int i = 0; i < oaseq.size(); i++)
+        for (size_t i = 0; i < oaseq.size(); i++)
         {
             bclib::Assert(oaseq[i], oa.getDataVector()[i]);
         }
@@ -197,7 +197,7 @@ namespace oalhs_test
                                       7,3,6,
                                       8,6,9,
                                       9,9,3};
-        for (unsigned int i = 0; i < lhsintseq.size(); i++)
+        for (size_t i = 0; i < lhsintseq.size(); i++)
         {
             bclib::Assert(lhsintseq[i], intlhs.getDataVector()[i], "deterministic oalhs values");
         }

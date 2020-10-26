@@ -37,12 +37,6 @@
 #include "GaloisField.h"
 #include "ak.h"
 
-/*  Glossary:
-
-
-
-*/
-
 namespace oacpp {
     /**
      * Namespace to construct Orthogonal Arrays using various algorithms
