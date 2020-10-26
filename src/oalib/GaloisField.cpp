@@ -41,7 +41,7 @@ namespace oacpp
 #include "xtn.h"
 
         return xtn;
-    };
+    }
 
     void GaloisField::fillAllPolynomials()
     {
@@ -66,7 +66,7 @@ namespace oacpp
                 poly(i, j) = poly(i - 1, j);
             }
         }
-    };
+    }
 
     void GaloisField::computeSumsAndProducts()
     {
@@ -87,7 +87,7 @@ namespace oacpp
                 times(i, j) = GaloisField::poly2int(p, n, temppoly);
             }
         }
-    };
+    }
 
     void GaloisField::computeMultiplicativeInverse()
     {
@@ -113,7 +113,7 @@ namespace oacpp
                 throw std::runtime_error(smsg.c_str());
             } // LCOV_EXCL_STOP
         }
-    };
+    }
 
     void GaloisField::computeNegative()
     {
@@ -134,7 +134,7 @@ namespace oacpp
                 throw std::runtime_error(msg.str().c_str());
             } // LCOV_EXCL_STOP
         }
-    };
+    }
 
     void GaloisField::computeRoots()
     {
@@ -151,7 +151,7 @@ namespace oacpp
                 }
             }
         }
-    };
+    }
 
     GaloisField::GaloisField(int q)
     {
@@ -210,7 +210,7 @@ namespace oacpp
         computeNegative();
         // compute roots of polynomials
         computeRoots();
-    };
+    }
 
     GaloisField::GaloisField()
     {
@@ -230,7 +230,7 @@ namespace oacpp
         {
             sum[i] = (p1[i] + p2[i]) % p;
         }
-    };
+    }
 
     void GaloisField::polyProd(int p, size_t u_n, const std::vector<int> & xton, const std::vector<int> & p1, 
         const std::vector<int> & p2, std::vector<int> & prod)
@@ -260,7 +260,7 @@ namespace oacpp
         {
             prod[i] = longprod[i] % p;
         }
-    };
+    }
 
     int GaloisField::poly2int(int p, int n, const std::vector<int> & poly)
     {
@@ -276,7 +276,7 @@ namespace oacpp
         ans += poly[0];
 
         return ans;
-    };
+    }
 
     void GaloisField::print() // LCOV_EXCL_START
     {
@@ -339,5 +339,5 @@ namespace oacpp
         {
             PRINT_OUTPUT << " " << i << " " << root[i] << "\n";
         }
-    }; // LCOV_EXCL_STOP
+    } // LCOV_EXCL_STOP
 }
