@@ -15,12 +15,18 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install Packages
-        run: sudo apt-get install clang clang-tidy cppcheck
+        run: sudo apt-get install clang clang-tidy cppcheck llvm cmake
+        
+      - name: Build Clang projects
+        run: |
+          cd src
+          sh cmakeshell.sh Debug Clang
+          cd ..
 
       - name: Run checks
         run: |
           clang-tidy --version
-          clang-tidy src/oalib/*.cpp src/oalhslib/*.cpp -checks=boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-cplusplus-*,clang-analyzer-*,cppcoreguidelines-* > clang-tidy-report.txt
+          clang-tidy src/oalib/*.cpp src/oalhslib/*.cpp -p=src/clangbuild -checks=boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-cplusplus-*,clang-analyzer-*,cppcoreguidelines-* > clang-tidy-report.txt
           cppcheck --enable=all --std=c++11 --language=c++ --output-file=cppcheck-report.txt src/oalib/* src/oalhslib/*
 
       - name: Archive clang-tidy artifacts
