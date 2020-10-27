@@ -91,7 +91,7 @@ namespace oacpp
 
         void primepow(int q, int* p, int* n, int* isit)
         {
-            int firstfactor = 0; // maybe uninitialized otherwise
+            int firstfactor = 1; // maybe uninitialized otherwise
 
             *p = *n = *isit = 0;
             if (q <= 1)

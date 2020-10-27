@@ -36,7 +36,8 @@ namespace oacpp
 	{
 		m_jent = m_i = m_j = m_k = m_l = ip = jp = 0;
 		c = cd = cm = 0.0;
-        std::fill(u, u + SEED_VECTOR_LENGTH, 0.0);
+        u = std::vector<double>(SEED_VECTOR_LENGTH);
+        u.assign(SEED_VECTOR_LENGTH, 0.0);
         RUnif::seed(1, 2, 3, 4);
 	}
 
@@ -44,15 +45,17 @@ namespace oacpp
     {
 		m_jent = m_i = m_j = m_k = m_l = ip = jp = 0;
 		c = cd = cm = 0.0;
-        std::fill(u, u + SEED_VECTOR_LENGTH, 0.0);
-		RUnif::seed(is, js, ks, ls);
+        u = std::vector<double>(SEED_VECTOR_LENGTH);
+        u.assign(SEED_VECTOR_LENGTH, 0.0);
+        RUnif::seed(is, js, ks, ls);
 	}
     
     RUnif::RUnif(SeedSet seedSet)
     {
 		m_jent = m_i = m_j = m_k = m_l = ip = jp = 0;
 		c = cd = cm = 0.0;
-        std::fill(u, u + SEED_VECTOR_LENGTH, 0.0);
+        u = std::vector<double>(SEED_VECTOR_LENGTH);
+        u.assign(SEED_VECTOR_LENGTH, 0.0);
         RUnif::seed(seedSet.is, seedSet.js, seedSet.ks, seedSet.ls);
 	}
     
@@ -69,10 +72,7 @@ namespace oacpp
         {
             return ans;
         }
-        else
-        {
-            return ans + b;
-        }
+        return ans + b;
     }
 
     int RUnif::seedok(int is, int js, int ks, int ls)
@@ -115,7 +115,7 @@ namespace oacpp
     
     SeedSet RUnif::getSeedSet()
     {
-        SeedSet s;
+        SeedSet s = SeedSet();
         s.is = m_i;
         s.js = m_j;
         s.ks = m_k;
@@ -126,7 +126,7 @@ namespace oacpp
     void RUnif::runif(std::vector<double> & x, int n)
     {
         // if the seed is not ok, it was set by default and not through seed()
-        if (!seedok(m_i, m_j, m_k, m_l))
+        if (seedok(m_i, m_j, m_k, m_l) == SEEDBAD)
         {
             m_jent = 0;
             m_i = 12;
@@ -139,11 +139,11 @@ namespace oacpp
 
     void RUnif::ranums(std::vector<double> & x, int n)
     {
-        int ii, jj, m;
+        int m;
         double s, t, uni;
 
         // if the seed is not ok, it was set by default and not through seed()
-        if (!seedok(m_i, m_j, m_k, m_l))
+        if (seedok(m_i, m_j, m_k, m_l) == SEEDBAD)
         {
             m_jent = 0;
             m_i = 12;
@@ -157,11 +157,11 @@ namespace oacpp
             goto L30;
         }
         m_jent = 1;
-        for (ii = 1; ii <= 97; ii++)
+        for (size_t ii = 1; ii <= 97; ii++)
         { /* do 20 ii=1,97 */
             s = 0.0;
             t = 0.5;
-            for (jj = 1; jj <= 24; jj++)
+            for (size_t jj = 1; jj <= 24; jj++)
             { /* do 10 jj=1,24 */
                 m = mod(mod(m_i*m_j, 179) * m_k, 179);
                 m_i = m_j;
@@ -184,14 +184,14 @@ namespace oacpp
         jp = 33;
 
 L30:
-        for (ii = 1; ii <= n; ii++)
+        for (size_t ii = 1; ii <= n; ii++)
         { /*  ii do 40 ii=1,n */
-            uni = u[ip] - u[jp];
+            uni = u[static_cast<size_t>(ip)] - u[static_cast<size_t>(jp)];
             if (uni < 0.0)
             {
                 uni = uni + 1.0;
             }
-            u[ip] = uni;
+            u[static_cast<size_t>(ip)] = uni;
             ip = ip - 1;
             if (ip == 0)
             {

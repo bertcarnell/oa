@@ -45,7 +45,7 @@ namespace oacpp
 
     void GaloisField::fillAllPolynomials()
     {
-        assert(u_q > 0 && u_n > 0);
+        assert(u_q > 0 && u_n > 0); // NOLINT
         poly = bclib::matrix<int>(u_q, u_n);
         size_t click = 0;
 
@@ -70,8 +70,8 @@ namespace oacpp
 
     void GaloisField::computeSumsAndProducts()
     {
-        assert(u_n > 0 && u_q > 0);
-        assert(poly.rowsize() == u_q && xton.size() == u_n && poly.colsize() == u_n);
+        assert(u_n > 0 && u_q > 0); // NOLINT
+        assert(poly.rowsize() == u_q && xton.size() == u_n && poly.colsize() == u_n); // NOLINT
         
         std::vector<int> temppoly(u_n);
         plus = bclib::matrix<int>(u_q, u_q);
@@ -91,7 +91,7 @@ namespace oacpp
 
     void GaloisField::computeMultiplicativeInverse()
     {
-        assert(u_q > 0 && !times.isEmpty());
+        assert(u_q > 0 && !times.isEmpty());  // NOLINT
         inv = std::vector<int>(u_q);
         std::ostringstream msg;
 
@@ -116,7 +116,7 @@ namespace oacpp
 
     void GaloisField::computeNegative()
     {
-        assert(u_q > 0 && !plus.isEmpty());
+        assert(u_q > 0 && !plus.isEmpty()); // NOLINT
         neg = std::vector<int>(u_q);
         std::ostringstream msg;
 
@@ -141,7 +141,7 @@ namespace oacpp
 
     void GaloisField::computeRoots()
     {
-        assert(u_q > 0 && !times.isEmpty());
+        assert(u_q > 0 && !times.isEmpty()); // NOLINT
         root = std::vector<int>(u_q);
         for (size_t i = 0; i < u_q; i++)
         {
@@ -224,8 +224,8 @@ namespace oacpp
 
     void GaloisField::polySum(int p, size_t u_n, const std::vector<int> & p1, const std::vector<int> & p2, std::vector<int> & sum)
     {
-        assert(p > 0 && u_n > 0);
-        assert(p1.size() == u_n && p2.size() == u_n && sum.size() == u_n);
+        assert(p > 0 && u_n > 0); // NOLINT
+        assert(p1.size() == u_n && p2.size() == u_n && sum.size() == u_n); // NOLINT
 
         for (size_t i = 0; i < u_n; i++)
         {
@@ -236,8 +236,8 @@ namespace oacpp
     void GaloisField::polyProd(int p, size_t u_n, const std::vector<int> & xton, const std::vector<int> & p1, 
         const std::vector<int> & p2, std::vector<int> & prod)
     {
-        assert(p > 0 && u_n > 0);
-        assert(xton.size() == u_n && p1.size() == u_n && p2.size() == u_n && prod.size() == u_n);
+        assert(p > 0 && u_n > 0); // NOLINT
+        assert(xton.size() == u_n && p1.size() == u_n && p2.size() == u_n && prod.size() == u_n); // NOLINT
         int n = static_cast<int>(u_n);
         std::vector<int> longprod(2 * u_n - 1);
 
@@ -265,8 +265,8 @@ namespace oacpp
 
     int GaloisField::poly2int(int p, int n, const std::vector<int> & poly)
     {
-        assert(p > 0 && n > 0);
-        assert(poly.size() == static_cast<size_t>(n));
+        assert(p > 0 && n > 0); // NOLINT
+        assert(poly.size() == static_cast<size_t>(n)); // NOLINT
         int ans = 0;
 
         for (int i = n - 1; i > 0; i--) // has to be an int to decrement less than zero

@@ -52,6 +52,8 @@ namespace oacpp
 	*/
     struct SeedSet
     {
+        /** Constructor */
+        SeedSet() {};
 		/** seed i */
         int is;
 		/** seed j */
@@ -138,7 +140,7 @@ namespace oacpp
 		void ranums(std::vector<double> & x, int n);
 
 		int m_jent, m_i, m_j, m_k, m_l, ip, jp;
-		double u[SEED_VECTOR_LENGTH];
+        std::vector<double> u;
 		double c, cd, cm;
 	};
 }
