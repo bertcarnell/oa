@@ -481,8 +481,8 @@ namespace oacpp
                             PRINT_OUTPUT << "the number of times (";
                             for (int i = 0; i < t; i++)
                             {
-                                const char * temp = ((i == t - 1) ? ")" : ","); // warning about decaying a pointer when used on next line
-                                PRINT_OUTPUT << "A(," << clist[i] << ")" << temp;
+                                std::string temp = (i == t - 1) ? ")" : ","; // warning about decaying a pointer when used on next line
+                                PRINT_OUTPUT << "A(," << clist[i] << ")" << temp.c_str();
                             }
                             PRINT_OUTPUT << " = (";
                             for (int i = 0; i < t; i++)
