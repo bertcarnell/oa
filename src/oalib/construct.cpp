@@ -353,7 +353,7 @@ namespace oacpp
         int bosebushlcheck(int s, int p, int lam, int ncol)
         {
             std::ostringstream msg;
-            if (!primes::isprime(p))
+            if (primes::isprime(p) == 0)
             {
                 msg << "Bose Bush routine given a nonprime.\n";
                 ostringstream_runtime_error(msg);

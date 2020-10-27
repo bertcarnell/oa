@@ -158,7 +158,7 @@ namespace oalhslib
                 {
                     randdouble = std::vector<double>(tempcount);
                     // get a random ordering for the digits
-                    for (std::vector<double>::iterator itt = randdouble.begin(); itt != randdouble.end(); itt++)
+                    for (std::vector<double>::iterator itt = randdouble.begin(); itt != randdouble.end(); ++itt)
                     {
                         *itt = oRandom.getNextRandom();
                     }

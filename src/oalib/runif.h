@@ -79,7 +79,7 @@ namespace oacpp
 		/** Constructor with individual seeds */
         RUnif(int is, int js, int ks, int ls);
 		/** Constructor with a seed set */
-        RUnif(SeedSet seedSet);
+        explicit RUnif(SeedSet seedSet);
         
         ~RUnif() {};
         

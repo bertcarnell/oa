@@ -101,7 +101,7 @@ namespace oacpp
                     numin = 0;
                     for (size_t i = 0; i < aknu; i++)
                     {
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             if (monic == -1)
                             {
@@ -129,20 +129,17 @@ namespace oacpp
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % gf.q;
-                            if (coef[ui])
+                            if (coef[ui] != 0)
                             {
                                 break;
                             }
-                            else
-                            {
-                                coef[ui] = 1;
-                            }
+                            coef[ui] = 1;
                         }
                     }
                     for (size_t i = 0; i < aknu; i++)
                     {
                         s[i] = (s[i] + 1) % 2;
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             break;
                         }
@@ -162,7 +159,7 @@ namespace oacpp
                     numin = 0;
                     for (size_t i = 1; i < aknu; i++)
                     {
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             if (monic == -1)
                             {
@@ -193,23 +190,20 @@ namespace oacpp
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % gf.q;
-                            if (coef[ui])
+                            if (coef[ui] != 0)
                             {
                                 break;
                             }
-                            else
+                            if (i > 0)
                             {
-                                if (i > 0)
-                                {
-                                    coef[ui] = 1;
-                                }
+                                coef[ui] = 1;
                             }
                         }
                     }
                     for (size_t i = 1; i < aknu; i++)
                     {
                         s[i] = (s[i] + 1) % 2;
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             break;
                         }
@@ -220,7 +214,7 @@ namespace oacpp
                 {
                     size_t ui = static_cast<size_t>(i);
                     x[ui] = (x[ui] + 1) % gf.q;
-                    if (x[ui])
+                    if (x[ui] != 0)
                     {
                         break;
                     }
@@ -255,7 +249,7 @@ namespace oacpp
                     numin = 0;
                     for (size_t i = 0; i < aknu; i++)
                     {
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             if (monic == -1)
                             {
@@ -274,7 +268,7 @@ namespace oacpp
                     for (size_t poly = 0; poly < static_cast<size_t>(primes::ipow(gf.q - 1, static_cast<int>(numin))) && col < ncol; poly++)
                     {
                         elt = x[monic];
-                        if (numin && s[0])
+                        if (numin != 0 && s[0] != 0)
                         {
                             elt = gf.plus(elt,b[coef[0]]);
                         }
@@ -287,20 +281,17 @@ namespace oacpp
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % gf.q;
-                            if (coef[ui])
+                            if (coef[ui] != 0)
                             {
                                 break;
                             }
-                            else
-                            {
-                                coef[ui] = 1;
-                            }
+                            coef[ui] = 1;
                         }
                     }
                     for (size_t i = 0; i < aknu; i++)
                     {
                         s[i] = (s[i] + 1) % 2;
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             break;
                         }
@@ -320,7 +311,7 @@ namespace oacpp
                     numin = 0;
                     for (size_t i = 1; i < aknu; i++)
                     {
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             if (monic == -1)
                             {
@@ -352,20 +343,17 @@ namespace oacpp
                         {
                             size_t ui = static_cast<size_t>(i);
                             coef[ui] = (coef[ui] + 1) % gf.q;
-                            if (coef[ui])
+                            if (coef[ui] != 0)
                             {
                                 break;
                             }
-                            else
-                            {
-                                coef[ui] = i > 0 ? 1 : 0;
-                            }
+                            coef[ui] = i > 0 ? 1 : 0;
                         }
                     }
                     for (size_t i = 1; i < aknu; i++)
                     {
                         s[i] = (s[i] + 1) % 2;
-                        if (s[i])
+                        if (s[i] != 0)
                         {
                             break;
                         }
@@ -376,7 +364,7 @@ namespace oacpp
                 {
                     size_t ui = static_cast<size_t>(i);
                     x[ui] = (x[ui] + 1) % gf.q;
-                    if (x[ui])
+                    if (x[ui] != 0)
                     {
                         break;
                     }

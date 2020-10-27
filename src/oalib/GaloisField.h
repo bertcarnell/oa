@@ -62,7 +62,7 @@ namespace oacpp {
         /**
          * Construct the Galois Field with order q
          */
-        GaloisField(int q);
+        explicit GaloisField(int q);
 
         /**
          * Default Constructor

@@ -124,8 +124,12 @@ namespace oacpp
         {
             neg[i] = -1;
             for (size_t j = 0; j < u_q; j++)
+            {
                 if (plus(i, j) == 0)
+                {
                     neg[i] = static_cast<int>(j);
+                }
+            }
             if (i > 0 && neg[i] <= 0)
             { // LCOV_EXCL_START
                 msg << "There is something wrong with the Galois field\n";
@@ -154,9 +158,11 @@ namespace oacpp
 
     GaloisField::GaloisField(int q)
     {
-        int ispp;
-        std::ostringstream msg;
         this->q = q;
+        this->p = 0;
+        this->n = 0;
+        int ispp = 0;
+        std::ostringstream msg;
         u_q = static_cast<size_t>(q);
 
         if (q < 1)
@@ -173,13 +179,13 @@ namespace oacpp
         primes::primepow(q, &p, &n, &ispp);
         u_n = static_cast<size_t>(n);
 
-        if (!ispp)
+        if (ispp == 0)
         {
             msg << "q=" << q << " is not a prime power.\n";
             ostringstream_runtime_error(msg);
         }
 
-        if (primes::isprime(q))
+        if (primes::isprime(q) != 0)
         {
             xton = { 0 }; /* Could have tested p=q, or n=1 */
         }
