@@ -184,7 +184,7 @@ namespace oacpp
         jp = 33;
 
 L30:
-        for (size_t ii = 1; ii <= n; ii++)
+        for (size_t ii = 1; ii <= static_cast<size_t>(n); ii++)
         { /*  ii do 40 ii=1,n */
             uni = u[static_cast<size_t>(ip)] - u[static_cast<size_t>(jp)];
             if (uni < 0.0)
