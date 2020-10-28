@@ -8,12 +8,10 @@ var dir_4cae563b40fc4120674c48006ad78bcf =
     [ "construct.h", "construct_8h.html", "construct_8h" ],
     [ "COrthogonalArray.cpp", "_c_orthogonal_array_8cpp.html", null ],
     [ "COrthogonalArray.h", "_c_orthogonal_array_8h.html", "_c_orthogonal_array_8h" ],
-    [ "galdef.h", "galdef_8h.html", [
-      [ "GF", "structoacpp_1_1_g_f.html", "structoacpp_1_1_g_f" ]
+    [ "GaloisField.cpp", "_galois_field_8cpp.html", null ],
+    [ "GaloisField.h", "_galois_field_8h.html", [
+      [ "GaloisField", "classoacpp_1_1_galois_field.html", "classoacpp_1_1_galois_field" ]
     ] ],
-    [ "galois.cpp", "galois_8cpp.html", "galois_8cpp" ],
-    [ "galois.h", "galois_8h.html", "galois_8h" ],
-    [ "gfields.cpp", "gfields_8cpp.html", "gfields_8cpp" ],
     [ "oa.cpp", "oa_8cpp.html", "oa_8cpp" ],
     [ "oa.h", "oa_8h.html", "oa_8h" ],
     [ "OACommonDefines.h", "_o_a_common_defines_8h.html", "_o_a_common_defines_8h" ],

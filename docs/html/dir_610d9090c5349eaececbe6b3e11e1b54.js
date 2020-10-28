@@ -4,6 +4,14 @@ var dir_610d9090c5349eaececbe6b3e11e1b54 =
     [ "COrthogonalArrayTest.h", "_c_orthogonal_array_test_8h.html", [
       [ "COrthogonalArrayTest", "classoa_test_1_1_c_orthogonal_array_test.html", "classoa_test_1_1_c_orthogonal_array_test" ]
     ] ],
+    [ "GaloisFieldTest.cpp", "_galois_field_test_8cpp.html", null ],
+    [ "GaloisFieldTest.h", "_galois_field_test_8h.html", [
+      [ "GaloisFieldTest", "classoa_test_1_1_galois_field_test.html", "classoa_test_1_1_galois_field_test" ]
+    ] ],
+    [ "galoisTest.cpp", "galois_test_8cpp.html", null ],
+    [ "galoisTest.h", "galois_test_8h.html", [
+      [ "galoisTest", "classoa_test_1_1galois_test.html", null ]
+    ] ],
     [ "gfieldsTest.cpp", "gfields_test_8cpp.html", null ],
     [ "gfieldsTest.h", "gfields_test_8h.html", [
       [ "gfieldsTest", "classoa_test_1_1gfields_test.html", null ]
