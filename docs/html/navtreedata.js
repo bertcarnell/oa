@@ -67,8 +67,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"",
-"oa_l_h_s_8h.html"
+"_c_orthogonal_array_8cpp.html",
+"oa_main_page.html#avail_prime_sec"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

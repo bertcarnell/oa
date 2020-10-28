@@ -8,14 +8,6 @@ var dir_610d9090c5349eaececbe6b3e11e1b54 =
     [ "GaloisFieldTest.h", "_galois_field_test_8h.html", [
       [ "GaloisFieldTest", "classoa_test_1_1_galois_field_test.html", "classoa_test_1_1_galois_field_test" ]
     ] ],
-    [ "galoisTest.cpp", "galois_test_8cpp.html", null ],
-    [ "galoisTest.h", "galois_test_8h.html", [
-      [ "galoisTest", "classoa_test_1_1galois_test.html", null ]
-    ] ],
-    [ "gfieldsTest.cpp", "gfields_test_8cpp.html", null ],
-    [ "gfieldsTest.h", "gfields_test_8h.html", [
-      [ "gfieldsTest", "classoa_test_1_1gfields_test.html", null ]
-    ] ],
     [ "main.cpp", "oatest_2main_8cpp.html", "oatest_2main_8cpp" ],
     [ "matrixTest.cpp", "matrix_test_8cpp.html", "matrix_test_8cpp" ],
     [ "matrixTest.h", "matrix_test_8h.html", [
