@@ -1,5 +1,5 @@
 /**
- * @file Version.h
+ * @file oalibVersion.h
  * @author Robert Carnell
  * @copyright Copyright (c) 2020, Robert Carnell
  *
@@ -18,10 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BCLIBVERSION_H
-#define	BCLIBVERSION_H
+#ifndef OALIBVERSION_H
+#define	OALIBVERSION_H
 
-namespace bclib {
+namespace oacpp {
 	inline static const char * getVersion() {return "0.0.0";}
 }
 
