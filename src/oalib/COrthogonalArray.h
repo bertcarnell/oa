@@ -3,7 +3,7 @@
  * @author Robert Carnell
  * @copyright Copyright (c) 2013, Robert Carnell
  * 
- * @license <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
+ * License: <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -170,11 +170,9 @@ namespace oacpp {
         /**
          * Construct an orthogonal array using the Addelman Kempthorne algorithm
          * 
-         * @deprecated This method is not included by default in Art Owens's
-         * project.  The method is in the code, but it is not compiled in
-         * the makefile.  Adding it as a target to the makefile creates a successful build,
-         * but running addelkempn 3 3 (which should be equivalent to addelkemp3 3)
-         * does not function in the MinGW64 build.
+         * This method is not included by default in Art Owens's
+         * project, but it is in the code.  It is not compiled in
+         * the makefile.  Adding it as a target to the makefile creates a successful build.
          * 
          * From the original documentation:
          * <blockquote>
@@ -184,6 +182,7 @@ namespace oacpp {
          * provides the example n=3,q=3 which is OA( 54,25,3,2 ).
          * Based on this example it is possible to make an educated
          * guess as to how the construction generalizes.
+         * </blockquote>
          * 
          * @param akn the exponent on <code>q</code> for the number of rows <code>n = 2q^akn</code>
          * @param q the number of symbols <code>(0,...,q-1)</code>

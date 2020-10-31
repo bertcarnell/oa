@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Orthogonal Array Library
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">Libray for generating orthogonal arrays based on Art Owen&#39;s oa library</div>
   </td>
@@ -348,10 +348,11 @@ if Lemma 5a is used in place of Lemma 5." Page 1175 provides the example n=3,q=3
 </div><div class="memdoc">
 
 <p>Construct an orthogonal array using the Addelman Kempthorne algorithm. </p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>This method is not included by default in Art Owens's project. The method is in the code, but it is not compiled in the makefile. Adding it as a target to the makefile creates a successful build, but running addelkempn 3 3 (which should be equivalent to addelkemp3 3) does not function in the MinGW64 build.</dd></dl>
+<p>This method is not included by default in Art Owens's project, but it is in the code. It is not compiled in the makefile. Adding it as a target to the makefile creates a successful build.</p>
 <p>From the original documentation: </p><blockquote class="doxtable">
 <p>The article is quite vague on this. Page 1173 states "When n&gt;2 the same procedure will yield the desired plans
-if Lemma 5a is used in place of Lemma 5." Page 1175 provides the example n=3,q=3 which is OA( 54,25,3,2 ). Based on this example it is possible to make an educated guess as to how the construction generalizes.</p>
+if Lemma 5a is used in place of Lemma 5." Page 1175 provides the example n=3,q=3 which is OA( 54,25,3,2 ). Based on this example it is possible to make an educated guess as to how the construction generalizes. </p>
+</blockquote>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">akn</td><td>the exponent on <code>q</code> for the number of rows <code>n = 2q^akn</code> </td></tr>
@@ -367,7 +368,6 @@ if Lemma 5a is used in place of Lemma 5." Page 1175 provides the example n=3,q=3
   </table>
   </dd>
 </dl>
-</blockquote>
 
 </div>
 </div>

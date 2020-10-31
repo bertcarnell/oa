@@ -35,7 +35,6 @@ var NAVTREE =
       [ "Compiling oalib", "oa_main_page.html#compile_oa", null ]
     ] ],
     [ "Test List", "test.html", null ],
-    [ "Todo List", "todo.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -68,7 +67,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_orthogonal_array_8cpp.html",
-"oa_main_page.html#avail_prime_sec"
+"oa_l_h_s_utility_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

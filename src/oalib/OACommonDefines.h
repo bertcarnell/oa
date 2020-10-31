@@ -2,7 +2,8 @@
  * @file OACommonDefines.h
  * @author Robert Carnell
  * @copyright Copyright (c) 2013, Robert Carnell
- * @license <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
+ *
+ * License: <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -43,12 +44,18 @@
  * A print macro to enable printing with or without R
  */
 #define PRINT_OUTPUT Rcpp::Rcout
+/**
+ * A macro to determine if warnings are printed or thrown as runtime_error
+ */
 #define PRINT_WARNINGS false
 #else
  /**
   * A print macro to enable printing with or without R
   */
 #define PRINT_OUTPUT std::cout
+/**
+ * A macro to determine if warnings are printed or thrown as runtime_error
+ */
 #define PRINT_WARNINGS true
 #endif
 
@@ -78,12 +85,22 @@
  * Throw with a const string from an ostringstream
  */
 namespace oacpp {
+	/**
+	 * throw a runtime_error with a stringstream message
+	 * @param msg the error message
+	 * @throws std::runtime_error
+	 */
     inline void ostringstream_runtime_error(const std::ostringstream & msg)
     {
         const std::string smsg = msg.str();
         throw std::runtime_error(smsg.c_str());
     }
 
+    /**
+	 * throw a warning with a streamstring message
+	 * @param msg the warning message
+	 * @throws bclib::RWarningException derived from std::runtime_error
+	 */
     inline void ostringstream_warning(const std::ostringstream & msg)
     {
         const std::string smsg = msg.str();

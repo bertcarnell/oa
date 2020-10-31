@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Orthogonal Array Library
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">Libray for generating orthogonal arrays based on Art Owen&#39;s oa library</div>
   </td>
@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('oa_l_h_s_8h_source.html',''); initResi
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;CRandom.h&quot;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="primes_8h.html">primes.h</a>&quot;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;order.h&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;oaLHSUtility.h&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="oa_l_h_s_utility_8h.html">oaLHSUtility.h</a>&quot;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_c_orthogonal_array_8h.html">COrthogonalArray.h</a>&quot;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span>oalhslib</div>
@@ -128,12 +128,13 @@ $(document).ready(function(){initNavTree('oa_l_h_s_8h_source.html',''); initResi
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* OALHS_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aoa_l_h_s_8cpp_html_aa47d068cb64825867375297d10446de1"><div class="ttname"><a href="oa_l_h_s_8cpp.html#aa47d068cb64825867375297d10446de1">oalhslib::oaLHS</a></div><div class="ttdeci">void oaLHS(int n, int k, const bclib::matrix&lt; int &gt; &amp;oa, bclib::matrix&lt; int &gt; &amp;intlhs, bclib::matrix&lt; double &gt; &amp;lhs, bool bVerbose, bclib::CRandom&lt; double &gt; &amp;oRandom)</div><div class="ttdoc">create an orthogonal array latin hypercube from an orthogonal array</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:32</div></div>
-<div class="ttc" id="aoa_l_h_s_8cpp_html_a7b6f5a213d7b66d6af3f7478560d28e1"><div class="ttname"><a href="oa_l_h_s_8cpp.html#a7b6f5a213d7b66d6af3f7478560d28e1">oalhslib::generateOALHS</a></div><div class="ttdeci">void generateOALHS(int n, int k, bclib::matrix&lt; double &gt; &amp;oalhs, bool bChooseLargerDesign, bool bVerbose, bclib::CRandom&lt; double &gt; &amp;oRandom)</div><div class="ttdoc">generate an orthogonal array Latin hypercube</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:190</div></div>
-<div class="ttc" id="aoa_l_h_s_8cpp_html_abeaa7b65bb0a079b17a160516f3b8fdc"><div class="ttname"><a href="oa_l_h_s_8cpp.html#abeaa7b65bb0a079b17a160516f3b8fdc">oalhslib::replaceOAValues</a></div><div class="ttdeci">void replaceOAValues(const bclib::matrix&lt; int &gt; &amp;oa, const std::vector&lt; std::vector&lt; int &gt; &gt; &amp;uniqueLevelsVector, bclib::matrix&lt; int &gt; &amp;intlhs, bclib::CRandom&lt; double &gt; &amp;oRandom, bool isRandom)</div><div class="ttdoc">replace orthogonal array values</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:139</div></div>
+<div class="ttc" id="aoa_l_h_s_8cpp_html_aa47d068cb64825867375297d10446de1"><div class="ttname"><a href="oa_l_h_s_8cpp.html#aa47d068cb64825867375297d10446de1">oalhslib::oaLHS</a></div><div class="ttdeci">void oaLHS(int n, int k, const bclib::matrix&lt; int &gt; &amp;oa, bclib::matrix&lt; int &gt; &amp;intlhs, bclib::matrix&lt; double &gt; &amp;lhs, bool bVerbose, bclib::CRandom&lt; double &gt; &amp;oRandom)</div><div class="ttdoc">create an orthogonal array latin hypercube from an orthogonal array</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:38</div></div>
+<div class="ttc" id="aoa_l_h_s_8cpp_html_a7b6f5a213d7b66d6af3f7478560d28e1"><div class="ttname"><a href="oa_l_h_s_8cpp.html#a7b6f5a213d7b66d6af3f7478560d28e1">oalhslib::generateOALHS</a></div><div class="ttdeci">void generateOALHS(int n, int k, bclib::matrix&lt; double &gt; &amp;oalhs, bool bChooseLargerDesign, bool bVerbose, bclib::CRandom&lt; double &gt; &amp;oRandom)</div><div class="ttdoc">generate an orthogonal array Latin hypercube</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:196</div></div>
+<div class="ttc" id="aoa_l_h_s_8cpp_html_abeaa7b65bb0a079b17a160516f3b8fdc"><div class="ttname"><a href="oa_l_h_s_8cpp.html#abeaa7b65bb0a079b17a160516f3b8fdc">oalhslib::replaceOAValues</a></div><div class="ttdeci">void replaceOAValues(const bclib::matrix&lt; int &gt; &amp;oa, const std::vector&lt; std::vector&lt; int &gt; &gt; &amp;uniqueLevelsVector, bclib::matrix&lt; int &gt; &amp;intlhs, bclib::CRandom&lt; double &gt; &amp;oRandom, bool isRandom)</div><div class="ttdoc">replace orthogonal array values</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:145</div></div>
 <div class="ttc" id="aprimes_8h_html"><div class="ttname"><a href="primes_8h.html">primes.h</a></div></div>
+<div class="ttc" id="aoa_l_h_s_utility_8h_html"><div class="ttname"><a href="oa_l_h_s_utility_8h.html">oaLHSUtility.h</a></div></div>
 <div class="ttc" id="a_o_a_common_defines_8h_html"><div class="ttname"><a href="_o_a_common_defines_8h.html">OACommonDefines.h</a></div></div>
-<div class="ttc" id="aoa_l_h_s_8cpp_html_a789e7a606ca3d52a57c533aeac31ef76"><div class="ttname"><a href="oa_l_h_s_8cpp.html#a789e7a606ca3d52a57c533aeac31ef76">oalhslib::printOAandUnique</a></div><div class="ttdeci">void printOAandUnique(const bclib::matrix&lt; int &gt; &amp;oa, const std::vector&lt; std::vector&lt; int &gt; &gt; &amp;uniqueLevelsVector)</div><div class="ttdoc">print an orthogonal array and the unique levels</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:94</div></div>
+<div class="ttc" id="aoa_l_h_s_8cpp_html_a789e7a606ca3d52a57c533aeac31ef76"><div class="ttname"><a href="oa_l_h_s_8cpp.html#a789e7a606ca3d52a57c533aeac31ef76">oalhslib::printOAandUnique</a></div><div class="ttdeci">void printOAandUnique(const bclib::matrix&lt; int &gt; &amp;oa, const std::vector&lt; std::vector&lt; int &gt; &gt; &amp;uniqueLevelsVector)</div><div class="ttdoc">print an orthogonal array and the unique levels</div><div class="ttdef"><b>Definition:</b> oaLHS.cpp:100</div></div>
 <div class="ttc" id="a_c_orthogonal_array_8h_html"><div class="ttname"><a href="_c_orthogonal_array_8h.html">COrthogonalArray.h</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

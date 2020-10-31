@@ -1,8 +1,9 @@
-/**
+/** 
  * @file oaLHS.cpp
  * @author Robert Carnell
  * @copyright Copyright (c) 2019, Robert Carnell
- * @license <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
+ * 
+ * License: <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License (LGPL v3)</a>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -22,10 +23,15 @@
 
 namespace oalhslib
 {
+	/** matrix size type */
     using msize_type = bclib::matrix<int>::size_type;
+	/** matrix column iterator */
     using columnit = bclib::matrix<int>::columnwise_iterator;
+	/** vector iterator */
     using viterator = std::vector<int>::iterator;
+	/** vector const iterator */
     using vconstiterator = std::vector<int>::const_iterator;
+	/** vector size type */
     using vsize_type = std::vector<int>::size_type;
 
     // oa is provided in an arbitrary way (not necessarily all columns with the same q)

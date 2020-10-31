@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Orthogonal Array Library
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">Libray for generating orthogonal arrays based on Art Owen&#39;s oa library</div>
   </td>
@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('namespaceoacpp_1_1oaaddelkemp.html',''
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aa05975f0d4cefad37d8712662db35b6a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaaddelkemp.html#aa05975f0d4cefad37d8712662db35b6a">addelkemp3check</a> (int q, int p, int ncol)</td></tr>
-<tr class="memdesc:aa05975f0d4cefad37d8712662db35b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check that the parameters of the addelkemp3 algorithm are consistent.  <a href="namespaceoacpp_1_1oaaddelkemp.html#aa05975f0d4cefad37d8712662db35b6a">More...</a><br /></td></tr>
+<tr class="memdesc:aa05975f0d4cefad37d8712662db35b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check that the parameters of the addelkemp3 algorithm are consistent (<code>ncol &lt;= 2q^2+2q+1</code>  <a href="namespaceoacpp_1_1oaaddelkemp.html#aa05975f0d4cefad37d8712662db35b6a">More...</a><br /></td></tr>
 <tr class="separator:aa05975f0d4cefad37d8712662db35b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aaecf6e88f6f2f27228caeeeb1e76fb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaaddelkemp.html#a4aaecf6e88f6f2f27228caeeeb1e76fb">akeven</a> (<a class="el" href="classoacpp_1_1_galois_field.html">GaloisField</a> &amp;gf, int *kay, std::vector&lt; int &gt; &amp;b, std::vector&lt; int &gt; &amp;c, std::vector&lt; int &gt; &amp;k)</td></tr>
 <tr class="memdesc:a4aaecf6e88f6f2f27228caeeeb1e76fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addelkemp algorithm for even <code>p</code>  <a href="namespaceoacpp_1_1oaaddelkemp.html#a4aaecf6e88f6f2f27228caeeeb1e76fb">More...</a><br /></td></tr>
@@ -108,7 +108,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a4cf7f988214c8db5662380354949c5f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check that the parameters are consistent for the addelkempn algorithm.  <a href="namespaceoacpp_1_1oaaddelkemp.html#a4cf7f988214c8db5662380354949c5f2">More...</a><br /></td></tr>
 <tr class="separator:a4cf7f988214c8db5662380354949c5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0d73e1b721169124da38c95d4be6125"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaaddelkemp.html#ae0d73e1b721169124da38c95d4be6125">addelkempn</a> (<a class="el" href="classoacpp_1_1_galois_field.html">GaloisField</a> &amp;gf, int akn, bclib::matrix&lt; int &gt; &amp;A, int ncol)</td></tr>
-<tr class="memdesc:ae0d73e1b721169124da38c95d4be6125"><td class="mdescLeft">&#160;</td><td class="mdescRight">The addelkemp algorithm for general n.  <a href="namespaceoacpp_1_1oaaddelkemp.html#ae0d73e1b721169124da38c95d4be6125">More...</a><br /></td></tr>
+<tr class="memdesc:ae0d73e1b721169124da38c95d4be6125"><td class="mdescLeft">&#160;</td><td class="mdescRight">The addelkemp algorithm for general n to produce OA(2q^n,ncol,q,2)  <a href="namespaceoacpp_1_1oaaddelkemp.html#ae0d73e1b721169124da38c95d4be6125">More...</a><br /></td></tr>
 <tr class="separator:ae0d73e1b721169124da38c95d4be6125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac532b7cac33ac25b25ba64d2b70c2f25"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaaddelkemp.html#ac532b7cac33ac25b25ba64d2b70c2f25">addelkemp3</a> (<a class="el" href="classoacpp_1_1_galois_field.html">GaloisField</a> &amp;gf, bclib::matrix&lt; int &gt; &amp;A, int ncol)</td></tr>
 <tr class="memdesc:ac532b7cac33ac25b25ba64d2b70c2f25"><td class="mdescLeft">&#160;</td><td class="mdescRight">The addelkemp algorithm for n=3.  <a href="namespaceoacpp_1_1oaaddelkemp.html#ac532b7cac33ac25b25ba64d2b70c2f25">More...</a><br /></td></tr>
@@ -194,12 +194,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Check that the parameters of the addelkemp3 algorithm are consistent. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>define p</dd></dl>
+<p>Check that the parameters of the addelkemp3 algorithm are consistent (<code>ncol &lt;= 2q^2+2q+1</code> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">q</td><td>the number of symbols </td></tr>
-    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">q</td><td>the order of the Galois field or the number of symbols </td></tr>
+    <tr><td class="paramname">p</td><td>the prime basis of the Galois field </td></tr>
     <tr><td class="paramname">ncol</td><td>the number of columns </td></tr>
   </table>
   </dd>
@@ -246,12 +245,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The addelkemp algorithm for general n. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>define akn</dd></dl>
+<p>The addelkemp algorithm for general n to produce OA(2q^n,ncol,q,2) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gf</td><td>galois filed </td></tr>
-    <tr><td class="paramname">akn</td><td></td></tr>
+    <tr><td class="paramname">gf</td><td>a Galois Field </td></tr>
+    <tr><td class="paramname">akn</td><td>the <code>akn</code> algorithm produces OA(2q^n,ncol,q,2) </td></tr>
     <tr><td class="paramname">A</td><td>the orthogonal array </td></tr>
     <tr><td class="paramname">ncol</td><td>the number of columns </td></tr>
   </table>
@@ -300,12 +298,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check that the parameters are consistent for the addelkempn algorithm. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>define p and akn</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">q</td><td>the number of symbols </td></tr>
-    <tr><td class="paramname">p</td><td></td></tr>
-    <tr><td class="paramname">akn</td><td></td></tr>
+    <tr><td class="paramname">q</td><td>the order of Galois field or the number of symbols </td></tr>
+    <tr><td class="paramname">p</td><td>the prime basis of the Galois field </td></tr>
+    <tr><td class="paramname">akn</td><td>the <code>akn</code> algorithm produces OA(2q^n,ncol,q,2) </td></tr>
     <tr><td class="paramname">ncol</td><td>the number of columns </td></tr>
   </table>
   </dd>
@@ -359,14 +356,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Addelkemp algorithm for even <code>p</code> </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>define b, c, and k </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gf</td><td>galois field object </td></tr>
+    <tr><td class="paramname">gf</td><td>a Galois field </td></tr>
     <tr><td class="paramname">kay</td><td>the number of columns </td></tr>
-    <tr><td class="paramname">b</td><td></td></tr>
-    <tr><td class="paramname">c</td><td></td></tr>
-    <tr><td class="paramname">k</td><td></td></tr>
+    <tr><td class="paramname">b</td><td>original Addelkemp variable </td></tr>
+    <tr><td class="paramname">c</td><td>original Addelkemp variable </td></tr>
+    <tr><td class="paramname">k</td><td>original Addelkemp variable </td></tr>
   </table>
   </dd>
 </dl>
@@ -419,14 +415,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Addelkemp algorithm for odd <code>p</code> </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>define b, c, and k </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gf</td><td>galois field object </td></tr>
+    <tr><td class="paramname">gf</td><td>a Galois field object </td></tr>
     <tr><td class="paramname">kay</td><td>the number of columns </td></tr>
-    <tr><td class="paramname">b</td><td></td></tr>
-    <tr><td class="paramname">c</td><td></td></tr>
-    <tr><td class="paramname">k</td><td></td></tr>
+    <tr><td class="paramname">b</td><td>original Addelkemp variable </td></tr>
+    <tr><td class="paramname">c</td><td>original Addelkemp variable </td></tr>
+    <tr><td class="paramname">k</td><td>original Addelkemp variable </td></tr>
   </table>
   </dd>
 </dl>

@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Orthogonal Array Library
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">Libray for generating orthogonal arrays based on Art Owen&#39;s oa library</div>
   </td>
@@ -88,71 +88,76 @@ $(document).ready(function(){initNavTree('_o_a_common_defines_8h_source.html',''
 </div><!--header-->
 <div class="contents">
 <a href="_o_a_common_defines_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef OACOMMONDEFINES_H</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define OACOMMONDEFINES_H</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;exception&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;RWarningException.h&quot;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifdef RCOMPILE</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;Rcpp.h&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define PRINT_OUTPUT Rcpp::Rcout</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define PRINT_WARNINGS false</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589">   51</a></span>&#160;<span class="preprocessor">#define PRINT_OUTPUT std::cout</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#define PRINT_WARNINGS true</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#ifndef NDEBUG</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#ifndef RANGE_DEBUG</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#a6468f990cec8df731c33e2d266588daf">   60</a></span>&#160;<span class="preprocessor">#define RANGE_DEBUG</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#a700fe5d925dc7762808951a0a02f2579">   67</a></span>&#160;<span class="preprocessor">#define SUCCESS_CHECK 1</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#afd1ca69c1eeffce8bc886ff99b208dad">   71</a></span>&#160;<span class="preprocessor">#define FAILURE_CHECK 0</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#af1f70f7bb168d469f3d4ffb36c9dc95d">   75</a></span>&#160;<span class="preprocessor">#define UNCHECKED_RETURN 0</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceoacpp.html">oacpp</a> {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> ostringstream_runtime_error(<span class="keyword">const</span> std::ostringstream &amp; msg)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keyword">const</span> std::string smsg = msg.str();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">throw</span> std::runtime_error(smsg.c_str());</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> ostringstream_warning(<span class="keyword">const</span> std::ostringstream &amp; msg)</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keyword">const</span> std::string smsg = msg.str();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordflow">if</span> (PRINT_WARNINGS)</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <a class="code" href="_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589">PRINT_OUTPUT</a> &lt;&lt; smsg.c_str();</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keywordflow">throw</span> bclib::RWarningException(smsg);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* OACOMMONDEFINES_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#ifndef OACOMMONDEFINES_H</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define OACOMMONDEFINES_H</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;exception&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;numeric&gt;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;RWarningException.h&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#ifdef RCOMPILE</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;Rcpp.h&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define PRINT_OUTPUT Rcpp::Rcout</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#define PRINT_WARNINGS false</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589">   55</a></span>&#160;<span class="preprocessor">#define PRINT_OUTPUT std::cout</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#a1fbb4eddcd7da008c5999a001014662c">   59</a></span>&#160;<span class="preprocessor">#define PRINT_WARNINGS true</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#ifndef NDEBUG</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#ifndef RANGE_DEBUG</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#a6468f990cec8df731c33e2d266588daf">   67</a></span>&#160;<span class="preprocessor">#define RANGE_DEBUG</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#a700fe5d925dc7762808951a0a02f2579">   74</a></span>&#160;<span class="preprocessor">#define SUCCESS_CHECK 1</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#afd1ca69c1eeffce8bc886ff99b208dad">   78</a></span>&#160;<span class="preprocessor">#define FAILURE_CHECK 0</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="_o_a_common_defines_8h.html#af1f70f7bb168d469f3d4ffb36c9dc95d">   82</a></span>&#160;<span class="preprocessor">#define UNCHECKED_RETURN 0</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceoacpp.html">oacpp</a> {</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="namespaceoacpp.html#aa64f364c37843f4798b9bf453c12aeaa">   93</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceoacpp.html#aa64f364c37843f4798b9bf453c12aeaa">ostringstream_runtime_error</a>(<span class="keyword">const</span> std::ostringstream &amp; msg)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">const</span> std::string smsg = msg.str();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">throw</span> std::runtime_error(smsg.c_str());</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="namespaceoacpp.html#a6010ab07fcbab430cac0736fcda0e380">  104</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceoacpp.html#a6010ab07fcbab430cac0736fcda0e380">ostringstream_warning</a>(<span class="keyword">const</span> std::ostringstream &amp; msg)</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">const</span> std::string smsg = msg.str();</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="_o_a_common_defines_8h.html#a1fbb4eddcd7da008c5999a001014662c">PRINT_WARNINGS</a>)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <a class="code" href="_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589">PRINT_OUTPUT</a> &lt;&lt; smsg.c_str();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">throw</span> bclib::RWarningException(smsg);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* OACOMMONDEFINES_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="a_o_a_common_defines_8h_html_a7eadbf610b2dfeee010c2742a65d7589"><div class="ttname"><a href="_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589">PRINT_OUTPUT</a></div><div class="ttdeci">#define PRINT_OUTPUT</div><div class="ttdoc">A print macro to enable printing with or without R.</div><div class="ttdef"><b>Definition:</b> OACommonDefines.h:51</div></div>
+<div class="ttc" id="a_o_a_common_defines_8h_html_a7eadbf610b2dfeee010c2742a65d7589"><div class="ttname"><a href="_o_a_common_defines_8h.html#a7eadbf610b2dfeee010c2742a65d7589">PRINT_OUTPUT</a></div><div class="ttdeci">#define PRINT_OUTPUT</div><div class="ttdoc">A print macro to enable printing with or without R.</div><div class="ttdef"><b>Definition:</b> OACommonDefines.h:55</div></div>
+<div class="ttc" id="anamespaceoacpp_html_aa64f364c37843f4798b9bf453c12aeaa"><div class="ttname"><a href="namespaceoacpp.html#aa64f364c37843f4798b9bf453c12aeaa">oacpp::ostringstream_runtime_error</a></div><div class="ttdeci">void ostringstream_runtime_error(const std::ostringstream &amp;msg)</div><div class="ttdoc">throw a runtime_error with a stringstream message</div><div class="ttdef"><b>Definition:</b> OACommonDefines.h:93</div></div>
 <div class="ttc" id="anamespaceoacpp_html"><div class="ttname"><a href="namespaceoacpp.html">oacpp</a></div><div class="ttdoc">Orthogonal Array Namespace.</div><div class="ttdef"><b>Definition:</b> ak.h:39</div></div>
+<div class="ttc" id="a_o_a_common_defines_8h_html_a1fbb4eddcd7da008c5999a001014662c"><div class="ttname"><a href="_o_a_common_defines_8h.html#a1fbb4eddcd7da008c5999a001014662c">PRINT_WARNINGS</a></div><div class="ttdeci">#define PRINT_WARNINGS</div><div class="ttdoc">A macro to determine if warnings are printed or thrown as runtime_error.</div><div class="ttdef"><b>Definition:</b> OACommonDefines.h:59</div></div>
+<div class="ttc" id="anamespaceoacpp_html_a6010ab07fcbab430cac0736fcda0e380"><div class="ttname"><a href="namespaceoacpp.html#a6010ab07fcbab430cac0736fcda0e380">oacpp::ostringstream_warning</a></div><div class="ttdeci">void ostringstream_warning(const std::ostringstream &amp;msg)</div><div class="ttdoc">throw a warning with a streamstring message</div><div class="ttdef"><b>Definition:</b> OACommonDefines.h:104</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

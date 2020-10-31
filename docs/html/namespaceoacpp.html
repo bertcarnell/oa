@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Orthogonal Array Library
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">Libray for generating orthogonal arrays based on Art Owen&#39;s oa library</div>
   </td>
@@ -127,17 +127,98 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa64f364c37843f4798b9bf453c12aeaa"><td class="memItemLeft" align="right" valign="top"><a id="aa64f364c37843f4798b9bf453c12aeaa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ostringstream_runtime_error</b> (const std::ostringstream &amp;msg)</td></tr>
+<tr class="memitem:aa64f364c37843f4798b9bf453c12aeaa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp.html#aa64f364c37843f4798b9bf453c12aeaa">ostringstream_runtime_error</a> (const std::ostringstream &amp;msg)</td></tr>
+<tr class="memdesc:aa64f364c37843f4798b9bf453c12aeaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">throw a runtime_error with a stringstream message  <a href="namespaceoacpp.html#aa64f364c37843f4798b9bf453c12aeaa">More...</a><br /></td></tr>
 <tr class="separator:aa64f364c37843f4798b9bf453c12aeaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6010ab07fcbab430cac0736fcda0e380"><td class="memItemLeft" align="right" valign="top"><a id="a6010ab07fcbab430cac0736fcda0e380"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ostringstream_warning</b> (const std::ostringstream &amp;msg)</td></tr>
+<tr class="memitem:a6010ab07fcbab430cac0736fcda0e380"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp.html#a6010ab07fcbab430cac0736fcda0e380">ostringstream_warning</a> (const std::ostringstream &amp;msg)</td></tr>
+<tr class="memdesc:a6010ab07fcbab430cac0736fcda0e380"><td class="mdescLeft">&#160;</td><td class="mdescRight">throw a warning with a streamstring message  <a href="namespaceoacpp.html#a6010ab07fcbab430cac0736fcda0e380">More...</a><br /></td></tr>
 <tr class="separator:a6010ab07fcbab430cac0736fcda0e380"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Orthogonal Array Namespace. </p>
 <p>Throw with a const string from an ostringstream. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="aa64f364c37843f4798b9bf453c12aeaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa64f364c37843f4798b9bf453c12aeaa">&#9670;&nbsp;</a></span>ostringstream_runtime_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void oacpp::ostringstream_runtime_error </td>
+          <td>(</td>
+          <td class="paramtype">const std::ostringstream &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>throw a runtime_error with a stringstream message </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>the error message </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6010ab07fcbab430cac0736fcda0e380"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6010ab07fcbab430cac0736fcda0e380">&#9670;&nbsp;</a></span>ostringstream_warning()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void oacpp::ostringstream_warning </td>
+          <td>(</td>
+          <td class="paramtype">const std::ostringstream &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>throw a warning with a streamstring message </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>the warning message </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">bclib::RWarningException</td><td>derived from std::runtime_error </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

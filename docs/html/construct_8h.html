@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Orthogonal Array Library
-   &#160;<span id="projectnumber">0.0.1</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">Libray for generating orthogonal arrays based on Art Owen&#39;s oa library</div>
   </td>
@@ -123,20 +123,25 @@ Functions</h2></td></tr>
 <tr class="memdesc:a34c78c9d625e0cc7ceeb2fbbf4ecc257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an orthogonal array using the bose-bush algorithm.  <a href="namespaceoacpp_1_1oaconstruct.html#a34c78c9d625e0cc7ceeb2fbbf4ecc257">More...</a><br /></td></tr>
 <tr class="separator:a34c78c9d625e0cc7ceeb2fbbf4ecc257"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef0531997f93b9ce83923f59d6c54572"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaconstruct.html#aef0531997f93b9ce83923f59d6c54572">oacpp::oaconstruct::bosecheck</a> (int q, int ncol)</td></tr>
-<tr class="memdesc:aef0531997f93b9ce83923f59d6c54572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the input to the bose algorithm.  <a href="namespaceoacpp_1_1oaconstruct.html#aef0531997f93b9ce83923f59d6c54572">More...</a><br /></td></tr>
+<tr class="memdesc:aef0531997f93b9ce83923f59d6c54572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the input to the bose algorithm (ncol &lt;= q + 1) where q = p^n.  <a href="namespaceoacpp_1_1oaconstruct.html#aef0531997f93b9ce83923f59d6c54572">More...</a><br /></td></tr>
 <tr class="separator:aef0531997f93b9ce83923f59d6c54572"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2c06e72fcdca2fd39add37c0465c3b1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaconstruct.html#ae2c06e72fcdca2fd39add37c0465c3b1">oacpp::oaconstruct::itopoly</a> (int n, int q, int d, std::vector&lt; int &gt; &amp;coef)</td></tr>
+<tr class="memdesc:ae2c06e72fcdca2fd39add37c0465c3b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer to polynomial.  <a href="namespaceoacpp_1_1oaconstruct.html#ae2c06e72fcdca2fd39add37c0465c3b1">More...</a><br /></td></tr>
 <tr class="separator:ae2c06e72fcdca2fd39add37c0465c3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0699f41e1291118f4b9964cfe414678"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaconstruct.html#ad0699f41e1291118f4b9964cfe414678">oacpp::oaconstruct::polyeval</a> (GaloisField &amp;gf, int d, std::vector&lt; int &gt; &amp;poly, int arg, int *value)</td></tr>
 <tr class="memdesc:ad0699f41e1291118f4b9964cfe414678"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate a polynomial with coefficients, argument and result in a Galois field.  <a href="namespaceoacpp_1_1oaconstruct.html#ad0699f41e1291118f4b9964cfe414678">More...</a><br /></td></tr>
 <tr class="separator:ad0699f41e1291118f4b9964cfe414678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecfef66257cec3dcb8ee0b19581f88d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaconstruct.html#aecfef66257cec3dcb8ee0b19581f88d7">oacpp::oaconstruct::bushcheck</a> (int q, int str, int ncol)</td></tr>
+<tr class="memdesc:aecfef66257cec3dcb8ee0b19581f88d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test the inputs to the Bush algorithm (<code>ncol &lt;= q + 1, str &lt;= ncol, str &lt; q + 1</code>)  <a href="namespaceoacpp_1_1oaconstruct.html#aecfef66257cec3dcb8ee0b19581f88d7">More...</a><br /></td></tr>
 <tr class="separator:aecfef66257cec3dcb8ee0b19581f88d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c0a94079749603b7a130e53da14e123"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaconstruct.html#a1c0a94079749603b7a130e53da14e123">oacpp::oaconstruct::bosebushcheck</a> (int q, int p, int ncol)</td></tr>
+<tr class="memdesc:a1c0a94079749603b7a130e53da14e123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test the inputs to the Bose-Bush algorithm (<code>p == 2, ncol &lt;= 2q + 1</code>)  <a href="namespaceoacpp_1_1oaconstruct.html#a1c0a94079749603b7a130e53da14e123">More...</a><br /></td></tr>
 <tr class="separator:a1c0a94079749603b7a130e53da14e123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ace07f8a02265aa37e4fa514d653292"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaconstruct.html#a4ace07f8a02265aa37e4fa514d653292">oacpp::oaconstruct::bosebushlcheck</a> (int s, int p, int lam, int ncol)</td></tr>
+<tr class="memdesc:a4ace07f8a02265aa37e4fa514d653292"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test the inputs to the Bose-Bush algorithm with lambda parameter (<code>ncol &lt;= lambda*q + 1</code>)  <a href="namespaceoacpp_1_1oaconstruct.html#a4ace07f8a02265aa37e4fa514d653292">More...</a><br /></td></tr>
 <tr class="separator:a4ace07f8a02265aa37e4fa514d653292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0448c398f455cd8394647cf1024bb7c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceoacpp_1_1oaconstruct.html#af0448c398f455cd8394647cf1024bb7c">oacpp::oaconstruct::addelkempcheck</a> (int q, int p, int ncol)</td></tr>
+<tr class="memdesc:af0448c398f455cd8394647cf1024bb7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test the inputs to the Addel-Kemp algorithm.  <a href="namespaceoacpp_1_1oaconstruct.html#af0448c398f455cd8394647cf1024bb7c">More...</a><br /></td></tr>
 <tr class="separator:af0448c398f455cd8394647cf1024bb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
