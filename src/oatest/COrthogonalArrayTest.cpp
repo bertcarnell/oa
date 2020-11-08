@@ -145,18 +145,32 @@ namespace oaTest {
         oacpp::COrthogonalArray coa;
 		coa.addelkemp(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage() == "");
 
 		q = 3;
 		ncol = 2*q;
 		n = 2*q*q;
 		coa.addelkemp(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage() == "");
 
 		q = 3;
 		ncol = 3;
 		n = 2*q*q;
 		coa.addelkemp(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage() == "");
+
+        q = 3;
+        ncol = 2*q + 1;
+        n = 0;
+        coa.addelkemp(q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(WARNING_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() > 0);
 
         std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::addelkemp);
         testException(f, 0, 0);
@@ -208,16 +222,22 @@ namespace oaTest {
         oacpp::COrthogonalArray coa;
 		coa.addelkemp3(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		q = 3;
 		ncol = 2*q*q + 2*q +1;
 		coa.addelkemp3(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		q = 3;
 		ncol = 9;
 		coa.addelkemp3(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::addelkemp3);
         testException(f, 0, 0);
@@ -266,12 +286,16 @@ namespace oaTest {
 		oacpp::COrthogonalArray coa;
 		coa.addelkempn(akn, q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
-		
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
+
 		ncol = 5;
 		n = 0;
 		oacpp::COrthogonalArray coa2;
 		coa2.addelkempn(akn, q, ncol, &n);
 		standardChecks(coa2.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		// design equivalent to Addelkemp3 test
 		ncol = 2*q*q + 2*q + 1; // 2*(q^akn - 1) / (q - 1) - 1 = 25
@@ -279,6 +303,8 @@ namespace oaTest {
         oacpp::COrthogonalArray coa3;
         coa3.addelkempn(akn, q, ncol, &n);
 		standardChecks(coa3.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		q = 3;
 		int p = 2;
@@ -311,21 +337,29 @@ namespace oaTest {
         oacpp::COrthogonalArray coa;
 		coa.bose(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		q = 3;
 		ncol = q;
 		coa.bose(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		q = 4;
 		ncol = q;
 		coa.bose(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		q = 4;
 		ncol = 3;
 		coa.bose(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
 
 		std::function<void(oacpp::COrthogonalArray&, int, int, int*)> f = std::mem_fn(&oacpp::COrthogonalArray::bose);
         testException(f, 0, 0);
@@ -356,9 +390,19 @@ namespace oaTest {
 		int q = 8;
 		int ncol = 5;
 		int n = 0;
-		oacpp::COrthogonalArray coa;
+		oacpp::COrthogonalArray coa = oacpp::COrthogonalArray();
 		coa.bosebush(q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage() == "");
+
+        q = 8;
+        ncol = 2*q + 1;
+        n = 0;
+        coa.bosebush(q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(WARNING_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() > 0);
 
         n = 7;
         // error for q not a power of 2
@@ -397,8 +441,20 @@ namespace oaTest {
 		oacpp::COrthogonalArray coa;
 		coa.bush(q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
+        bclib::Assert(3 * 3 * 3, n);
 
-		q = 2;
+        q = 2;
+        ncol = 3;
+        n = 0;
+        coa.bush(q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(WARNING_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() > 0);
+        bclib::Assert(2 * 2 * 2, n);
+
+        q = 2;
 		int str = 2;
 		ncol = 5;
 		// Error when ncol > q + 1
@@ -502,6 +558,8 @@ namespace oaTest {
         oacpp::COrthogonalArray coa;
 		coa.busht(str, q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
         
         // strength must be >= 2
         ASSERT_THROW(coa.busht(1, q, ncol, &n));
