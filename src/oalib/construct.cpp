@@ -130,15 +130,6 @@ namespace oacpp
                 msg << "It doesn't make sense to have an array of strength " << str << " with only " << ncol << "columns.\n";
                 ostringstream_runtime_error(msg);
 			}
-            if (str >= q + 1) // LCOV_EXCL_START
-            {
-                msg << "\tBush's (1952) theorem has a condition t<q where t\n";
-                msg << "\tis the strength of the array and q is the number of symbols.\n";
-                msg << "\tHere we have t = " << str << " and q = " << q << ".  The array may still\n";
-                msg << "\tbe useful, but a full factorial would have at least as\n";
-                msg << "many columns.\n";
-                ostringstream_warning(msg);
-            } // LCOV_EXCL_STOP
 
             return SUCCESS_CHECK;
         }
@@ -183,16 +174,6 @@ namespace oacpp
                 ostringstream_runtime_error(msg);
             }
 
-            if (ncol == 2 * q + 1) // LCOV_EXCL_START
-            {
-                msg << "\n\tWarning: The Addelman-Kempthorne construction with ncol = 2q+1\n";
-                msg << "\thas a defect.  While it is still an OA(2q^2,2q+1,q,2),\n";
-                msg << "\tthere exist some pairs of rows that agree in three columns.\n";
-                msg << "\tThe final column in the array is involved in all of these\n";
-                msg << "\ttriple coincidences.\n";
-                ostringstream_warning(msg);
-            } // LCOV_EXCL_STOP
-            
             return SUCCESS_CHECK;
         }
 
@@ -299,14 +280,6 @@ namespace oacpp
                 ostringstream_runtime_error(msg);
             }
 
-            if (ncol == 2 * q + 1) // LCOV_EXCL_START
-            {
-                msg << "\n\tWarning: The Bose-Bush construction with ncol = 2q+1\n";
-                msg << "\thas a defect.  While it is still an OA(2q^2,2q+1,q,2),\n";
-                msg << "\tthere exist some pairs of rows that agree in three columns.\n\n";
-                ostringstream_warning(msg);
-            } // LCOV_EXCL_STOP
-            
             return SUCCESS_CHECK;
         }
 
@@ -367,15 +340,6 @@ namespace oacpp
                 ostringstream_runtime_error(msg);
             }
 
-            if (ncol == lam * s + 1) // LCOV_EXCL_START
-            {
-                msg << "\n\tWarning: The Bose-Bush construction with ncol = lambda*q+1\n";
-                msg << "\thas a defect.  While it is still an OA(lambda*q^2,lambda*q+1,q,2),\n";
-                msg << "\tit may have worse coincidence properties than\n";
-                msg << "\tOA(lambda*q^2,lambda*q+1,q,2).\n";
-                ostringstream_warning(msg);
-            } // LCOV_EXCL_STOP
-            
             return SUCCESS_CHECK;
         }
 

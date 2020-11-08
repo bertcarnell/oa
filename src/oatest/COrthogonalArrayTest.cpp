@@ -430,7 +430,8 @@ namespace oaTest {
         oacpp::COrthogonalArray coa;
 		coa.bosebushl(lambda, q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
-        
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+
         // errors
         // q not an integer power of a prime
         ASSERT_THROW(coa.bosebushl(lambda, 6, ncol, &n));
@@ -453,36 +454,28 @@ namespace oaTest {
 		// Error when ncol > lambda * s + 1
 		ASSERT_THROW(oacpp::oaconstruct::bosebushlcheck(s, p, lambda, ncol));
 
-        // Should send warnings to a buffer instead of std::out
-        std::stringstream buffer;
-        std::streambuf * oldbuffer = std::cout.rdbuf(buffer.rdbuf());
-        try {
-            q = 3;
-            lambda = 3;
-            ncol = 10;
-            coa.bosebushl(lambda, q, ncol, &n);
-            standardChecks(coa.getoa(), q, ncol);
+        q = 3;
+        lambda = 3;
+        ncol = 10;
+        coa.bosebushl(lambda, q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(WARNING_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() > 0);
         
-            q = 4; // 2^2
-            lambda = 2;
-            ncol = 9;
-            coa.bosebushl(lambda, q, ncol, &n);
-            standardChecks(coa.getoa(), q, ncol);
-        }
-        catch (...)
-        {
-            std::cout.rdbuf(oldbuffer);
-            throw;
-        }
-        std::cout.rdbuf(oldbuffer);
-        // check to make sure something was printed
-        bclib::Assert(buffer.str().length() > 0, "No warnings were printed");
+        q = 4; // 2^2
+        lambda = 2;
+        ncol = 9;
+        coa.bosebushl(lambda, q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(WARNING_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() > 0);
 
 		q = 4; // 2^2
 		lambda = 2;
 		ncol = 8;
 		coa.bosebushl(lambda, q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
 
 		q = 4; // 2^2
 		lambda = 2;
