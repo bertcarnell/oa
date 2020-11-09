@@ -163,15 +163,16 @@ void COrthogonalArray::bosebush(int q, int k, int *n)
 	{
 		throw std::runtime_error("This implementation of Bose-Bush only works for a number of levels equal to a power of 2");
 	}
-	k = checkMaxColumns(k, 2*q + 1); // this was just 2*q but it wasn't supported in the initial docs
-	createGaloisField(2*q);
+	k = checkMaxColumns(k, 2*q + 1);
+    int q_star = 2 * q;
+	createGaloisField(q_star);
 	int matrows = 2 * q * q;
     m_A = bclib::matrix<int>(matrows, k);
 	checkDesignMemory();
 	int result = oaconstruct::bosebush(m_gf, m_A, k);
 	checkResult(result, 2*q*q, n);
 
-    if (k == 2 * q + 1) // not sure if this is possible when the initial check was 2*q
+    if (k == 2 * q + 1) 
     {
         std::ostringstream msg;
         msg << "\n\tWarning: The Bose-Bush construction with ncol = 2q+1\n";

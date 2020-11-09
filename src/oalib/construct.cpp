@@ -288,17 +288,18 @@ namespace oacpp
             int mul;
 			size_t irow;
             size_t u_ncol = static_cast<size_t>(ncol);
-
-            size_t s = gf.u_q / 2; /* number of levels in design */
-            bclib::matrix<int> A(s, gf.u_q);
+            size_t q_star = gf.u_q;
+            size_t s = q_star / 2; // s is the same as q since q_star = 2 * q
+            
+            bclib::matrix<int> A(s, q_star);
 
             // bosebushcheck throws if it fails
             bosebushcheck(static_cast<int>(s), gf.p, ncol);
 
             irow = 0;
-            for (size_t i = 0; i < gf.u_q; i++)
+            for (size_t i = 0; i < q_star; i++)
             {
-                for (size_t j = 0; j < gf.u_q; j++)
+                for (size_t j = 0; j < q_star; j++)
                 {
                     mul = gf.times(i,j);
                     mul = mul % s;
@@ -309,7 +310,10 @@ namespace oacpp
                 }
                 for (size_t k = 0; k < s; k++)
                 {
-                    for (size_t j = 0; j < u_ncol && j < 2 * s + 1; j++)
+                    // the original code has this j < ncol && j < 2*s+1
+                    //   however, A has dimensions of [s,2*q] so this must stop at either the number of columns or 2*q
+                    //   for (size_t j = 0; j < u_ncol && j < 2 * s + 1; j++)
+                    for (size_t j = 0; j < u_ncol && j < 2 * s; j++)
                     {
                         B(irow,j) = A(k,j);
                     }

@@ -387,22 +387,30 @@ namespace oaTest {
     
     void COrthogonalArrayTest::testBoseBush()
     {
-		int q = 8;
-		int ncol = 5;
+		int q = 8; // 2^3
+		int ncol = 5; // 5 << 2*8+1
 		int n = 0;
 		oacpp::COrthogonalArray coa = oacpp::COrthogonalArray();
 		coa.bosebush(q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
-        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
-        bclib::Assert(coa.getMessage() == "");
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode(), "Success not returned in testBoseBush (2)");
+        bclib::Assert(coa.getMessage() == "", "erroneous message returned in testBoseBush (2)");
 
-        q = 8;
-        ncol = 2*q + 1;
+        q = 4; // 2^2
+        ncol = 8; // 8 < 2*4+1
         n = 0;
         coa.bosebush(q, ncol, &n);
         standardChecks(coa.getoa(), q, ncol);
-        bclib::Assert(WARNING_CHECK, coa.getReturnCode());
-        bclib::Assert(coa.getMessage().length() > 0);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode(), "Success not returned in testBoseBush (2)");
+        bclib::Assert(coa.getMessage() == "", "erroneous message returned in testBoseBush (2)");
+
+        q = 8; // 2^3
+        ncol = 2*q + 1; // 17 = 2*8 + 1
+        n = 0;
+        coa.bosebush(q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(WARNING_CHECK, coa.getReturnCode(), "Warning not triggered in testBoseBush");
+        bclib::Assert(coa.getMessage().length() > 0, "Warning message not available in testBoseBush");
 
         n = 7;
         // error for q not a power of 2
