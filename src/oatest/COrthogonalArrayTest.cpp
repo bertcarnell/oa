@@ -279,13 +279,24 @@ namespace oaTest {
 
 	void COrthogonalArrayTest::testAddelkempn()
 	{
-		int q = 3;
+        // should all akodd
+		int q = 3; // p == 3, q = 3^1
 		int ncol = 4;
-		int n;
+		int n = 0;
 		int akn = 3;
 		oacpp::COrthogonalArray coa;
 		coa.addelkempn(akn, q, ncol, &n);
 		standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
+
+        // should call akeven
+        q = 4; // p == 2, q = 2^2
+        ncol = 4;
+        n = 0;
+        akn = 3;
+        coa.addelkempn(akn, q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
         bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
         bclib::Assert(coa.getMessage().length() == 0);
 
@@ -312,13 +323,17 @@ namespace oaTest {
 		akn = 1;
 		// akn < 2
 		ASSERT_THROW(oacpp::oaaddelkemp::addelkempncheck(q, p, akn, ncol));
-		q = 5;
+        akn = 3;
+		q = 8;
+        p = 2;
+        ncol = 5;
 		// p == 2 && q > 4
 		ASSERT_THROW(oacpp::oaaddelkemp::addelkempncheck(q, p, akn, ncol));
-		p = 2;
-		q = 3;
+        akn = 2;
+		p = 3;
+		q = 9;
 		ncol = 100;
-		// ncol > 2*(q^akn - 1) / (q - 1) - 1 = 25
+		// ncol > 2*(q^akn - 1) / (q - 1) - 1 = 2*(9^2-1)/(9-1) -1 = 19
 		ASSERT_THROW(oacpp::oaaddelkemp::addelkempncheck(q, p, akn, ncol));
 
 		bclib::matrix<int> A = bclib::matrix<int>(2, 2);
@@ -620,6 +635,30 @@ namespace oaTest {
         int n;
         coa.addelkemp3(3, 25, &n);
         bclib::Assert(2, coa.oastr(false), "Error in oastr");
+
+        // create an artificial array not even of strength 0
+        int q = 4;
+        std::vector<int> temp = { 0,5,1,0 };
+        bclib::matrix<int> A = bclib::matrix<int>(2, 2, temp);
+        int str = 0;
+        oacpp::oastrength::OA_strength(q, A, &str, false);
+        bclib::Assert(-1, str, "Artificial array should not even be strength 0");
+
+        // create an artificial strength 0 array
+        q = 4;
+        temp = { 0,1,0,0 };
+        A = bclib::matrix<int>(2, 2, temp);
+        str = 0;
+        oacpp::oastrength::OA_strength(q, A, &str, false);
+        bclib::Assert(0, str, "Artificial array should be strength 0");
+
+        // create an artificial strength 1 array
+        q = 2;
+        temp = { 0,1,1,0 };
+        A = bclib::matrix<int>(2, 2, temp);
+        str = 0;
+        oacpp::oastrength::OA_strength(q, A, &str, false);
+        bclib::Assert(1, str, "Artificial array should be strength 1");
     }
 
     void COrthogonalArrayTest::testOastr1()
@@ -632,6 +671,13 @@ namespace oaTest {
 		oacpp::COrthogonalArray coa2;
 		coa2.bose(2, 1, &n);
 		bclib::Assert(coa2.oastr1(false), "Error 2 in oastr1");
+
+        int q = 2;
+        std::vector<int> temp = { 1,1,1,1 };
+        bclib::matrix<int> A = bclib::matrix<int>(2, 2, temp);
+        int test = oacpp::oastrength::OA_str1(q, A, false);
+        bclib::Assert(FAILURE_CHECK, test, "error in testOastr1");
+
     }
 
     void COrthogonalArrayTest::testOastr2()
@@ -639,32 +685,72 @@ namespace oaTest {
         oacpp::COrthogonalArray coa;
         int n;
         coa.addelkemp3(3, 25, &n);
-        bclib::Assert(coa.oastr2(false), "Error 1 in oastr2");
+        bclib::Assert(coa.oastr2(false), "Error 1 in oastr2 (1)");
 
 		oacpp::COrthogonalArray coa2;
 		coa2.bose(2, 1, &n);
-		bclib::Assert(coa2.oastr2(false), "Error 2 in oastr2");
+		bclib::Assert(coa2.oastr2(false), "Error 2 in oastr2 (2)");
 
 		oacpp::COrthogonalArray coa3;
 		coa3.bosebush(2, 4, &n);
-		bclib::Assert(coa3.oastr2(false), "Error 3 in oastr2");
-	}
+		bclib::Assert(coa3.oastr2(false), "Error 3 in oastr2 (3)");
+
+        int q = 3;
+        std::vector<int> temp = { 1,1,1,1,1,1 };
+        bclib::matrix<int> A = bclib::matrix<int>(6, 1, temp);
+        int test = oacpp::oastrength::OA_str2(q, A, false); // Array only has one column
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr2 (4)");
+
+        q = 3;
+        temp = { 1,1,1,1,1,1 };
+        A = bclib::matrix<int>(3, 2, temp);
+        test = oacpp::oastrength::OA_str2(q, A, false); // Array has rows that are not a multiple of q^2
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr2 (5)");
+
+        q = 3;
+        temp.clear();
+        temp.resize(18);
+        std::fill(temp.begin(), temp.end(), 1);
+        A = bclib::matrix<int>(9, 2, temp);
+        test = oacpp::oastrength::OA_str2(q, A, false); // Array has q^2 rows but is not strength 2
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr2 (6)");
+    }
 
     void COrthogonalArrayTest::testOastr3()
     {
         oacpp::COrthogonalArray coa;
         int n;
         coa.addelkemp3(3, 25, &n);
-        bclib::Assert(!coa.oastr3(false), "Error 1 in oastr3");
+        bclib::Assert(!coa.oastr3(false), "Error 1 in oastr3 (1)");
 
 		oacpp::COrthogonalArray coa2;
 		coa2.bose(2, 1, &n);
-		bclib::Assert(!coa2.oastr3(false), "Error 2 in oastr3");
+		bclib::Assert(!coa2.oastr3(false), "Error 2 in oastr3 (2)");
 
 		oacpp::COrthogonalArray coa3;
 		coa3.bosebush(2, 4, &n);
-		bclib::Assert(coa3.oastr3(false), "Error 3 in oastr3");
-	}
+		bclib::Assert(coa3.oastr3(false), "Error 3 in oastr3 (3)");
+
+        int q = 3;
+        std::vector<int> temp = { 1,1,1,1,1,1 };
+        bclib::matrix<int> A = bclib::matrix<int>(6, 1, temp);
+        int test = oacpp::oastrength::OA_str3(q, A, false); // Array only has one column, needs at least 3
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr3 (4)");
+
+        q = 3;
+        temp.resize(9);
+        std::fill(temp.begin(), temp.end(), 1);
+        A = bclib::matrix<int>(3, 3, temp);
+        test = oacpp::oastrength::OA_str3(q, A, false); // Array has rows that are not a multiple of q^3
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr3 (5)");
+
+        q = 3;
+        temp.resize(81);
+        std::fill(temp.begin(), temp.end(), 1);
+        A = bclib::matrix<int>(27, 3, temp);
+        test = oacpp::oastrength::OA_str3(q, A, false); // Array has q^3 rows but is not strength 2
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr3 (6)");
+    }
 
     void COrthogonalArrayTest::testOastr4()
     {
@@ -680,7 +766,27 @@ namespace oaTest {
 		oacpp::COrthogonalArray coa3;
 		coa3.bosebush(2, 4, &n);
 		bclib::Assert(!coa3.oastr4(false), "Error 3 in oastr4");
-	}
+
+        int q = 2;
+        std::vector<int> temp = { 1,1,1,1,1,1 };
+        bclib::matrix<int> A = bclib::matrix<int>(6, 1, temp);
+        int test = oacpp::oastrength::OA_str4(q, A, false); // Array only has one column, needs at least 4
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr4 (4)");
+
+        q = 2;
+        temp.resize(40);
+        std::fill(temp.begin(), temp.end(), 1);
+        A = bclib::matrix<int>(10, 4, temp);
+        test = oacpp::oastrength::OA_str4(q, A, false); // Array has rows that are not a multiple of q^4
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr4 (5)");
+
+        q = 2;
+        temp.resize(64);
+        std::fill(temp.begin(), temp.end(), 1);
+        A = bclib::matrix<int>(16, 4, temp);
+        test = oacpp::oastrength::OA_str4(q, A, false); // Array has q^4 rows but is not strength 2
+        bclib::Assert(FAILURE_CHECK, test, "error in oastr4 (6)");
+    }
 
 	void COrthogonalArrayTest::testOastrt()
 	{
