@@ -786,6 +786,18 @@ namespace oaTest {
         A = bclib::matrix<int>(16, 4, temp);
         test = oacpp::oastrength::OA_str4(q, A, false); // Array has q^4 rows but is not strength 2
         bclib::Assert(FAILURE_CHECK, test, "error in oastr4 (6)");
+
+        q = 3;
+        int ncol = 4;
+        int str = 4;
+        n = 0;
+        coa.busht(str, q, ncol, &n);
+        standardChecks(coa.getoa(), q, ncol);
+        bclib::Assert(SUCCESS_CHECK, coa.getReturnCode());
+        bclib::Assert(coa.getMessage().length() == 0);
+
+        test = oacpp::oastrength::OA_str4(q, const_cast<bclib::matrix<int>&>(coa.getoa()), false);
+        bclib::Assert(SUCCESS_CHECK, test, "error in oastr4 (7)");
     }
 
 	void COrthogonalArrayTest::testOastrt()
@@ -793,14 +805,19 @@ namespace oaTest {
 		oacpp::COrthogonalArray coa;
 		int n;
 		coa.addelkemp3(3, 25, &n);
-		bclib::Assert(!coa.oastrt(5, false), "Error 1 in oastrt");
+		bclib::Assert(!coa.oastrt(5, false), "Error 1 in oastrt (1)");
 
 		oacpp::COrthogonalArray coa2;
 		coa2.bose(2, 1, &n);
-		bclib::Assert(!coa2.oastrt(5, false), "Error 2 in oastrt");
+		bclib::Assert(!coa2.oastrt(5, false), "Error 2 in oastrt (2)");
 
 		oacpp::COrthogonalArray coa3;
 		coa3.bosebush(2, 4, &n);
-		bclib::Assert(!coa3.oastrt(5, false), "Error 3 in oastrt");
-	}
+		bclib::Assert(!coa3.oastrt(5, false), "Error 3 in oastrt (3)");
+
+        // negative t should fail
+        bclib::Assert(FAILURE_CHECK, coa3.oastrt(-1, false), "Error 4 in oastrt (4)");
+        // t=0 should return success
+        bclib::Assert(SUCCESS_CHECK, coa3.oastrt(0, false), "Error 5 in oastrt (5)");
+    }
 } // end namespace
