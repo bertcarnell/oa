@@ -116,11 +116,11 @@ namespace oaTest{
         ss.js = 20;
         ss.ks = 30;
         ss.ls = 40;
-        oacpp::RUnif ran5 = oacpp::RUnif(ss);
-        bclib::Assert(ran5.getSeedSet().js == 20);
+        oacpp::RUnif ran5 = oacpp::RUnif(ss.is, ss.js, ss.ks, ss.ls);
+        bclib::Assert(ran5.getSeedSet().js == ss.js);
         
         oacpp::RUnif ran6 = oacpp::RUnif();
         ran6.seed(ss);
-        bclib::Assert(ran6.getSeedSet().ks == 30);
+        bclib::Assert(ran6.getSeedSet().ks == ss.ks);
     }
 }

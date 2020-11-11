@@ -617,7 +617,7 @@ namespace oaTest {
     
     void COrthogonalArrayTest::testOarand()
     {
-        oacpp::COrthogonalArray coa;
+        oacpp::COrthogonalArray coa = oacpp::COrthogonalArray();
         int n;
         coa.addelkemp3(3, 25, &n);
         // all between 1 and 168

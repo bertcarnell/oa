@@ -33,6 +33,7 @@ COrthogonalArray::COrthogonalArray()
 	m_q = 0;
     m_return_code = SUCCESS_CHECK;
     m_warning_msg = "";
+    m_randomClass = RUnif();
 }
 
 void COrthogonalArray::createGaloisField(int q)

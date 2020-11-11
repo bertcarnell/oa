@@ -82,8 +82,6 @@ namespace oacpp
         RUnif();
 		/** Constructor with individual seeds */
         RUnif(int is, int js, int ks, int ls);
-		/** Constructor with a seed set */
-        explicit RUnif(SeedSet seedSet);
         
         ~RUnif() {};
         
@@ -100,7 +98,7 @@ namespace oacpp
          * Set the seeds to equal the numbers in the seedSet
          * @param seedSet a set of four seeds
          */
-        void seed(SeedSet seedSet);
+        void seed(SeedSet & seedSet);
         
 		/**
 		 * Get the seed set

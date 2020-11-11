@@ -51,10 +51,8 @@ namespace oaTest
     void runifTest::testRunif()
     {
         // constructors
-        oacpp::RUnif ran(1,2,3,10);
+        oacpp::RUnif ran = oacpp::RUnif(1,2,3,10);
         oacpp::RUnif ran_default = oacpp::RUnif(); // seeds are 1,2,3,4
-        oacpp::SeedSet temp_seed(1, 2, 3, 5);
-        oacpp::RUnif ran_seed(temp_seed);
         
         // test seeds are set correctly
         oacpp::SeedSet s = ran.getSeedSet();
@@ -68,12 +66,6 @@ namespace oaTest
         bclib::Assert(s.js == 2, "Seed Error D10");
         bclib::Assert(s.ks == 3, "Seed Error D11");
         bclib::Assert(s.ls == 4, "Seed Error D12");
-
-        s = ran_seed.getSeedSet();
-        bclib::Assert(s.is == 1, "Seed Error S9");
-        bclib::Assert(s.js == 2, "Seed Error S10");
-        bclib::Assert(s.ks == 3, "Seed Error S11");
-        bclib::Assert(s.ls == 5, "Seed Error S12");
 
         // test seeds are changed after calling random number generation
         std::vector<double> x(3);
@@ -93,7 +85,7 @@ namespace oaTest
         }
 
         // set the seeds back to the beginning and show they generate the same draws
-        ran.seed(1,2,3,4);
+        ran.seed(1,2,3,10);
         std::vector<double> x3(3);
         ran.runif(x3, 3);
         for (size_t i = 0; i < 3; i++)
